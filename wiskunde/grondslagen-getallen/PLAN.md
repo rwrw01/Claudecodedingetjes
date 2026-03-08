@@ -22,9 +22,12 @@ Bij elk nieuw begrip een korte, alledaagse vergelijking of voorbeeld geven. Geen
 ### A. Inleiding — Waarom dit ertoe doet
 - Je kunt rekenen, maar kun je bewijzen WAAROM 2+3 = 3+2?
 - Spivak's aanpak: alles opbouwen vanuit 12 spelregels (axioma's)
+- "Een axioma is een spelregel die we als waarheid aannemen — je hoeft het niet te bewijzen, het IS het startpunt."
 - Link terug naar de basis-hoofdstukken: "die intuïtie formaliseren we nu"
+- **Drie soorten axioma's:** kort uitleggen dat er lichaamsaxioma's (P1-P9, de rekenregels) en orde-axioma's (P10-P12, de rangorde) zijn. Later komt er nog een dertiende axioma (completheid) dat de stap maakt van breuken naar alle reële getallen — maar dat is voor een volgend hoofdstuk.
 
-### B. De rekenregels (P1–P9)
+### B. Lichaamsaxioma's — de rekenregels (P1–P9)
+*"Lichaam" (Engels: field) klinkt abstract, maar het betekent simpelweg: een verzameling getallen waarmee je kunt optellen, aftrekken, vermenigvuldigen en delen.*
 
 **P1: Associativiteit van optelling** — a + (b + c) = (a + b) + c
 - "Het maakt niet uit waar je de haakjes zet bij optellen"
@@ -55,7 +58,11 @@ Bij elk nieuw begrip een korte, alledaagse vergelijking of voorbeeld geven. Geen
 **P7: Inverse van vermenigvuldiging** — voor a ≠ 0 bestaat a⁻¹ zodat a · a⁻¹ = 1
 - "Elk getal (behalve 0) heeft een 'omgekeerde' waarmee je weer op 1 uitkomt."
 - Definitie van deling: a/b = a · b⁻¹
-- Waarom niet delen door 0? → Omdat 0 geen inverse heeft
+- **⚠ Warning-box: Waarom niet delen door 0?**
+  - Stel dat 0 wél een inverse had: er zou een getal x moeten bestaan met 0 · x = 1
+  - Maar we hebben net bewezen (bij P9) dat a · 0 = 0 voor elk getal a
+  - Dus 0 · x = 0, niet 1. Tegenspraak! Daarom bestaat 0⁻¹ niet.
+  - Dit is geen willekeurige regel — het volgt LOGISCH uit de andere axioma's.
 - Probeer zelf: "Wat is de inverse van 5?"
 
 **P8: Commutativiteit van vermenigvuldiging** — a · b = b · a
@@ -70,11 +77,13 @@ Bij elk nieuw begrip een korte, alledaagse vergelijking of voorbeeld geven. Geen
   - (−a) · b = −(a · b)
   - (−a)(−b) = a · b → interactief stap-voor-stap bewijs met invulvelden per stap
 
-### C. De orde-eigenschappen (P10–P12)
+### C. Orde-axioma's — de rangorde (P10–P12)
+*Deze axioma's leggen vast hoe getallen zich tot elkaar verhouden: welk getal is groter, welk is kleiner?*
 
 **P10: Trichotomie** — voor elk paar a, b geldt precies één van: a = b, a < b, a > b
 - "Drie mogelijkheden, en precies één is waar — net als bij een wedstrijd: je wint, verliest, of speelt gelijk."
-- Gedefinieerd via verzameling P van positieve getallen
+- Dit betekent: elk getal heeft een vaste plek op de getallenlijn, zonder dubbelzinnigheid. Een getal kan niet tegelijk positief en negatief zijn.
+- Gedefinieerd via verzameling P van positieve getallen: voor elk getal a geldt precies één van: a ∈ P, a = 0, of −a ∈ P
 - Interactief: getallenlijngrafiek
 
 **P11: Gesloten onder optelling** — als a > 0 en b > 0, dan a + b > 0
@@ -111,7 +120,7 @@ Selectie (aangepaste getallen/letters per CLAUDE.md):
 
 1. **Bewijs:** als bx = b voor een b ≠ 0, dan x = 1
 2. **Bewijs:** p² − q² = (p − q)(p + q)
-3. **Fout zoeken:** de "2 = 1"-drogrede (delen door 0)
+3. **Fout zoeken:** de "2 = 1"-drogrede (delen door 0) — feedback linkt direct naar P7 warning-box
 4. **Bewijs:** a/b = ac/(bc) als b,c ≠ 0
 5. **Bewijs:** a/b + c/d = (ad + bc)/(bd) — link naar kruislings-methode!
 6. **Ongelijkheden:** vind alle x waarvoor 3 − x < 5 − 2x
@@ -120,7 +129,7 @@ Selectie (aangepaste getallen/letters per CLAUDE.md):
 9. **Bewijs:** als 0 < a < 1, dan a² < a
 10. **Absolute waarde:** schrijf |√3 + √5 − √2 − √7| zonder absolute-waardetekens
 11. **Vind alle x:** |x − 4| < 3
-12. **Bewijs:** |a + b| = |a| + |b| als a en b hetzelfde teken hebben
+12. **Bewijs:** |a + b| = |a| + |b| als a en b hetzelfde teken hebben — stapsgewijze uitwerking met invulvelden, laat interactie tussen absolute waarde en orde-axioma's zien
 
 ## Interactiviteitsaanpak (per CLAUDE.md-regels)
 - **Sliders** bij P1, P5 (associativiteit visueel maken), P10-P12 (getallenlijn)

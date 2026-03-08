@@ -500,6 +500,86 @@
             <button onclick="checkTry('try5')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
             <span id="try5fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
         </div>
+
+        <h3>De kruislings-methode: werkt altijd!</h3>
+        <p>Bij 1/3 + 1/4 zie je snel dat 12 de gemeenschappelijke noemer is. Maar wat als de noemers &ldquo;lastig&rdquo; zijn, zoals 11 en 13? Dan is er een methode die <strong>altijd</strong> werkt:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> +
+            <span class="frac"><span class="num">c</span><span class="den">d</span></span> =
+            <span class="frac"><span class="num">a &times; d + c &times; b</span><span class="den">b &times; d</span></span>
+        </div>
+
+        <p>Hoe onthoud je dit? <strong>Kruislings vermenigvuldigen</strong> voor de tellers, en <strong>noemers &times; noemers</strong> voor de noemer:</p>
+
+        <div class="tip-box">
+            <strong>Stappenplan kruislings:</strong>
+            <ol style="margin:0.5rem 0 0 1.5rem;">
+                <li><strong>Noemer:</strong> vermenigvuldig de twee noemers: b &times; d</li>
+                <li><strong>Linker teller:</strong> teller links &times; noemer rechts: a &times; d</li>
+                <li><strong>Rechter teller:</strong> teller rechts &times; noemer links: c &times; b</li>
+                <li><strong>Tel de tellers op</strong> (of trek af bij aftrekken)</li>
+                <li>Vereenvoudig als het kan</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld 1 (check met een makkelijke):</strong>
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span> +
+            <span class="frac"><span class="num">1</span><span class="den">4</span></span><br><br>
+
+            Noemer: 3 &times; 4 = 12<br>
+            Tellers: 1 &times; 4 = 4 en 1 &times; 3 = 3<br>
+            Uitkomst: <span class="frac"><span class="num">4 + 3</span><span class="den">12</span></span> =
+            <span class="frac"><span class="num">7</span><span class="den">12</span></span> &nbsp; Klopt!
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld 2 (nu een lastige):</strong>
+            <span class="frac"><span class="num">3</span><span class="den">11</span></span> +
+            <span class="frac"><span class="num">4</span><span class="den">13</span></span><br><br>
+
+            <strong>Stap 1:</strong> Noemer: 11 &times; 13 = <strong>143</strong><br>
+            <strong>Stap 2:</strong> Linker teller: 3 &times; 13 = <strong>39</strong><br>
+            <strong>Stap 3:</strong> Rechter teller: 4 &times; 11 = <strong>44</strong><br>
+            <strong>Stap 4:</strong>
+            <span class="frac"><span class="num">39 + 44</span><span class="den">143</span></span> =
+            <span class="frac"><span class="num">83</span><span class="den">143</span></span><br><br>
+
+            <span style="color:var(--muted);font-size:0.9rem;">143 = 11 &times; 13, en 83 is een priemgetal, dus dit is al vereenvoudigd.</span>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld 3 (aftrekken):</strong>
+            <span class="frac"><span class="num">5</span><span class="den">7</span></span> &minus;
+            <span class="frac"><span class="num">2</span><span class="den">9</span></span><br><br>
+
+            Noemer: 7 &times; 9 = 63<br>
+            Tellers: 5 &times; 9 = 45 en 2 &times; 7 = 14<br>
+            Uitkomst: <span class="frac"><span class="num">45 &minus; 14</span><span class="den">63</span></span> =
+            <span class="frac"><span class="num">31</span><span class="den">63</span></span>
+        </div>
+
+        <div class="warning-box">
+            <strong>Let op:</strong> De kruislings-methode geeft niet altijd de <em>kleinste</em> noemer. Bijvoorbeeld: 1/4 + 1/6 geeft met kruislings noemer 24, maar de kleinste gemeenschappelijke noemer is 12. Het antwoord is hetzelfde (je kunt achteraf altijd vereenvoudigen), maar soms scheelt het rekenwerk als je de kleinere noemer ziet.
+        </div>
+
+        <div class="try-it" style="background:#f1f5f9;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
+            <strong style="color:var(--primary);">Probeer zelf:</strong>
+            <span>Reken kruislings uit:
+                <span class="frac"><span class="num">2</span><span class="den">7</span></span> +
+                <span class="frac"><span class="num">3</span><span class="den">5</span></span> =
+            </span><br>
+            <span style="color:var(--muted);font-size:0.85rem;">Tussenstap &mdash; Wat is de noemer? </span>
+            <input type="text" id="tryCross1" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:60px;" placeholder="?">
+            <button onclick="checkTry('tryCross1')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryCross1fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+            <br>
+            <span style="color:var(--muted);font-size:0.85rem;">Eindantwoord: </span>
+            <input type="text" id="tryCross2" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:100px;" placeholder="bijv. 31/35">
+            <button onclick="checkTry('tryCross2')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryCross2fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
     </div>
 
     <!-- ==================== DE STAP NAAR LETTERS ==================== -->
@@ -793,7 +873,9 @@ const tryAnswers = {
     try3: { check: v => /^2\s*\/\s*15$/.test(v), correct: 'Goed! 1\u00d72=2, 3\u00d75=15.', wrong: 'Niet juist. Teller \u00d7 teller, noemer \u00d7 noemer.' },
     try4: { check: v => { const s = v.replace(/\s/g,''); return s==='8'; }, correct: 'Goed! 2 \u00d7 4/1 = 8.', wrong: 'Niet juist. Draai 1/4 om naar 4/1, vermenigvuldig.' },
     try5: { check: v => /^5\s*\/\s*6$/.test(v), correct: 'Goed! 3/6 + 2/6 = 5/6.', wrong: 'Niet juist. Gemeenschappelijke noemer is 6.' },
-    try6: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s==='2a' || s==='2*a'; }, correct: 'Goed! 8ab/4b = 2a (gedeeld door 4 en b).', wrong: 'Niet juist. Deel door 4 (getallen) en door b (letters).' }
+    try6: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s==='2a' || s==='2*a'; }, correct: 'Goed! 8ab/4b = 2a (gedeeld door 4 en b).', wrong: 'Niet juist. Deel door 4 (getallen) en door b (letters).' },
+    tryCross1: { check: v => { const n = parseFloat(v.replace(',','.')); return n === 35; }, correct: 'Goed! 7 \u00d7 5 = 35.', wrong: 'Niet juist. De noemer is noemer \u00d7 noemer: 7 \u00d7 5.' },
+    tryCross2: { check: v => /^31\s*\/\s*35$/.test(v.trim()), correct: 'Goed! 2\u00d75=10, 3\u00d77=21, tellers: 10+21=31, noemer: 35.', wrong: 'Niet juist. Kruislings: 2\u00d75=10 en 3\u00d77=21, tel op: 31. Noemer: 7\u00d75=35.' }
 };
 
 function checkTry(id) {

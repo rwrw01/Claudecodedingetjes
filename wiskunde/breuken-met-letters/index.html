@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breuken met letters herleiden &mdash; HAVO 3 Wiskunde</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+        .breadcrumb {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 1.2rem 0 0.5rem;
+            color: var(--text);
+        }
+
+        /* Math fractions */
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 0.15em;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .frac .num, .frac .den {
+            padding: 0 0.25em;
+            line-height: 1.3;
+        }
+        .frac .num {
+            border-bottom: 1.5px solid currentColor;
+        }
+        .math {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.05em;
+        }
+        .math-block {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.3em;
+            margin: 0.5rem 0;
+        }
+        .math-block .step-arrow {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1rem;
+            margin: 0.75rem 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+
+        .tip-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .tip-box strong { color: #854d0e; }
+
+        .warning-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .warning-box strong { color: #991b1b; }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+        }
+        .example-box strong { color: #166534; }
+
+        .explanation {
+            color: var(--muted);
+            margin: 0.5rem 0 1rem;
+        }
+
+        .toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .toc a {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .toc a:hover { background: var(--primary); color: white; }
+
+        .exercise {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .exercise p { margin-bottom: 0.5rem; }
+        .exercise .q { font-weight: 600; }
+        .exercise input[type=text] {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            font-size: 1rem;
+            width: 200px;
+            margin-right: 0.5rem;
+        }
+        .exercise button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .exercise button:hover { filter: brightness(1.1); }
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .feedback.correct { display: block; background: #dcfce7; color: #166534; }
+        .feedback.wrong { display: block; background: #fee2e2; color: #991b1b; }
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+            margin-top: 0.25rem;
+        }
+        .hint {
+            display: none;
+            background: #fef9c3;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: #854d0e;
+        }
+        .show-solution-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+            margin-left: 0.25rem;
+            transition: opacity 0.2s;
+        }
+        .show-solution-btn:hover { background: #f1f5f9; }
+        .show-solution-btn.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .solution {
+            display: none;
+            background: #f0fdf4;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #166534;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Breuken met letters herleiden</h1>
+    <p>HAVO 3 &mdash; Stap voor stap uitgelegd</p>
+</header>
+
+<div class="breadcrumb">
+    <a href="../">Overzicht</a> &rsaquo; Breuken met letters herleiden
+</div>
+
+<div class="container">
+
+    <!-- INHOUDSOPGAVE -->
+    <div class="card">
+        <h2>Inhoud</h2>
+        <div class="toc">
+            <a href="#theorie-a">A. Vereenvoudigen</a>
+            <a href="#theorie-b">B. Variabelen uit breuken halen</a>
+            <a href="#theorie-c">C. Vermenigvuldigen &amp; delen</a>
+            <a href="#theorie-d">D. Optellen &amp; aftrekken</a>
+            <a href="#oefensommen">10 Oefensommen</a>
+        </div>
+    </div>
+
+    <!-- ==================== THEORIE A ==================== -->
+    <div class="card" id="theorie-a">
+        <h2>Theorie A &mdash; Breuken met letters vereenvoudigen</h2>
+
+        <h3>Het basisidee</h3>
+        <p>Je kent het vereenvoudigen van gewone breuken al:</p>
+        <div class="formula">
+            <span class="frac"><span class="num">12</span><span class="den">15</span></span> =
+            <span class="frac"><span class="num">4</span><span class="den">5</span></span>
+            &nbsp;&nbsp;(teller en noemer gedeeld door 3)
+        </div>
+        <p>Bij breuken met letters werkt het <strong>precies hetzelfde</strong>: je deelt teller en noemer door dezelfde factor. Het verschil is dat die factor nu ook een letter kan zijn.</p>
+
+        <h3>Hoe doe je dat?</h3>
+        <p>Zoek een <strong>gemeenschappelijke factor</strong> van teller en noemer. Dat kan een getal zijn, een letter, of allebei. Deel er dan door.</p>
+
+        <div class="example-box">
+            <strong>Voorbeeld 1:</strong>
+            <span class="frac"><span class="num">5a</span><span class="den">8a</span></span> =
+            <span class="frac"><span class="num">5</span><span class="den">8</span></span>
+            &nbsp;&nbsp;(gedeeld door <em>a</em>)<br><br>
+
+            <strong>Voorbeeld 2:</strong>
+            <span class="frac"><span class="num">7ab</span><span class="den">14ac</span></span> =
+            <span class="frac"><span class="num">b</span><span class="den">2c</span></span>
+            &nbsp;&nbsp;(gedeeld door 7 &eacute;n door <em>a</em>)<br><br>
+
+            <strong>Voorbeeld 3:</strong>
+            <span class="frac"><span class="num">16xy</span><span class="den">8x</span></span> =
+            <span class="frac"><span class="num">2y</span><span class="den">1</span></span> = 2y
+            &nbsp;&nbsp;(gedeeld door 8 en door <em>x</em>)
+        </div>
+
+        <div class="tip-box">
+            <strong>Stappenplan vereenvoudigen:</strong>
+            <ol style="margin: 0.5rem 0 0 1.5rem;">
+                <li>Kijk naar de <strong>getallen</strong>: kun je teller en noemer door hetzelfde getal delen?</li>
+                <li>Kijk naar de <strong>letters</strong>: welke letters staan in zowel teller als noemer? Die kun je wegdelen.</li>
+                <li>Vereenvoudig zo ver mogelijk.</li>
+            </ol>
+        </div>
+
+        <div class="warning-box">
+            <strong>Let op het verschil!</strong><br>
+            <span class="frac"><span class="num">8a</span><span class="den">a</span></span> =
+            <span class="frac"><span class="num">8 &middot; a</span><span class="den">1 &middot; a</span></span> =
+            <strong>8</strong>
+            &nbsp;&nbsp;&nbsp; maar &nbsp;&nbsp;&nbsp;
+            <span class="frac"><span class="num">a</span><span class="den">8a</span></span> =
+            <span class="frac"><span class="num">1 &middot; a</span><span class="den">8 &middot; a</span></span> =
+            <span class="frac"><span class="num">1</span><span class="den">8</span></span><br><br>
+            Het maakt uit of de letter in de teller of noemer &ldquo;overblijft&rdquo;!
+        </div>
+
+        <h3>Minteken bij breuken</h3>
+        <p>Als er een minteken voor de breuk of in de teller/noemer staat, houd dat dan netjes bij:</p>
+        <div class="example-box">
+            <strong>Voorbeeld:</strong>
+            <span class="frac"><span class="num">&minus;12ab</span><span class="den">20bc</span></span> =
+            <span class="frac"><span class="num">&minus;3a</span><span class="den">5c</span></span>
+            &nbsp;&nbsp;(gedeeld door 4 en door <em>b</em>; het minteken blijft)
+        </div>
+    </div>
+
+    <!-- ==================== THEORIE B ==================== -->
+    <div class="card" id="theorie-b">
+        <h2>Theorie B &mdash; Variabelen uit breuken halen</h2>
+
+        <h3>Wat betekent dit?</h3>
+        <p>Je weet dat <span class="frac"><span class="num">2</span><span class="den">3</span></span> =
+        <span class="frac"><span class="num">1</span><span class="den">3</span></span> &middot; 2.
+        Op dezelfde manier kun je een letter &ldquo;uit de breuk halen&rdquo;:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">3</span></span> =
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span> &middot; a =
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span>a
+        </div>
+
+        <p>Dit is handig om je antwoord netjes op te schrijven. Meestal combineer je dit met vereenvoudigen.</p>
+
+        <div class="example-box">
+            <strong>Voorbeeld 1:</strong>
+            <span class="frac"><span class="num">12a</span><span class="den">15</span></span> =
+            <span class="frac"><span class="num">4a</span><span class="den">5</span></span> =
+            <span class="frac"><span class="num">4</span><span class="den">5</span></span>a
+            &nbsp;&nbsp;(eerst vereenvoudigen, dan <em>a</em> eruit)<br><br>
+
+            <strong>Voorbeeld 2:</strong>
+            <span class="frac"><span class="num">15ab</span><span class="den">20a</span></span> =
+            <span class="frac"><span class="num">3b</span><span class="den">4</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span>b
+            &nbsp;&nbsp;(gedeeld door 5 en <em>a</em>, dan <em>b</em> eruit)
+        </div>
+
+        <div class="warning-box">
+            <strong>Pas op!</strong> Je kunt een variabele alleen uit de <strong>teller</strong> halen, niet uit de noemer!<br><br>
+            <span class="frac"><span class="num">2x</span><span class="den">6</span></span> =
+            <span class="frac"><span class="num">x</span><span class="den">3</span></span> =
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span>x
+            &nbsp; &nbsp; maar &nbsp; &nbsp;
+            <span class="frac"><span class="num">2</span><span class="den">6x</span></span> =
+            <span class="frac"><span class="num">1</span><span class="den">3x</span></span>
+            &nbsp;(de <em>x</em> blijft in de noemer staan!)
+        </div>
+
+        <div class="tip-box">
+            <strong>Ezelsbruggetje:</strong> Een letter &ldquo;boven de streep&rdquo; kan eruit als factor.
+            Een letter &ldquo;onder de streep&rdquo; moet daar blijven.
+        </div>
+    </div>
+
+    <!-- ==================== THEORIE C ==================== -->
+    <div class="card" id="theorie-c">
+        <h2>Theorie C &mdash; Breuken vermenigvuldigen &amp; delen</h2>
+
+        <h3>Vermenigvuldigen</h3>
+        <p>Breuken vermenigvuldig je door <strong>teller &times; teller</strong> en <strong>noemer &times; noemer</strong>:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> &middot;
+            <span class="frac"><span class="num">c</span><span class="den">d</span></span> =
+            <span class="frac"><span class="num">a &middot; c</span><span class="den">b &middot; d</span></span>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong>
+            <span class="frac"><span class="num">3</span><span class="den">2a</span></span> &middot;
+            <span class="frac"><span class="num">6</span><span class="den">a</span></span> =
+            <span class="frac"><span class="num">18</span><span class="den">2a&sup2;</span></span> =
+            <span class="frac"><span class="num">9</span><span class="den">a&sup2;</span></span>
+        </div>
+
+        <div class="tip-box">
+            <strong>Tip:</strong> Vereenvoudig <em>voordat</em> je vermenigvuldigt. Dat scheelt rekenwerk!<br>
+            <span class="frac"><span class="num">8</span><span class="den">3a</span></span> &middot;
+            <span class="frac"><span class="num">5</span><span class="den">2a</span></span>: je kunt niet tussentijds wegstrepen, dus gewoon vermenigvuldigen:
+            <span class="frac"><span class="num">40</span><span class="den">6a&sup2;</span></span> =
+            <span class="frac"><span class="num">20</span><span class="den">3a&sup2;</span></span>.
+        </div>
+
+        <h3>Delen</h3>
+        <p><strong>Delen door een breuk = vermenigvuldigen met het omgekeerde.</strong> Dit is de sleutelregel:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> :
+            <span class="frac"><span class="num">c</span><span class="den">d</span></span> =
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> &middot;
+            <span class="frac"><span class="num">d</span><span class="den">c</span></span> =
+            <span class="frac"><span class="num">a &middot; d</span><span class="den">b &middot; c</span></span>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld 1:</strong>
+            <span class="frac"><span class="num">3</span><span class="den">2a</span></span> :
+            <span class="frac"><span class="num">6</span><span class="den">a</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">2a</span></span> &middot;
+            <span class="frac"><span class="num">a</span><span class="den">6</span></span> =
+            <span class="frac"><span class="num">3a</span><span class="den">12a</span></span> =
+            <span class="frac"><span class="num">1</span><span class="den">4</span></span><br><br>
+
+            <strong>Voorbeeld 2 (dubbele breuk):</strong>
+            <span class="frac"><span class="num"><span class="frac"><span class="num">2x</span><span class="den">3</span></span></span><span class="den">5</span></span>
+            = <span class="frac"><span class="num">2x</span><span class="den">3</span></span> : 5
+            = <span class="frac"><span class="num">2x</span><span class="den">3</span></span> &middot; <span class="frac"><span class="num">1</span><span class="den">5</span></span>
+            = <span class="frac"><span class="num">2x</span><span class="den">15</span></span>
+            = <span class="frac"><span class="num">2</span><span class="den">15</span></span>x
+        </div>
+
+        <div class="warning-box">
+            <strong>Dubbele breuken:</strong> Een breuk in de noemer? Herschrijf als deling!<br><br>
+            <span class="frac"><span class="num">10</span><span class="den"><span class="frac"><span class="num">3</span><span class="den">x</span></span></span></span>
+            = 10 : <span class="frac"><span class="num">3</span><span class="den">x</span></span>
+            = 10 &middot; <span class="frac"><span class="num">x</span><span class="den">3</span></span>
+            = <span class="frac"><span class="num">10x</span><span class="den">3</span></span>
+            = 3<span class="frac"><span class="num">1</span><span class="den">3</span></span>x
+        </div>
+    </div>
+
+    <!-- ==================== THEORIE D ==================== -->
+    <div class="card" id="theorie-d">
+        <h2>Theorie D &mdash; Breuken optellen &amp; aftrekken</h2>
+
+        <h3>Gelijke noemer</h3>
+        <p>Bij gelijke noemers tel/trek je gewoon de tellers op:</p>
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">c</span></span> +
+            <span class="frac"><span class="num">b</span><span class="den">c</span></span> =
+            <span class="frac"><span class="num">a + b</span><span class="den">c</span></span>
+        </div>
+
+        <h3>Breuken met letters optellen/aftrekken</h3>
+        <p>Vaak kun je breuken met letters eerst <strong>vereenvoudigen</strong>, waardoor de berekening makkelijker wordt:</p>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong>
+            <span class="frac"><span class="num">18xy</span><span class="den">6x</span></span> &minus; 5y<br><br>
+            Stap 1: Vereenvoudig de breuk:
+            <span class="frac"><span class="num">18xy</span><span class="den">6x</span></span> = 3y<br>
+            Stap 2: Trek af: 3y &minus; 5y = <strong>&minus;2y</strong>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong>
+            <span class="frac"><span class="num">8ab</span><span class="den">2b</span></span> +
+            <span class="frac"><span class="num">9ac</span><span class="den">3c</span></span><br><br>
+            Stap 1: Vereenvoudig apart:
+            <span class="frac"><span class="num">8ab</span><span class="den">2b</span></span> = 4a en
+            <span class="frac"><span class="num">9ac</span><span class="den">3c</span></span> = 3a<br>
+            Stap 2: Tel op: 4a + 3a = <strong>7a</strong>
+        </div>
+
+        <div class="tip-box">
+            <strong>Strategie bij optellen/aftrekken:</strong>
+            <ol style="margin: 0.5rem 0 0 1.5rem;">
+                <li>Vereenvoudig elke breuk <em>apart</em> zo ver mogelijk</li>
+                <li>Kijk of je gelijksoortige termen kunt combineren</li>
+                <li>Als de noemers niet wegvallen: maak ze gelijknamig</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ==================== OEFENSOMMEN ==================== -->
+    <div class="card" id="oefensommen">
+        <h2>10 Oefensommen</h2>
+        <p class="explanation">Test je kennis! Schrijf je antwoord zo simpel mogelijk. Gebruik * voor vermenigvuldigen (bijv. 3*a) of schrijf gewoon 3a. Gebruik / voor breuken (bijv. 3/5 of 3a/5).</p>
+
+        <!-- Opgave 1: Basis vereenvoudigen -->
+        <div class="exercise" id="ex1">
+            <p class="q">1. Vereenvoudig:
+                <span class="frac"><span class="num">5b</span><span class="den">15b</span></span>
+            </p>
+            <input type="text" id="ans1" placeholder="bijv. 1/3">
+            <button onclick="checkAnswer(1)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn1" onclick="toggleSolution(1)">Uitwerking</button>
+            <div class="hint" id="hint1">
+                <strong>Aanpak:</strong> Zoek de gemeenschappelijke factor van teller en noemer.<br>
+                Getal: 5 en 15 zijn beide deelbaar door 5.<br>
+                Letter: <em>b</em> staat boven en onder de streep, dus die kun je ook wegdelen.
+            </div>
+            <div class="feedback" id="fb1"></div>
+            <div class="solution" id="sol1">
+                <span class="frac"><span class="num">5b</span><span class="den">15b</span></span>
+                = <span class="frac"><span class="num">5 &middot; b</span><span class="den">15 &middot; b</span></span>
+                (deel door 5 en door <em>b</em>)
+                = <span class="frac"><span class="num">1</span><span class="den">3</span></span><br>
+                <strong>Antwoord: 1/3</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 2: Vereenvoudigen met meerdere letters -->
+        <div class="exercise" id="ex2">
+            <p class="q">2. Vereenvoudig:
+                <span class="frac"><span class="num">12abc</span><span class="den">&minus;4ac</span></span>
+            </p>
+            <input type="text" id="ans2" placeholder="bijv. -3b">
+            <button onclick="checkAnswer(2)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn2" onclick="toggleSolution(2)">Uitwerking</button>
+            <div class="hint" id="hint2">
+                <strong>Aanpak:</strong> Deel teller en noemer door dezelfde factoren.<br>
+                Getallen: 12 en 4 zijn beide deelbaar door 4.<br>
+                Letters: <em>a</em> en <em>c</em> staan boven &eacute;n onder. Let op het minteken in de noemer!
+            </div>
+            <div class="feedback" id="fb2"></div>
+            <div class="solution" id="sol2">
+                <span class="frac"><span class="num">12abc</span><span class="den">&minus;4ac</span></span>
+                = <span class="frac"><span class="num">12 &middot; a &middot; b &middot; c</span><span class="den">&minus;4 &middot; a &middot; c</span></span>
+                (deel door 4, <em>a</em> en <em>c</em>)
+                = <span class="frac"><span class="num">3b</span><span class="den">&minus;1</span></span> = &minus;3b<br>
+                <strong>Antwoord: &minus;3b</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 3: Variabele uit breuk halen -->
+        <div class="exercise" id="ex3">
+            <p class="q">3. Herleid (variabele eruit):
+                <span class="frac"><span class="num">7p</span><span class="den">28</span></span>
+            </p>
+            <input type="text" id="ans3" placeholder="bijv. 1/4 p">
+            <button onclick="checkAnswer(3)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn3" onclick="toggleSolution(3)">Uitwerking</button>
+            <div class="hint" id="hint3">
+                <strong>Aanpak:</strong> Eerst de getallen vereenvoudigen: 7 en 28 zijn deelbaar door 7.<br>
+                Dan houd je <span class="frac"><span class="num">p</span><span class="den">4</span></span> over. Haal de <em>p</em> uit de teller: dat wordt <span class="frac"><span class="num">1</span><span class="den">4</span></span>p.
+            </div>
+            <div class="feedback" id="fb3"></div>
+            <div class="solution" id="sol3">
+                <span class="frac"><span class="num">7p</span><span class="den">28</span></span>
+                = <span class="frac"><span class="num">p</span><span class="den">4</span></span>
+                = <span class="frac"><span class="num">1</span><span class="den">4</span></span>p<br>
+                <strong>Antwoord: 1/4 p</strong> (of p/4)
+            </div>
+        </div>
+
+        <!-- Opgave 4: Variabele uit breuk (lastiger) -->
+        <div class="exercise" id="ex4">
+            <p class="q">4. Herleid:
+                <span class="frac"><span class="num">15ab</span><span class="den">45</span></span>
+            </p>
+            <input type="text" id="ans4" placeholder="bijv. 1/3 ab">
+            <button onclick="checkAnswer(4)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn4" onclick="toggleSolution(4)">Uitwerking</button>
+            <div class="hint" id="hint4">
+                <strong>Aanpak:</strong> De getallen: 15 en 45 zijn deelbaar door 15. Dat geeft
+                <span class="frac"><span class="num">ab</span><span class="den">3</span></span>.<br>
+                De letters <em>a</em> en <em>b</em> staan alleen in de teller, dus je kunt ze eruit halen.
+            </div>
+            <div class="feedback" id="fb4"></div>
+            <div class="solution" id="sol4">
+                <span class="frac"><span class="num">15ab</span><span class="den">45</span></span>
+                = <span class="frac"><span class="num">ab</span><span class="den">3</span></span>
+                = <span class="frac"><span class="num">1</span><span class="den">3</span></span>ab<br>
+                <strong>Antwoord: 1/3 ab</strong> (of ab/3)
+            </div>
+        </div>
+
+        <!-- Opgave 5: Vermenigvuldigen -->
+        <div class="exercise" id="ex5">
+            <p class="q">5. Herleid:
+                <span class="frac"><span class="num">3</span><span class="den">x</span></span> &middot;
+                <span class="frac"><span class="num">x</span><span class="den">3y</span></span>
+            </p>
+            <input type="text" id="ans5" placeholder="bijv. 1/y">
+            <button onclick="checkAnswer(5)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn5" onclick="toggleSolution(5)">Uitwerking</button>
+            <div class="hint" id="hint5">
+                <strong>Aanpak:</strong> Bij vermenigvuldigen: teller &times; teller, noemer &times; noemer.<br>
+                Je krijgt <span class="frac"><span class="num">3x</span><span class="den">3xy</span></span>.
+                Vereenvoudig nu door te delen door 3 en door <em>x</em>.
+            </div>
+            <div class="feedback" id="fb5"></div>
+            <div class="solution" id="sol5">
+                <span class="frac"><span class="num">3</span><span class="den">x</span></span> &middot;
+                <span class="frac"><span class="num">x</span><span class="den">3y</span></span> =
+                <span class="frac"><span class="num">3x</span><span class="den">3xy</span></span> =
+                <span class="frac"><span class="num">1</span><span class="den">y</span></span><br>
+                <strong>Antwoord: 1/y</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 6: Delen -->
+        <div class="exercise" id="ex6">
+            <p class="q">6. Herleid:
+                <span class="frac"><span class="num">3</span><span class="den">2a</span></span> :
+                <span class="frac"><span class="num">6</span><span class="den">a</span></span>
+            </p>
+            <input type="text" id="ans6" placeholder="bijv. 1/4">
+            <button onclick="checkAnswer(6)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(6)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn6" onclick="toggleSolution(6)">Uitwerking</button>
+            <div class="hint" id="hint6">
+                <strong>Aanpak:</strong> Delen door een breuk = vermenigvuldigen met het omgekeerde!<br>
+                Draai de tweede breuk om: <span class="frac"><span class="num">6</span><span class="den">a</span></span> wordt <span class="frac"><span class="num">a</span><span class="den">6</span></span>.<br>
+                Vermenigvuldig nu en vereenvoudig.
+            </div>
+            <div class="feedback" id="fb6"></div>
+            <div class="solution" id="sol6">
+                <span class="frac"><span class="num">3</span><span class="den">2a</span></span> :
+                <span class="frac"><span class="num">6</span><span class="den">a</span></span> =
+                <span class="frac"><span class="num">3</span><span class="den">2a</span></span> &middot;
+                <span class="frac"><span class="num">a</span><span class="den">6</span></span> =
+                <span class="frac"><span class="num">3a</span><span class="den">12a</span></span> =
+                <span class="frac"><span class="num">1</span><span class="den">4</span></span><br>
+                <strong>Antwoord: 1/4</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 7: Optellen/aftrekken na vereenvoudigen -->
+        <div class="exercise" id="ex7">
+            <p class="q">7. Herleid:
+                <span class="frac"><span class="num">18xy</span><span class="den">6x</span></span> &minus; 5y
+            </p>
+            <input type="text" id="ans7" placeholder="bijv. -2y">
+            <button onclick="checkAnswer(7)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(7)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn7" onclick="toggleSolution(7)">Uitwerking</button>
+            <div class="hint" id="hint7">
+                <strong>Aanpak:</strong> Vereenvoudig eerst de breuk apart.<br>
+                <span class="frac"><span class="num">18xy</span><span class="den">6x</span></span>: deel door 6 en door <em>x</em> &rarr; je houdt 3y over.<br>
+                Trek dan af: 3y &minus; 5y = ?
+            </div>
+            <div class="feedback" id="fb7"></div>
+            <div class="solution" id="sol7">
+                <span class="frac"><span class="num">18xy</span><span class="den">6x</span></span> = 3y<br>
+                3y &minus; 5y = &minus;2y<br>
+                <strong>Antwoord: &minus;2y</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 8: Dubbele breuk -->
+        <div class="exercise" id="ex8">
+            <p class="q">8. Herleid de dubbele breuk:
+                <span style="font-family:'Cambria Math',serif;font-size:1.1em;">
+                    <span class="frac"><span class="num"><span class="frac"><span class="num">4p</span><span class="den">3</span></span></span><span class="den">2</span></span>
+                </span>
+            </p>
+            <input type="text" id="ans8" placeholder="bijv. 2/3 p">
+            <button onclick="checkAnswer(8)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(8)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn8" onclick="toggleSolution(8)">Uitwerking</button>
+            <div class="hint" id="hint8">
+                <strong>Aanpak:</strong> Een dubbele breuk is een deling.<br>
+                <span class="frac"><span class="num"><span class="frac"><span class="num">4p</span><span class="den">3</span></span></span><span class="den">2</span></span>
+                = <span class="frac"><span class="num">4p</span><span class="den">3</span></span> : 2
+                = <span class="frac"><span class="num">4p</span><span class="den">3</span></span> &middot; <span class="frac"><span class="num">1</span><span class="den">2</span></span>.<br>
+                Vermenigvuldig teller &times; teller en noemer &times; noemer, en vereenvoudig.
+            </div>
+            <div class="feedback" id="fb8"></div>
+            <div class="solution" id="sol8">
+                <span class="frac"><span class="num"><span class="frac"><span class="num">4p</span><span class="den">3</span></span></span><span class="den">2</span></span>
+                = <span class="frac"><span class="num">4p</span><span class="den">3</span></span> &middot; <span class="frac"><span class="num">1</span><span class="den">2</span></span>
+                = <span class="frac"><span class="num">4p</span><span class="den">6</span></span>
+                = <span class="frac"><span class="num">2p</span><span class="den">3</span></span>
+                = <span class="frac"><span class="num">2</span><span class="den">3</span></span>p<br>
+                <strong>Antwoord: 2/3 p</strong> (of 2p/3)
+            </div>
+        </div>
+
+        <!-- Opgave 9: Vereenvoudigen met ontbinden -->
+        <div class="exercise" id="ex9">
+            <p class="q">9. Herleid:
+                <span class="frac"><span class="num">2a + 2b</span><span class="den">5a + 5b</span></span>
+            </p>
+            <input type="text" id="ans9" placeholder="bijv. 2/5">
+            <button onclick="checkAnswer(9)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(9)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn9" onclick="toggleSolution(9)">Uitwerking</button>
+            <div class="hint" id="hint9">
+                <strong>Aanpak:</strong> Je kunt hier niet direct wegstrepen &mdash; je moet eerst <em>ontbinden in factoren</em>.<br>
+                Teller: 2a + 2b = 2(a + b).<br>
+                Noemer: 5a + 5b = 5(a + b).<br>
+                Nu staat (a + b) boven &eacute;n onder: die kun je wegdelen!
+            </div>
+            <div class="feedback" id="fb9"></div>
+            <div class="solution" id="sol9">
+                <span class="frac"><span class="num">2a + 2b</span><span class="den">5a + 5b</span></span>
+                = <span class="frac"><span class="num">2(a + b)</span><span class="den">5(a + b)</span></span>
+                = <span class="frac"><span class="num">2</span><span class="den">5</span></span><br>
+                <strong>Antwoord: 2/5</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 10: Combinatie opgave -->
+        <div class="exercise" id="ex10">
+            <p class="q">10. Herleid:
+                <span class="frac"><span class="num">2a</span><span class="den">3</span></span> &middot; 6a
+            </p>
+            <input type="text" id="ans10" placeholder="bijv. 4a^2">
+            <button onclick="checkAnswer(10)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(10)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn10" onclick="toggleSolution(10)">Uitwerking</button>
+            <div class="hint" id="hint10">
+                <strong>Aanpak:</strong> Schrijf 6a als een breuk: <span class="frac"><span class="num">6a</span><span class="den">1</span></span>.<br>
+                Vermenigvuldig: <span class="frac"><span class="num">2a</span><span class="den">3</span></span> &middot; <span class="frac"><span class="num">6a</span><span class="den">1</span></span> =
+                <span class="frac"><span class="num">12a&sup2;</span><span class="den">3</span></span>.<br>
+                Vereenvoudig nu de getallen.
+            </div>
+            <div class="feedback" id="fb10"></div>
+            <div class="solution" id="sol10">
+                <span class="frac"><span class="num">2a</span><span class="den">3</span></span> &middot; 6a
+                = <span class="frac"><span class="num">2a &middot; 6a</span><span class="den">3</span></span>
+                = <span class="frac"><span class="num">12a&sup2;</span><span class="den">3</span></span>
+                = 4a&sup2;<br>
+                <strong>Antwoord: 4a&sup2;</strong>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<footer>
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    Wiskunde HAVO &middot; Interactieve gids
+</footer>
+
+<script>
+const answers = {
+    1:  { check: v => /^1\s*\/\s*3$/.test(v.trim()),
+          correct: 'Goed! 5b/15b = 1/3 (gedeeld door 5b).',
+          wrong: 'Niet juist. Deel teller en noemer door 5 \u00e9n door b.' },
+    2:  { check: v => { const s = v.trim().replace(/\s/g,''); return s==='-3b' || s==='\u22123b' || s==='(-3b)'; },
+          correct: 'Goed! 12abc / (-4ac) = -3b.',
+          wrong: 'Niet juist. Deel door 4, door a en door c. Let op het minteken!' },
+    3:  { check: v => { const s = v.trim().replace(/\s/g,'').toLowerCase(); return s==='1/4p' || s==='p/4' || s==='1/4*p' || s==='\u00bcp'; },
+          correct: 'Goed! 7p/28 = p/4 = \u00bc p.',
+          wrong: 'Niet juist. Deel 7 en 28 door 7, haal dan p eruit.' },
+    4:  { check: v => { const s = v.trim().replace(/\s/g,'').toLowerCase(); return s==='1/3ab' || s==='ab/3' || s==='1/3*ab'; },
+          correct: 'Goed! 15ab/45 = ab/3 = \u2153 ab.',
+          wrong: 'Niet juist. Deel 15 en 45 door 15.' },
+    5:  { check: v => { const s = v.trim().replace(/\s/g,'').toLowerCase(); return s==='1/y'; },
+          correct: 'Goed! (3 \u00b7 x)/(x \u00b7 3y) = 1/y.',
+          wrong: 'Niet juist. Vermenigvuldig teller\u00d7teller en noemer\u00d7noemer, vereenvoudig dan.' },
+    6:  { check: v => /^1\s*\/\s*4$/.test(v.trim()),
+          correct: 'Goed! Omdraaien en vermenigvuldigen: 3a/(12a) = 1/4.',
+          wrong: 'Niet juist. Draai de tweede breuk om en vermenigvuldig.' },
+    7:  { check: v => { const s = v.trim().replace(/\s/g,'').toLowerCase(); return s==='-2y' || s==='\u22122y'; },
+          correct: 'Goed! 18xy/(6x) = 3y, en 3y - 5y = -2y.',
+          wrong: 'Niet juist. Vereenvoudig eerst de breuk tot 3y.' },
+    8:  { check: v => { const s = v.trim().replace(/\s/g,'').toLowerCase(); return s==='2/3p' || s==='2p/3' || s==='2/3*p'; },
+          correct: 'Goed! (4p/3) : 2 = 4p/6 = 2p/3.',
+          wrong: 'Niet juist. Herschrijf als deling: (4p/3) \u00f7 2 = (4p/3) \u00d7 (1/2).' },
+    9:  { check: v => /^2\s*\/\s*5$/.test(v.trim()),
+          correct: 'Goed! Ontbind: 2(a+b) / 5(a+b) = 2/5.',
+          wrong: 'Niet juist. Ontbind teller en noemer in factoren: haal de gemeenschappelijke factor eruit.' },
+    10: { check: v => { const s = v.trim().replace(/\s/g,'').toLowerCase(); return s==='4a^2' || s==='4a\u00b2' || s==='4a2'; },
+          correct: 'Goed! (2a \u00d7 6a)/3 = 12a\u00b2/3 = 4a\u00b2.',
+          wrong: 'Niet juist. Schrijf 6a als 6a/1, vermenigvuldig, en vereenvoudig.' }
+};
+
+function checkAnswer(n) {
+    const val = document.getElementById('ans' + n).value;
+    if (!val.trim()) return;
+    const fb = document.getElementById('fb' + n);
+    const a = answers[n];
+    if (a.check(val)) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.correct;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+    const solBtn = document.getElementById('solbtn' + n);
+    if (solBtn) solBtn.classList.remove('locked');
+}
+
+function toggleHint(n) {
+    const el = document.getElementById('hint' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+function toggleSolution(n) {
+    const el = document.getElementById('sol' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+document.querySelectorAll('.exercise input[type=text]').forEach(input => {
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            const n = parseInt(input.id.replace('ans', ''));
+            checkAnswer(n);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

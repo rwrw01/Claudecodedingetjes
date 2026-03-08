@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wortelfuncties &mdash; Transformaties (HAVO)</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .card h2 .step-num {
+            background: var(--primary);
+            color: white;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.15rem;
+            margin: 0.75rem 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+
+        .explanation {
+            color: var(--muted);
+            margin: 0.5rem 0 1rem;
+        }
+
+        canvas.graph {
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 1rem auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* Slider section */
+        .slider-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+        @media (max-width: 500px) { .slider-group { grid-template-columns: 1fr; } }
+
+        .slider-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .slider-item label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .slider-item input[type=range] {
+            width: 100%;
+            accent-color: var(--primary);
+        }
+        .slider-val {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        #sliderFormula {
+            text-align: center;
+            font-size: 1.3rem;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            margin: 0.5rem 0;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Exercises */
+        .exercise {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .exercise p { margin-bottom: 0.5rem; }
+        .exercise .q { font-weight: 600; }
+        .exercise input[type=text] {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            font-size: 1rem;
+            width: 160px;
+            margin-right: 0.5rem;
+        }
+        .exercise button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .exercise button:hover { filter: brightness(1.1); }
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .feedback.correct { display: block; background: #dcfce7; color: #166534; }
+        .feedback.wrong { display: block; background: #fee2e2; color: #991b1b; }
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+            margin-top: 0.25rem;
+        }
+        .hint {
+            display: none;
+            background: #fef9c3;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: #854d0e;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .legend-swatch {
+            width: 24px;
+            height: 3px;
+            border-radius: 2px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+        .nav-tabs button {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+        }
+        .nav-tabs button.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Wortelfuncties &amp; Transformaties</h1>
+    <p>Interactieve gids &mdash; HAVO Wiskunde</p>
+</header>
+
+<div class="container">
+
+    <!-- INTRO -->
+    <div class="card">
+        <h2>De basisvorm</h2>
+        <p>De <strong>standaard wortelfunctie</strong> is:</p>
+        <div class="formula">f(x) = &radic;x</div>
+        <p class="explanation">
+            De grafiek begint in de oorsprong (0, 0) en loopt stijgend naar rechts.
+            Het domein is x &ge; 0 en het bereik is y &ge; 0.
+        </p>
+        <p>De <strong>algemene vorm</strong> met transformaties is:</p>
+        <div class="formula">f(x) = a &middot; &radic;(x &minus; p) + q</div>
+        <p class="explanation">
+            <strong>a</strong> = verticale vermenigvuldiging (en spiegeling als a &lt; 0)<br>
+            <strong>p</strong> = horizontale verschuiving (naar rechts als p &gt; 0)<br>
+            <strong>q</strong> = verticale verschuiving (omhoog als q &gt; 0)
+        </p>
+    </div>
+
+    <!-- STAPSGEWIJZE OPBOUW -->
+    <div class="card">
+        <h2>Stapsgewijze opbouw van f(x) = &minus;2&radic;(x + 4) + 2</h2>
+        <p class="explanation">
+            We herschrijven: f(x) = &minus;2&radic;(x &minus; (&minus;4)) + 2, dus a = &minus;2, p = &minus;4, q = 2.
+            Hieronder bouwen we de grafiek stap voor stap op.
+        </p>
+
+        <div class="nav-tabs" id="stepTabs">
+            <button class="active" data-step="0">Basis</button>
+            <button data-step="1">Stap 1</button>
+            <button data-step="2">Stap 2</button>
+            <button data-step="3">Stap 3</button>
+            <button data-step="4">Alles</button>
+        </div>
+        <div id="stepInfo"></div>
+        <canvas id="stepCanvas" class="graph" width="500" height="400"></canvas>
+        <div class="legend" id="stepLegend"></div>
+    </div>
+
+    <!-- INTERACTIEVE SLIDER-VERKENNER -->
+    <div class="card">
+        <h2>Interactieve slider-verkenner</h2>
+        <p class="explanation">Versleep de sliders om te zien hoe a, p en q de grafiek veranderen.</p>
+        <div id="sliderFormula">f(x) = 1 &middot; &radic;(x &minus; 0) + 0</div>
+        <canvas id="sliderCanvas" class="graph" width="500" height="400"></canvas>
+        <div class="slider-group">
+            <div class="slider-item">
+                <label>a (vermenigvuldiging)</label>
+                <input type="range" id="sliderA" min="-3" max="3" step="0.1" value="1">
+                <div class="slider-val" id="valA">a = 1</div>
+            </div>
+            <div class="slider-item">
+                <label>p (horizontale verschuiving)</label>
+                <input type="range" id="sliderP" min="-6" max="6" step="0.5" value="0">
+                <div class="slider-val" id="valP">p = 0</div>
+            </div>
+            <div class="slider-item">
+                <label>q (verticale verschuiving)</label>
+                <input type="range" id="sliderQ" min="-5" max="5" step="0.5" value="0">
+                <div class="slider-val" id="valQ">q = 0</div>
+            </div>
+            <div class="slider-item" style="display:flex;align-items:center;justify-content:center;">
+                <button id="resetSliders" style="padding:0.5rem 1.2rem;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:0.95rem;">Reset</button>
+                <button id="presetBtn" style="padding:0.5rem 1.2rem;border-radius:8px;border:none;background:var(--primary);color:white;cursor:pointer;font-size:0.95rem;margin-left:0.5rem;">Voorbeeld laden</button>
+            </div>
+        </div>
+        <div class="legend">
+            <div class="legend-item"><div class="legend-swatch" style="background:#94a3b8"></div> &radic;x (basis)</div>
+            <div class="legend-item"><div class="legend-swatch" style="background:var(--accent)"></div> Jouw functie</div>
+        </div>
+    </div>
+
+    <!-- OEFENOPGAVEN -->
+    <div class="card">
+        <h2>Oefenopgaven</h2>
+        <p class="explanation">Test je kennis! Vul je antwoord in en controleer.</p>
+
+        <div class="exercise" id="ex1">
+            <p class="q">1. Wat is het domein van f(x) = &radic;(x &minus; 3)?</p>
+            <p class="explanation">Schrijf als: x &ge; ... (vul het getal in)</p>
+            <input type="text" id="ans1" placeholder="bijv. 3">
+            <button onclick="checkAnswer(1)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
+            <div class="hint" id="hint1">Onder het wortelteken moet &ge; 0 staan: x &minus; 3 &ge; 0.</div>
+            <div class="feedback" id="fb1"></div>
+        </div>
+
+        <div class="exercise" id="ex2">
+            <p class="q">2. De grafiek van g(x) = &radic;(x + 2) is de grafiek van &radic;x verschoven met ... eenheden naar ...</p>
+            <p class="explanation">Antwoord: een getal en richting, bijv. "2 links"</p>
+            <input type="text" id="ans2" placeholder="bijv. 2 links">
+            <button onclick="checkAnswer(2)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
+            <div class="hint" id="hint2">x + 2 = x &minus; (&minus;2), dus p = &minus;2. Negatieve p = naar links.</div>
+            <div class="feedback" id="fb2"></div>
+        </div>
+
+        <div class="exercise" id="ex3">
+            <p class="q">3. Bepaal het startpunt (beginpunt van de grafiek) van h(x) = 3&radic;(x &minus; 1) + 5.</p>
+            <p class="explanation">Schrijf als: (x, y), bijv. (1, 5)</p>
+            <input type="text" id="ans3" placeholder="bijv. (1, 5)">
+            <button onclick="checkAnswer(3)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
+            <div class="hint" id="hint3">Het startpunt is (p, q). Hier: p = 1, q = 5.</div>
+            <div class="feedback" id="fb3"></div>
+        </div>
+
+        <div class="exercise" id="ex4">
+            <p class="q">4. Is de grafiek van f(x) = &minus;&radic;x stijgend of dalend?</p>
+            <input type="text" id="ans4" placeholder="stijgend of dalend">
+            <button onclick="checkAnswer(4)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
+            <div class="hint" id="hint4">De min-teken voor de wortel spiegelt de grafiek in de x-as.</div>
+            <div class="feedback" id="fb4"></div>
+        </div>
+
+        <div class="exercise" id="ex5">
+            <p class="q">5. Geef het bereik van f(x) = &minus;2&radic;(x + 4) + 2.</p>
+            <p class="explanation">Schrijf als: y &le; ... (vul het getal in)</p>
+            <input type="text" id="ans5" placeholder="bijv. 2">
+            <button onclick="checkAnswer(5)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
+            <div class="hint" id="hint5">a is negatief, dus de grafiek gaat naar beneden. Het maximum is q = 2.</div>
+            <div class="feedback" id="fb5"></div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    Wortelfuncties &mdash; HAVO Wiskunde &middot; Interactieve gids
+</footer>
+
+<script>
+// ========== GRAPH DRAWING UTILITIES ==========
+function setupGraph(canvas, xMin, xMax, yMin, yMax) {
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    const w = rect.width || canvas.width;
+    const h = rect.height || canvas.height;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const pad = 40;
+    const plotW = w - 2 * pad;
+    const plotH = h - 2 * pad;
+
+    function toPixel(x, y) {
+        return [
+            pad + (x - xMin) / (xMax - xMin) * plotW,
+            pad + (1 - (y - yMin) / (yMax - yMin)) * plotH
+        ];
+    }
+
+    // background
+    ctx.fillStyle = '#fafbfc';
+    ctx.fillRect(0, 0, w, h);
+
+    // grid
+    ctx.strokeStyle = '#e8ecf0';
+    ctx.lineWidth = 0.5;
+    for (let gx = Math.ceil(xMin); gx <= xMax; gx++) {
+        const [px] = toPixel(gx, 0);
+        ctx.beginPath(); ctx.moveTo(px, pad); ctx.lineTo(px, pad + plotH); ctx.stroke();
+    }
+    for (let gy = Math.ceil(yMin); gy <= yMax; gy++) {
+        const [, py] = toPixel(0, gy);
+        ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(pad + plotW, py); ctx.stroke();
+    }
+
+    // axes
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1.5;
+    // x-axis
+    if (yMin <= 0 && yMax >= 0) {
+        const [, ay] = toPixel(0, 0);
+        ctx.beginPath(); ctx.moveTo(pad, ay); ctx.lineTo(pad + plotW, ay); ctx.stroke();
+    }
+    // y-axis
+    if (xMin <= 0 && xMax >= 0) {
+        const [ax] = toPixel(0, 0);
+        ctx.beginPath(); ctx.moveTo(ax, pad); ctx.lineTo(ax, pad + plotH); ctx.stroke();
+    }
+
+    // tick labels
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '11px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    const [, yAxis] = toPixel(0, 0);
+    for (let gx = Math.ceil(xMin); gx <= xMax; gx++) {
+        if (gx === 0) continue;
+        const [px] = toPixel(gx, 0);
+        const tickY = (yMin <= 0 && yMax >= 0) ? yAxis : pad + plotH;
+        ctx.fillText(gx, px, tickY + 14);
+    }
+    ctx.textAlign = 'right';
+    const [xAxis] = toPixel(0, 0);
+    for (let gy = Math.ceil(yMin); gy <= yMax; gy++) {
+        if (gy === 0) continue;
+        const [, py] = toPixel(0, gy);
+        const tickX = (xMin <= 0 && xMax >= 0) ? xAxis : pad;
+        ctx.fillText(gy, tickX - 5, py + 4);
+    }
+
+    return { ctx, toPixel, w, h, pad, plotW, plotH };
+}
+
+function drawCurve(g, fn, xStart, xEnd, color, lineWidth, dashed) {
+    const { ctx, toPixel } = g;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth || 2.5;
+    if (dashed) ctx.setLineDash([6, 4]); else ctx.setLineDash([]);
+    ctx.beginPath();
+    let started = false;
+    const steps = 400;
+    const dx = (xEnd - xStart) / steps;
+    for (let i = 0; i <= steps; i++) {
+        const x = xStart + i * dx;
+        const y = fn(x);
+        if (isNaN(y) || !isFinite(y)) { started = false; continue; }
+        const [px, py] = toPixel(x, y);
+        if (!started) { ctx.moveTo(px, py); started = true; }
+        else ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+function drawPoint(g, x, y, color, label) {
+    const { ctx, toPixel } = g;
+    const [px, py] = toPixel(x, y);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(px, py, 5, 0, Math.PI * 2);
+    ctx.fill();
+    if (label) {
+        ctx.fillStyle = color;
+        ctx.font = 'bold 12px system-ui, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText(label, px + 8, py - 6);
+    }
+}
+
+// ========== STEP-BY-STEP GRAPHS ==========
+const stepData = [
+    {
+        title: 'Basisgrafiek: f(x) = \u221ax',
+        desc: 'De standaard wortelfunctie. Start in (0, 0), stijgend naar rechts.',
+        curves: [{ fn: x => Math.sqrt(x), start: 0, color: '#94a3b8', lw: 2.5, label: '\u221ax' }],
+        points: [{ x: 0, y: 0, color: '#94a3b8', label: '(0, 0)' }]
+    },
+    {
+        title: 'Stap 1: Horizontale verschuiving \u2192 \u221a(x + 4)',
+        desc: 'x + 4 = x \u2212 (\u22124), dus p = \u22124: de grafiek schuift 4 naar links. Nieuw startpunt: (\u22124, 0).',
+        curves: [
+            { fn: x => Math.sqrt(x), start: 0, color: '#94a3b8', lw: 1.5, dashed: true },
+            { fn: x => Math.sqrt(x + 4), start: -4, color: '#2563eb', lw: 2.5 }
+        ],
+        points: [
+            { x: 0, y: 0, color: '#94a3b8', label: '(0, 0)' },
+            { x: -4, y: 0, color: '#2563eb', label: '(\u22124, 0)' }
+        ]
+    },
+    {
+        title: 'Stap 2: Vermenigvuldiging \u2192 2\u221a(x + 4)',
+        desc: 'Factor a = 2: de grafiek wordt 2\u00d7 zo steil (verticaal uitgerekt).',
+        curves: [
+            { fn: x => Math.sqrt(x + 4), start: -4, color: '#94a3b8', lw: 1.5, dashed: true },
+            { fn: x => 2 * Math.sqrt(x + 4), start: -4, color: '#7c3aed', lw: 2.5 }
+        ],
+        points: [
+            { x: -4, y: 0, color: '#7c3aed', label: '(\u22124, 0)' }
+        ]
+    },
+    {
+        title: 'Stap 3: Spiegeling \u2192 \u22122\u221a(x + 4)',
+        desc: 'Het minteken spiegelt de grafiek in de x-as. De grafiek daalt nu.',
+        curves: [
+            { fn: x => 2 * Math.sqrt(x + 4), start: -4, color: '#94a3b8', lw: 1.5, dashed: true },
+            { fn: x => -2 * Math.sqrt(x + 4), start: -4, color: '#ea580c', lw: 2.5 }
+        ],
+        points: [
+            { x: -4, y: 0, color: '#ea580c', label: '(\u22124, 0)' }
+        ]
+    },
+    {
+        title: 'Stap 4: Verticale verschuiving \u2192 \u22122\u221a(x + 4) + 2',
+        desc: 'q = 2: de hele grafiek schuift 2 omhoog. Startpunt wordt (\u22124, 2).',
+        curves: [
+            { fn: x => Math.sqrt(x), start: 0, color: '#94a3b8', lw: 1, dashed: true },
+            { fn: x => -2 * Math.sqrt(x + 4), start: -4, color: '#94a3b8', lw: 1.5, dashed: true },
+            { fn: x => -2 * Math.sqrt(x + 4) + 2, start: -4, color: '#e11d48', lw: 3 }
+        ],
+        points: [
+            { x: 0, y: 0, color: '#94a3b8', label: '(0, 0)' },
+            { x: -4, y: 2, color: '#e11d48', label: '(\u22124, 2)' }
+        ]
+    }
+];
+
+const colorNames = {
+    '#94a3b8': 'Vorige stap',
+    '#2563eb': '\u221a(x + 4)',
+    '#7c3aed': '2\u221a(x + 4)',
+    '#ea580c': '\u22122\u221a(x + 4)',
+    '#e11d48': '\u22122\u221a(x + 4) + 2'
+};
+
+let currentStep = 0;
+
+function drawStep(step) {
+    const sd = stepData[step];
+    const canvas = document.getElementById('stepCanvas');
+    const g = setupGraph(canvas, -7, 8, -7, 7);
+
+    sd.curves.forEach(c => {
+        drawCurve(g, c.fn, c.start, 8, c.color, c.lw, c.dashed);
+    });
+    sd.points.forEach(p => {
+        drawPoint(g, p.x, p.y, p.color, p.label);
+    });
+
+    document.getElementById('stepInfo').innerHTML =
+        '<div class="formula">' + sd.title + '</div>' +
+        '<p class="explanation">' + sd.desc + '</p>';
+
+    // legend
+    const legendEl = document.getElementById('stepLegend');
+    const items = sd.curves.map(c =>
+        '<div class="legend-item"><div class="legend-swatch" style="background:' + c.color +
+        (c.dashed ? ';border-top:2px dashed ' + c.color + ';height:0;' : '') +
+        '"></div> ' + (colorNames[c.color] || '') + '</div>'
+    );
+    legendEl.innerHTML = items.join('');
+}
+
+document.getElementById('stepTabs').addEventListener('click', e => {
+    if (e.target.tagName !== 'BUTTON') return;
+    document.querySelectorAll('#stepTabs button').forEach(b => b.classList.remove('active'));
+    e.target.classList.add('active');
+    currentStep = parseInt(e.target.dataset.step);
+    drawStep(currentStep);
+});
+
+// ========== SLIDER EXPLORER ==========
+const slA = document.getElementById('sliderA');
+const slP = document.getElementById('sliderP');
+const slQ = document.getElementById('sliderQ');
+
+function updateSlider() {
+    const a = parseFloat(slA.value);
+    const p = parseFloat(slP.value);
+    const q = parseFloat(slQ.value);
+
+    document.getElementById('valA').textContent = 'a = ' + a.toFixed(1);
+    document.getElementById('valP').textContent = 'p = ' + p.toFixed(1);
+    document.getElementById('valQ').textContent = 'q = ' + q.toFixed(1);
+
+    // formula display
+    const pStr = p === 0 ? 'x' : p > 0 ? '(x \u2212 ' + p + ')' : '(x + ' + Math.abs(p) + ')';
+    const qStr = q === 0 ? '' : q > 0 ? ' + ' + q : ' \u2212 ' + Math.abs(q);
+    const aStr = a === 1 ? '' : a === -1 ? '\u2212' : a.toFixed(1) + ' \u00b7 ';
+    document.getElementById('sliderFormula').textContent = 'f(x) = ' + aStr + '\u221a' + pStr + qStr;
+
+    const canvas = document.getElementById('sliderCanvas');
+    const g = setupGraph(canvas, -8, 10, -8, 8);
+
+    // base sqrt
+    drawCurve(g, x => Math.sqrt(x), 0, 10, '#94a3b8', 1.5, true);
+
+    // transformed
+    const xStart = p;
+    drawCurve(g, x => a * Math.sqrt(x - p) + q, xStart, 10, '#e11d48', 2.5, false);
+
+    // start point
+    drawPoint(g, p, q, '#e11d48', '(' + p + ', ' + q + ')');
+}
+
+slA.addEventListener('input', updateSlider);
+slP.addEventListener('input', updateSlider);
+slQ.addEventListener('input', updateSlider);
+
+document.getElementById('resetSliders').addEventListener('click', () => {
+    slA.value = 1; slP.value = 0; slQ.value = 0;
+    updateSlider();
+});
+
+document.getElementById('presetBtn').addEventListener('click', () => {
+    slA.value = -2; slP.value = -4; slQ.value = 2;
+    updateSlider();
+});
+
+// ========== EXERCISES ==========
+const answers = {
+    1: { check: v => v.trim() === '3', correct: 'Goed! x \u2212 3 \u2265 0, dus x \u2265 3.', wrong: 'Niet juist. Los op: x \u2212 3 \u2265 0.' },
+    2: { check: v => /2\s*links/.test(v.toLowerCase().trim()), correct: 'Goed! x + 2 = x \u2212 (\u22122), dus 2 naar links.', wrong: 'Niet juist. Denk aan: x + 2 = x \u2212 (\u22122).' },
+    3: { check: v => /\(?\s*1\s*[,;]\s*5\s*\)?/.test(v.trim()), correct: 'Goed! Startpunt (p, q) = (1, 5).', wrong: 'Niet juist. Het startpunt is (p, q). Wat zijn p en q?' },
+    4: { check: v => /dal/.test(v.toLowerCase().trim()), correct: 'Goed! Het minteken spiegelt de grafiek, dus dalend.', wrong: 'Niet juist. Wat doet het minteken voor de wortel?' },
+    5: { check: v => v.trim() === '2', correct: 'Goed! a < 0, dus de grafiek daalt. Maximum is q = 2, bereik: y \u2264 2.', wrong: 'Niet juist. a is negatief, dus de grafiek daalt vanaf q.' }
+};
+
+function checkAnswer(n) {
+    const val = document.getElementById('ans' + n).value;
+    const fb = document.getElementById('fb' + n);
+    const a = answers[n];
+    if (a.check(val)) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.correct;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+}
+
+function toggleHint(n) {
+    const el = document.getElementById('hint' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+// ========== INIT ==========
+drawStep(0);
+updateSlider();
+
+// Redraw on resize
+window.addEventListener('resize', () => {
+    drawStep(currentStep);
+    updateSlider();
+});
+</script>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wortelfuncties &mdash; Transformaties (HAVO)</title>
+    <title>Hoofdstuk 1: Wortelfuncties &mdash; HAVO Wiskunde</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -24,7 +24,7 @@
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         header {
@@ -35,8 +35,17 @@
         }
         header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
         header p { opacity: 0.85; font-size: 1.1rem; }
+        .breadcrumb {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
 
-        .container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
 
         .card {
             background: var(--card);
@@ -54,16 +63,10 @@
             align-items: center;
             gap: 0.5rem;
         }
-        .card h2 .step-num {
-            background: var(--primary);
-            color: white;
-            width: 32px; height: 32px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            flex-shrink: 0;
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 1.2rem 0 0.5rem;
+            color: var(--text);
         }
 
         .formula {
@@ -76,9 +79,64 @@
             font-family: 'Cambria Math', 'Times New Roman', serif;
         }
 
+        .tip-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .tip-box strong { color: #854d0e; }
+
+        .warning-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .warning-box strong { color: #991b1b; }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+        }
+        .example-box strong { color: #166534; }
+
         .explanation {
             color: var(--muted);
             margin: 0.5rem 0 1rem;
+        }
+
+        .step-list {
+            list-style: none;
+            counter-reset: steps;
+            padding: 0;
+        }
+        .step-list li {
+            counter-increment: steps;
+            padding: 0.5rem 0 0.5rem 2.5rem;
+            position: relative;
+        }
+        .step-list li::before {
+            content: counter(steps);
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            background: var(--primary);
+            color: white;
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
         }
 
         canvas.graph {
@@ -90,7 +148,6 @@
             border: 1px solid var(--border);
         }
 
-        /* Slider section */
         .slider-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -104,19 +161,9 @@
             flex-direction: column;
             gap: 0.25rem;
         }
-        .slider-item label {
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        .slider-item input[type=range] {
-            width: 100%;
-            accent-color: var(--primary);
-        }
-        .slider-val {
-            font-size: 0.85rem;
-            color: var(--muted);
-            text-align: center;
-        }
+        .slider-item label { font-weight: 600; font-size: 0.9rem; }
+        .slider-item input[type=range] { width: 100%; accent-color: var(--primary); }
+        .slider-val { font-size: 0.85rem; color: var(--muted); text-align: center; }
 
         #sliderFormula {
             text-align: center;
@@ -127,7 +174,6 @@
             color: var(--primary);
         }
 
-        /* Exercises */
         .exercise {
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -141,7 +187,7 @@
             border-radius: 6px;
             padding: 0.4rem 0.6rem;
             font-size: 1rem;
-            width: 160px;
+            width: 200px;
             margin-right: 0.5rem;
         }
         .exercise button {
@@ -181,6 +227,28 @@
             margin-top: 0.25rem;
             color: #854d0e;
         }
+        .show-solution-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+            margin-left: 0.25rem;
+        }
+        .show-solution-btn:hover { background: #f1f5f9; }
+        .solution {
+            display: none;
+            background: #f0fdf4;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #166534;
+            line-height: 1.6;
+        }
 
         .legend {
             display: flex;
@@ -189,22 +257,15 @@
             margin: 0.5rem 0;
             font-size: 0.85rem;
         }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.35rem;
-        }
-        .legend-swatch {
-            width: 24px;
-            height: 3px;
-            border-radius: 2px;
-        }
+        .legend-item { display: flex; align-items: center; gap: 0.35rem; }
+        .legend-swatch { width: 24px; height: 3px; border-radius: 2px; }
 
         .nav-tabs {
             display: flex;
             gap: 0.25rem;
             margin-bottom: 1rem;
             border-bottom: 2px solid var(--border);
+            flex-wrap: wrap;
         }
         .nav-tabs button {
             background: none;
@@ -223,6 +284,23 @@
             font-weight: 600;
         }
 
+        .toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .toc a {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .toc a:hover { background: var(--primary); color: white; }
+
         footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -234,52 +312,209 @@
 <body>
 
 <header>
-    <h1>Wortelfuncties &amp; Transformaties</h1>
-    <p>Interactieve gids &mdash; HAVO Wiskunde</p>
+    <h1>Hoofdstuk 1: Wortelfuncties</h1>
+    <p>Uitgebreide uitleg, interactieve grafieken &amp; oefensommen</p>
 </header>
+
+<div class="breadcrumb">
+    <a href="../">Overzicht</a> &rsaquo; Wortelfuncties
+</div>
 
 <div class="container">
 
-    <!-- INTRO -->
+    <!-- INHOUDSOPGAVE -->
     <div class="card">
-        <h2>De basisvorm</h2>
-        <p>De <strong>standaard wortelfunctie</strong> is:</p>
-        <div class="formula">f(x) = &radic;x</div>
-        <p class="explanation">
-            De grafiek begint in de oorsprong (0, 0) en loopt stijgend naar rechts.
-            Het domein is x &ge; 0 en het bereik is y &ge; 0.
-        </p>
-        <p>De <strong>algemene vorm</strong> met transformaties is:</p>
-        <div class="formula">f(x) = a &middot; &radic;(x &minus; p) + q</div>
-        <p class="explanation">
-            <strong>a</strong> = verticale vermenigvuldiging (en spiegeling als a &lt; 0)<br>
-            <strong>p</strong> = horizontale verschuiving (naar rechts als p &gt; 0)<br>
-            <strong>q</strong> = verticale verschuiving (omhoog als q &gt; 0)
-        </p>
+        <h2>Inhoud</h2>
+        <div class="toc">
+            <a href="#theorie-a">A. Wortelfuncties &amp; transformaties</a>
+            <a href="#theorie-b">B. Domein &amp; bereik</a>
+            <a href="#theorie-c">C. Randpunten</a>
+            <a href="#theorie-d">D. Wortelvergelijkingen</a>
+            <a href="#interactief">Interactieve verkenner</a>
+            <a href="#oefensommen">10 Oefensommen</a>
+        </div>
     </div>
 
-    <!-- STAPSGEWIJZE OPBOUW -->
-    <div class="card">
-        <h2>Stapsgewijze opbouw van f(x) = &minus;2&radic;(x + 4) + 2</h2>
-        <p class="explanation">
-            We herschrijven: f(x) = &minus;2&radic;(x &minus; (&minus;4)) + 2, dus a = &minus;2, p = &minus;4, q = 2.
-            Hieronder bouwen we de grafiek stap voor stap op.
+    <!-- ==================== THEORIE A ==================== -->
+    <div class="card" id="theorie-a">
+        <h2>Theorie A &mdash; Wortelfuncties &amp; transformaties</h2>
+
+        <h3>Wat is een wortelfunctie?</h3>
+        <p>De eenvoudigste wortelfunctie is:</p>
+        <div class="formula">f(x) = &radic;x</div>
+        <p>
+            Dit betekent: voor elke x-waarde bereken je de <strong>vierkantswortel</strong>.
+            Bijvoorbeeld: f(4) = &radic;4 = 2, en f(9) = &radic;9 = 3.
         </p>
+
+        <div class="tip-box">
+            <strong>Belangrijk:</strong> Je kunt alleen de wortel trekken uit een getal dat &ge; 0 is.
+            Daarom geldt voor f(x) = &radic;x dat x &ge; 0 moet zijn.
+        </div>
+
+        <h3>De algemene vorm</h3>
+        <p>In de meeste opgaven krijg je een <strong>getransformeerde</strong> wortelfunctie:</p>
+        <div class="formula">f(x) = a &middot; &radic;(x &minus; p) + q</div>
+        <p>Wat doen a, p en q? Laten we ze stuk voor stuk bekijken:</p>
+
+        <h3>Parameter a &mdash; vermenigvuldiging &amp; spiegeling</h3>
+        <p>De factor <strong>a</strong> bepaalt hoe steil de grafiek is en of hij omhoog of omlaag gaat:</p>
+        <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li><strong>a &gt; 1</strong>: grafiek wordt steiler (verticaal uitgerekt)</li>
+            <li><strong>0 &lt; a &lt; 1</strong>: grafiek wordt vlakker (verticaal samengedrukt)</li>
+            <li><strong>a &lt; 0</strong>: grafiek wordt gespiegeld in de x-as (gaat naar beneden)</li>
+        </ul>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> f(x) = 2&radic;x gaat steiler omhoog dan &radic;x.<br>
+            f(x) = &minus;&radic;x gaat juist naar beneden (gespiegeld).
+        </div>
+
+        <h3>Parameter p &mdash; horizontale verschuiving</h3>
+        <p>De waarde <strong>p</strong> verschuift de grafiek naar links of rechts:</p>
+        <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li><strong>p &gt; 0</strong>: grafiek schuift naar <strong>rechts</strong></li>
+            <li><strong>p &lt; 0</strong>: grafiek schuift naar <strong>links</strong></li>
+        </ul>
+
+        <div class="warning-box">
+            <strong>Let op het minteken!</strong> In de formule staat (x &minus; p). Als er staat &radic;(x + 3),
+            dan is dat &radic;(x &minus; (&minus;3)), dus p = &minus;3 en de grafiek gaat 3 naar <strong>links</strong>.
+            Dit is een veelgemaakte fout!
+        </div>
+
+        <h3>Parameter q &mdash; verticale verschuiving</h3>
+        <p>De waarde <strong>q</strong> verschuift de hele grafiek omhoog of omlaag:</p>
+        <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li><strong>q &gt; 0</strong>: grafiek schuift <strong>omhoog</strong></li>
+            <li><strong>q &lt; 0</strong>: grafiek schuift <strong>omlaag</strong></li>
+        </ul>
+
+        <h3>Stap-voor-stap voorbeeld</h3>
+        <p>Bekijk hoe f(x) = &minus;2&radic;(x + 4) + 2 wordt opgebouwd vanuit &radic;x:</p>
 
         <div class="nav-tabs" id="stepTabs">
             <button class="active" data-step="0">Basis</button>
-            <button data-step="1">Stap 1</button>
-            <button data-step="2">Stap 2</button>
-            <button data-step="3">Stap 3</button>
-            <button data-step="4">Alles</button>
+            <button data-step="1">Stap 1: verschuif</button>
+            <button data-step="2">Stap 2: rek uit</button>
+            <button data-step="3">Stap 3: spiegel</button>
+            <button data-step="4">Stap 4: omhoog</button>
         </div>
         <div id="stepInfo"></div>
         <canvas id="stepCanvas" class="graph" width="500" height="400"></canvas>
         <div class="legend" id="stepLegend"></div>
     </div>
 
-    <!-- INTERACTIEVE SLIDER-VERKENNER -->
-    <div class="card">
+    <!-- ==================== THEORIE B ==================== -->
+    <div class="card" id="theorie-b">
+        <h2>Theorie B &mdash; Domein &amp; bereik</h2>
+
+        <h3>Domein bepalen</h3>
+        <p>Het <strong>domein</strong> is de verzameling van alle x-waarden waarvoor de functie bestaat.
+        Bij wortelfuncties moet alles onder het wortelteken &ge; 0 zijn.</p>
+
+        <div class="formula">f(x) = a &middot; &radic;(x &minus; p) + q &rarr; domein: x &ge; p</div>
+
+        <div class="example-box">
+            <strong>Voorbeeld 1:</strong> f(x) = &radic;(x &minus; 3) &rarr; x &minus; 3 &ge; 0 &rarr; <strong>x &ge; 3</strong><br><br>
+            <strong>Voorbeeld 2:</strong> f(x) = 3 &minus; &radic;(x&sup2; &minus; 4)<br>
+            Onder de wortel: x&sup2; &minus; 4 &ge; 0 &rarr; x&sup2; &ge; 4 &rarr; <strong>x &le; &minus;2 of x &ge; 2</strong><br>
+            (Dit is lastiger! Het is een parabool-ongelijkheid.)
+        </div>
+
+        <div class="tip-box">
+            <strong>Stappenplan domein:</strong>
+            <ol style="margin: 0.5rem 0 0 1.5rem;">
+                <li>Schrijf op wat er onder het wortelteken staat</li>
+                <li>Stel dat &ge; 0</li>
+                <li>Los de ongelijkheid op</li>
+            </ol>
+        </div>
+
+        <h3>Bereik bepalen</h3>
+        <p>Het <strong>bereik</strong> is de verzameling van alle y-waarden die de functie aanneemt.</p>
+
+        <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
+            <li>Als <strong>a &gt; 0</strong>: de grafiek stijgt vanaf q &rarr; bereik: <strong>y &ge; q</strong></li>
+            <li>Als <strong>a &lt; 0</strong>: de grafiek daalt vanaf q &rarr; bereik: <strong>y &le; q</strong></li>
+        </ul>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> f(x) = &minus;2&radic;(x + 4) + 2<br>
+            Hier is a = &minus;2 (negatief) en q = 2.<br>
+            De grafiek start op y = 2 en gaat naar beneden &rarr; bereik: <strong>y &le; 2</strong>
+        </div>
+    </div>
+
+    <!-- ==================== THEORIE C ==================== -->
+    <div class="card" id="theorie-c">
+        <h2>Theorie C &mdash; Randpunten</h2>
+
+        <h3>Wat is een randpunt?</h3>
+        <p>Een <strong>randpunt</strong> is een punt waar de grafiek begint (of eindigt).
+        Bij een wortelfunctie is dat het punt waar de uitdrukking onder de wortel precies 0 wordt.</p>
+
+        <div class="formula">Randpunt van f(x) = a &middot; &radic;(x &minus; p) + q is het punt (p, q)</div>
+
+        <p>Dit is logisch: als x = p, dan staat er &radic;0 = 0, en de functiewaarde is dan a &middot; 0 + q = q.</p>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> f(x) = 3 &minus; &radic;(x&sup2; &minus; 4)<br>
+            Randpunten vind je waar x&sup2; &minus; 4 = 0 &rarr; x&sup2; = 4 &rarr; x = 2 of x = &minus;2.<br>
+            &bull; x = 2: f(2) = 3 &minus; &radic;0 = 3 &rarr; randpunt <strong>(2, 3)</strong><br>
+            &bull; x = &minus;2: f(&minus;2) = 3 &minus; &radic;0 = 3 &rarr; randpunt <strong>(&minus;2, 3)</strong>
+        </div>
+
+        <h3>Wanneer heeft een grafiek geen randpunten?</h3>
+        <p>Als de uitdrukking onder de wortel <strong>altijd &ge; 0</strong> is (nooit precies 0 wordt op een &ldquo;grens&rdquo;),
+        dan heeft de grafiek geen randpunt. De grafiek loopt dan eindeloos door.</p>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> f(x) = 6 &minus; &radic;(x&sup2; &minus; 4x + 5)<br>
+            Bekijk x&sup2; &minus; 4x + 5: discriminant = 16 &minus; 20 = &minus;4 &lt; 0.<br>
+            Omdat de discriminant negatief is en de parabool omhoog opent, is x&sup2; &minus; 4x + 5 <strong>altijd &gt; 0</strong>.<br>
+            De wortel is dus altijd gedefinieerd en wordt nooit 0 &rarr; <strong>geen randpunten</strong>.
+        </div>
+    </div>
+
+    <!-- ==================== THEORIE D ==================== -->
+    <div class="card" id="theorie-d">
+        <h2>Theorie D &mdash; Wortelvergelijkingen</h2>
+
+        <h3>Wat is een wortelvergelijking?</h3>
+        <p>Een <strong>wortelvergelijking</strong> is een vergelijking met een wortelteken erin, zoals &radic;(2x &minus; 5) = 3.</p>
+
+        <h3>Stappenplan: wortelvergelijking oplossen</h3>
+        <ol class="step-list">
+            <li><strong>Isoleer de wortel</strong> aan &eacute;&eacute;n kant van het = teken.</li>
+            <li><strong>Kwadrateer beide kanten</strong> om het wortelteken te laten verdwijnen.</li>
+            <li><strong>Los de vergelijking op.</strong></li>
+            <li><strong>Controleer je antwoord!</strong> Door het kwadrateren kun je een schijnoplossing krijgen.</li>
+        </ol>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> Los op: &radic;(2x &minus; 5) = 3<br><br>
+            Stap 1: Wortel staat al alleen.<br>
+            Stap 2: Kwadrateer beide kanten: 2x &minus; 5 = 9<br>
+            Stap 3: 2x = 14, dus x = 7.<br>
+            Stap 4: Controle: &radic;(2&middot;7 &minus; 5) = &radic;9 = 3. Klopt!
+        </div>
+
+        <div class="warning-box">
+            <strong>Pas op voor schijnoplossingen!</strong><br>
+            Neem de vergelijking &radic;(2x &minus; 5) = &minus;3.<br>
+            Een wortel is <strong>altijd &ge; 0</strong>, dus &radic;(iets) kan nooit &minus;3 zijn.<br>
+            Deze vergelijking heeft <strong>geen oplossing</strong>!
+        </div>
+
+        <div class="tip-box">
+            <strong>Vuistregel:</strong> Als het rechterlid negatief is, heeft de wortelvergelijking
+            <strong>geen oplossing</strong>. Een wortel geeft altijd een niet-negatief getal.
+        </div>
+    </div>
+
+    <!-- ==================== INTERACTIEF ==================== -->
+    <div class="card" id="interactief">
         <h2>Interactieve slider-verkenner</h2>
         <p class="explanation">Versleep de sliders om te zien hoe a, p en q de grafiek veranderen.</p>
         <div id="sliderFormula">f(x) = 1 &middot; &radic;(x &minus; 0) + 0</div>
@@ -300,9 +535,9 @@
                 <input type="range" id="sliderQ" min="-5" max="5" step="0.5" value="0">
                 <div class="slider-val" id="valQ">q = 0</div>
             </div>
-            <div class="slider-item" style="display:flex;align-items:center;justify-content:center;">
+            <div class="slider-item" style="display:flex;align-items:center;justify-content:center;gap:0.5rem;">
                 <button id="resetSliders" style="padding:0.5rem 1.2rem;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:0.95rem;">Reset</button>
-                <button id="presetBtn" style="padding:0.5rem 1.2rem;border-radius:8px;border:none;background:var(--primary);color:white;cursor:pointer;font-size:0.95rem;margin-left:0.5rem;">Voorbeeld laden</button>
+                <button id="presetBtn" style="padding:0.5rem 1.2rem;border-radius:8px;border:none;background:var(--primary);color:white;cursor:pointer;font-size:0.95rem;">Voorbeeld</button>
             </div>
         </div>
         <div class="legend">
@@ -311,65 +546,212 @@
         </div>
     </div>
 
-    <!-- OEFENOPGAVEN -->
-    <div class="card">
-        <h2>Oefenopgaven</h2>
-        <p class="explanation">Test je kennis! Vul je antwoord in en controleer.</p>
+    <!-- ==================== OEFENSOMMEN ==================== -->
+    <div class="card" id="oefensommen">
+        <h2>10 Oefensommen</h2>
+        <p class="explanation">Test je kennis! Bij elke opgave kun je een hint en de volledige uitwerking bekijken.</p>
 
+        <!-- Opgave 1: Domein bepalen (basis) -->
         <div class="exercise" id="ex1">
             <p class="q">1. Wat is het domein van f(x) = &radic;(x &minus; 3)?</p>
-            <p class="explanation">Schrijf als: x &ge; ... (vul het getal in)</p>
+            <p class="explanation">Vul het getal in: x &ge; ...</p>
             <input type="text" id="ans1" placeholder="bijv. 3">
             <button onclick="checkAnswer(1)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
+            <button class="show-solution-btn" onclick="toggleSolution(1)">Uitwerking</button>
             <div class="hint" id="hint1">Onder het wortelteken moet &ge; 0 staan: x &minus; 3 &ge; 0.</div>
             <div class="feedback" id="fb1"></div>
+            <div class="solution" id="sol1">
+                We eisen: x &minus; 3 &ge; 0<br>
+                Dus: x &ge; 3<br>
+                <strong>Antwoord: x &ge; 3</strong>
+            </div>
         </div>
 
+        <!-- Opgave 2: Verschuiving herkennen -->
         <div class="exercise" id="ex2">
-            <p class="q">2. De grafiek van g(x) = &radic;(x + 2) is de grafiek van &radic;x verschoven met ... eenheden naar ...</p>
-            <p class="explanation">Antwoord: een getal en richting, bijv. "2 links"</p>
+            <p class="q">2. De grafiek van g(x) = &radic;(x + 2) is de grafiek van &radic;x verschoven. Hoeveel en welke richting?</p>
+            <p class="explanation">Schrijf bijv. "2 links" of "3 rechts"</p>
             <input type="text" id="ans2" placeholder="bijv. 2 links">
             <button onclick="checkAnswer(2)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
-            <div class="hint" id="hint2">x + 2 = x &minus; (&minus;2), dus p = &minus;2. Negatieve p = naar links.</div>
+            <button class="show-solution-btn" onclick="toggleSolution(2)">Uitwerking</button>
+            <div class="hint" id="hint2">Herschrijf x + 2 als x &minus; (&minus;2). Wat is p?</div>
             <div class="feedback" id="fb2"></div>
+            <div class="solution" id="sol2">
+                g(x) = &radic;(x + 2) = &radic;(x &minus; (&minus;2))<br>
+                Dus p = &minus;2. Negatieve p betekent naar links.<br>
+                <strong>Antwoord: 2 naar links</strong>
+            </div>
         </div>
 
+        <!-- Opgave 3: Startpunt / randpunt bepalen -->
         <div class="exercise" id="ex3">
-            <p class="q">3. Bepaal het startpunt (beginpunt van de grafiek) van h(x) = 3&radic;(x &minus; 1) + 5.</p>
-            <p class="explanation">Schrijf als: (x, y), bijv. (1, 5)</p>
+            <p class="q">3. Bepaal het startpunt van de grafiek van h(x) = 3&radic;(x &minus; 1) + 5.</p>
+            <p class="explanation">Schrijf als (x, y)</p>
             <input type="text" id="ans3" placeholder="bijv. (1, 5)">
             <button onclick="checkAnswer(3)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
-            <div class="hint" id="hint3">Het startpunt is (p, q). Hier: p = 1, q = 5.</div>
+            <button class="show-solution-btn" onclick="toggleSolution(3)">Uitwerking</button>
+            <div class="hint" id="hint3">Het startpunt is altijd (p, q). Lees p en q af uit de formule.</div>
             <div class="feedback" id="fb3"></div>
+            <div class="solution" id="sol3">
+                h(x) = 3&radic;(x &minus; 1) + 5, dus a = 3, p = 1, q = 5.<br>
+                Het startpunt (randpunt) is (p, q) = (1, 5).<br>
+                Controle: h(1) = 3&radic;0 + 5 = 5. Klopt!<br>
+                <strong>Antwoord: (1, 5)</strong>
+            </div>
         </div>
 
+        <!-- Opgave 4: Bereik bepalen -->
         <div class="exercise" id="ex4">
-            <p class="q">4. Is de grafiek van f(x) = &minus;&radic;x stijgend of dalend?</p>
-            <input type="text" id="ans4" placeholder="stijgend of dalend">
+            <p class="q">4. Geef het bereik van f(x) = &minus;2&radic;(x + 4) + 2.</p>
+            <p class="explanation">Vul het getal in: y &le; ... of y &ge; ...</p>
+            <input type="text" id="ans4" placeholder="bijv. 2">
             <button onclick="checkAnswer(4)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
-            <div class="hint" id="hint4">De min-teken voor de wortel spiegelt de grafiek in de x-as.</div>
+            <button class="show-solution-btn" onclick="toggleSolution(4)">Uitwerking</button>
+            <div class="hint" id="hint4">a = &minus;2 (negatief), dus de grafiek daalt. Wat is het maximum (= q)?</div>
             <div class="feedback" id="fb4"></div>
+            <div class="solution" id="sol4">
+                a = &minus;2 &lt; 0, dus de grafiek gaat naar beneden.<br>
+                Het startpunt is (&minus;4, 2), en de grafiek daalt daarvandaan.<br>
+                Het maximum is q = 2.<br>
+                <strong>Antwoord: y &le; 2</strong>
+            </div>
         </div>
 
+        <!-- Opgave 5: f(x) > waarde (zoals opgave 21 uit boek) -->
         <div class="exercise" id="ex5">
-            <p class="q">5. Geef het bereik van f(x) = &minus;2&radic;(x + 4) + 2.</p>
-            <p class="explanation">Schrijf als: y &le; ... (vul het getal in)</p>
-            <input type="text" id="ans5" placeholder="bijv. 2">
+            <p class="q">5. Gegeven f(x) = 2&radic;(7 &minus; 3x) &minus; 4. Voor welke x geldt f(x) &gt; &minus;2?</p>
+            <p class="explanation">Schrijf als ongelijkheid, bijv. "x &lt; 1" (gebruik &lt; of &gt;)</p>
+            <input type="text" id="ans5" placeholder="bijv. x < 1">
             <button onclick="checkAnswer(5)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
-            <div class="hint" id="hint5">a is negatief, dus de grafiek gaat naar beneden. Het maximum is q = 2.</div>
+            <button class="show-solution-btn" onclick="toggleSolution(5)">Uitwerking</button>
+            <div class="hint" id="hint5">Stel 2&radic;(7 &minus; 3x) &minus; 4 &gt; &minus;2, dus 2&radic;(7 &minus; 3x) &gt; 2, dus &radic;(7 &minus; 3x) &gt; 1. Kwadrateer nu.</div>
             <div class="feedback" id="fb5"></div>
+            <div class="solution" id="sol5">
+                f(x) &gt; &minus;2<br>
+                2&radic;(7 &minus; 3x) &minus; 4 &gt; &minus;2<br>
+                2&radic;(7 &minus; 3x) &gt; 2<br>
+                &radic;(7 &minus; 3x) &gt; 1<br>
+                Kwadrateren (mag, want beide kanten &gt; 0):<br>
+                7 &minus; 3x &gt; 1<br>
+                &minus;3x &gt; &minus;6<br>
+                x &lt; 2 (ongelijkheid draait om bij delen door negatief getal!)<br>
+                Gecombineerd met domein (7 &minus; 3x &ge; 0 &rarr; x &le; 7/3):<br>
+                <strong>Antwoord: x &lt; 2</strong>
+            </div>
         </div>
+
+        <!-- Opgave 6: Randpunten vinden (zoals opgave 22) -->
+        <div class="exercise" id="ex6">
+            <p class="q">6. Gegeven f(x) = 3 &minus; &radic;(x&sup2; &minus; 4). Bereken de co&ouml;rdinaten van de twee randpunten.</p>
+            <p class="explanation">Schrijf als twee punten, bijv. "(-2, 3) en (2, 3)"</p>
+            <input type="text" id="ans6" placeholder="bijv. (-2, 3) en (2, 3)">
+            <button onclick="checkAnswer(6)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(6)">Hint</button>
+            <button class="show-solution-btn" onclick="toggleSolution(6)">Uitwerking</button>
+            <div class="hint" id="hint6">Randpunten: waar wordt de uitdrukking onder de wortel precies 0? Los op: x&sup2; &minus; 4 = 0.</div>
+            <div class="feedback" id="fb6"></div>
+            <div class="solution" id="sol6">
+                Randpunten: x&sup2; &minus; 4 = 0<br>
+                x&sup2; = 4<br>
+                x = 2 of x = &minus;2<br><br>
+                f(2) = 3 &minus; &radic;0 = 3 &rarr; punt (2, 3)<br>
+                f(&minus;2) = 3 &minus; &radic;0 = 3 &rarr; punt (&minus;2, 3)<br>
+                <strong>Antwoord: (&minus;2, 3) en (2, 3)</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 7: Wortelvergelijking oplossen (basis) -->
+        <div class="exercise" id="ex7">
+            <p class="q">7. Los op: &radic;(2x &minus; 5) = 3</p>
+            <p class="explanation">Vul de waarde van x in</p>
+            <input type="text" id="ans7" placeholder="bijv. 7">
+            <button onclick="checkAnswer(7)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(7)">Hint</button>
+            <button class="show-solution-btn" onclick="toggleSolution(7)">Uitwerking</button>
+            <div class="hint" id="hint7">Kwadrateer beide kanten: 2x &minus; 5 = 9.</div>
+            <div class="feedback" id="fb7"></div>
+            <div class="solution" id="sol7">
+                &radic;(2x &minus; 5) = 3<br>
+                Kwadrateer: 2x &minus; 5 = 9<br>
+                2x = 14<br>
+                x = 7<br>
+                Controle: &radic;(14 &minus; 5) = &radic;9 = 3. Klopt!<br>
+                <strong>Antwoord: x = 7</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 8: Geen oplossing herkennen -->
+        <div class="exercise" id="ex8">
+            <p class="q">8. Heeft de vergelijking &radic;(2x &minus; 5) = &minus;3 een oplossing? Waarom wel/niet?</p>
+            <p class="explanation">Antwoord "ja" of "nee"</p>
+            <input type="text" id="ans8" placeholder="ja of nee">
+            <button onclick="checkAnswer(8)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(8)">Hint</button>
+            <button class="show-solution-btn" onclick="toggleSolution(8)">Uitwerking</button>
+            <div class="hint" id="hint8">Kan een wortel ooit een negatief getal opleveren?</div>
+            <div class="feedback" id="fb8"></div>
+            <div class="solution" id="sol8">
+                Een wortelteken levert altijd een waarde &ge; 0 op.<br>
+                &radic;(iets) kan dus nooit &minus;3 zijn.<br>
+                <strong>Antwoord: nee, geen oplossing</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 9: Domein met x² (zoals opgave 22/23) -->
+        <div class="exercise" id="ex9">
+            <p class="q">9. Geef het domein van f(x) = 6 &minus; &radic;(x&sup2; &minus; 4x + 5).</p>
+            <p class="explanation">Schrijf "alle reele getallen" of een beperking</p>
+            <input type="text" id="ans9" placeholder="bijv. alle reele getallen">
+            <button onclick="checkAnswer(9)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(9)">Hint</button>
+            <button class="show-solution-btn" onclick="toggleSolution(9)">Uitwerking</button>
+            <div class="hint" id="hint9">Bereken de discriminant van x&sup2; &minus; 4x + 5. Is die positief, nul of negatief? Wat betekent dat?</div>
+            <div class="feedback" id="fb9"></div>
+            <div class="solution" id="sol9">
+                We moeten kijken: wanneer is x&sup2; &minus; 4x + 5 &ge; 0?<br>
+                Discriminant: D = 16 &minus; 20 = &minus;4 &lt; 0.<br>
+                De parabool x&sup2; &minus; 4x + 5 opent omhoog (positieve x&sup2;-term) en heeft geen nulpunten.<br>
+                Dus x&sup2; &minus; 4x + 5 is <strong>altijd positief</strong>.<br>
+                De wortel is altijd gedefinieerd.<br>
+                <strong>Antwoord: alle re&euml;le getallen</strong>
+            </div>
+        </div>
+
+        <!-- Opgave 10: Randpunt op een lijn (zoals opgave 24) -->
+        <div class="exercise" id="ex10">
+            <p class="q">10. Het randpunt van f(x) = 4 &minus; &radic;(5 + ax) ligt op de lijn y = 2x &minus; 1. Bereken exact de waarde van a.</p>
+            <p class="explanation">Vul de waarde van a in (als breuk mag ook)</p>
+            <input type="text" id="ans10" placeholder="bijv. -5/2">
+            <button onclick="checkAnswer(10)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(10)">Hint</button>
+            <button class="show-solution-btn" onclick="toggleSolution(10)">Uitwerking</button>
+            <div class="hint" id="hint10">Het randpunt is waar 5 + ax = 0, dus x = &minus;5/a. De y-waarde is dan 4. Vul (x, 4) in op y = 2x &minus; 1.</div>
+            <div class="feedback" id="fb10"></div>
+            <div class="solution" id="sol10">
+                Randpunt: 5 + ax = 0 &rarr; x = &minus;5/a.<br>
+                Bij het randpunt is &radic;0 = 0, dus y = 4 &minus; 0 = 4.<br>
+                Het randpunt is (&minus;5/a, 4).<br><br>
+                Dit punt ligt op y = 2x &minus; 1:<br>
+                4 = 2 &middot; (&minus;5/a) &minus; 1<br>
+                4 = &minus;10/a &minus; 1<br>
+                5 = &minus;10/a<br>
+                a = &minus;10/5 = &minus;2<br>
+                <strong>Antwoord: a = &minus;2</strong>
+            </div>
+        </div>
+
     </div>
 
 </div>
 
 <footer>
-    Wortelfuncties &mdash; HAVO Wiskunde &middot; Interactieve gids
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    Wiskunde HAVO &middot; Interactieve gids
 </footer>
 
 <script>
@@ -397,11 +779,9 @@ function setupGraph(canvas, xMin, xMax, yMin, yMax) {
         ];
     }
 
-    // background
     ctx.fillStyle = '#fafbfc';
     ctx.fillRect(0, 0, w, h);
 
-    // grid
     ctx.strokeStyle = '#e8ecf0';
     ctx.lineWidth = 0.5;
     for (let gx = Math.ceil(xMin); gx <= xMax; gx++) {
@@ -413,21 +793,17 @@ function setupGraph(canvas, xMin, xMax, yMin, yMax) {
         ctx.beginPath(); ctx.moveTo(pad, py); ctx.lineTo(pad + plotW, py); ctx.stroke();
     }
 
-    // axes
     ctx.strokeStyle = '#94a3b8';
     ctx.lineWidth = 1.5;
-    // x-axis
     if (yMin <= 0 && yMax >= 0) {
         const [, ay] = toPixel(0, 0);
         ctx.beginPath(); ctx.moveTo(pad, ay); ctx.lineTo(pad + plotW, ay); ctx.stroke();
     }
-    // y-axis
     if (xMin <= 0 && xMax >= 0) {
         const [ax] = toPixel(0, 0);
         ctx.beginPath(); ctx.moveTo(ax, pad); ctx.lineTo(ax, pad + plotH); ctx.stroke();
     }
 
-    // tick labels
     ctx.fillStyle = '#94a3b8';
     ctx.font = '11px system-ui, sans-serif';
     ctx.textAlign = 'center';
@@ -491,7 +867,7 @@ const stepData = [
     {
         title: 'Basisgrafiek: f(x) = \u221ax',
         desc: 'De standaard wortelfunctie. Start in (0, 0), stijgend naar rechts.',
-        curves: [{ fn: x => Math.sqrt(x), start: 0, color: '#94a3b8', lw: 2.5, label: '\u221ax' }],
+        curves: [{ fn: x => Math.sqrt(x), start: 0, color: '#94a3b8', lw: 2.5 }],
         points: [{ x: 0, y: 0, color: '#94a3b8', label: '(0, 0)' }]
     },
     {
@@ -513,9 +889,7 @@ const stepData = [
             { fn: x => Math.sqrt(x + 4), start: -4, color: '#94a3b8', lw: 1.5, dashed: true },
             { fn: x => 2 * Math.sqrt(x + 4), start: -4, color: '#7c3aed', lw: 2.5 }
         ],
-        points: [
-            { x: -4, y: 0, color: '#7c3aed', label: '(\u22124, 0)' }
-        ]
+        points: [{ x: -4, y: 0, color: '#7c3aed', label: '(\u22124, 0)' }]
     },
     {
         title: 'Stap 3: Spiegeling \u2192 \u22122\u221a(x + 4)',
@@ -524,9 +898,7 @@ const stepData = [
             { fn: x => 2 * Math.sqrt(x + 4), start: -4, color: '#94a3b8', lw: 1.5, dashed: true },
             { fn: x => -2 * Math.sqrt(x + 4), start: -4, color: '#ea580c', lw: 2.5 }
         ],
-        points: [
-            { x: -4, y: 0, color: '#ea580c', label: '(\u22124, 0)' }
-        ]
+        points: [{ x: -4, y: 0, color: '#ea580c', label: '(\u22124, 0)' }]
     },
     {
         title: 'Stap 4: Verticale verschuiving \u2192 \u22122\u221a(x + 4) + 2',
@@ -558,18 +930,13 @@ function drawStep(step) {
     const canvas = document.getElementById('stepCanvas');
     const g = setupGraph(canvas, -7, 8, -7, 7);
 
-    sd.curves.forEach(c => {
-        drawCurve(g, c.fn, c.start, 8, c.color, c.lw, c.dashed);
-    });
-    sd.points.forEach(p => {
-        drawPoint(g, p.x, p.y, p.color, p.label);
-    });
+    sd.curves.forEach(c => drawCurve(g, c.fn, c.start, 8, c.color, c.lw, c.dashed));
+    sd.points.forEach(p => drawPoint(g, p.x, p.y, p.color, p.label));
 
     document.getElementById('stepInfo').innerHTML =
         '<div class="formula">' + sd.title + '</div>' +
         '<p class="explanation">' + sd.desc + '</p>';
 
-    // legend
     const legendEl = document.getElementById('stepLegend');
     const items = sd.curves.map(c =>
         '<div class="legend-item"><div class="legend-swatch" style="background:' + c.color +
@@ -601,7 +968,6 @@ function updateSlider() {
     document.getElementById('valP').textContent = 'p = ' + p.toFixed(1);
     document.getElementById('valQ').textContent = 'q = ' + q.toFixed(1);
 
-    // formula display
     const pStr = p === 0 ? 'x' : p > 0 ? '(x \u2212 ' + p + ')' : '(x + ' + Math.abs(p) + ')';
     const qStr = q === 0 ? '' : q > 0 ? ' + ' + q : ' \u2212 ' + Math.abs(q);
     const aStr = a === 1 ? '' : a === -1 ? '\u2212' : a.toFixed(1) + ' \u00b7 ';
@@ -610,14 +976,10 @@ function updateSlider() {
     const canvas = document.getElementById('sliderCanvas');
     const g = setupGraph(canvas, -8, 10, -8, 8);
 
-    // base sqrt
     drawCurve(g, x => Math.sqrt(x), 0, 10, '#94a3b8', 1.5, true);
 
-    // transformed
     const xStart = p;
     drawCurve(g, x => a * Math.sqrt(x - p) + q, xStart, 10, '#e11d48', 2.5, false);
-
-    // start point
     drawPoint(g, p, q, '#e11d48', '(' + p + ', ' + q + ')');
 }
 
@@ -637,11 +999,46 @@ document.getElementById('presetBtn').addEventListener('click', () => {
 
 // ========== EXERCISES ==========
 const answers = {
-    1: { check: v => v.trim() === '3', correct: 'Goed! x \u2212 3 \u2265 0, dus x \u2265 3.', wrong: 'Niet juist. Los op: x \u2212 3 \u2265 0.' },
-    2: { check: v => /2\s*links/.test(v.toLowerCase().trim()), correct: 'Goed! x + 2 = x \u2212 (\u22122), dus 2 naar links.', wrong: 'Niet juist. Denk aan: x + 2 = x \u2212 (\u22122).' },
-    3: { check: v => /\(?\s*1\s*[,;]\s*5\s*\)?/.test(v.trim()), correct: 'Goed! Startpunt (p, q) = (1, 5).', wrong: 'Niet juist. Het startpunt is (p, q). Wat zijn p en q?' },
-    4: { check: v => /dal/.test(v.toLowerCase().trim()), correct: 'Goed! Het minteken spiegelt de grafiek, dus dalend.', wrong: 'Niet juist. Wat doet het minteken voor de wortel?' },
-    5: { check: v => v.trim() === '2', correct: 'Goed! a < 0, dus de grafiek daalt. Maximum is q = 2, bereik: y \u2264 2.', wrong: 'Niet juist. a is negatief, dus de grafiek daalt vanaf q.' }
+    1:  { check: v => v.trim() === '3',
+          correct: 'Goed! x \u2212 3 \u2265 0, dus x \u2265 3.',
+          wrong: 'Niet juist. Wat moet je oplossen: x \u2212 3 \u2265 0?' },
+    2:  { check: v => /2\s*links/.test(v.toLowerCase().trim()),
+          correct: 'Goed! x + 2 = x \u2212 (\u22122), dus 2 naar links.',
+          wrong: 'Niet juist. Herschrijf x + 2 als x \u2212 (\u22122).' },
+    3:  { check: v => /\(?\s*1\s*[,;]\s*5\s*\)?/.test(v.trim()),
+          correct: 'Goed! Startpunt (p, q) = (1, 5).',
+          wrong: 'Niet juist. Het startpunt is (p, q). Lees p en q af.' },
+    4:  { check: v => v.trim() === '2',
+          correct: 'Goed! a < 0, dus dalend. Maximum is q = 2, bereik: y \u2264 2.',
+          wrong: 'Niet juist. a is negatief, dus grafiek daalt. Wat is q?' },
+    5:  { check: v => /x\s*<\s*2/.test(v.trim()),
+          correct: 'Goed! Na kwadrateren en omschrijven: x < 2.',
+          wrong: 'Niet juist. Werk stap voor stap: isoleer de wortel, kwadrateer, los op.' },
+    6:  { check: v => {
+              const s = v.toLowerCase().replace(/\s/g, '');
+              return (s.includes('(-2,3') && s.includes('(2,3')) ||
+                     (s.includes('-2,3') && s.includes('2,3'));
+          },
+          correct: 'Goed! De randpunten zijn (\u22122, 3) en (2, 3).',
+          wrong: 'Niet juist. Los op: x\u00b2 \u2212 4 = 0 en vul die x-waarden in.' },
+    7:  { check: v => v.trim() === '7',
+          correct: 'Goed! Kwadrateren geeft 2x \u2212 5 = 9, dus x = 7.',
+          wrong: 'Niet juist. Kwadrateer beide kanten en los op.' },
+    8:  { check: v => /nee/.test(v.toLowerCase().trim()),
+          correct: 'Goed! Een wortel is altijd \u2265 0, dus kan nooit \u22123 zijn.',
+          wrong: 'Niet juist. Kan \u221a(iets) ooit negatief zijn?' },
+    9:  { check: v => {
+              const s = v.toLowerCase().replace(/\s/g, '');
+              return s.includes('alle') || s.includes('reel') || s.includes('heel') || s === 'r';
+          },
+          correct: 'Goed! D < 0 en de parabool opent omhoog, dus altijd \u2265 0. Domein: alle re\u00eble getallen.',
+          wrong: 'Niet juist. Bereken de discriminant van x\u00b2 \u2212 4x + 5.' },
+    10: { check: v => {
+              const s = v.trim().replace(/\s/g, '');
+              return s === '-2' || s === '\u22122' || s === '-10/5';
+          },
+          correct: 'Goed! a = \u22122.',
+          wrong: 'Niet juist. Vind eerst het randpunt: x = \u22125/a, y = 4. Vul in op y = 2x \u2212 1.' }
 };
 
 function checkAnswer(n) {
@@ -662,11 +1059,25 @@ function toggleHint(n) {
     el.style.display = el.style.display === 'block' ? 'none' : 'block';
 }
 
+function toggleSolution(n) {
+    const el = document.getElementById('sol' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+// Allow Enter key to submit answers
+document.querySelectorAll('.exercise input[type=text]').forEach(input => {
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            const n = parseInt(input.id.replace('ans', ''));
+            checkAnswer(n);
+        }
+    });
+});
+
 // ========== INIT ==========
 drawStep(0);
 updateSlider();
 
-// Redraw on resize
 window.addEventListener('resize', () => {
     drawStep(currentStep);
     updateSlider();

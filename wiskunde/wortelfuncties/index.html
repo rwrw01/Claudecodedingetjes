@@ -389,6 +389,14 @@
             Dit is een veelgemaakte fout!
         </div>
 
+        <div class="try-it" style="background:#f1f5f9;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
+            <strong style="color:var(--primary);">Probeer zelf:</strong>
+            <span>f(x) = &radic;(x + 5). Wat is p? </span>
+            <input type="text" id="tryA1" class="try-input" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:80px;" placeholder="?">
+            <button onclick="checkTry('tryA1')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryA1fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
+
         <h3>Parameter q &mdash; verticale verschuiving</h3>
         <p>De waarde <strong>q</strong> verschuift de hele grafiek omhoog of omlaag:</p>
         <ul style="margin: 0.5rem 0 0.5rem 1.5rem;">
@@ -428,6 +436,14 @@
             (Dit is lastiger! Het is een parabool-ongelijkheid.)
         </div>
 
+        <div class="try-it" style="background:#f1f5f9;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
+            <strong style="color:var(--primary);">Probeer zelf:</strong>
+            <span>Wat is het domein van f(x) = &radic;(x &minus; 7)? x &ge; </span>
+            <input type="text" id="tryB1" class="try-input" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:80px;" placeholder="?">
+            <button onclick="checkTry('tryB1')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryB1fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
+
         <div class="tip-box">
             <strong>Stappenplan domein:</strong>
             <ol style="margin: 0.5rem 0 0 1.5rem;">
@@ -449,6 +465,14 @@
             <strong>Voorbeeld:</strong> f(x) = &minus;2&radic;(x + 4) + 2<br>
             Hier is a = &minus;2 (negatief) en q = 2.<br>
             De grafiek start op y = 2 en gaat naar beneden &rarr; bereik: <strong>y &le; 2</strong>
+        </div>
+
+        <div class="try-it" style="background:#f1f5f9;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
+            <strong style="color:var(--primary);">Probeer zelf:</strong>
+            <span>f(x) = &minus;3&radic;(x &minus; 1) + 4. Wat is het bereik? y &le; </span>
+            <input type="text" id="tryB2" class="try-input" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:80px;" placeholder="?">
+            <button onclick="checkTry('tryB2')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryB2fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
         </div>
     </div>
 
@@ -481,6 +505,18 @@
             Omdat de discriminant negatief is en de parabool omhoog opent, is x&sup2; &minus; 4x + 5 <strong>altijd &gt; 0</strong>.<br>
             De wortel is dus altijd gedefinieerd en wordt nooit 0 &rarr; <strong>geen randpunten</strong>.
         </div>
+
+        <div class="try-it" style="background:#f1f5f9;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
+            <strong style="color:var(--primary);">Probeer zelf:</strong>
+            <span>Wat is het randpunt van f(x) = 2&radic;(x + 3) &minus; 1?</span><br>
+            <span>Randpunt: (</span>
+            <input type="text" id="tryC1a" class="try-input" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:60px;" placeholder="p">
+            <span>, </span>
+            <input type="text" id="tryC1b" class="try-input" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:60px;" placeholder="q">
+            <span>)</span>
+            <button onclick="checkTryPair('tryC1a','tryC1b',-3,-1)" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryC1afb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
     </div>
 
     <!-- ==================== THEORIE D ==================== -->
@@ -504,6 +540,14 @@
             Stap 2: Kwadrateer beide kanten: 2x &minus; 5 = 9<br>
             Stap 3: 2x = 14, dus x = 7.<br>
             Stap 4: Controle: &radic;(2&middot;7 &minus; 5) = &radic;9 = 3. Klopt!
+        </div>
+
+        <div class="try-it" style="background:#f1f5f9;border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0;">
+            <strong style="color:var(--primary);">Probeer zelf:</strong>
+            <span>Los op: &radic;(x) = 5. Wat is x? </span>
+            <input type="text" id="tryD1" class="try-input" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:80px;" placeholder="?">
+            <button onclick="checkTry('tryD1')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
+            <span id="tryD1fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
         </div>
 
         <div class="warning-box">
@@ -1137,6 +1181,62 @@ updateSlider();
 window.addEventListener('resize', () => {
     drawStep(currentStep);
     updateSlider();
+});
+
+// ========== PROBEER ZELF (TRY-IT) ==========
+const tryAnswers = {
+    tryA1: { check: v => { const n = parseFloat(v.replace(',','.')); return n === -5; },
+             correct: 'Goed! (x + 5) = (x \u2212 (\u22125)), dus p = \u22125.', wrong: 'Niet juist. (x + 5) = (x \u2212 (\u22125)). Let op het minteken in de formule!' },
+    tryB1: { check: v => { const n = parseFloat(v.replace(',','.')); return n === 7; },
+             correct: 'Goed! x \u2212 7 \u2265 0 \u2192 x \u2265 7.', wrong: 'Niet juist. Stel x \u2212 7 \u2265 0 en los op.' },
+    tryB2: { check: v => { const n = parseFloat(v.replace(',','.')); return n === 4; },
+             correct: 'Goed! a < 0 dus y \u2264 q, en q = 4.', wrong: 'Niet juist. Kijk naar het teken van a en de waarde van q.' },
+    tryD1: { check: v => { const n = parseFloat(v.replace(',','.')); return n === 25; },
+             correct: 'Goed! \u221Ax = 5, dus x = 5\u00B2 = 25.', wrong: 'Niet juist. Als \u221Ax = 5, kwadrateer beide kanten.' }
+};
+
+function checkTry(id) {
+    const input = document.getElementById(id);
+    const val = input.value.trim();
+    if (!val) return;
+    const fb = document.getElementById(id + 'fb');
+    const a = tryAnswers[id];
+    if (a.check(val)) {
+        fb.textContent = a.correct;
+        fb.style.color = '#166534';
+        input.style.borderColor = '#22c55e';
+    } else {
+        fb.textContent = a.wrong;
+        fb.style.color = '#991b1b';
+        input.style.borderColor = '#ef4444';
+    }
+}
+
+function checkTryPair(id1, id2, exp1, exp2) {
+    const v1 = parseFloat(document.getElementById(id1).value.trim().replace(',','.'));
+    const v2 = parseFloat(document.getElementById(id2).value.trim().replace(',','.'));
+    const fb = document.getElementById(id1 + 'fb');
+    if (Math.abs(v1 - exp1) < 0.001 && Math.abs(v2 - exp2) < 0.001) {
+        fb.textContent = 'Goed! Randpunt = (\u22123, \u22121).';
+        fb.style.color = '#166534';
+        document.getElementById(id1).style.borderColor = '#22c55e';
+        document.getElementById(id2).style.borderColor = '#22c55e';
+    } else {
+        fb.textContent = 'Niet juist. p komt uit (x + 3) = (x \u2212 (\u22123)), q is de waarde na het +-teken.';
+        fb.style.color = '#991b1b';
+        document.getElementById(id1).style.borderColor = '#ef4444';
+        document.getElementById(id2).style.borderColor = '#ef4444';
+    }
+}
+
+// Enter key support for try-it inputs
+document.querySelectorAll('.try-input').forEach(input => {
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const btn = this.parentElement.querySelector('button');
+            if (btn) btn.click();
+        }
+    });
 });
 </script>
 

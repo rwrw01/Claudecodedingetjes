@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Van getallen naar breuken &mdash; de brug naar algebra</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+        .breadcrumb {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 1.2rem 0 0.5rem;
+            color: var(--text);
+        }
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 0.15em;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .frac .num, .frac .den { padding: 0 0.25em; line-height: 1.3; }
+        .frac .num { border-bottom: 1.5px solid currentColor; }
+        .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em; }
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1rem;
+            margin: 0.75rem 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .tip-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .tip-box strong { color: #854d0e; }
+        .warning-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .warning-box strong { color: #991b1b; }
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+        }
+        .example-box strong { color: #166534; }
+        .toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .toc a {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .toc a:hover { background: var(--primary); color: white; }
+
+        /* Bridge arrows */
+        .bridge {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.15rem;
+        }
+        .bridge .arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .bridge .step-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        /* Exercises */
+        .exercise {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .exercise p { margin-bottom: 0.5rem; }
+        .exercise .q { font-weight: 600; }
+        .exercise input[type=text] {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            font-size: 1rem;
+            width: 160px;
+            margin-right: 0.5rem;
+        }
+        .exercise button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .exercise button:hover { filter: brightness(1.1); }
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .feedback.correct { display: block; background: #dcfce7; color: #166534; }
+        .feedback.wrong { display: block; background: #fee2e2; color: #991b1b; }
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+            margin-top: 0.25rem;
+        }
+        .hint {
+            display: none;
+            background: #fef9c3;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: #854d0e;
+        }
+        .show-solution-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+            margin-left: 0.25rem;
+        }
+        .show-solution-btn.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .show-solution-btn:hover:not(.locked) { background: #f1f5f9; }
+        .solution {
+            display: none;
+            background: #f0fdf4;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #166534;
+            line-height: 1.6;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Van getallen naar breuken</h1>
+    <p>De brug van rekenen naar algebra</p>
+</header>
+
+<div class="breadcrumb">
+    <a href="../">Overzicht</a> &rsaquo; Van getallen naar breuken
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Inhoud</h2>
+        <div class="toc">
+            <a href="#wat-is-een-breuk">Wat is een breuk?</a>
+            <a href="#vereenvoudigen">Vereenvoudigen</a>
+            <a href="#vermenigvuldigen-delen">Vermenigvuldigen &amp; delen</a>
+            <a href="#optellen-aftrekken">Optellen &amp; aftrekken</a>
+            <a href="#stap-naar-letters">De stap naar letters</a>
+            <a href="#oefensommen">10 Oefensommen</a>
+        </div>
+        <div class="tip-box" style="margin-top:0.5rem;">
+            <strong>Voorkennis:</strong> dit hoofdstuk bouwt voort op <a href="../rekenen-basis/" style="color:#854d0e;">Rekenen &mdash; wat doe je eigenlijk?</a>
+        </div>
+    </div>
+
+    <!-- ==================== WAT IS EEN BREUK ==================== -->
+    <div class="card" id="wat-is-een-breuk">
+        <h2>Wat is een breuk eigenlijk?</h2>
+
+        <h3>Een breuk = een deling</h3>
+        <p>Dit is het allerbelangrijkste om te onthouden:</p>
+
+        <div class="formula">
+            De streep in een breuk <strong>is</strong> een deelteken.<br>
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span> = 3 &divide; 4 = 0,75
+        </div>
+
+        <p>Je kent dit al van het vorige hoofdstuk! Elke deling kun je als breuk schrijven, en elke breuk is een deling:</p>
+
+        <div class="example-box">
+            <span class="frac"><span class="num">1</span><span class="den">2</span></span> = 1 &divide; 2 = 0,5<br><br>
+            <span class="frac"><span class="num">1</span><span class="den">4</span></span> = 1 &divide; 4 = 0,25<br><br>
+            <span class="frac"><span class="num">3</span><span class="den">10</span></span> = 3 &divide; 10 = 0,3<br><br>
+            <span class="frac"><span class="num">7</span><span class="den">2</span></span> = 7 &divide; 2 = 3,5
+        </div>
+
+        <h3>Omgekeerd: van decimaal naar breuk</h3>
+        <div class="example-box">
+            0,5 = <span class="frac"><span class="num">1</span><span class="den">2</span></span> &nbsp;&nbsp;(want 1 &divide; 2 = 0,5)<br><br>
+            0,25 = <span class="frac"><span class="num">1</span><span class="den">4</span></span> &nbsp;&nbsp;(want 1 &divide; 4 = 0,25)<br><br>
+            0,75 = <span class="frac"><span class="num">3</span><span class="den">4</span></span> &nbsp;&nbsp;(want 3 &divide; 4 = 0,75)
+        </div>
+
+        <h3>De deling uit het vorige hoofdstuk &mdash; nu als breuk</h3>
+        <p>Weet je nog? 0,5 &divide; 0,5 = 1. Nu als breuk:</p>
+        <div class="formula">
+            <span class="frac"><span class="num">0,5</span><span class="den">0,5</span></span> = 1
+            &nbsp;&nbsp;&nbsp;&mdash;&nbsp;net als&nbsp;&nbsp;
+            <span class="frac"><span class="num">5</span><span class="den">5</span></span> = 1
+            &nbsp;&nbsp;&nbsp;&mdash;&nbsp;net als&nbsp;&nbsp;
+            <span class="frac"><span class="num">100</span><span class="den">100</span></span> = 1
+        </div>
+        <p>Een getal gedeeld door zichzelf is <strong>altijd 1</strong>. Dat werkt met getallen, met breuken, en straks ook met letters.</p>
+    </div>
+
+    <!-- ==================== VEREENVOUDIGEN ==================== -->
+    <div class="card" id="vereenvoudigen">
+        <h2>Breuken vereenvoudigen</h2>
+
+        <h3>Waarom mag je vereenvoudigen?</h3>
+        <p>Je weet al van het vorige hoofdstuk: als je boven &eacute;n onder met hetzelfde getal vermenigvuldigt (of deelt), verandert de waarde niet. Want je vermenigvuldigt eigenlijk met 1:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">6</span><span class="den">8</span></span> =
+            <span class="frac"><span class="num">6 &divide; 2</span><span class="den">8 &divide; 2</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+            &nbsp;&nbsp;&nbsp;(gedeeld door 2 boven &eacute;n onder)
+        </div>
+
+        <p>Check: 6 &divide; 8 = 0,75 en 3 &divide; 4 = 0,75. Zelfde getal!</p>
+
+        <h3>Stappenplan</h3>
+        <div class="tip-box">
+            <strong>Zo vereenvoudig je een breuk:</strong>
+            <ol style="margin:0.5rem 0 0 1.5rem;">
+                <li>Zoek het <strong>grootste getal</strong> waardoor je teller en noemer allebei kunt delen</li>
+                <li>Deel ze allebei door dat getal</li>
+                <li>Herhaal tot het niet meer kan</li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld 1:</strong>
+            <span class="frac"><span class="num">12</span><span class="den">18</span></span>
+            &rarr; allebei deelbaar door 6 &rarr;
+            <span class="frac"><span class="num">2</span><span class="den">3</span></span><br><br>
+
+            <strong>Voorbeeld 2:</strong>
+            <span class="frac"><span class="num">15</span><span class="den">25</span></span>
+            &rarr; allebei deelbaar door 5 &rarr;
+            <span class="frac"><span class="num">3</span><span class="den">5</span></span><br><br>
+
+            <strong>Voorbeeld 3:</strong>
+            <span class="frac"><span class="num">24</span><span class="den">36</span></span>
+            &rarr; allebei deelbaar door 12 &rarr;
+            <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+            <br><span style="font-size:0.85rem;color:var(--muted);">(Of in stappen: eerst door 2 &rarr; 12/18, dan door 6 &rarr; 2/3)</span>
+        </div>
+    </div>
+
+    <!-- ==================== VERMENIGVULDIGEN & DELEN ==================== -->
+    <div class="card" id="vermenigvuldigen-delen">
+        <h2>Breuken vermenigvuldigen &amp; delen</h2>
+
+        <h3>Vermenigvuldigen: teller &times; teller, noemer &times; noemer</h3>
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> &times;
+            <span class="frac"><span class="num">c</span><span class="den">d</span></span> =
+            <span class="frac"><span class="num">a &times; c</span><span class="den">b &times; d</span></span>
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong>
+            <span class="frac"><span class="num">2</span><span class="den">3</span></span> &times;
+            <span class="frac"><span class="num">4</span><span class="den">5</span></span> =
+            <span class="frac"><span class="num">2 &times; 4</span><span class="den">3 &times; 5</span></span> =
+            <span class="frac"><span class="num">8</span><span class="den">15</span></span><br><br>
+
+            <strong>Check:</strong> 2/3 &asymp; 0,667 en 4/5 = 0,8. En 0,667 &times; 0,8 &asymp; 0,533. En 8/15 &asymp; 0,533. Klopt!
+        </div>
+
+        <h3>Delen: omdraaien en vermenigvuldigen</h3>
+        <p>Uit het vorige hoofdstuk weet je: delen = &ldquo;hoe vaak past het erin?&rdquo; Bij breuken is er een handige methode:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> &divide;
+            <span class="frac"><span class="num">c</span><span class="den">d</span></span> =
+            <span class="frac"><span class="num">a</span><span class="den">b</span></span> &times;
+            <span class="frac"><span class="num">d</span><span class="den">c</span></span>
+            &nbsp;&nbsp;&nbsp;(draai de tweede breuk om)
+        </div>
+
+        <h3>Maar waarom werkt dat?</h3>
+        <p>Laten we het eerst checken met een makkelijk voorbeeld waar je de uitkomst al weet:</p>
+
+        <div class="example-box">
+            <strong>Hoe vaak past <span class="frac"><span class="num">1</span><span class="den">4</span></span> in <span class="frac"><span class="num">3</span><span class="den">4</span></span>?</strong><br><br>
+
+            <strong>Intu&iuml;tie:</strong> je hebt drie kwarten. Een kwart past daar 3 keer in. Antwoord = <strong>3</strong>.<br><br>
+
+            <strong>Met de methode:</strong>
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span> &divide;
+            <span class="frac"><span class="num">1</span><span class="den">4</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span> &times;
+            <span class="frac"><span class="num">4</span><span class="den">1</span></span> =
+            <span class="frac"><span class="num">12</span><span class="den">4</span></span> = <strong>3</strong><br><br>
+
+            Zelfde antwoord! De methode werkt.
+        </div>
+
+        <div class="example-box">
+            <strong>Nog een check:</strong> Hoe vaak past <span class="frac"><span class="num">1</span><span class="den">2</span></span> in 3?<br><br>
+
+            <strong>Intu&iuml;tie:</strong> een half past 6 keer in 3 (want 2 halven per geheel, &times; 3).<br><br>
+
+            <strong>Met de methode:</strong>
+            3 &divide; <span class="frac"><span class="num">1</span><span class="den">2</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">1</span></span> &times;
+            <span class="frac"><span class="num">2</span><span class="den">1</span></span> = <strong>6</strong>. Klopt!
+        </div>
+
+        <div class="tip-box">
+            <strong>De methode is geen trucje.</strong> Het is een snelkoppeling die bewezen hetzelfde antwoord geeft als &ldquo;hoe vaak past het erin?&rdquo;. Bij makkelijke getallen kun je het zelf checken. Bij moeilijke getallen (zoals <span class="frac"><span class="num">23</span><span class="den">47</span></span> &divide; <span class="frac"><span class="num">7</span><span class="den">11</span></span>) vertrouw je op de methode, want je hebt gezien dat hij steeds klopt.
+        </div>
+    </div>
+
+    <!-- ==================== OPTELLEN & AFTREKKEN ==================== -->
+    <div class="card" id="optellen-aftrekken">
+        <h2>Breuken optellen &amp; aftrekken</h2>
+
+        <h3>Gelijke noemer: makkelijk</h3>
+        <p>Als de noemers gelijk zijn, tel je gewoon de tellers op:</p>
+
+        <div class="formula">
+            <span class="frac"><span class="num">2</span><span class="den">5</span></span> +
+            <span class="frac"><span class="num">1</span><span class="den">5</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">5</span></span>
+        </div>
+
+        <p><strong>Waarom moet de noemer gelijk zijn?</strong> De noemer zegt welk &ldquo;soort stukje&rdquo; je hebt. Je kunt 2 vijfden en 1 vijfde optellen, want het zijn dezelfde soort stukjes. Maar 2 vijfden en 1 derde? Dat zijn andere stukjes &mdash; je moet ze eerst gelijk maken.</p>
+
+        <div class="tip-box">
+            <strong>Vergelijk met fruit:</strong> 2 appels + 3 appels = 5 appels. Maar 2 appels + 3 peren = ? Dat kun je niet &ldquo;samen optellen&rdquo; tot &eacute;&eacute;n getal, tenzij je ze allebei &ldquo;stuks fruit&rdquo; noemt. Bij breuken maak je de noemers gelijk &mdash; dan zijn het dezelfde &ldquo;soort stukjes&rdquo;.
+        </div>
+
+        <h3>Ongelijke noemer: eerst gelijknamig maken</h3>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong>
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span> +
+            <span class="frac"><span class="num">1</span><span class="den">4</span></span><br><br>
+
+            <strong>Stap 1:</strong> Zoek een gemeenschappelijke noemer. 3 en 4 passen allebei in 12.<br>
+            <strong>Stap 2:</strong> Herschrijf de breuken:<br>
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span> =
+            <span class="frac"><span class="num">4</span><span class="den">12</span></span>
+            &nbsp;&nbsp;en&nbsp;&nbsp;
+            <span class="frac"><span class="num">1</span><span class="den">4</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">12</span></span><br>
+            <strong>Stap 3:</strong> Tel op:
+            <span class="frac"><span class="num">4</span><span class="den">12</span></span> +
+            <span class="frac"><span class="num">3</span><span class="den">12</span></span> =
+            <span class="frac"><span class="num">7</span><span class="den">12</span></span>
+        </div>
+
+        <div class="example-box">
+            <strong>Aftrekken werkt hetzelfde:</strong><br>
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span> &minus;
+            <span class="frac"><span class="num">1</span><span class="den">6</span></span><br><br>
+
+            Gemeenschappelijke noemer: 12.<br>
+            <span class="frac"><span class="num">9</span><span class="den">12</span></span> &minus;
+            <span class="frac"><span class="num">2</span><span class="den">12</span></span> =
+            <span class="frac"><span class="num">7</span><span class="den">12</span></span>
+        </div>
+    </div>
+
+    <!-- ==================== DE STAP NAAR LETTERS ==================== -->
+    <div class="card" id="stap-naar-letters">
+        <h2>De stap naar letters</h2>
+
+        <h3>Letters zijn gewoon getallen die je nog niet weet</h3>
+        <p>Dit is de sleutel tot algebra. Als je kunt rekenen met getallen, kun je ook rekenen met letters. Kijk maar:</p>
+
+        <div class="bridge">
+            <span class="frac"><span class="num">6</span><span class="den">8</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+            <span class="arrow">&rarr;</span>
+            <span class="frac"><span class="num">6a</span><span class="den">8a</span></span> =
+            <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+            <span class="step-label">(zelfde truc: boven en onder door 2 &eacute;n door <em>a</em>)</span>
+        </div>
+
+        <p>Of met vermenigvuldigen:</p>
+        <div class="bridge">
+            <span class="frac"><span class="num">2</span><span class="den">3</span></span> &times;
+            <span class="frac"><span class="num">4</span><span class="den">5</span></span> =
+            <span class="frac"><span class="num">8</span><span class="den">15</span></span>
+            <span class="arrow">&rarr;</span>
+            <span class="frac"><span class="num">2</span><span class="den">3a</span></span> &times;
+            <span class="frac"><span class="num">4</span><span class="den">5</span></span> =
+            <span class="frac"><span class="num">8</span><span class="den">15a</span></span>
+            <span class="step-label">(zelfde regel: teller &times; teller, noemer &times; noemer)</span>
+        </div>
+
+        <h3>Vereenvoudigen met letters</h3>
+        <p>Bij getallen deel je boven en onder door hetzelfde getal. Bij letters doe je precies hetzelfde:</p>
+
+        <div class="example-box">
+            <strong>Met getallen:</strong>
+            <span class="frac"><span class="num">12</span><span class="den">18</span></span> =
+            <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+            &nbsp;&nbsp;(gedeeld door 6)<br><br>
+
+            <strong>Met letters:</strong>
+            <span class="frac"><span class="num">12a</span><span class="den">18a</span></span> =
+            <span class="frac"><span class="num">2</span><span class="den">3</span></span>
+            &nbsp;&nbsp;(gedeeld door 6 &eacute;n door <em>a</em>)<br><br>
+
+            <strong>Ingewikkelder:</strong>
+            <span class="frac"><span class="num">5ab</span><span class="den">15b</span></span> =
+            <span class="frac"><span class="num">a</span><span class="den">3</span></span> =
+            <span class="frac"><span class="num">1</span><span class="den">3</span></span>a
+            &nbsp;&nbsp;(gedeeld door 5 en door <em>b</em>)
+        </div>
+
+        <div class="tip-box">
+            <strong>Alles wat je kunt met getallen, kun je ook met letters.</strong><br>
+            Vereenvoudigen? Check. Vermenigvuldigen? Check. Omdraaien en vermenigvuldigen? Check.<br><br>
+            Klaar voor meer? Ga verder met <a href="../breuken-met-letters/" style="color:#854d0e;">Breuken met letters herleiden</a>!
+        </div>
+    </div>
+
+    <!-- ==================== OEFENSOMMEN ==================== -->
+    <div class="card" id="oefensommen">
+        <h2>10 Oefensommen</h2>
+        <p style="color:var(--muted);margin-bottom:1rem;">Schrijf breuken als a/b (bijv. 3/4). Schrijf letters als gewone tekst (bijv. a/3 of 2a/5). Vereenvoudig zo ver mogelijk.</p>
+
+        <!-- 1. Decimaal naar breuk -->
+        <div class="exercise" id="ex1">
+            <p class="q">1. Schrijf als breuk en vereenvoudig: 0,4</p>
+            <input type="text" id="ans1" placeholder="bijv. 2/5">
+            <button onclick="checkAnswer(1)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn1" onclick="toggleSolution(1)">Uitwerking</button>
+            <div class="hint" id="hint1">0,4 = 4/10. Kun je 4 en 10 nog door hetzelfde getal delen?</div>
+            <div class="feedback" id="fb1"></div>
+            <div class="solution" id="sol1">0,4 = 4/10 = <strong>2/5</strong> (gedeeld door 2)</div>
+        </div>
+
+        <!-- 2. Vereenvoudigen -->
+        <div class="exercise" id="ex2">
+            <p class="q">2. Vereenvoudig:
+                <span class="frac"><span class="num">18</span><span class="den">24</span></span>
+            </p>
+            <input type="text" id="ans2" placeholder="bijv. 3/4">
+            <button onclick="checkAnswer(2)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn2" onclick="toggleSolution(2)">Uitwerking</button>
+            <div class="hint" id="hint2">18 en 24 zijn allebei deelbaar door 6.</div>
+            <div class="feedback" id="fb2"></div>
+            <div class="solution" id="sol2">18/24 = <strong>3/4</strong> (gedeeld door 6)</div>
+        </div>
+
+        <!-- 3. Vermenigvuldigen -->
+        <div class="exercise" id="ex3">
+            <p class="q">3. Reken uit:
+                <span class="frac"><span class="num">2</span><span class="den">3</span></span> &times;
+                <span class="frac"><span class="num">3</span><span class="den">4</span></span>
+            </p>
+            <input type="text" id="ans3" placeholder="bijv. 1/2">
+            <button onclick="checkAnswer(3)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn3" onclick="toggleSolution(3)">Uitwerking</button>
+            <div class="hint" id="hint3">Teller &times; teller = 2&times;3 = 6. Noemer &times; noemer = 3&times;4 = 12. Vereenvoudig daarna.</div>
+            <div class="feedback" id="fb3"></div>
+            <div class="solution" id="sol3">2/3 &times; 3/4 = 6/12 = <strong>1/2</strong></div>
+        </div>
+
+        <!-- 4. Delen -->
+        <div class="exercise" id="ex4">
+            <p class="q">4. Reken uit:
+                <span class="frac"><span class="num">3</span><span class="den">4</span></span> &divide;
+                <span class="frac"><span class="num">1</span><span class="den">2</span></span>
+            </p>
+            <input type="text" id="ans4" placeholder="bijv. 3/2">
+            <button onclick="checkAnswer(4)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn4" onclick="toggleSolution(4)">Uitwerking</button>
+            <div class="hint" id="hint4">Draai de tweede breuk om: 1/2 wordt 2/1. Vermenigvuldig nu.</div>
+            <div class="feedback" id="fb4"></div>
+            <div class="solution" id="sol4">3/4 &divide; 1/2 = 3/4 &times; 2/1 = 6/4 = <strong>3/2</strong> (of 1,5)</div>
+        </div>
+
+        <!-- 5. Optellen -->
+        <div class="exercise" id="ex5">
+            <p class="q">5. Reken uit:
+                <span class="frac"><span class="num">1</span><span class="den">3</span></span> +
+                <span class="frac"><span class="num">1</span><span class="den">6</span></span>
+            </p>
+            <input type="text" id="ans5" placeholder="bijv. 1/2">
+            <button onclick="checkAnswer(5)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn5" onclick="toggleSolution(5)">Uitwerking</button>
+            <div class="hint" id="hint5">Maak de noemers gelijk. 3 en 6: gemeenschappelijke noemer is 6. Dus 1/3 = 2/6.</div>
+            <div class="feedback" id="fb5"></div>
+            <div class="solution" id="sol5">1/3 + 1/6 = 2/6 + 1/6 = 3/6 = <strong>1/2</strong></div>
+        </div>
+
+        <!-- 6. Aftrekken -->
+        <div class="exercise" id="ex6">
+            <p class="q">6. Reken uit:
+                <span class="frac"><span class="num">5</span><span class="den">6</span></span> &minus;
+                <span class="frac"><span class="num">1</span><span class="den">3</span></span>
+            </p>
+            <input type="text" id="ans6" placeholder="bijv. 1/2">
+            <button onclick="checkAnswer(6)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(6)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn6" onclick="toggleSolution(6)">Uitwerking</button>
+            <div class="hint" id="hint6">Gemeenschappelijke noemer: 6. Dan wordt 1/3 = 2/6.</div>
+            <div class="feedback" id="fb6"></div>
+            <div class="solution" id="sol6">5/6 &minus; 1/3 = 5/6 &minus; 2/6 = <strong>3/6 = 1/2</strong></div>
+        </div>
+
+        <!-- 7. Brug: vereenvoudigen met letter -->
+        <div class="exercise" id="ex7">
+            <p class="q">7. Vereenvoudig:
+                <span class="frac"><span class="num">4a</span><span class="den">8</span></span>
+            </p>
+            <input type="text" id="ans7" placeholder="bijv. a/2 of 1/2 a">
+            <button onclick="checkAnswer(7)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(7)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn7" onclick="toggleSolution(7)">Uitwerking</button>
+            <div class="hint" id="hint7">Deel boven en onder door 4. De <em>a</em> staat alleen boven, die blijft staan (of haal je eruit als factor).</div>
+            <div class="feedback" id="fb7"></div>
+            <div class="solution" id="sol7">4a/8 = a/2 = <strong>1/2 a</strong> (of a/2)</div>
+        </div>
+
+        <!-- 8. Brug: letter vereenvoudigen -->
+        <div class="exercise" id="ex8">
+            <p class="q">8. Vereenvoudig:
+                <span class="frac"><span class="num">6ab</span><span class="den">9b</span></span>
+            </p>
+            <input type="text" id="ans8" placeholder="bijv. 2a/3 of 2/3 a">
+            <button onclick="checkAnswer(8)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(8)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn8" onclick="toggleSolution(8)">Uitwerking</button>
+            <div class="hint" id="hint8">Getallen: 6 en 9 zijn deelbaar door 3. Letters: <em>b</em> staat boven &eacute;n onder.</div>
+            <div class="feedback" id="fb8"></div>
+            <div class="solution" id="sol8">6ab / 9b = (deel door 3 en door <em>b</em>) = 2a/3 = <strong>2/3 a</strong></div>
+        </div>
+
+        <!-- 9. Brug: vermenigvuldigen met letter -->
+        <div class="exercise" id="ex9">
+            <p class="q">9. Reken uit:
+                <span class="frac"><span class="num">2</span><span class="den">a</span></span> &times;
+                <span class="frac"><span class="num">a</span><span class="den">6</span></span>
+            </p>
+            <input type="text" id="ans9" placeholder="bijv. 1/3">
+            <button onclick="checkAnswer(9)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(9)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn9" onclick="toggleSolution(9)">Uitwerking</button>
+            <div class="hint" id="hint9">Teller &times; teller: 2 &times; a = 2a. Noemer &times; noemer: a &times; 6 = 6a. Vereenvoudig 2a/6a.</div>
+            <div class="feedback" id="fb9"></div>
+            <div class="solution" id="sol9">2/a &times; a/6 = 2a/6a = <strong>1/3</strong> (gedeeld door 2 en door <em>a</em>)</div>
+        </div>
+
+        <!-- 10. Brug: delen met letter -->
+        <div class="exercise" id="ex10">
+            <p class="q">10. Reken uit:
+                <span class="frac"><span class="num">3</span><span class="den">5</span></span> &divide;
+                <span class="frac"><span class="num">a</span><span class="den">5</span></span>
+            </p>
+            <input type="text" id="ans10" placeholder="bijv. 3/a">
+            <button onclick="checkAnswer(10)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(10)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn10" onclick="toggleSolution(10)">Uitwerking</button>
+            <div class="hint" id="hint10">Draai de tweede breuk om: a/5 wordt 5/a. Vermenigvuldig nu. Vereenvoudig.</div>
+            <div class="feedback" id="fb10"></div>
+            <div class="solution" id="sol10">3/5 &divide; a/5 = 3/5 &times; 5/a = 15/5a = <strong>3/a</strong></div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    <p>Wiskunde HAVO &middot; Interactieve gids</p>
+    <p style="margin-top:0.5rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script>
+const answers = {
+    1:  { check: v => /^2\s*\/\s*5$/.test(v),
+          correct: 'Goed! 0,4 = 4/10 = 2/5.',
+          wrong: 'Niet juist. 0,4 = 4/10. Vereenvoudig door teller en noemer door 2 te delen.' },
+    2:  { check: v => /^3\s*\/\s*4$/.test(v),
+          correct: 'Goed! 18/24 = 3/4 (gedeeld door 6).',
+          wrong: 'Niet juist. Zoek het grootste getal waardoor je 18 \u00e9n 24 kunt delen.' },
+    3:  { check: v => /^1\s*\/\s*2$/.test(v),
+          correct: 'Goed! 2/3 \u00d7 3/4 = 6/12 = 1/2.',
+          wrong: 'Niet juist. Teller \u00d7 teller, noemer \u00d7 noemer, dan vereenvoudigen.' },
+    4:  { check: v => { const s = v.replace(/\s/g,''); return s==='3/2' || s==='1.5' || s==='1,5'; },
+          correct: 'Goed! 3/4 \u00d7 2/1 = 6/4 = 3/2.',
+          wrong: 'Niet juist. Draai 1/2 om naar 2/1, vermenigvuldig, vereenvoudig.' },
+    5:  { check: v => /^1\s*\/\s*2$/.test(v),
+          correct: 'Goed! 2/6 + 1/6 = 3/6 = 1/2.',
+          wrong: 'Niet juist. Maak de noemers gelijk (noemer 6), tel de tellers op, vereenvoudig.' },
+    6:  { check: v => /^1\s*\/\s*2$/.test(v),
+          correct: 'Goed! 5/6 \u2212 2/6 = 3/6 = 1/2.',
+          wrong: 'Niet juist. Maak de noemers gelijk (noemer 6), trek de tellers van elkaar af.' },
+    7:  { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s==='a/2' || s==='1/2a' || s==='1/2*a'; },
+          correct: 'Goed! 4a/8 = a/2 = \u00bd a.',
+          wrong: 'Niet juist. Deel 4 en 8 door 4. De a blijft in de teller.' },
+    8:  { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s==='2a/3' || s==='2/3a' || s==='2/3*a'; },
+          correct: 'Goed! 6ab/9b = 2a/3 (gedeeld door 3 en door b).',
+          wrong: 'Niet juist. Deel door 3 (getallen) en door b (letters).' },
+    9:  { check: v => /^1\s*\/\s*3$/.test(v),
+          correct: 'Goed! 2a/6a = 1/3 (gedeeld door 2 en door a).',
+          wrong: 'Niet juist. Teller\u00d7teller, noemer\u00d7noemer, dan delen door 2a.' },
+    10: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s==='3/a'; },
+          correct: 'Goed! 3/5 \u00d7 5/a = 15/5a = 3/a.',
+          wrong: 'Niet juist. Draai a/5 om naar 5/a, vermenigvuldig, vereenvoudig.' }
+};
+
+function checkAnswer(n) {
+    const raw = document.getElementById('ans' + n).value;
+    if (!raw.trim()) return;
+    const val = raw.trim().replace(',', '.').replace(/\s+/g, ' ');
+    const fb = document.getElementById('fb' + n);
+    const a = answers[n];
+    if (a.check(val)) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.correct;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+    const solBtn = document.getElementById('solbtn' + n);
+    if (solBtn) solBtn.classList.remove('locked');
+}
+
+function toggleHint(n) {
+    const el = document.getElementById('hint' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+function toggleSolution(n) {
+    const el = document.getElementById('sol' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+document.querySelectorAll('.exercise input[type=text]').forEach(input => {
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            const n = parseInt(input.id.replace('ans', ''));
+            checkAnswer(n);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekenen &mdash; wat doe je eigenlijk?</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+        .breadcrumb {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 1.2rem 0 0.5rem;
+            color: var(--text);
+        }
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 0.15em;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .frac .num, .frac .den { padding: 0 0.25em; line-height: 1.3; }
+        .frac .num { border-bottom: 1.5px solid currentColor; }
+        .math { font-family: 'Cambria Math', 'Times New Roman', serif; font-size: 1.05em; }
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1rem;
+            margin: 0.75rem 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+        }
+        .tip-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .tip-box strong { color: #854d0e; }
+        .warning-box {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.95rem;
+        }
+        .warning-box strong { color: #991b1b; }
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid #22c55e;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+        }
+        .example-box strong { color: #166534; }
+        .toc {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .toc a {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .toc a:hover { background: var(--primary); color: white; }
+
+        /* Visual models */
+        .visual {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        .visual-block {
+            background: #dbeafe;
+            border: 2px solid #60a5fa;
+            border-radius: 8px;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #1e40af;
+        }
+        .visual-block.half {
+            width: 30px;
+            background: #bfdbfe;
+        }
+        .visual-block.quarter {
+            width: 15px;
+            background: #93c5fd;
+        }
+        .visual-arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .visual-result {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* Cups visualization */
+        .cups {
+            display: flex;
+            gap: 0.5rem;
+            align-items: flex-end;
+            margin: 0.75rem 0;
+        }
+        .cup {
+            width: 40px;
+            border: 2px solid #60a5fa;
+            border-top: none;
+            border-radius: 0 0 6px 6px;
+            position: relative;
+            background: linear-gradient(to top, #60a5fa var(--fill, 100%), transparent var(--fill, 100%));
+        }
+        .cup.full { height: 50px; --fill: 100%; }
+        .cup.half-cup { height: 50px; --fill: 50%; }
+        .cup.empty { height: 50px; --fill: 0%; border-style: dashed; }
+
+        /* Summary table */
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+        .summary-table th, .summary-table td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 0.75rem;
+            text-align: center;
+        }
+        .summary-table th {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .summary-table .bigger { background: #dcfce7; color: #166534; }
+        .summary-table .smaller { background: #fee2e2; color: #991b1b; }
+
+        /* Interactive demo */
+        .demo {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .demo label { font-weight: 600; display: block; margin-bottom: 0.5rem; }
+        .demo input[type=range] { width: 100%; margin: 0.25rem 0; }
+        .demo .demo-output { font-size: 1.2rem; font-weight: 700; color: var(--primary); margin-top: 0.5rem; }
+
+        /* Exercises */
+        .exercise {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .exercise p { margin-bottom: 0.5rem; }
+        .exercise .q { font-weight: 600; }
+        .exercise input[type=text] {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.6rem;
+            font-size: 1rem;
+            width: 140px;
+            margin-right: 0.5rem;
+        }
+        .exercise button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        .exercise button:hover { filter: brightness(1.1); }
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .feedback.correct { display: block; background: #dcfce7; color: #166534; }
+        .feedback.wrong { display: block; background: #fee2e2; color: #991b1b; }
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+            margin-top: 0.25rem;
+        }
+        .hint {
+            display: none;
+            background: #fef9c3;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: #854d0e;
+        }
+        .show-solution-btn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 0.25rem;
+            margin-left: 0.25rem;
+        }
+        .show-solution-btn.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .show-solution-btn:hover:not(.locked) { background: #f1f5f9; }
+        .solution {
+            display: none;
+            background: #f0fdf4;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #166534;
+            line-height: 1.6;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Rekenen &mdash; wat doe je eigenlijk?</h1>
+    <p>De basis die je &eacute;cht moet snappen</p>
+</header>
+
+<div class="breadcrumb">
+    <a href="../">Overzicht</a> &rsaquo; Rekenen &mdash; wat doe je eigenlijk?
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Inhoud</h2>
+        <div class="toc">
+            <a href="#optellen">Optellen</a>
+            <a href="#aftrekken">Aftrekken</a>
+            <a href="#vermenigvuldigen">Vermenigvuldigen</a>
+            <a href="#delen">Delen</a>
+            <a href="#samenvatting">Samenvatting</a>
+            <a href="#oefensommen">10 Oefensommen</a>
+        </div>
+    </div>
+
+    <!-- ==================== OPTELLEN ==================== -->
+    <div class="card" id="optellen">
+        <h2>Optellen &mdash; samenvoegen</h2>
+
+        <p>Optellen is het simpelst: je <strong>voegt dingen samen</strong>.</p>
+
+        <div class="example-box">
+            <strong>Met hele getallen:</strong><br>
+            Je hebt 3 appels. Je krijgt er 2 bij. Nu heb je 3 + 2 = <strong>5 appels</strong>.<br><br>
+            <strong>Met decimalen:</strong><br>
+            Je hebt &euro;0,30. Je vindt &euro;0,70 op de grond. Nu heb je 0,30 + 0,70 = <strong>&euro;1,00</strong>.<br><br>
+            <strong>Nog een:</strong><br>
+            Een plank van 1,5 meter en een plank van 0,8 meter aan elkaar. Totaal: 1,5 + 0,8 = <strong>2,3 meter</strong>.
+        </div>
+
+        <div class="tip-box">
+            <strong>Optellen maakt altijd groter</strong> (zolang je positieve getallen optelt). Dit is de makkelijkste bewerking &mdash; hier gaat bijna niemand de mist in.
+        </div>
+    </div>
+
+    <!-- ==================== AFTREKKEN ==================== -->
+    <div class="card" id="aftrekken">
+        <h2>Aftrekken &mdash; wat blijft er over?</h2>
+
+        <p>Aftrekken is het omgekeerde van optellen: je <strong>haalt iets weg</strong>.</p>
+
+        <div class="example-box">
+            <strong>Met hele getallen:</strong><br>
+            Je hebt &euro;10. Je koopt iets van &euro;3. Je houdt 10 &minus; 3 = <strong>&euro;7</strong> over.<br><br>
+            <strong>Met decimalen:</strong><br>
+            Je hebt 1 liter melk. Je gebruikt 0,3 liter. Er is 1,0 &minus; 0,3 = <strong>0,7 liter</strong> over.<br><br>
+            <strong>Nog een:</strong><br>
+            Een touw van 2,5 meter. Je knipt er 0,8 meter af. Er is 2,5 &minus; 0,8 = <strong>1,7 meter</strong> over.
+        </div>
+
+        <div class="tip-box">
+            <strong>Aftrekken maakt altijd kleiner</strong> (bij positieve getallen). Ook hier weinig verwarring. Het wordt pas spannend bij de volgende twee&hellip;
+        </div>
+    </div>
+
+    <!-- ==================== VERMENIGVULDIGEN ==================== -->
+    <div class="card" id="vermenigvuldigen">
+        <h2>Vermenigvuldigen &mdash; twee manieren om het te zien</h2>
+
+        <h3>Manier 1: &ldquo;Herhaald optellen&rdquo;</h3>
+        <p>Dit ken je al:</p>
+        <div class="formula">
+            3 &times; 4 = 4 + 4 + 4 = 12 &nbsp;&nbsp;&nbsp;(&ldquo;3 keer 4&rdquo;)
+        </div>
+        <p>Maar wat is dan 0,5 &times; 6? &ldquo;Een halve keer 6&rdquo;? Dat klinkt raar. Daarom heb je een tweede manier nodig.</p>
+
+        <h3>Manier 2: &ldquo;Een deel van&rdquo;</h3>
+        <p>Vermenigvuldigen met een getal betekent: <strong>neem dat deel</strong>.</p>
+
+        <div class="example-box">
+            <strong>0,5 &times; 6</strong> = &ldquo;de helft van 6&rdquo; = <strong>3</strong><br><br>
+            <strong>0,5 &times; 10</strong> = &ldquo;de helft van 10&rdquo; = <strong>5</strong><br><br>
+            <strong>0,25 &times; 8</strong> = &ldquo;een kwart van 8&rdquo; = <strong>2</strong><br><br>
+            <strong>0,1 &times; 50</strong> = &ldquo;een tiende van 50&rdquo; = <strong>5</strong>
+        </div>
+
+        <h3>De verrassing: 0,5 &times; 0,5</h3>
+        <p>Veel mensen denken: &ldquo;vermenigvuldigen maakt groter&rdquo;. Maar kijk:</p>
+
+        <div class="formula">
+            0,5 &times; 0,5 = &ldquo;de helft van een half&rdquo; = <strong>0,25</strong>
+        </div>
+
+        <p>Stel je een pizza voor. Je hebt een halve pizza. Je neemt daar de helft van. Dan heb je een <strong>kwart</strong> pizza. Dat is <em>kleiner</em> dan waar je mee begon!</p>
+
+        <div class="warning-box">
+            <strong>Denkfout: &ldquo;Vermenigvuldigen maakt altijd groter&rdquo;</strong><br><br>
+            Dit klopt alleen als je vermenigvuldigt met een getal <strong>groter dan 1</strong>.<br>
+            Vermenigvuldig je met een getal <strong>kleiner dan 1</strong>? Dan wordt het resultaat <strong>kleiner</strong>!<br><br>
+            <table style="width:100%;font-size:0.9rem;margin-top:0.5rem;">
+                <tr><td>5 &times; 2 = 10</td><td>&nbsp;&rarr;&nbsp;</td><td>groter (want 2 &gt; 1)</td></tr>
+                <tr><td>5 &times; 1 = 5</td><td>&nbsp;&rarr;&nbsp;</td><td>hetzelfde (want 1 = 1)</td></tr>
+                <tr><td>5 &times; 0,5 = 2,5</td><td>&nbsp;&rarr;&nbsp;</td><td>kleiner (want 0,5 &lt; 1)</td></tr>
+                <tr><td>5 &times; 0,1 = 0,5</td><td>&nbsp;&rarr;&nbsp;</td><td>veel kleiner (want 0,1 &lt; 1)</td></tr>
+            </table>
+        </div>
+
+        <!-- Interactive slider demo -->
+        <div class="demo">
+            <label>Probeer het zelf: sleep de schuif en zie wat er met 10 gebeurt</label>
+            <input type="range" id="multSlider" min="0" max="30" value="10" step="1">
+            <div class="demo-output">
+                10 &times; <span id="multFactor">1,0</span> = <span id="multResult">10</span>
+                <span id="multComment" style="font-weight:normal;font-size:0.85rem;color:#64748b;"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DELEN ==================== -->
+    <div class="card" id="delen">
+        <h2>Delen &mdash; hier gaat het mis (en zo fix je het)</h2>
+
+        <h3>Manier 1: &ldquo;Eerlijk verdelen&rdquo;</h3>
+        <p>Dit is hoe je delen hebt geleerd:</p>
+
+        <div class="example-box">
+            <strong>4 taarten, 2 mensen.</strong> Ieder krijgt 4 &divide; 2 = <strong>2 taarten</strong>.<br><br>
+            <strong>12 snoepjes, 3 kinderen.</strong> Ieder krijgt 12 &divide; 3 = <strong>4 snoepjes</strong>.
+        </div>
+
+        <p>Dit werkt prima met hele getallen. Maar nu&hellip;</p>
+
+        <div class="warning-box">
+            <strong>Het probleem:</strong><br>
+            0,5 &divide; 0,5 = &ldquo;een halve taart verdelen over een halve persoon&rdquo;??<br><br>
+            Dat slaat <em>nergens</em> op. Een halve persoon bestaat niet. Je hebt een beter mentaal plaatje nodig.
+        </div>
+
+        <h3>Manier 2: &ldquo;Hoe vaak past het erin?&rdquo;</h3>
+        <p>Dit is de manier die <strong>altijd werkt</strong>, ook met decimalen:</p>
+
+        <div class="formula">
+            a &divide; b = &ldquo;hoe vaak past b in a?&rdquo;
+        </div>
+
+        <p>Check eerst dat het klopt bij makkelijke getallen:</p>
+        <div class="example-box">
+            <strong>4 &divide; 2</strong> = &ldquo;hoe vaak past 2 in 4?&rdquo; = <strong>2 keer</strong> &nbsp;(klopt!)<br><br>
+            <strong>12 &divide; 3</strong> = &ldquo;hoe vaak past 3 in 12?&rdquo; = <strong>4 keer</strong> &nbsp;(klopt!)
+        </div>
+
+        <p>Nu met decimalen &mdash; en ineens is het logisch:</p>
+
+        <h3>Voorbeeld: flesjes water</h3>
+        <p>Je hebt <strong>2 liter</strong> water. Je schenkt het in bekertjes van <strong>0,5 liter</strong>.</p>
+        <p>Hoeveel bekertjes kun je vullen?</p>
+
+        <div class="cups">
+            <div class="cup full" title="0,5L"></div>
+            <div class="cup full" title="0,5L"></div>
+            <div class="cup full" title="0,5L"></div>
+            <div class="cup full" title="0,5L"></div>
+        </div>
+        <p style="color:var(--muted);font-size:0.85rem;">4 bekertjes van 0,5 liter</p>
+
+        <div class="formula">
+            2 &divide; 0,5 = &ldquo;hoe vaak past 0,5 in 2?&rdquo; = <strong>4 keer</strong>
+        </div>
+
+        <h3>Voorbeeld: lint knippen</h3>
+        <p>Je hebt <strong>3 meter</strong> lint. Je knipt stukjes van <strong>0,5 meter</strong>. Hoeveel stukjes?</p>
+        <div class="formula">
+            3 &divide; 0,5 = &ldquo;hoe vaak past 0,5 in 3?&rdquo; = <strong>6 stukjes</strong>
+        </div>
+
+        <h3>En nu de grote vraag: 0,5 &divide; 0,5</h3>
+        <p>Je hebt <strong>0,5 meter</strong> lint. Je knipt stukjes van <strong>0,5 meter</strong>. Hoeveel stukjes?</p>
+
+        <div class="cups">
+            <div class="cup full" title="0,5L"></div>
+        </div>
+        <p style="color:var(--muted);font-size:0.85rem;">Precies 1 stukje</p>
+
+        <div class="formula">
+            0,5 &divide; 0,5 = &ldquo;hoe vaak past 0,5 in 0,5?&rdquo; = <strong>precies 1 keer</strong>
+        </div>
+
+        <p><strong>Ineens logisch, toch?</strong> Een half past precies &eacute;&eacute;n keer in een half.</p>
+
+        <h3>Nog meer voorbeelden met geld</h3>
+        <div class="example-box">
+            <strong>&euro;10 &divide; &euro;2,50</strong> = &ldquo;hoeveel broodjes van &euro;2,50 kun je kopen van &euro;10?&rdquo; = <strong>4 broodjes</strong><br><br>
+            <strong>&euro;0,50 &divide; &euro;0,25</strong> = &ldquo;hoeveel snoepjes van 25 cent kun je kopen van 50 cent?&rdquo; = <strong>2 snoepjes</strong><br><br>
+            <strong>&euro;0,25 &divide; &euro;0,25</strong> = &ldquo;hoeveel snoepjes van 25 cent van 25 cent?&rdquo; = <strong>1 snoepje</strong>
+        </div>
+
+        <div class="warning-box">
+            <strong>Denkfout: &ldquo;Delen maakt altijd kleiner&rdquo;</strong><br><br>
+            Dit klopt alleen als je deelt door een getal <strong>groter dan 1</strong>.<br>
+            Deel je door iets <strong>kleiner dan 1</strong>? Dan wordt het resultaat juist <strong>groter</strong>!<br><br>
+            <table style="width:100%;font-size:0.9rem;margin-top:0.5rem;">
+                <tr><td>6 &divide; 3 = 2</td><td>&nbsp;&rarr;&nbsp;</td><td>kleiner (want 3 &gt; 1)</td></tr>
+                <tr><td>6 &divide; 1 = 6</td><td>&nbsp;&rarr;&nbsp;</td><td>hetzelfde (want 1 = 1)</td></tr>
+                <tr><td>6 &divide; 0,5 = 12</td><td>&nbsp;&rarr;&nbsp;</td><td>groter! (want 0,5 &lt; 1)</td></tr>
+                <tr><td>6 &divide; 0,1 = 60</td><td>&nbsp;&rarr;&nbsp;</td><td>veel groter! (want 0,1 &lt; 1)</td></tr>
+            </table>
+        </div>
+
+        <h3>De brugtruc: maak de komma weg</h3>
+        <p>Als je het even niet meer weet bij decimalen, is er een handige truc. Vermenigvuldig boven en onder de streep met 10 (of 100) om van de komma af te komen:</p>
+
+        <div class="example-box">
+            <strong>0,5 &divide; 0,5</strong><br>
+            Vermenigvuldig allebei met 10: &rarr; 5 &divide; 5 = <strong>1</strong><br><br>
+
+            <strong>0,8 &divide; 0,4</strong><br>
+            Vermenigvuldig allebei met 10: &rarr; 8 &divide; 4 = <strong>2</strong><br><br>
+
+            <strong>0,25 &divide; 0,05</strong><br>
+            Vermenigvuldig allebei met 100: &rarr; 25 &divide; 5 = <strong>5</strong>
+        </div>
+
+        <div class="tip-box">
+            <strong>Waarom mag dat?</strong> Als je boven &eacute;n onder met hetzelfde getal vermenigvuldigt, verandert de uitkomst niet. Net als bij breuken:
+            <span class="frac"><span class="num">1</span><span class="den">2</span></span> =
+            <span class="frac"><span class="num">5</span><span class="den">10</span></span> =
+            <span class="frac"><span class="num">50</span><span class="den">100</span></span>
+            &mdash; het is steeds hetzelfde getal!
+        </div>
+
+        <!-- Interactive slider demo for division -->
+        <div class="demo">
+            <label>Probeer het zelf: deel 6 door een getal en kijk wat er gebeurt</label>
+            <input type="range" id="divSlider" min="1" max="40" value="10" step="1">
+            <div class="demo-output">
+                6 &divide; <span id="divDivisor">1,0</span> = <span id="divResult">6</span>
+                <span id="divComment" style="font-weight:normal;font-size:0.85rem;color:#64748b;"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SAMENVATTING ==================== -->
+    <div class="card" id="samenvatting">
+        <h2>Samenvatting: wanneer wordt het groter of kleiner?</h2>
+
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Bewerking</th>
+                    <th>Met getal &gt; 1</th>
+                    <th>Met getal = 1</th>
+                    <th>Met getal &lt; 1</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Optellen (+)</strong></td>
+                    <td class="bigger">groter</td>
+                    <td class="bigger">groter</td>
+                    <td class="bigger">groter</td>
+                </tr>
+                <tr>
+                    <td><strong>Aftrekken (&minus;)</strong></td>
+                    <td class="smaller">kleiner</td>
+                    <td class="smaller">kleiner</td>
+                    <td class="smaller">kleiner</td>
+                </tr>
+                <tr>
+                    <td><strong>Vermenigvuldigen (&times;)</strong></td>
+                    <td class="bigger">groter</td>
+                    <td>gelijk</td>
+                    <td class="smaller">kleiner!</td>
+                </tr>
+                <tr>
+                    <td><strong>Delen (&divide;)</strong></td>
+                    <td class="smaller">kleiner</td>
+                    <td>gelijk</td>
+                    <td class="bigger">groter!</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="tip-box">
+            <strong>De twee verrassingen</strong> die de meeste mensen niet verwachten:<br>
+            <ol style="margin:0.5rem 0 0 1.5rem;">
+                <li><strong>Vermenigvuldigen met een getal kleiner dan 1 maakt kleiner</strong><br>
+                    0,5 &times; 0,5 = 0,25 (de helft van een half)</li>
+                <li><strong>Delen door een getal kleiner dan 1 maakt groter</strong><br>
+                    6 &divide; 0,5 = 12 (een half past 12 keer in 6)</li>
+            </ol>
+        </div>
+
+        <p>Als je dit snapt, ben je klaar voor breuken! Ga door naar <a href="../van-getallen-naar-breuken/" style="color:var(--primary);">Van getallen naar breuken</a>.</p>
+    </div>
+
+    <!-- ==================== OEFENSOMMEN ==================== -->
+    <div class="card" id="oefensommen">
+        <h2>10 Oefensommen</h2>
+        <p style="color:var(--muted);margin-bottom:1rem;">Gebruik een punt of komma voor decimalen (bijv. 0.5 of 0,5). Schrijf breuken met / (bijv. 1/4).</p>
+
+        <div class="exercise" id="ex1">
+            <p class="q">1. Hoeveel bekertjes van 0,5 liter kun je vullen met 3 liter water?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Reken uit: 3 &divide; 0,5 = ?</p>
+            <input type="text" id="ans1" placeholder="?">
+            <button onclick="checkAnswer(1)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn1" onclick="toggleSolution(1)">Uitwerking</button>
+            <div class="hint" id="hint1">Hoe vaak past 0,5 in 3? Of: vermenigvuldig allebei met 10 &rarr; 30 &divide; 5 = ?</div>
+            <div class="feedback" id="fb1"></div>
+            <div class="solution" id="sol1">3 &divide; 0,5 = &ldquo;hoe vaak past 0,5 in 3?&rdquo; = <strong>6</strong><br>Of: &times;10 &rarr; 30 &divide; 5 = 6</div>
+        </div>
+
+        <div class="exercise" id="ex2">
+            <p class="q">2. Wat is 0,5 &times; 0,5?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Denk: &ldquo;de helft van een half&rdquo;</p>
+            <input type="text" id="ans2" placeholder="?">
+            <button onclick="checkAnswer(2)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn2" onclick="toggleSolution(2)">Uitwerking</button>
+            <div class="hint" id="hint2">De helft van 0,5. Een halve pizza, daar de helft van nemen&hellip;</div>
+            <div class="feedback" id="fb2"></div>
+            <div class="solution" id="sol2">0,5 &times; 0,5 = &ldquo;de helft van een half&rdquo; = <strong>0,25</strong> (een kwart)</div>
+        </div>
+
+        <div class="exercise" id="ex3">
+            <p class="q">3. Je hebt &euro;0,50. Snoepjes kosten &euro;0,10 per stuk. Hoeveel kun je kopen?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Reken uit: 0,50 &divide; 0,10 = ?</p>
+            <input type="text" id="ans3" placeholder="?">
+            <button onclick="checkAnswer(3)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn3" onclick="toggleSolution(3)">Uitwerking</button>
+            <div class="hint" id="hint3">Hoe vaak past 10 cent in 50 cent? Of: &times;10 &rarr; 5 &divide; 1 = ?</div>
+            <div class="feedback" id="fb3"></div>
+            <div class="solution" id="sol3">0,50 &divide; 0,10 = &ldquo;hoe vaak past 0,10 in 0,50?&rdquo; = <strong>5</strong></div>
+        </div>
+
+        <div class="exercise" id="ex4">
+            <p class="q">4. Wat is 0,25 &times; 12?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Denk: &ldquo;een kwart van 12&rdquo;</p>
+            <input type="text" id="ans4" placeholder="?">
+            <button onclick="checkAnswer(4)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn4" onclick="toggleSolution(4)">Uitwerking</button>
+            <div class="hint" id="hint4">Een kwart van 12. Deel 12 door 4.</div>
+            <div class="feedback" id="fb4"></div>
+            <div class="solution" id="sol4">0,25 &times; 12 = &ldquo;een kwart van 12&rdquo; = 12 &divide; 4 = <strong>3</strong></div>
+        </div>
+
+        <div class="exercise" id="ex5">
+            <p class="q">5. Wat is 1 &divide; 0,25?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Hoe vaak past 0,25 in 1?</p>
+            <input type="text" id="ans5" placeholder="?">
+            <button onclick="checkAnswer(5)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn5" onclick="toggleSolution(5)">Uitwerking</button>
+            <div class="hint" id="hint5">Hoe vaak past een kwart in 1 geheel? Denk aan een pizza in 4 stukken.</div>
+            <div class="feedback" id="fb5"></div>
+            <div class="solution" id="sol5">1 &divide; 0,25 = &ldquo;hoe vaak past een kwart in 1?&rdquo; = <strong>4</strong><br>Of: &times;100 &rarr; 100 &divide; 25 = 4</div>
+        </div>
+
+        <div class="exercise" id="ex6">
+            <p class="q">6. Wat is 0,3 &times; 0,2?</p>
+            <input type="text" id="ans6" placeholder="?">
+            <button onclick="checkAnswer(6)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(6)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn6" onclick="toggleSolution(6)">Uitwerking</button>
+            <div class="hint" id="hint6">0,2 = een vijfde. Dus: een vijfde van 0,3. Of reken: 3 &times; 2 = 6, en tel de decimalen (1+1=2 achter de komma).</div>
+            <div class="feedback" id="fb6"></div>
+            <div class="solution" id="sol6">0,3 &times; 0,2 = 0,06<br>Truc: 3 &times; 2 = 6, totaal 2 cijfers achter de komma &rarr; <strong>0,06</strong></div>
+        </div>
+
+        <div class="exercise" id="ex7">
+            <p class="q">7. Wat is 2,4 &divide; 0,8?</p>
+            <input type="text" id="ans7" placeholder="?">
+            <button onclick="checkAnswer(7)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(7)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn7" onclick="toggleSolution(7)">Uitwerking</button>
+            <div class="hint" id="hint7">Maak de komma weg: &times;10 &rarr; 24 &divide; 8 = ?</div>
+            <div class="feedback" id="fb7"></div>
+            <div class="solution" id="sol7">2,4 &divide; 0,8 &rarr; &times;10 &rarr; 24 &divide; 8 = <strong>3</strong></div>
+        </div>
+
+        <div class="exercise" id="ex8">
+            <p class="q">8. Wat is groter: 5 &times; 0,9 of 5?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Typ het antwoord van 5 &times; 0,9</p>
+            <input type="text" id="ans8" placeholder="?">
+            <button onclick="checkAnswer(8)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(8)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn8" onclick="toggleSolution(8)">Uitwerking</button>
+            <div class="hint" id="hint8">0,9 is kleiner dan 1. Vermenigvuldigen met een getal kleiner dan 1 maakt&hellip;?</div>
+            <div class="feedback" id="fb8"></div>
+            <div class="solution" id="sol8">5 &times; 0,9 = <strong>4,5</strong><br>Dat is kleiner dan 5! Want 0,9 &lt; 1.</div>
+        </div>
+
+        <div class="exercise" id="ex9">
+            <p class="q">9. Wat is 0,6 &divide; 0,2?</p>
+            <input type="text" id="ans9" placeholder="?">
+            <button onclick="checkAnswer(9)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(9)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn9" onclick="toggleSolution(9)">Uitwerking</button>
+            <div class="hint" id="hint9">Hoe vaak past 0,2 in 0,6? Of: &times;10 &rarr; 6 &divide; 2 = ?</div>
+            <div class="feedback" id="fb9"></div>
+            <div class="solution" id="sol9">0,6 &divide; 0,2 = &ldquo;hoe vaak past 0,2 in 0,6?&rdquo; = <strong>3</strong></div>
+        </div>
+
+        <div class="exercise" id="ex10">
+            <p class="q">10. Wat is 0,1 &times; 0,1?</p>
+            <p style="color:var(--muted);font-size:0.9rem;">Denk: &ldquo;een tiende van een tiende&rdquo;</p>
+            <input type="text" id="ans10" placeholder="?">
+            <button onclick="checkAnswer(10)">Controleer</button>
+            <button class="hint-btn" onclick="toggleHint(10)">Hint</button>
+            <button class="show-solution-btn locked" id="solbtn10" onclick="toggleSolution(10)">Uitwerking</button>
+            <div class="hint" id="hint10">1 &times; 1 = 1, en je hebt totaal 2 cijfers achter de komma. Dus 0,0?</div>
+            <div class="feedback" id="fb10"></div>
+            <div class="solution" id="sol10">0,1 &times; 0,1 = &ldquo;een tiende van een tiende&rdquo; = <strong>0,01</strong> (een honderdste)</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    <p>Wiskunde HAVO &middot; Interactieve gids</p>
+    <p style="margin-top:0.5rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script>
+const answers = {
+    1:  { val: 6,    msg: 'Goed! 3 \u00f7 0,5 = 6. Een half past 6 keer in 3.',     wrong: 'Niet juist. Hoe vaak past 0,5 in 3? Tip: \u00d710 \u2192 30\u00f75.' },
+    2:  { val: 0.25, msg: 'Goed! De helft van een half = een kwart = 0,25.',          wrong: 'Niet juist. De helft van 0,5 is\u2026?' },
+    3:  { val: 5,    msg: 'Goed! 50 cent \u00f7 10 cent = 5 snoepjes.',               wrong: 'Niet juist. Hoeveel keer past 10 cent in 50 cent?' },
+    4:  { val: 3,    msg: 'Goed! Een kwart van 12 = 3.',                              wrong: 'Niet juist. Een kwart van 12: deel 12 door 4.' },
+    5:  { val: 4,    msg: 'Goed! Een kwart past 4 keer in 1.',                        wrong: 'Niet juist. Hoeveel kwarten in een geheel? Denk aan een pizza.' },
+    6:  { val: 0.06, msg: 'Goed! 0,3 \u00d7 0,2 = 0,06.',                             wrong: 'Niet juist. 3\u00d72=6, twee cijfers achter de komma \u2192 0,06.' },
+    7:  { val: 3,    msg: 'Goed! 24 \u00f7 8 = 3.',                                   wrong: 'Niet juist. \u00d710: 24 \u00f7 8 = ?' },
+    8:  { val: 4.5,  msg: 'Goed! 5 \u00d7 0,9 = 4,5. Kleiner dan 5, want 0,9 < 1.',  wrong: 'Niet juist. 5 \u00d7 0,9: negen tienden van 5.' },
+    9:  { val: 3,    msg: 'Goed! 0,2 past 3 keer in 0,6.',                           wrong: 'Niet juist. \u00d710: 6 \u00f7 2 = ?' },
+    10: { val: 0.01, msg: 'Goed! Een tiende van een tiende = een honderdste = 0,01.', wrong: 'Niet juist. Een tiende van een tiende. 1\u00d71=1, twee decimalen \u2192 0,01.' }
+};
+
+function normalize(s) {
+    return s.trim().replace(',', '.').replace(/\s/g, '');
+}
+
+function checkAnswer(n) {
+    const raw = document.getElementById('ans' + n).value;
+    if (!raw.trim()) return;
+    const val = parseFloat(normalize(raw));
+    const fb = document.getElementById('fb' + n);
+    const a = answers[n];
+    if (Math.abs(val - a.val) < 0.001) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.msg;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+    const solBtn = document.getElementById('solbtn' + n);
+    if (solBtn) solBtn.classList.remove('locked');
+}
+
+function toggleHint(n) {
+    const el = document.getElementById('hint' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+function toggleSolution(n) {
+    const el = document.getElementById('sol' + n);
+    el.style.display = el.style.display === 'block' ? 'none' : 'block';
+}
+
+document.querySelectorAll('.exercise input[type=text]').forEach(input => {
+    input.addEventListener('keypress', e => {
+        if (e.key === 'Enter') {
+            const n = parseInt(input.id.replace('ans', ''));
+            checkAnswer(n);
+        }
+    });
+});
+
+// Multiplication slider
+const multSlider = document.getElementById('multSlider');
+multSlider.addEventListener('input', () => {
+    const factor = multSlider.value / 10;
+    const result = 10 * factor;
+    document.getElementById('multFactor').textContent = factor.toFixed(1).replace('.', ',');
+    document.getElementById('multResult').textContent = result % 1 === 0 ? result : result.toFixed(2).replace('.', ',');
+    const comment = document.getElementById('multComment');
+    if (factor > 1) comment.textContent = '(groter \u2014 want factor > 1)';
+    else if (factor === 1) comment.textContent = '(gelijk \u2014 want factor = 1)';
+    else if (factor > 0) comment.textContent = '(kleiner! \u2014 want factor < 1)';
+    else comment.textContent = '';
+});
+
+// Division slider
+const divSlider = document.getElementById('divSlider');
+divSlider.addEventListener('input', () => {
+    const divisor = divSlider.value / 10;
+    const result = divisor > 0 ? 6 / divisor : 0;
+    document.getElementById('divDivisor').textContent = divisor.toFixed(1).replace('.', ',');
+    document.getElementById('divResult').textContent = result % 1 === 0 ? result : result.toFixed(2).replace('.', ',');
+    const comment = document.getElementById('divComment');
+    if (divisor > 1) comment.textContent = '(kleiner \u2014 want deler > 1)';
+    else if (divisor === 1) comment.textContent = '(gelijk \u2014 want deler = 1)';
+    else if (divisor > 0) comment.textContent = '(groter! \u2014 want deler < 1)';
+    else comment.textContent = '';
+});
+</script>
+
+</body>
+</html>

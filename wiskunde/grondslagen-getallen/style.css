@@ -1,0 +1,350 @@
+/* ==================== CSS VARIABELEN ==================== */
+:root {
+    --primary: #2563eb;
+    --primary-light: #dbeafe;
+    --accent: #e11d48;
+    --success: #16a34a;
+    --bg: #f8fafc;
+    --card: #ffffff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 12px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+/* ==================== HEADER & NAV ==================== */
+header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+    color: white;
+    padding: 2.5rem 1rem;
+    text-align: center;
+}
+header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+header p { opacity: 0.85; font-size: 1.1rem; }
+
+.breadcrumb {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 900px;
+    margin: 0 auto;
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
+
+/* ==================== CARDS ==================== */
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+}
+.card h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+.card h3 {
+    font-size: 1.1rem;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--text);
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+}
+.card h3:first-of-type { border-top: none; padding-top: 0; }
+
+/* ==================== TOC ==================== */
+.toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.toc a {
+    background: var(--primary-light);
+    color: var(--primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+.toc a:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* ==================== INFO BOXES ==================== */
+.formula {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 1.15rem;
+    margin: 0.75rem 0;
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+}
+
+.tip-box {
+    background: #fef9c3;
+    border-left: 4px solid #eab308;
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+}
+.tip-box strong { color: #854d0e; }
+
+.warning-box {
+    background: #fee2e2;
+    border-left: 4px solid #ef4444;
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.75rem 0;
+    font-size: 0.95rem;
+}
+.warning-box strong { color: #991b1b; }
+
+.example-box {
+    background: #f0fdf4;
+    border-left: 4px solid #22c55e;
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 0.75rem 0;
+}
+.example-box strong { color: #166534; }
+
+.explanation {
+    color: var(--muted);
+    margin: 0.5rem 0 1rem;
+    font-size: 0.9rem;
+}
+
+/* ==================== FRACTIONS ==================== */
+.frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    font-family: 'Cambria Math', 'Times New Roman', serif;
+}
+.frac .num {
+    border-bottom: 1.5px solid currentColor;
+    padding: 0 0.3rem 0.15rem;
+    line-height: 1.2;
+}
+.frac .den {
+    padding: 0.15rem 0.3rem 0;
+    line-height: 1.2;
+}
+
+/* ==================== SLIDERS ==================== */
+.slider-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+@media (max-width: 500px) { .slider-group { grid-template-columns: 1fr; } }
+
+.slider-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+.slider-item label { font-weight: 600; font-size: 0.9rem; }
+.slider-item input[type=range] { width: 100%; accent-color: var(--primary); }
+
+.slider-demo {
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.75rem 0;
+}
+
+/* ==================== CANVAS ==================== */
+canvas.graph {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 1rem auto;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+/* ==================== PROOF CARDS ==================== */
+.proof-card {
+    background: #faf5ff;
+    border: 1px solid #e9d5ff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+.proof-card h4 {
+    color: #7c3aed;
+    margin-bottom: 0.5rem;
+    font-size: 1.05rem;
+}
+
+.proof-steps {
+    margin: 0.75rem 0;
+}
+.proof-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0e6ff;
+}
+.proof-step:last-child { border-bottom: none; }
+.step-num {
+    background: #7c3aed;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+/* ==================== TRY-IT BOXES ==================== */
+.try-it {
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+}
+.try-it strong { color: var(--primary); }
+.try-it input[type=text],
+.try-input {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    margin: 0.25rem 0.25rem;
+}
+.try-it button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.try-it button:hover { filter: brightness(1.1); }
+.try-it select {
+    padding: 0.4rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+/* ==================== EXERCISES ==================== */
+.exercise {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.exercise p { margin-bottom: 0.5rem; }
+.exercise .q { font-weight: 600; }
+.exercise input[type=text] {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    width: 200px;
+    margin-right: 0.5rem;
+}
+.exercise button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.4rem 1rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+.exercise button:hover { filter: brightness(1.1); }
+
+.feedback {
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: none;
+}
+.feedback.correct { display: block; background: #dcfce7; color: #166534; }
+.feedback.wrong { display: block; background: #fee2e2; color: #991b1b; }
+
+.hint-btn {
+    background: none !important;
+    border: none;
+    color: var(--primary) !important;
+    cursor: pointer;
+    font-size: 0.85rem;
+    text-decoration: underline;
+    margin-top: 0.25rem;
+}
+.hint {
+    display: none;
+    background: #fef9c3;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    color: #854d0e;
+}
+
+.show-solution-btn {
+    background: none !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--muted) !important;
+    margin-top: 0.25rem;
+    margin-left: 0.25rem;
+    transition: opacity 0.2s;
+}
+.show-solution-btn:hover { background: #f1f5f9 !important; }
+.show-solution-btn.locked {
+    opacity: 0.35;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+.solution {
+    display: none;
+    background: #f0fdf4;
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    color: #166534;
+    line-height: 1.6;
+}
+
+/* ==================== FOOTER ==================== */
+footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+}

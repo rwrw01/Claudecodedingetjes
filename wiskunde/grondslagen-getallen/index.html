@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grondslagen van Getallen &mdash; Calculus-voorbereiding</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Grondslagen van Getallen</h1>
+    <p>De 12 spelregels achter al het rekenen &mdash; Calculus-voorbereiding</p>
+</header>
+
+<div class="breadcrumb">
+    <a href="../">Overzicht</a> &rsaquo; Grondslagen van Getallen
+</div>
+
+<div class="container">
+
+<!-- ==================== INHOUDSOPGAVE ==================== -->
+<div class="card">
+    <h2>Inhoud</h2>
+    <div class="toc">
+        <a href="#inleiding">Inleiding</a>
+        <a href="#lichaamsaxiomas">P1&ndash;P9: Lichaamsaxioma&rsquo;s</a>
+        <a href="#orde-axiomas">P10&ndash;P12: Orde-axioma&rsquo;s</a>
+        <a href="#absolute-waarde">Absolute waarde</a>
+        <a href="#oefenopgaven">12 Oefenopgaven</a>
+    </div>
+</div>
+
+<!-- ==================== A. INLEIDING ==================== -->
+<div class="card" id="inleiding">
+    <h2>Waarom dit ertoe doet</h2>
+    <p>Je kunt rekenen. Dat weet je. Maar kun je <strong>bewijzen</strong> waarom 2 + 3 = 3 + 2? Of waarom &ldquo;min keer min is plus&rdquo;?</p>
+    <p>In dit hoofdstuk pakken we het anders aan. We beginnen bij het allereerste begin: <strong>12 spelregels</strong> (wiskundigen noemen ze <em>axioma&rsquo;s</em>) waaruit &aacute;lle rekenregels volgen. Een <strong>axioma</strong> is een spelregel die we als waarheid aannemen &mdash; je hoeft het niet te bewijzen, het <em>is</em> het startpunt.</p>
+
+    <div class="tip-box">
+        <strong>Drie soorten axioma&rsquo;s:</strong><br>
+        &bull; <strong>Lichaamsaxioma&rsquo;s</strong> (P1&ndash;P9) &mdash; de rekenregels: hoe optellen en vermenigvuldigen werken.<br>
+        &bull; <strong>Orde-axioma&rsquo;s</strong> (P10&ndash;P12) &mdash; de rangorde: hoe &ldquo;groter dan&rdquo; werkt.<br>
+        &bull; Later komt er nog een dertiende axioma (<em>completheid</em>) dat de stap maakt van breuken naar alle re&euml;le getallen &mdash; maar dat is voor een volgend hoofdstuk.
+    </div>
+
+    <p>Na dit hoofdstuk weet je niet alleen <em>dat</em> rekenregels werken, maar <em>waarom</em> ze werken &mdash; en kun je het bewijzen.</p>
+</div>
+
+<!-- ==================== B. LICHAAMSAXIOMA'S (P1-P9) ==================== -->
+<div class="card" id="lichaamsaxiomas">
+    <h2>B. Lichaamsaxioma&rsquo;s &mdash; de rekenregels (P1&ndash;P9)</h2>
+    <p><strong>Lichaam</strong> (Engels: <em>field</em>) klinkt abstract, maar het betekent simpelweg: een verzameling getallen waarmee je kunt optellen, aftrekken, vermenigvuldigen en delen. De volgende 9 spelregels beschrijven hoe dat werkt.</p>
+
+    <!-- P1 -->
+    <h3 id="p1">P1: Associativiteit van optelling</h3>
+    <div class="formula">a + (b + c) = (a + b) + c</div>
+    <p><strong>Associativiteit</strong> &mdash; dat is een moeilijk woord voor iets simpels: <em>het maakt niet uit waar je de haakjes zet bij optellen.</em></p>
+
+    <div class="example-box">
+        <strong>Voorbeeld:</strong> 3 + (5 + 7) = 3 + 12 = 15, en (3 + 5) + 7 = 8 + 7 = 15. Zelfde uitkomst!
+    </div>
+
+    <div class="slider-demo" id="assocDemo">
+        <p style="font-weight:600;margin-bottom:0.5rem;">Probeer het zelf met de sliders:</p>
+        <div class="slider-group" style="grid-template-columns:1fr 1fr 1fr;">
+            <div class="slider-item">
+                <label>a = <span id="assocA">4</span></label>
+                <input type="range" min="-10" max="10" value="4" oninput="updateAssoc()">
+            </div>
+            <div class="slider-item">
+                <label>b = <span id="assocB">6</span></label>
+                <input type="range" min="-10" max="10" value="6" oninput="updateAssoc()">
+            </div>
+            <div class="slider-item">
+                <label>c = <span id="assocC">2</span></label>
+                <input type="range" min="-10" max="10" value="2" oninput="updateAssoc()">
+            </div>
+        </div>
+        <div class="assoc-result" id="assocResult" style="text-align:center;font-family:'Cambria Math','Times New Roman',serif;font-size:1.15rem;margin:0.5rem 0;"></div>
+    </div>
+
+    <!-- P2 -->
+    <h3 id="p2">P2: Identiteitselement van optelling</h3>
+    <div class="formula">a + 0 = 0 + a = a</div>
+    <p><strong>Identiteitselement</strong> &mdash; het &lsquo;niets-doen-getal&rsquo;: tel je 0 ergens bij op, dan verandert er niets. Nul is neutraal bij optelling.</p>
+
+    <div class="try-it">
+        <strong>Probeer zelf:</strong>
+        <span>Welk getal verandert niets bij optelling? </span>
+        <input type="text" id="tryP2" class="try-input" placeholder="?" style="width:60px;">
+        <button onclick="checkTry('tryP2')">Check</button>
+        <span id="tryP2fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- P3 -->
+    <h3 id="p3">P3: Inverse van optelling</h3>
+    <div class="formula">Voor elke a bestaat &minus;a, zodat a + (&minus;a) = 0</div>
+    <p><strong>Inverse</strong> &mdash; het &lsquo;tegenovergestelde&rsquo;: elk getal heeft een tegenhanger waarmee je weer op 0 uitkomt. Het tegenovergestelde van 5 is &minus;5, want 5 + (&minus;5) = 0.</p>
+
+    <div class="tip-box">
+        <strong>Hieruit volgt:</strong> Aftrekken IS optellen van het tegenovergestelde.<br>
+        a &minus; b = a + (&minus;b). Aftrekken is geen aparte bewerking &mdash; het is optelling in vermomming!
+    </div>
+
+    <div class="try-it">
+        <strong>Probeer zelf:</strong>
+        <span>Wat is het tegenovergestelde van 8? </span>
+        <input type="text" id="tryP3" class="try-input" placeholder="?" style="width:80px;">
+        <button onclick="checkTry('tryP3')">Check</button>
+        <span id="tryP3fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- P4 -->
+    <h3 id="p4">P4: Commutativiteit van optelling</h3>
+    <div class="formula">a + b = b + a</div>
+    <p><strong>Commutativiteit</strong> &mdash; de volgorde maakt niet uit bij optellen. Of je nu 3 + 7 of 7 + 3 rekent, je krijgt altijd 10.</p>
+
+    <div class="try-it">
+        <strong>Probeer zelf:</strong>
+        <span>Vul twee getallen in en zie dat de volgorde niet uitmaakt:</span><br>
+        <input type="text" id="tryP4a" class="try-input" placeholder="getal 1" style="width:80px;">
+        <span> + </span>
+        <input type="text" id="tryP4b" class="try-input" placeholder="getal 2" style="width:80px;">
+        <button onclick="checkCommut()">Check</button>
+        <span id="tryP4fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- P5 -->
+    <h3 id="p5">P5: Associativiteit van vermenigvuldiging</h3>
+    <div class="formula">a &middot; (b &middot; c) = (a &middot; b) &middot; c</div>
+    <p>Zelfde verhaal als P1, maar dan voor vermenigvuldigen: <em>het maakt niet uit waar je de haakjes zet.</em></p>
+
+    <div class="example-box">
+        <strong>Voorbeeld:</strong> 2 &middot; (4 &middot; 5) = 2 &middot; 20 = 40, en (2 &middot; 4) &middot; 5 = 8 &middot; 5 = 40. Zelfde uitkomst!
+    </div>
+
+    <!-- P6 -->
+    <h3 id="p6">P6: Identiteitselement van vermenigvuldiging</h3>
+    <div class="formula">a &middot; 1 = 1 &middot; a = a</div>
+    <p>Het &lsquo;niets-doen-getal&rsquo; voor vermenigvuldiging is <strong>1</strong>. Vermenigvuldig je iets met 1, dan verandert er niets.</p>
+
+    <div class="warning-box">
+        <strong>Belangrijk:</strong> 1 &ne; 0. Dit klinkt vanzelfsprekend, maar het is wiskundig essentieel. Het niets-doen-getal voor optelling (0) is een &aacute;nder getal dan het niets-doen-getal voor vermenigvuldiging (1). Als ze gelijk zouden zijn, zou elk getal gelijk zijn aan 0 &mdash; en dan heb je geen bruikbare wiskunde meer.
+    </div>
+
+    <!-- P7 -->
+    <h3 id="p7">P7: Inverse van vermenigvuldiging</h3>
+    <div class="formula">Voor elke a &ne; 0 bestaat a&sup1; (geschreven a<sup>&minus;1</sup> of 1/a), zodat a &middot; a<sup>&minus;1</sup> = 1</div>
+    <p><strong>Multiplicatieve inverse</strong> &mdash; elk getal (behalve 0) heeft een &lsquo;omgekeerde&rsquo; waarmee je weer op 1 uitkomt. Het omgekeerde van 5 is &frac15;, want 5 &middot; &frac15; = 1.</p>
+
+    <div class="tip-box">
+        <strong>Hieruit volgt:</strong> Delen IS vermenigvuldigen met het omgekeerde.<br>
+        a / b = a &middot; b<sup>&minus;1</sup>. Net als aftrekken optelling in vermomming is, is deling vermenigvuldiging in vermomming!
+    </div>
+
+    <div class="warning-box" id="p7warning">
+        <strong>&#9888; Waarom niet delen door 0?</strong><br>
+        Stel dat 0 w&eacute;l een inverse had. Dan zou er een getal x moeten bestaan met 0 &middot; x = 1.<br>
+        Maar we bewijzen straks (bij P9) dat a &middot; 0 = 0 voor <em>elk</em> getal a.<br>
+        Dus 0 &middot; x = 0, niet 1. <strong>Tegenspraak!</strong><br>
+        Daarom bestaat 0<sup>&minus;1</sup> niet. Dit is geen willekeurige regel &mdash; het volgt <em>logisch</em> uit de andere axioma&rsquo;s.
+    </div>
+
+    <div class="try-it">
+        <strong>Probeer zelf:</strong>
+        <span>Wat is de (multiplicatieve) inverse van 4? Schrijf als breuk. </span>
+        <input type="text" id="tryP7" class="try-input" placeholder="bijv. 1/3" style="width:80px;">
+        <button onclick="checkTry('tryP7')">Check</button>
+        <span id="tryP7fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- P8 -->
+    <h3 id="p8">P8: Commutativiteit van vermenigvuldiging</h3>
+    <div class="formula">a &middot; b = b &middot; a</div>
+    <p>De volgorde maakt niet uit bij vermenigvuldigen. 3 &middot; 7 = 7 &middot; 3 = 21.</p>
+
+    <!-- P9 -->
+    <h3 id="p9">P9: Distributiviteit</h3>
+    <div class="formula">a &middot; (b + c) = a &middot; b + a &middot; c</div>
+    <p><strong>Distributiviteit</strong> &mdash; de brug tussen optellen en vermenigvuldigen. Je mag een vermenigvuldiging &lsquo;uitdelen&rsquo; over een optelling. Dit is misschien wel de belangrijkste eigenschap, want het verbindt de twee bewerkingen.</p>
+
+    <div class="example-box">
+        <strong>Voorbeeld:</strong> 3 &middot; (4 + 6) = 3 &middot; 4 + 3 &middot; 6 = 12 + 18 = 30. Klopt, want 3 &middot; 10 = 30.
+    </div>
+
+    <div class="try-it">
+        <strong>Probeer zelf:</strong>
+        <span>Werk uit: 5 &middot; (7 + 3) = 5 &middot; 7 + 5 &middot; 3 = </span>
+        <input type="text" id="tryP9a" class="try-input" placeholder="?" style="width:60px;">
+        <span> + </span>
+        <input type="text" id="tryP9b" class="try-input" placeholder="?" style="width:60px;">
+        <span> = </span>
+        <input type="text" id="tryP9c" class="try-input" placeholder="?" style="width:60px;">
+        <button onclick="checkDistrib()">Check</button>
+        <span id="tryP9fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- Eerste bewijzen -->
+    <h3>Eerste bewijzen met P1&ndash;P9</h3>
+    <p>Nu het spannende deel: we gaan dingen <strong>bewijzen</strong> die je altijd als vanzelfsprekend hebt aangenomen.</p>
+
+    <!-- Bewijs: a · 0 = 0 -->
+    <div class="proof-card">
+        <h4>Bewijs: a &middot; 0 = 0</h4>
+        <p>Waarom is &ldquo;iets keer nul altijd nul&rdquo;? Dat volgt uit P9 (distributiviteit):</p>
+        <div class="proof-steps">
+            <div class="proof-step">
+                <span class="step-num">1</span>
+                <span>We weten: 0 + 0 = 0 <em>(want P2: 0 is het identiteitselement)</em></span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">2</span>
+                <span>Dus: a &middot; 0 = a &middot; (0 + 0) <em>(we vervangen 0 door 0 + 0)</em></span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">3</span>
+                <span>P9 toepassen: a &middot; (0 + 0) = a &middot; 0 + a &middot; 0</span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">4</span>
+                <span>Nu hebben we: a &middot; 0 = a &middot; 0 + a &middot; 0</span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">5</span>
+                <span>Trek a &middot; 0 af van beide kanten (P3): 0 = a &middot; 0 &#10004;</span>
+            </div>
+        </div>
+        <div class="try-it">
+            <strong>Welk axioma gebruikten we in stap 3?</strong>
+            <input type="text" id="tryProof1" class="try-input" placeholder="P?" style="width:60px;">
+            <button onclick="checkTry('tryProof1')">Check</button>
+            <span id="tryProof1fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
+    </div>
+
+    <!-- Bewijs: (-a)·b = -(a·b) -->
+    <div class="proof-card">
+        <h4>Bewijs: (&minus;a) &middot; b = &minus;(a &middot; b)</h4>
+        <p>We moeten laten zien dat (&minus;a) &middot; b het tegenovergestelde is van a &middot; b. Oftewel: hun som moet 0 zijn.</p>
+        <div class="proof-steps">
+            <div class="proof-step">
+                <span class="step-num">1</span>
+                <span>Bereken: a &middot; b + (&minus;a) &middot; b</span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">2</span>
+                <span>P9 (andersom): = (a + (&minus;a)) &middot; b</span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">3</span>
+                <span>P3: a + (&minus;a) = 0, dus = 0 &middot; b</span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">4</span>
+                <span>Zojuist bewezen: 0 &middot; b = 0 &#10004;</span>
+            </div>
+        </div>
+        <p>De som is 0, dus (&minus;a) &middot; b is inderdaad het tegenovergestelde van a &middot; b.</p>
+    </div>
+
+    <!-- Bewijs: (-a)(-b) = ab -->
+    <div class="proof-card">
+        <h4>Bewijs: (&minus;a)(&minus;b) = a &middot; b &mdash; &ldquo;Min keer min is plus&rdquo;</h4>
+        <p>Dit is de beroemde regel die iedereen kent maar bijna niemand kan bewijzen. Hier gaat-ie:</p>
+        <div class="proof-steps" id="minMinProof">
+            <div class="proof-step">
+                <span class="step-num">1</span>
+                <span>We weten nu: (&minus;a) &middot; b = &minus;(a &middot; b) <em>(net bewezen)</em></span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">2</span>
+                <span>Vul b = &minus;b in: (&minus;a) &middot; (&minus;b) = &minus;(a &middot; (&minus;b))</span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">3</span>
+                <span>Maar a &middot; (&minus;b) = &minus;(a &middot; b) <em>(zelfde regel, nu met a en &minus;b)</em></span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">4</span>
+                <span>Dus: (&minus;a)(&minus;b) = &minus;(&minus;(a &middot; b)) = a &middot; b &#10004;</span>
+            </div>
+        </div>
+        <p class="explanation">In stap 4 gebruiken we dat het tegenovergestelde van het tegenovergestelde je weer terugbrengt bij het origineel: &minus;(&minus;x) = x. Dat volgt uit P3: als x + (&minus;x) = 0, dan is &minus;x + x = 0, dus x is het tegenovergestelde van &minus;x.</p>
+
+        <div class="try-it">
+            <strong>Controleer:</strong> (&minus;3)(&minus;7) =
+            <input type="text" id="tryMinMin" class="try-input" placeholder="?" style="width:60px;">
+            <button onclick="checkTry('tryMinMin')">Check</button>
+            <span id="tryMinMinfb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== C. ORDE-AXIOMA'S (P10-P12) ==================== -->
+<div class="card" id="orde-axiomas">
+    <h2>C. Orde-axioma&rsquo;s &mdash; de rangorde (P10&ndash;P12)</h2>
+    <p>De eerste 9 axioma&rsquo;s zeggen hoe je kunt <em>rekenen</em>. Maar ze zeggen niets over welk getal groter is dan welk ander getal. Daarvoor hebben we drie extra spelregels nodig.</p>
+
+    <p>We defini&euml;ren een speciale verzameling <strong>P</strong> (van &ldquo;positief&rdquo;): de verzameling van alle positieve getallen.</p>
+
+    <!-- P10 -->
+    <h3 id="p10">P10: Trichotomie</h3>
+    <div class="formula">Voor elk getal a geldt precies &eacute;&eacute;n van deze drie: a &isin; P, &nbsp; a = 0, &nbsp; &minus;a &isin; P</div>
+    <p><strong>Trichotomie</strong> &mdash; drie mogelijkheden, en precies &eacute;&eacute;n is waar. Net als bij een wedstrijd: je wint, verliest, of speelt gelijk &mdash; nooit twee tegelijk.</p>
+    <p>Dit betekent: elk getal heeft een vaste plek op de getallenlijn. Een getal kan niet tegelijk positief en negatief zijn, en er zijn geen &ldquo;gaten&rdquo; in de ordening.</p>
+
+    <p>We schrijven <strong>a &gt; b</strong> als a &minus; b &isin; P (het verschil is positief).</p>
+
+    <div class="number-line-container">
+        <p style="font-weight:600;margin-bottom:0.5rem;">Verken de getallenlijn:</p>
+        <canvas id="numberLine" class="graph" width="500" height="120"></canvas>
+        <div style="text-align:center;">
+            <label>a = <span id="nlVal">3</span></label><br>
+            <input type="range" id="nlSlider" min="-10" max="10" value="3" step="0.5" style="width:80%;max-width:400px;accent-color:var(--primary);" oninput="updateNumberLine()">
+        </div>
+        <div id="nlResult" style="text-align:center;font-size:0.95rem;margin-top:0.5rem;color:var(--primary);font-weight:600;"></div>
+    </div>
+
+    <!-- P11 -->
+    <h3 id="p11">P11: Gesloten onder optelling</h3>
+    <div class="formula">Als a &gt; 0 en b &gt; 0, dan a + b &gt; 0</div>
+    <p>In gewone taal: <em>positief plus positief is altijd positief.</em> Logisch, toch? Maar het is niet vanzelfsprekend &mdash; het is een spelregel die we aannemen.</p>
+
+    <div class="example-box">
+        <strong>Gevolg:</strong> Als a &lt; b, dan a + c &lt; b + c (voor elk getal c).<br>
+        <em>Bewijs:</em> b &minus; a &gt; 0 (gegeven), dus (b + c) &minus; (a + c) = b &minus; a &gt; 0. &#10004;
+    </div>
+
+    <!-- P12 -->
+    <h3 id="p12">P12: Gesloten onder vermenigvuldiging</h3>
+    <div class="formula">Als a &gt; 0 en b &gt; 0, dan a &middot; b &gt; 0</div>
+    <p><em>Positief keer positief is altijd positief.</em></p>
+
+    <div class="proof-card">
+        <h4>Gevolg: 1 &gt; 0</h4>
+        <p>Dit is een van de mooiste kleine bewijzen. We weten:</p>
+        <div class="proof-steps">
+            <div class="proof-step"><span class="step-num">1</span><span>1 &ne; 0 (axioma P6)</span></div>
+            <div class="proof-step"><span class="step-num">2</span><span>Dus (P10): 1 &isin; P of &minus;1 &isin; P</span></div>
+            <div class="proof-step"><span class="step-num">3</span><span>Stel 1 &isin; P &rarr; dan is 1 &gt; 0 &#10004;</span></div>
+            <div class="proof-step"><span class="step-num">4</span><span>Stel &minus;1 &isin; P &rarr; dan (P12): (&minus;1) &middot; (&minus;1) &isin; P &rarr; 1 &isin; P &#10004;</span></div>
+            <div class="proof-step"><span class="step-num">5</span><span>In beide gevallen: 1 &gt; 0!</span></div>
+        </div>
+    </div>
+
+    <div class="proof-card">
+        <h4>Gevolg: als a &ne; 0, dan a&sup2; &gt; 0</h4>
+        <p>Als a &gt; 0: dan a &middot; a &gt; 0 (P12). Als a &lt; 0: dan &minus;a &gt; 0, dus (&minus;a)(&minus;a) = a&sup2; &gt; 0 (P12 + min&times;min=plus).</p>
+    </div>
+
+    <!-- Afleidingen met ongelijkheden -->
+    <h3>Belangrijke afleidingen</h3>
+
+    <div class="example-box">
+        <strong>Als a &lt; b en c &gt; 0, dan ac &lt; bc</strong><br>
+        <em>Bewijs:</em> b &minus; a &gt; 0 en c &gt; 0, dus (b &minus; a) &middot; c &gt; 0 (P12), dus bc &minus; ac &gt; 0. &#10004;
+    </div>
+
+    <div class="warning-box">
+        <strong>&#9888; Pas op! Als a &lt; b en c &lt; 0, dan ac &gt; bc</strong><br>
+        De ongelijkheid <strong>draait om</strong> bij vermenigvuldiging met een negatief getal!<br>
+        <em>Bewijs:</em> b &minus; a &gt; 0 en &minus;c &gt; 0, dus (b &minus; a)(&minus;c) &gt; 0, dus &minus;bc + ac &gt; 0, dus ac &gt; bc. &#10004;
+    </div>
+
+    <div class="slider-demo">
+        <p style="font-weight:600;margin-bottom:0.5rem;">Zie het omdraai-effect:</p>
+        <p>Neem de ongelijkheid 2 &lt; 5. Vermenigvuldig beide kanten met c:</p>
+        <div style="text-align:center;">
+            <label>c = <span id="ineqC">3</span></label><br>
+            <input type="range" id="ineqSlider" min="-5" max="5" value="3" style="width:80%;max-width:400px;accent-color:var(--primary);" oninput="updateIneq()">
+        </div>
+        <div id="ineqResult" style="text-align:center;font-size:1.1rem;margin-top:0.5rem;font-family:'Cambria Math','Times New Roman',serif;"></div>
+    </div>
+</div>
+
+<!-- ==================== D. ABSOLUTE WAARDE ==================== -->
+<div class="card" id="absolute-waarde">
+    <h2>D. Absolute waarde en driehoeksongelijkheid</h2>
+
+    <h3>Definitie</h3>
+    <div class="formula">
+        |a| = a als a &ge; 0, &nbsp;&nbsp; |a| = &minus;a als a &lt; 0
+    </div>
+    <p><strong>Absolute waarde</strong> &mdash; de afstand van een getal tot nul op de getallenlijn. Altijd positief of nul.</p>
+
+    <div class="example-box">
+        <strong>Voorbeelden:</strong> |5| = 5, &nbsp; |&minus;3| = 3, &nbsp; |0| = 0
+    </div>
+
+    <div class="number-line-container">
+        <p style="font-weight:600;margin-bottom:0.5rem;">Schuif over de getallenlijn en zie de absolute waarde:</p>
+        <canvas id="absLine" class="graph" width="500" height="140"></canvas>
+        <div style="text-align:center;">
+            <label>a = <span id="absVal">-4</span></label><br>
+            <input type="range" id="absSlider" min="-10" max="10" value="-4" step="0.5" style="width:80%;max-width:400px;accent-color:var(--primary);" oninput="updateAbsLine()">
+        </div>
+        <div id="absResult" style="text-align:center;font-size:1.05rem;margin-top:0.5rem;color:var(--primary);font-weight:600;"></div>
+    </div>
+
+    <div class="try-it">
+        <strong>Probeer zelf:</strong>
+        <span>|&minus;7| = </span>
+        <input type="text" id="tryAbs1" class="try-input" placeholder="?" style="width:60px;">
+        <span>, &nbsp; |4| = </span>
+        <input type="text" id="tryAbs2" class="try-input" placeholder="?" style="width:60px;">
+        <span>, &nbsp; |0| = </span>
+        <input type="text" id="tryAbs3" class="try-input" placeholder="?" style="width:60px;">
+        <button onclick="checkAbsTry()">Check</button>
+        <span id="tryAbsfb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- Driehoeksongelijkheid -->
+    <h3>Stelling 1: De driehoeksongelijkheid</h3>
+    <div class="formula">|a + b| &le; |a| + |b|</div>
+    <p><strong>De &lsquo;kortste weg&rsquo;-regel:</strong> de directe afstand is nooit langer dan de omweg. Als je eerst a stappen doet en dan b stappen, kan de totale verplaatsing nooit groter zijn dan de som van de afstanden &mdash; want stappen in tegengestelde richting heffen elkaar (deels) op.</p>
+
+    <div class="example-box">
+        <strong>Voorbeeld:</strong> a = 5, b = &minus;3.<br>
+        |a + b| = |5 + (&minus;3)| = |2| = 2<br>
+        |a| + |b| = 5 + 3 = 8<br>
+        Inderdaad: 2 &le; 8 &#10004;
+    </div>
+
+    <div class="proof-card">
+        <h4>Bewijs (gevallenanalyse)</h4>
+        <p>We onderscheiden twee gevallen:</p>
+        <div class="proof-steps">
+            <div class="proof-step">
+                <span class="step-num">1</span>
+                <span><strong>Geval 1:</strong> a en b hebben hetzelfde teken (beide &ge; 0 of beide &le; 0).<br>Dan |a + b| = |a| + |b|. <em>Gelijkheid!</em></span>
+            </div>
+            <div class="proof-step">
+                <span class="step-num">2</span>
+                <span><strong>Geval 2:</strong> a en b hebben tegengestelde tekens.<br>Dan heffen ze elkaar deels op, dus |a + b| &lt; |a| + |b|. <em>Strikte ongelijkheid!</em></span>
+            </div>
+        </div>
+        <p class="explanation">De slimme truc: je kunt het ook bewijzen via |a|&sup2; = a&sup2;. Omdat a&sup2; + 2ab + b&sup2; &le; a&sup2; + 2|a||b| + b&sup2; (want ab &le; |a||b|), geldt (a+b)&sup2; &le; (|a|+|b|)&sup2;, en na worteltrekken volgt |a+b| &le; |a|+|b|.</p>
+    </div>
+
+    <div class="try-it">
+        <strong>Wanneer geldt gelijkheid?</strong>
+        <select id="tryTriangle" style="padding:0.4rem;border:1px solid var(--border);border-radius:6px;">
+            <option value="">Kies...</option>
+            <option value="same">Als a en b hetzelfde teken hebben</option>
+            <option value="diff">Als a en b tegengesteld teken hebben</option>
+            <option value="always">Altijd</option>
+        </select>
+        <button onclick="checkTriangle()">Check</button>
+        <span id="tryTrianglefb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+</div>
+
+<!-- ==================== E. OEFENOPGAVEN ==================== -->
+<div class="card" id="oefenopgaven">
+    <h2>E. Oefenopgaven</h2>
+    <p>Pas nu de axioma&rsquo;s zelf toe. Bij bewijsopgaven: schrijf welke axioma&rsquo;s (P1&ndash;P12) je gebruikt.</p>
+
+    <!-- Opgave 1 -->
+    <div class="exercise" id="ex1">
+        <p class="q">1. Bewijs: als bx = b voor een b &ne; 0, dan x = 1.</p>
+        <p class="explanation">Hint: welk axioma garandeert dat b een inverse heeft?</p>
+        <input type="text" id="ans1" placeholder="x = ?">
+        <button onclick="checkAnswer(1)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn1" onclick="toggleSolution(1)">Uitwerking</button>
+        <div class="hint" id="hint1">Vermenigvuldig beide kanten met b<sup>&minus;1</sup> (die bestaat vanwege P7, want b &ne; 0).</div>
+        <div class="feedback" id="fb1"></div>
+        <div class="solution" id="sol1">
+            <strong>Bewijs:</strong><br>
+            bx = b &nbsp; (gegeven)<br>
+            b<sup>&minus;1</sup> &middot; (bx) = b<sup>&minus;1</sup> &middot; b &nbsp; (vermenigvuldig met b<sup>&minus;1</sup>, bestaat vanwege P7)<br>
+            (b<sup>&minus;1</sup> &middot; b) &middot; x = 1 &nbsp; (P5: associativiteit, P7: b<sup>&minus;1</sup> &middot; b = 1)<br>
+            1 &middot; x = 1 &nbsp; (P7)<br>
+            x = 1 &nbsp; (P6) &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 2 -->
+    <div class="exercise" id="ex2">
+        <p class="q">2. Bewijs: p&sup2; &minus; q&sup2; = (p &minus; q)(p + q)</p>
+        <input type="text" id="ans2" placeholder="werk (p-q)(p+q) uit">
+        <button onclick="checkAnswer(2)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn2" onclick="toggleSolution(2)">Uitwerking</button>
+        <div class="hint" id="hint2">Werk (p &minus; q)(p + q) uit met distributiviteit (P9). Je krijgt 4 termen, waarvan er 2 tegen elkaar wegvallen.</div>
+        <div class="feedback" id="fb2"></div>
+        <div class="solution" id="sol2">
+            <strong>Bewijs (P9 twee keer toepassen):</strong><br>
+            (p &minus; q)(p + q)<br>
+            = p(p + q) + (&minus;q)(p + q) &nbsp; (P9)<br>
+            = p&sup2; + pq + (&minus;q)p + (&minus;q)q &nbsp; (P9 nogmaals)<br>
+            = p&sup2; + pq &minus; pq &minus; q&sup2; &nbsp; ((&minus;q)p = &minus;(qp) en (&minus;q)q = &minus;q&sup2;)<br>
+            = p&sup2; &minus; q&sup2; &nbsp; (pq &minus; pq = 0, P3) &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 3 -->
+    <div class="exercise" id="ex3">
+        <p class="q">3. Fout zoeken: het &ldquo;bewijs&rdquo; dat 2 = 1. Waar gaat het mis?</p>
+        <div class="example-box" style="background:#fff8f8;">
+            Neem a = b. Dan:<br>
+            a&sup2; = ab &nbsp; (beide kanten &times; a)<br>
+            a&sup2; &minus; b&sup2; = ab &minus; b&sup2; &nbsp; (trek b&sup2; af)<br>
+            (a &minus; b)(a + b) = b(a &minus; b) &nbsp; (ontbinden)<br>
+            a + b = b &nbsp; (<strong>delen door (a &minus; b)</strong>)<br>
+            b + b = b &nbsp; (want a = b)<br>
+            2b = b, dus 2 = 1 ???
+        </div>
+        <input type="text" id="ans3" placeholder="in welke stap zit de fout?">
+        <button onclick="checkAnswer(3)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn3" onclick="toggleSolution(3)">Uitwerking</button>
+        <div class="hint" id="hint3">Kijk naar de stap waar we &ldquo;delen&rdquo;. Waardoor delen we? En wat is de waarde daarvan?</div>
+        <div class="feedback" id="fb3"></div>
+        <div class="solution" id="sol3">
+            <strong>De fout zit in stap 4:</strong> we delen door (a &minus; b).<br>
+            Maar a = b, dus a &minus; b = 0.<br>
+            <strong>Delen door 0 is niet toegestaan!</strong> (P7: alleen getallen &ne; 0 hebben een inverse.)<br>
+            Dit is precies waarom de warning-box bij P7 zo belangrijk is: zonder die beperking kun je elke onzin &ldquo;bewijzen&rdquo;.
+        </div>
+    </div>
+
+    <!-- Opgave 4 -->
+    <div class="exercise" id="ex4">
+        <p class="q">4. Bewijs: <span class="frac"><span class="num">a</span><span class="den">b</span></span> = <span class="frac"><span class="num">ac</span><span class="den">bc</span></span> als b, c &ne; 0</p>
+        <input type="text" id="ans4" placeholder="welk axioma gebruik je?">
+        <button onclick="checkAnswer(4)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn4" onclick="toggleSolution(4)">Uitwerking</button>
+        <div class="hint" id="hint4">Schrijf a/b als a &middot; b<sup>&minus;1</sup> en ac/(bc) als (ac) &middot; (bc)<sup>&minus;1</sup>. Gebruik dat (bc)<sup>&minus;1</sup> = b<sup>&minus;1</sup> &middot; c<sup>&minus;1</sup>.</div>
+        <div class="feedback" id="fb4"></div>
+        <div class="solution" id="sol4">
+            <strong>Bewijs:</strong><br>
+            ac/(bc) = (ac) &middot; (bc)<sup>&minus;1</sup> &nbsp; (definitie deling)<br>
+            = (ac) &middot; (b<sup>&minus;1</sup> &middot; c<sup>&minus;1</sup>) &nbsp; (inverse van product)<br>
+            = a &middot; (c &middot; c<sup>&minus;1</sup>) &middot; b<sup>&minus;1</sup> &nbsp; (P5, P8: herschikken)<br>
+            = a &middot; 1 &middot; b<sup>&minus;1</sup> &nbsp; (P7: c &middot; c<sup>&minus;1</sup> = 1)<br>
+            = a &middot; b<sup>&minus;1</sup> &nbsp; (P6)<br>
+            = a/b &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 5 -->
+    <div class="exercise" id="ex5">
+        <p class="q">5. Bewijs: <span class="frac"><span class="num">a</span><span class="den">b</span></span> + <span class="frac"><span class="num">c</span><span class="den">d</span></span> = <span class="frac"><span class="num">ad + bc</span><span class="den">bd</span></span></p>
+        <input type="text" id="ans5" placeholder="eerste stap?">
+        <button onclick="checkAnswer(5)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn5" onclick="toggleSolution(5)">Uitwerking</button>
+        <div class="hint" id="hint5">Schrijf a/b als a &middot; b<sup>&minus;1</sup> en c/d als c &middot; d<sup>&minus;1</sup>. Maak dan de noemers gelijk door slim te vermenigvuldigen.</div>
+        <div class="feedback" id="fb5"></div>
+        <div class="solution" id="sol5">
+            <strong>Bewijs:</strong><br>
+            a/b + c/d<br>
+            = a &middot; b<sup>&minus;1</sup> + c &middot; d<sup>&minus;1</sup> &nbsp; (definitie)<br>
+            = a &middot; b<sup>&minus;1</sup> &middot; (d &middot; d<sup>&minus;1</sup>) + c &middot; d<sup>&minus;1</sup> &middot; (b &middot; b<sup>&minus;1</sup>) &nbsp; (P7: x &middot; x<sup>&minus;1</sup> = 1)<br>
+            = (ad) &middot; (bd)<sup>&minus;1</sup> + (cb) &middot; (db)<sup>&minus;1</sup> &nbsp; (herschikken)<br>
+            = (ad) &middot; (bd)<sup>&minus;1</sup> + (bc) &middot; (bd)<sup>&minus;1</sup> &nbsp; (P8)<br>
+            = (ad + bc) &middot; (bd)<sup>&minus;1</sup> &nbsp; (P9: uitbuiken)<br>
+            = (ad + bc) / (bd) &#10004;<br><br>
+            <em>Dit is de kruislings-methode die je al kent van breuken optellen!</em>
+        </div>
+    </div>
+
+    <!-- Opgave 6 -->
+    <div class="exercise" id="ex6">
+        <p class="q">6. Vind alle x waarvoor 3 &minus; x &lt; 5 &minus; 2x</p>
+        <input type="text" id="ans6" placeholder="x > ? of x < ?">
+        <button onclick="checkAnswer(6)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(6)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn6" onclick="toggleSolution(6)">Uitwerking</button>
+        <div class="hint" id="hint6">Tel 2x op bij beide kanten, en trek 3 af van beide kanten.</div>
+        <div class="feedback" id="fb6"></div>
+        <div class="solution" id="sol6">
+            3 &minus; x &lt; 5 &minus; 2x<br>
+            3 &minus; x + 2x &lt; 5 &minus; 2x + 2x &nbsp; (P11-gevolg: tel 2x op)<br>
+            3 + x &lt; 5<br>
+            x &lt; 2 &nbsp; (trek 3 af) &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 7 -->
+    <div class="exercise" id="ex7">
+        <p class="q">7. Vind alle x waarvoor 7 &minus; x&sup2; &lt; 3</p>
+        <input type="text" id="ans7" placeholder="x > ? en/of x < ?">
+        <button onclick="checkAnswer(7)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(7)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn7" onclick="toggleSolution(7)">Uitwerking</button>
+        <div class="hint" id="hint7">Herschrijf als x&sup2; &gt; 4, en gebruik dan opgave 2 (verschil van kwadraten).</div>
+        <div class="feedback" id="fb7"></div>
+        <div class="solution" id="sol7">
+            7 &minus; x&sup2; &lt; 3<br>
+            &minus;x&sup2; &lt; &minus;4 &nbsp; (trek 7 af)<br>
+            x&sup2; &gt; 4 &nbsp; (vermenigvuldig met &minus;1, ongelijkheid draait om!)<br>
+            x&sup2; &minus; 4 &gt; 0<br>
+            (x &minus; 2)(x + 2) &gt; 0 &nbsp; (opgave 2!)<br><br>
+            Dit geldt als beide factoren positief OF beide negatief:<br>
+            &bull; x &gt; 2 en x &gt; &minus;2 &rarr; x &gt; 2<br>
+            &bull; x &lt; 2 en x &lt; &minus;2 &rarr; x &lt; &minus;2<br><br>
+            <strong>Antwoord: x &lt; &minus;2 of x &gt; 2</strong> &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 8 -->
+    <div class="exercise" id="ex8">
+        <p class="q">8. Bewijs: als a &lt; b, dan &minus;b &lt; &minus;a</p>
+        <input type="text" id="ans8" placeholder="welk axioma/gevolg?">
+        <button onclick="checkAnswer(8)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(8)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn8" onclick="toggleSolution(8)">Uitwerking</button>
+        <div class="hint" id="hint8">Tel &minus;a en &minus;b op bij beide kanten van a &lt; b.</div>
+        <div class="feedback" id="fb8"></div>
+        <div class="solution" id="sol8">
+            <strong>Bewijs:</strong><br>
+            a &lt; b &nbsp; (gegeven)<br>
+            a + (&minus;a) + (&minus;b) &lt; b + (&minus;a) + (&minus;b) &nbsp; (P11-gevolg: tel &minus;a &minus; b op)<br>
+            &minus;b &lt; &minus;a &nbsp; (P2, P3: vereenvoudigen) &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 9 -->
+    <div class="exercise" id="ex9">
+        <p class="q">9. Bewijs: als 0 &lt; a &lt; 1, dan a&sup2; &lt; a</p>
+        <input type="text" id="ans9" placeholder="welke stap?">
+        <button onclick="checkAnswer(9)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(9)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn9" onclick="toggleSolution(9)">Uitwerking</button>
+        <div class="hint" id="hint9">a&sup2; = a &middot; a. Vermenigvuldig de ongelijkheid a &lt; 1 met a (en a &gt; 0!).</div>
+        <div class="feedback" id="fb9"></div>
+        <div class="solution" id="sol9">
+            <strong>Bewijs:</strong><br>
+            a &lt; 1 &nbsp; (gegeven)<br>
+            a &middot; a &lt; 1 &middot; a &nbsp; (vermenigvuldig met a; mag want a &gt; 0, P12-gevolg)<br>
+            a&sup2; &lt; a &nbsp; (P6: 1 &middot; a = a) &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 10 -->
+    <div class="exercise" id="ex10">
+        <p class="q">10. Schrijf |&radic;3 + &radic;5 &minus; &radic;2 &minus; &radic;7| zonder absolute-waardetekens.</p>
+        <p class="explanation">Tip: bereken eerst of de uitdrukking positief of negatief is.</p>
+        <input type="text" id="ans10" placeholder="positief of negatief?">
+        <button onclick="checkAnswer(10)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(10)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn10" onclick="toggleSolution(10)">Uitwerking</button>
+        <div class="hint" id="hint10">&radic;3 &asymp; 1,73 en &radic;5 &asymp; 2,24 en &radic;2 &asymp; 1,41 en &radic;7 &asymp; 2,65. Tel op en trek af.</div>
+        <div class="feedback" id="fb10"></div>
+        <div class="solution" id="sol10">
+            &radic;3 + &radic;5 &asymp; 1,73 + 2,24 = 3,97<br>
+            &radic;2 + &radic;7 &asymp; 1,41 + 2,65 = 4,06<br>
+            Dus &radic;3 + &radic;5 &minus; &radic;2 &minus; &radic;7 &asymp; &minus;0,09 &lt; 0<br><br>
+            Omdat de uitdrukking negatief is:<br>
+            |&radic;3 + &radic;5 &minus; &radic;2 &minus; &radic;7| = <strong>&radic;2 + &radic;7 &minus; &radic;3 &minus; &radic;5</strong> &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 11 -->
+    <div class="exercise" id="ex11">
+        <p class="q">11. Vind alle x waarvoor |x &minus; 4| &lt; 3</p>
+        <input type="text" id="ans11" placeholder="? < x < ?">
+        <button onclick="checkAnswer(11)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(11)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn11" onclick="toggleSolution(11)">Uitwerking</button>
+        <div class="hint" id="hint11">|x &minus; 4| &lt; 3 betekent: de afstand van x tot 4 is kleiner dan 3. Welke getallen liggen minder dan 3 van 4 af?</div>
+        <div class="feedback" id="fb11"></div>
+        <div class="solution" id="sol11">
+            |x &minus; 4| &lt; 3 betekent:<br>
+            &minus;3 &lt; x &minus; 4 &lt; 3<br>
+            &minus;3 + 4 &lt; x &lt; 3 + 4 &nbsp; (tel 4 op)<br>
+            <strong>1 &lt; x &lt; 7</strong> &#10004;
+        </div>
+    </div>
+
+    <!-- Opgave 12 -->
+    <div class="exercise" id="ex12">
+        <p class="q">12. Bewijs: |a + b| = |a| + |b| als a en b hetzelfde teken hebben.</p>
+        <input type="text" id="ans12" placeholder="hoeveel gevallen?">
+        <button onclick="checkAnswer(12)">Controleer</button>
+        <button class="hint-btn" onclick="toggleHint(12)">Hint</button>
+        <button class="show-solution-btn locked" id="solbtn12" onclick="toggleSolution(12)">Uitwerking</button>
+        <div class="hint" id="hint12">Behandel twee gevallen: (1) a &ge; 0 en b &ge; 0, en (2) a &le; 0 en b &le; 0.</div>
+        <div class="feedback" id="fb12"></div>
+        <div class="solution" id="sol12">
+            <strong>Bewijs (twee gevallen):</strong><br><br>
+            <strong>Geval 1:</strong> a &ge; 0 en b &ge; 0<br>
+            &bull; a + b &ge; 0 (P11), dus |a + b| = a + b<br>
+            &bull; |a| = a en |b| = b<br>
+            &bull; Dus |a + b| = a + b = |a| + |b| &#10004;<br><br>
+            <strong>Geval 2:</strong> a &le; 0 en b &le; 0<br>
+            &bull; Dan &minus;a &ge; 0 en &minus;b &ge; 0 (P10)<br>
+            &bull; a + b &le; 0 (want beide &le; 0), dus |a + b| = &minus;(a + b) = (&minus;a) + (&minus;b)<br>
+            &bull; |a| = &minus;a en |b| = &minus;b<br>
+            &bull; Dus |a + b| = (&minus;a) + (&minus;b) = |a| + |b| &#10004;<br><br>
+            <em>Let op hoe de orde-axioma&rsquo;s (P10, P11) samenwerken met de definitie van absolute waarde!</em>
+        </div>
+    </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    <p>Wiskunde &middot; Interactieve gids</p>
+    <p style="margin-top:0.5rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

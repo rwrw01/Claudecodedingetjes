@@ -237,8 +237,14 @@
             color: var(--muted);
             margin-top: 0.25rem;
             margin-left: 0.25rem;
+            transition: opacity 0.2s;
         }
         .show-solution-btn:hover { background: #f1f5f9; }
+        .show-solution-btn.locked {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
         .solution {
             display: none;
             background: #f0fdf4;
@@ -558,8 +564,11 @@
             <input type="text" id="ans1" placeholder="bijv. 3">
             <button onclick="checkAnswer(1)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(1)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(1)">Uitwerking</button>
-            <div class="hint" id="hint1">Onder het wortelteken moet &ge; 0 staan: x &minus; 3 &ge; 0.</div>
+            <button class="show-solution-btn locked" id="solbtn1" onclick="toggleSolution(1)">Uitwerking</button>
+            <div class="hint" id="hint1">
+                <strong>Aanpak:</strong> Bij domein van een wortelfunctie stel je altijd de uitdrukking onder het wortelteken &ge; 0.<br>
+                Hier staat onder de wortel: x &minus; 3. Stel dus op: x &minus; 3 &ge; 0 en los op naar x.
+            </div>
             <div class="feedback" id="fb1"></div>
             <div class="solution" id="sol1">
                 We eisen: x &minus; 3 &ge; 0<br>
@@ -575,8 +584,11 @@
             <input type="text" id="ans2" placeholder="bijv. 2 links">
             <button onclick="checkAnswer(2)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(2)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(2)">Uitwerking</button>
-            <div class="hint" id="hint2">Herschrijf x + 2 als x &minus; (&minus;2). Wat is p?</div>
+            <button class="show-solution-btn locked" id="solbtn2" onclick="toggleSolution(2)">Uitwerking</button>
+            <div class="hint" id="hint2">
+                <strong>Aanpak:</strong> Vergelijk met de standaardvorm &radic;(x &minus; p). Herschrijf x + 2 als x &minus; (&minus;2).<br>
+                Dan is p = &minus;2. Onthoud: negatieve p = naar links, positieve p = naar rechts.
+            </div>
             <div class="feedback" id="fb2"></div>
             <div class="solution" id="sol2">
                 g(x) = &radic;(x + 2) = &radic;(x &minus; (&minus;2))<br>
@@ -592,8 +604,11 @@
             <input type="text" id="ans3" placeholder="bijv. (1, 5)">
             <button onclick="checkAnswer(3)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(3)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(3)">Uitwerking</button>
-            <div class="hint" id="hint3">Het startpunt is altijd (p, q). Lees p en q af uit de formule.</div>
+            <button class="show-solution-btn locked" id="solbtn3" onclick="toggleSolution(3)">Uitwerking</button>
+            <div class="hint" id="hint3">
+                <strong>Aanpak:</strong> Het startpunt (randpunt) van f(x) = a&radic;(x &minus; p) + q is altijd het punt (p, q).<br>
+                Lees p en q af: wat staat er achter het minteken in (x &minus; ...)? Dat is p. Wat staat er los achter de wortel? Dat is q.
+            </div>
             <div class="feedback" id="fb3"></div>
             <div class="solution" id="sol3">
                 h(x) = 3&radic;(x &minus; 1) + 5, dus a = 3, p = 1, q = 5.<br>
@@ -610,8 +625,11 @@
             <input type="text" id="ans4" placeholder="bijv. 2">
             <button onclick="checkAnswer(4)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(4)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(4)">Uitwerking</button>
-            <div class="hint" id="hint4">a = &minus;2 (negatief), dus de grafiek daalt. Wat is het maximum (= q)?</div>
+            <button class="show-solution-btn locked" id="solbtn4" onclick="toggleSolution(4)">Uitwerking</button>
+            <div class="hint" id="hint4">
+                <strong>Aanpak:</strong> Kijk eerst naar het teken van a. Hier is a = &minus;2 (negatief), dus de grafiek gaat naar beneden.<br>
+                Bij een dalende wortelfunctie is q het <em>maximum</em>. Het bereik wordt dan y &le; q. Wat is q hier?
+            </div>
             <div class="feedback" id="fb4"></div>
             <div class="solution" id="sol4">
                 a = &minus;2 &lt; 0, dus de grafiek gaat naar beneden.<br>
@@ -628,8 +646,14 @@
             <input type="text" id="ans5" placeholder="bijv. x < 1">
             <button onclick="checkAnswer(5)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(5)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(5)">Uitwerking</button>
-            <div class="hint" id="hint5">Stel 2&radic;(7 &minus; 3x) &minus; 4 &gt; &minus;2, dus 2&radic;(7 &minus; 3x) &gt; 2, dus &radic;(7 &minus; 3x) &gt; 1. Kwadrateer nu.</div>
+            <button class="show-solution-btn locked" id="solbtn5" onclick="toggleSolution(5)">Uitwerking</button>
+            <div class="hint" id="hint5">
+                <strong>Aanpak:</strong> Vul de ongelijkheid in: 2&radic;(7 &minus; 3x) &minus; 4 &gt; &minus;2.<br>
+                Stap 1: Breng &minus;4 naar rechts &rarr; 2&radic;(7 &minus; 3x) &gt; 2.<br>
+                Stap 2: Deel door 2 &rarr; &radic;(7 &minus; 3x) &gt; 1.<br>
+                Stap 3: Kwadrateer beide kanten (mag, want allebei positief).<br>
+                <strong>Let op:</strong> als je deelt door een negatief getal, draait het ongelijkheidsteken om!
+            </div>
             <div class="feedback" id="fb5"></div>
             <div class="solution" id="sol5">
                 f(x) &gt; &minus;2<br>
@@ -652,8 +676,12 @@
             <input type="text" id="ans6" placeholder="bijv. (-2, 3) en (2, 3)">
             <button onclick="checkAnswer(6)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(6)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(6)">Uitwerking</button>
-            <div class="hint" id="hint6">Randpunten: waar wordt de uitdrukking onder de wortel precies 0? Los op: x&sup2; &minus; 4 = 0.</div>
+            <button class="show-solution-btn locked" id="solbtn6" onclick="toggleSolution(6)">Uitwerking</button>
+            <div class="hint" id="hint6">
+                <strong>Aanpak:</strong> Randpunten vind je waar de uitdrukking onder de wortel precies 0 is.<br>
+                Stel op: x&sup2; &minus; 4 = 0. Los op (ontbinden of wortel trekken).<br>
+                Vul daarna elke gevonden x in de functie in om de y-waarde te berekenen.
+            </div>
             <div class="feedback" id="fb6"></div>
             <div class="solution" id="sol6">
                 Randpunten: x&sup2; &minus; 4 = 0<br>
@@ -672,8 +700,14 @@
             <input type="text" id="ans7" placeholder="bijv. 7">
             <button onclick="checkAnswer(7)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(7)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(7)">Uitwerking</button>
-            <div class="hint" id="hint7">Kwadrateer beide kanten: 2x &minus; 5 = 9.</div>
+            <button class="show-solution-btn locked" id="solbtn7" onclick="toggleSolution(7)">Uitwerking</button>
+            <div class="hint" id="hint7">
+                <strong>Aanpak:</strong> Dit is een wortelvergelijking. Gebruik het stappenplan:<br>
+                1. Wortel staat al alleen aan &eacute;&eacute;n kant.<br>
+                2. Kwadrateer beide kanten: (&radic;(2x &minus; 5))&sup2; = 3&sup2; &rarr; 2x &minus; 5 = 9.<br>
+                3. Los de gewone vergelijking op.<br>
+                4. Vergeet niet te controleren door je antwoord terug in te vullen!
+            </div>
             <div class="feedback" id="fb7"></div>
             <div class="solution" id="sol7">
                 &radic;(2x &minus; 5) = 3<br>
@@ -692,8 +726,12 @@
             <input type="text" id="ans8" placeholder="ja of nee">
             <button onclick="checkAnswer(8)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(8)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(8)">Uitwerking</button>
-            <div class="hint" id="hint8">Kan een wortel ooit een negatief getal opleveren?</div>
+            <button class="show-solution-btn locked" id="solbtn8" onclick="toggleSolution(8)">Uitwerking</button>
+            <div class="hint" id="hint8">
+                <strong>Aanpak:</strong> Kijk eerst naar het rechterlid van de vergelijking: dat is &minus;3.<br>
+                Bedenk: een wortelteken &radic;(...) levert <em>altijd</em> een getal &ge; 0 op.<br>
+                Kan het linkerlid ooit gelijk zijn aan een negatief getal?
+            </div>
             <div class="feedback" id="fb8"></div>
             <div class="solution" id="sol8">
                 Een wortelteken levert altijd een waarde &ge; 0 op.<br>
@@ -709,8 +747,13 @@
             <input type="text" id="ans9" placeholder="bijv. alle reele getallen">
             <button onclick="checkAnswer(9)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(9)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(9)">Uitwerking</button>
-            <div class="hint" id="hint9">Bereken de discriminant van x&sup2; &minus; 4x + 5. Is die positief, nul of negatief? Wat betekent dat?</div>
+            <button class="show-solution-btn locked" id="solbtn9" onclick="toggleSolution(9)">Uitwerking</button>
+            <div class="hint" id="hint9">
+                <strong>Aanpak:</strong> Je moet weten wanneer x&sup2; &minus; 4x + 5 &ge; 0 is.<br>
+                Bereken de discriminant: D = b&sup2; &minus; 4ac = (&minus;4)&sup2; &minus; 4&middot;1&middot;5.<br>
+                Als D &lt; 0 en de parabool opent omhoog (a &gt; 0), dan is de uitdrukking <em>altijd</em> positief.<br>
+                Wat betekent dat voor het domein?
+            </div>
             <div class="feedback" id="fb9"></div>
             <div class="solution" id="sol9">
                 We moeten kijken: wanneer is x&sup2; &minus; 4x + 5 &ge; 0?<br>
@@ -729,8 +772,13 @@
             <input type="text" id="ans10" placeholder="bijv. -5/2">
             <button onclick="checkAnswer(10)">Controleer</button>
             <button class="hint-btn" onclick="toggleHint(10)">Hint</button>
-            <button class="show-solution-btn" onclick="toggleSolution(10)">Uitwerking</button>
-            <div class="hint" id="hint10">Het randpunt is waar 5 + ax = 0, dus x = &minus;5/a. De y-waarde is dan 4. Vul (x, 4) in op y = 2x &minus; 1.</div>
+            <button class="show-solution-btn locked" id="solbtn10" onclick="toggleSolution(10)">Uitwerking</button>
+            <div class="hint" id="hint10">
+                <strong>Aanpak:</strong> Dit is een puzzel in 3 stappen:<br>
+                1. Vind het randpunt: stel 5 + ax = 0 &rarr; x = &minus;5/a. De y-waarde bij het randpunt is altijd 4 (want &radic;0 = 0).<br>
+                2. Het randpunt is dus (&minus;5/a, 4).<br>
+                3. Dit punt ligt op y = 2x &minus; 1. Vul x = &minus;5/a en y = 4 in die lijn in en los op naar a.
+            </div>
             <div class="feedback" id="fb10"></div>
             <div class="solution" id="sol10">
                 Randpunt: 5 + ax = 0 &rarr; x = &minus;5/a.<br>
@@ -1043,6 +1091,7 @@ const answers = {
 
 function checkAnswer(n) {
     const val = document.getElementById('ans' + n).value;
+    if (!val.trim()) return; // geen leeg antwoord
     const fb = document.getElementById('fb' + n);
     const a = answers[n];
     if (a.check(val)) {
@@ -1052,6 +1101,9 @@ function checkAnswer(n) {
         fb.className = 'feedback wrong';
         fb.textContent = a.wrong;
     }
+    // Ontgrendel de uitwerking-knop na het checken
+    const solBtn = document.getElementById('solbtn' + n);
+    if (solBtn) solBtn.classList.remove('locked');
 }
 
 function toggleHint(n) {

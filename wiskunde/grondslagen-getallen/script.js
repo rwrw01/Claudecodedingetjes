@@ -412,12 +412,193 @@ function toggleSolution(n) {
     sol.style.display = sol.style.display === 'block' ? 'none' : 'block';
 }
 
+// ==================== MINI-OEFENINGEN VALIDATIE ====================
+
+// --- Blok A: Optelling (P1-P4) ---
+function checkMiniA1() {
+    const a = document.getElementById('miniA1a').value.trim();
+    const b = document.getElementById('miniA1b').value.trim();
+    const c = document.getElementById('miniA1c').value.trim();
+    const d = document.getElementById('miniA1d').value.trim();
+    const fb = document.getElementById('miniA1fb');
+    if (a === '13' && b === '7' && c === '3' && d === '7') {
+        fb.textContent = '✓ Goed! Beide manieren geven 7. Dat is P1: associativiteit!';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ Reken stap voor stap: 9 + 4 = 13, −6 + 13 = 7, en −6 + 9 = 3, 3 + 4 = 7.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniA2() {
+    const a = document.getElementById('miniA2a').value.trim().replace('−', '-');
+    const b = document.getElementById('miniA2b').value.trim();
+    const fb = document.getElementById('miniA2fb');
+    if (a === '3' && b === '0') {
+        fb.textContent = '✓ Goed! Het tegenovergestelde van −3 is 3, want −3 + 3 = 0 (P3).';
+        fb.style.color = '#166534';
+        document.getElementById('miniA2echo').textContent = '3';
+    } else {
+        fb.textContent = '✗ Het tegenovergestelde is het getal waarmee je op 0 uitkomt (P3).';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniA3() {
+    const a = document.getElementById('miniA3a').value.trim().replace('−', '-');
+    const b = document.getElementById('miniA3b').value.trim();
+    const fb = document.getElementById('miniA3fb');
+    if ((a === '-5' || a === '(-5)') && b === '7') {
+        fb.textContent = '✓ Goed! 12 − 5 = 12 + (−5) = 7. Aftrekken is optellen in vermomming!';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ P3 zegt: a − b = a + (−b). Dus 12 − 5 = 12 + (−5) = ?';
+        fb.style.color = '#991b1b';
+    }
+}
+
+// --- Blok B: Vermenigvuldiging (P5-P9) ---
+function checkMiniB1() {
+    const a = document.getElementById('miniB1a').value.trim();
+    const b = document.getElementById('miniB1b').value.trim();
+    const c = document.getElementById('miniB1c').value.trim().toUpperCase().replace(/\s/g, '');
+    const fb = document.getElementById('miniB1fb');
+    if (a === '12' && b === '36' && c === 'P5') {
+        fb.textContent = '✓ Goed! 3 · 12 = 36 en 6 · 6 = 36. P5: associativiteit van vermenigvuldiging.';
+        fb.style.color = '#166534';
+    } else if (b === '36' && c === 'P5') {
+        fb.textContent = '✓ Bijna! De uitkomst klopt (36) en het axioma klopt (P5). Vul ook de tussenstap in.';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ Reken: 2 · 6 = 12, dan 3 · 12 = 36. Welk axioma gaat over haakjes bij vermenigvuldiging?';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniB2() {
+    const a = document.getElementById('miniB2a').value.trim().replace(/\s/g, '');
+    const b = document.getElementById('miniB2b').value.trim();
+    const fb = document.getElementById('miniB2fb');
+    if ((a === '3/2' || a === '1.5' || a === '1,5') && b === '1') {
+        fb.textContent = '✓ Goed! ⅔ · 3/2 = 1. De inverse van ⅔ is 3/2 (P7).';
+        fb.style.color = '#166534';
+        document.getElementById('miniB2echo').textContent = '3/2';
+    } else {
+        fb.textContent = '✗ De inverse van a/b is b/a, want (a/b) · (b/a) = 1.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniB3() {
+    const a = document.getElementById('miniB3a').value.trim().replace('−', '-');
+    const b = document.getElementById('miniB3b').value.trim();
+    const c = document.getElementById('miniB3c').value.trim().replace('−', '-');
+    const d = document.getElementById('miniB3d').value.trim();
+    const fb = document.getElementById('miniB3fb');
+    if ((a === '-3' || a === '−3') && b === '32' && (c === '-12' || c === '−12') && d === '20') {
+        fb.textContent = '✓ Goed! 4 · 8 + 4 · (−3) = 32 + (−12) = 20. Dat is P9!';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ P9: 4 · (8 − 3) = 4 · 8 + 4 · (−3) = 32 + (−12) = 20.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+// --- Blok C: Orde-axioma's (P10-P12) ---
+function checkMiniC1() {
+    const a = document.getElementById('miniC1a').value;
+    const b = document.getElementById('miniC1b').value;
+    const c = document.getElementById('miniC1c').value;
+    const fb = document.getElementById('miniC1fb');
+    if (a === 'neg' && b === 'nul' && c === 'pos') {
+        fb.textContent = '✓ Goed! −4 is negatief, 0 is nul, 7 is positief. Precies één optie per getal (P10).';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ Denk aan trichotomie: elk getal is positief, nul, of negatief — precies één van de drie.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniC2() {
+    const a = document.getElementById('miniC2a').value.trim().replace('−', '-');
+    const b = document.getElementById('miniC2b').value.trim().replace('−', '-');
+    const c = document.getElementById('miniC2c').value;
+    const fb = document.getElementById('miniC2fb');
+    if ((a === '-8' || a === '−8') && (b === '-18' || b === '−18') && c === '>') {
+        fb.textContent = '✓ Goed! −8 > −18. De ongelijkheid draait om bij vermenigvuldiging met een negatief getal!';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ 4 · (−2) = −8, 9 · (−2) = −18. En −8 is groter dan −18! Het teken draait om.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniC3() {
+    const a = document.getElementById('miniC3a').value.trim();
+    const b = document.getElementById('miniC3b').value;
+    const fb = document.getElementById('miniC3fb');
+    if (a === '25' && b === 'pos') {
+        fb.textContent = '✓ Goed! (−5)² = 25 > 0. Het kwadraat van elk getal ≠ 0 is positief (P12 + min×min=plus).';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ (−5)² = (−5) · (−5). Min keer min is plus! Dus (−5)² = 25.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+// --- Blok D: Absolute waarde ---
+function checkMiniD1() {
+    const a = document.getElementById('miniD1a').value.trim();
+    const b = document.getElementById('miniD1b').value.trim();
+    const c = document.getElementById('miniD1c').value.trim();
+    const d = document.getElementById('miniD1d').value.trim();
+    const fb = document.getElementById('miniD1fb');
+    if (a === '9' && b === '3' && c === '2' && d === '10') {
+        fb.textContent = '✓ Goed! 9 + 3 − 2 = 10.';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ |−9| = 9, |3| = 3, |−2| = 2. Dus 9 + 3 − 2 = 10.';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniD2() {
+    const a = document.getElementById('miniD2a').value.trim();
+    const b = document.getElementById('miniD2b').value.trim();
+    const c = document.getElementById('miniD2c').value.trim();
+    const d = document.getElementById('miniD2d').value.trim();
+    const e = document.getElementById('miniD2e').value.trim();
+    const f = document.getElementById('miniD2f').value;
+    const fb = document.getElementById('miniD2fb');
+    if (a === '3' && b === '3' && c === '8' && d === '5' && e === '13' && f === 'ja') {
+        fb.textContent = '✓ Goed! |3| = 3 ≤ 13 = 8 + 5. De driehoeksongelijkheid klopt!';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ 8 + (−5) = 3, dus |3| = 3. En |8| + |−5| = 8 + 5 = 13. Is 3 ≤ 13?';
+        fb.style.color = '#991b1b';
+    }
+}
+
+function checkMiniD3() {
+    const a = document.getElementById('miniD3a').value.trim().replace('−', '-');
+    const b = document.getElementById('miniD3b').value.trim().replace('−', '-');
+    const fb = document.getElementById('miniD3fb');
+    const vals = [a, b].sort();
+    if ((vals[0] === '-7' && vals[1] === '3') || (vals[0] === '−7' && vals[1] === '3')) {
+        fb.textContent = '✓ Goed! x + 2 = 5 → x = 3, of x + 2 = −5 → x = −7.';
+        fb.style.color = '#166534';
+    } else {
+        fb.textContent = '✗ |x + 2| = 5 betekent: x + 2 = 5 óf x + 2 = −5. Los beide op.';
+        fb.style.color = '#991b1b';
+    }
+}
+
 // ==================== ENTER KEY SUPPORT ====================
-document.querySelectorAll('.try-input, .try-it input[type=text]').forEach(input => {
+document.querySelectorAll('.try-input, .try-it input[type=text], .mini-ex input[type=text]').forEach(input => {
     input.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
-            const btn = this.parentElement.querySelector('button') ||
-                        this.closest('.try-it').querySelector('button');
+            const btn = this.closest('.try-it, .mini-ex')?.querySelector('button') ||
+                        this.parentElement.querySelector('button');
             if (btn) btn.click();
         }
     });

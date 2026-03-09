@@ -27,7 +27,7 @@
         <a href="#lichaamsaxiomas">P1&ndash;P9: Lichaamsaxioma&rsquo;s</a>
         <a href="#orde-axiomas">P10&ndash;P12: Orde-axioma&rsquo;s</a>
         <a href="#absolute-waarde">Absolute waarde</a>
-        <a href="#oefenopgaven">12 Oefenopgaven</a>
+        <a href="#oefenopgaven">Uitdaging &mdash; bewijsopgaven</a>
     </div>
 </div>
 
@@ -126,6 +126,50 @@
         <span id="tryP4fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
     </div>
 
+    <!-- ===== MINI-OEFENINGEN P1-P4 ===== -->
+    <div class="mini-exercises">
+        <h3>Oefen: optelling (P1&ndash;P4)</h3>
+
+        <div class="mini-ex" id="miniA1">
+            <p class="q"><strong>A1.</strong> Bereken op twee manieren (met verschillende haakjes):<br>
+            &minus;6 + (9 + 4) = ? &nbsp; en &nbsp; (&minus;6 + 9) + 4 = ?</p>
+            <div class="mini-ex-row">
+                <span>Manier 1: &minus;6 + <input type="text" id="miniA1a" class="try-input" placeholder="9+4=?" style="width:50px;"> = </span>
+                <input type="text" id="miniA1b" class="try-input" placeholder="?" style="width:50px;">
+            </div>
+            <div class="mini-ex-row">
+                <span>Manier 2: <input type="text" id="miniA1c" class="try-input" placeholder="-6+9=?" style="width:50px;"> + 4 = </span>
+                <input type="text" id="miniA1d" class="try-input" placeholder="?" style="width:50px;">
+            </div>
+            <button onclick="checkMiniA1()">Check</button>
+            <span id="miniA1fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniA2">
+            <p class="q"><strong>A2.</strong> Welk getal is het tegenovergestelde van &minus;3? En wat is &minus;3 + dat getal?</p>
+            <div class="mini-ex-row">
+                <span>Tegenovergestelde van &minus;3: </span>
+                <input type="text" id="miniA2a" class="try-input" placeholder="?" style="width:60px;">
+                <span>, &nbsp; &minus;3 + <span id="miniA2echo">?</span> = </span>
+                <input type="text" id="miniA2b" class="try-input" placeholder="?" style="width:60px;">
+            </div>
+            <button onclick="checkMiniA2()">Check</button>
+            <span id="miniA2fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniA3">
+            <p class="q"><strong>A3.</strong> Schrijf &ldquo;12 &minus; 5&rdquo; als een optelling (gebruik P3: aftrekken = optellen van het tegenovergestelde).</p>
+            <div class="mini-ex-row">
+                <span>12 &minus; 5 = 12 + </span>
+                <input type="text" id="miniA3a" class="try-input" placeholder="?" style="width:60px;">
+                <span> = </span>
+                <input type="text" id="miniA3b" class="try-input" placeholder="?" style="width:60px;">
+            </div>
+            <button onclick="checkMiniA3()">Check</button>
+            <span id="miniA3fb" class="mini-fb"></span>
+        </div>
+    </div>
+
     <!-- P5 -->
     <h3 id="p5">P5: Associativiteit van vermenigvuldiging</h3>
     <div class="formula">a &middot; (b &middot; c) = (a &middot; b) &middot; c</div>
@@ -194,6 +238,49 @@
         <input type="text" id="tryP9c" class="try-input" placeholder="?" style="width:60px;">
         <button onclick="checkDistrib()">Check</button>
         <span id="tryP9fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+    </div>
+
+    <!-- ===== MINI-OEFENINGEN P5-P9 ===== -->
+    <div class="mini-exercises">
+        <h3>Oefen: vermenigvuldiging &amp; distributiviteit (P5&ndash;P9)</h3>
+
+        <div class="mini-ex" id="miniB1">
+            <p class="q"><strong>B1.</strong> Bereken op twee manieren: 3 &middot; (2 &middot; 6) en (3 &middot; 2) &middot; 6. Welk axioma zegt dat de uitkomst gelijk is?</p>
+            <div class="mini-ex-row">
+                <span>3 &middot; <input type="text" id="miniB1a" class="try-input" placeholder="2&middot;6=?" style="width:50px;"> = </span>
+                <input type="text" id="miniB1b" class="try-input" placeholder="?" style="width:50px;">
+                <span>&nbsp; Axioma: </span>
+                <input type="text" id="miniB1c" class="try-input" placeholder="P?" style="width:50px;">
+            </div>
+            <button onclick="checkMiniB1()">Check</button>
+            <span id="miniB1fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniB2">
+            <p class="q"><strong>B2.</strong> Wat is de multiplicatieve inverse van &frac23;? Controleer door te vermenigvuldigen.</p>
+            <div class="mini-ex-row">
+                <span>Inverse van &frac23; = </span>
+                <input type="text" id="miniB2a" class="try-input" placeholder="bijv. a/b" style="width:70px;">
+                <span>, &nbsp; want &frac23; &middot; <span id="miniB2echo">?</span> = </span>
+                <input type="text" id="miniB2b" class="try-input" placeholder="?" style="width:50px;">
+            </div>
+            <button onclick="checkMiniB2()">Check</button>
+            <span id="miniB2fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniB3">
+            <p class="q"><strong>B3.</strong> Werk uit met distributiviteit: 4 &middot; (8 &minus; 3). Schrijf de tussenstap op.</p>
+            <div class="mini-ex-row">
+                <span>4 &middot; (8 &minus; 3) = 4 &middot; 8 + 4 &middot; (<input type="text" id="miniB3a" class="try-input" placeholder="?" style="width:50px;">) = </span>
+                <input type="text" id="miniB3b" class="try-input" placeholder="?" style="width:50px;">
+                <span> + </span>
+                <input type="text" id="miniB3c" class="try-input" placeholder="?" style="width:55px;">
+                <span> = </span>
+                <input type="text" id="miniB3d" class="try-input" placeholder="?" style="width:50px;">
+            </div>
+            <button onclick="checkMiniB3()">Check</button>
+            <span id="miniB3fb" class="mini-fb"></span>
+        </div>
     </div>
 
     <!-- Eerste bewijzen -->
@@ -374,6 +461,53 @@
     </div>
 </div>
 
+    <!-- ===== MINI-OEFENINGEN P10-P12 ===== -->
+    <div class="mini-exercises">
+        <h3>Oefen: orde-axioma&rsquo;s (P10&ndash;P12)</h3>
+
+        <div class="mini-ex" id="miniC1">
+            <p class="q"><strong>C1.</strong> Classificeer elk getal volgens trichotomie (P10): positief, nul, of negatief?</p>
+            <div class="mini-ex-row">
+                <span>&minus;4: </span>
+                <select id="miniC1a"><option value="">kies...</option><option value="pos">positief</option><option value="nul">nul</option><option value="neg">negatief</option></select>
+                <span>&nbsp; 0: </span>
+                <select id="miniC1b"><option value="">kies...</option><option value="pos">positief</option><option value="nul">nul</option><option value="neg">negatief</option></select>
+                <span>&nbsp; 7: </span>
+                <select id="miniC1c"><option value="">kies...</option><option value="pos">positief</option><option value="nul">nul</option><option value="neg">negatief</option></select>
+            </div>
+            <button onclick="checkMiniC1()">Check</button>
+            <span id="miniC1fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniC2">
+            <p class="q"><strong>C2.</strong> We weten 4 &lt; 9. Vermenigvuldig beide kanten met &minus;2. Wat gebeurt er met het teken?</p>
+            <div class="mini-ex-row">
+                <span>4 &middot; (&minus;2) = </span>
+                <input type="text" id="miniC2a" class="try-input" placeholder="?" style="width:50px;">
+                <span>&nbsp; en &nbsp; 9 &middot; (&minus;2) = </span>
+                <input type="text" id="miniC2b" class="try-input" placeholder="?" style="width:50px;">
+                <span>&nbsp; Dus: &minus;8 </span>
+                <select id="miniC2c"><option value="">kies...</option><option value="<">&lt;</option><option value=">">&gt;</option><option value="=">=</option></select>
+                <span> &minus;18</span>
+            </div>
+            <button onclick="checkMiniC2()">Check</button>
+            <span id="miniC2fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniC3">
+            <p class="q"><strong>C3.</strong> Is (&minus;5)&sup2; positief, nul of negatief? En waarom?</p>
+            <div class="mini-ex-row">
+                <span>(&minus;5)&sup2; = </span>
+                <input type="text" id="miniC3a" class="try-input" placeholder="?" style="width:60px;">
+                <span>, dit is </span>
+                <select id="miniC3b"><option value="">kies...</option><option value="pos">positief</option><option value="nul">nul</option><option value="neg">negatief</option></select>
+            </div>
+            <button onclick="checkMiniC3()">Check</button>
+            <span id="miniC3fb" class="mini-fb"></span>
+        </div>
+    </div>
+</div>
+
 <!-- ==================== D. ABSOLUTE WAARDE ==================== -->
 <div class="card" id="absolute-waarde">
     <h2>D. Absolute waarde en driehoeksongelijkheid</h2>
@@ -451,10 +585,60 @@
     </div>
 </div>
 
+    <!-- ===== MINI-OEFENINGEN ABSOLUTE WAARDE ===== -->
+    <div class="mini-exercises">
+        <h3>Oefen: absolute waarde</h3>
+
+        <div class="mini-ex" id="miniD1">
+            <p class="q"><strong>D1.</strong> Bereken: |&minus;9| + |3| &minus; |&minus;2|</p>
+            <div class="mini-ex-row">
+                <span>= <input type="text" id="miniD1a" class="try-input" placeholder="|−9|" style="width:40px;"> + <input type="text" id="miniD1b" class="try-input" placeholder="|3|" style="width:40px;"> &minus; <input type="text" id="miniD1c" class="try-input" placeholder="|−2|" style="width:40px;"> = </span>
+                <input type="text" id="miniD1d" class="try-input" placeholder="?" style="width:50px;">
+            </div>
+            <button onclick="checkMiniD1()">Check</button>
+            <span id="miniD1fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniD2">
+            <p class="q"><strong>D2.</strong> Controleer de driehoeksongelijkheid voor a = 8, b = &minus;5:</p>
+            <div class="mini-ex-row">
+                <span>|a + b| = |8 + (&minus;5)| = |<input type="text" id="miniD2a" class="try-input" placeholder="?" style="width:40px;">| = </span>
+                <input type="text" id="miniD2b" class="try-input" placeholder="?" style="width:40px;">
+            </div>
+            <div class="mini-ex-row">
+                <span>|a| + |b| = |8| + |&minus;5| = </span>
+                <input type="text" id="miniD2c" class="try-input" placeholder="?" style="width:40px;">
+                <span> + </span>
+                <input type="text" id="miniD2d" class="try-input" placeholder="?" style="width:40px;">
+                <span> = </span>
+                <input type="text" id="miniD2e" class="try-input" placeholder="?" style="width:40px;">
+            </div>
+            <div class="mini-ex-row">
+                <span>Klopt |a + b| &le; |a| + |b|? </span>
+                <select id="miniD2f"><option value="">kies...</option><option value="ja">Ja</option><option value="nee">Nee</option></select>
+            </div>
+            <button onclick="checkMiniD2()">Check</button>
+            <span id="miniD2fb" class="mini-fb"></span>
+        </div>
+
+        <div class="mini-ex" id="miniD3">
+            <p class="q"><strong>D3.</strong> Voor welke x geldt |x + 2| = 5? (Twee antwoorden!)</p>
+            <div class="mini-ex-row">
+                <span>x = </span>
+                <input type="text" id="miniD3a" class="try-input" placeholder="?" style="width:60px;">
+                <span> of x = </span>
+                <input type="text" id="miniD3b" class="try-input" placeholder="?" style="width:60px;">
+            </div>
+            <button onclick="checkMiniD3()">Check</button>
+            <span id="miniD3fb" class="mini-fb"></span>
+        </div>
+    </div>
+</div>
+
 <!-- ==================== E. OEFENOPGAVEN ==================== -->
 <div class="card" id="oefenopgaven">
-    <h2>E. Oefenopgaven</h2>
-    <p>Pas nu de axioma&rsquo;s zelf toe. Bij bewijsopgaven: schrijf welke axioma&rsquo;s (P1&ndash;P12) je gebruikt.</p>
+    <h2>E. Uitdaging &mdash; bewijsopgaven</h2>
+    <p>Klaar voor het echte werk? Bij deze opgaven moet je zelf een bewijs opschrijven. Noem welke axioma&rsquo;s (P1&ndash;P12) je gebruikt.</p>
 
     <!-- Opgave 1 -->
     <div class="exercise" id="ex1">

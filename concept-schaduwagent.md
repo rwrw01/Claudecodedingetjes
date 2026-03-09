@@ -251,81 +251,157 @@ De schaduwagent vervangt de slechte uitvraag door **rijke, automatische ticketre
 
 Uit onderzoek blijken er diverse open source projecten te zijn die als bouwstenen kunnen dienen:
 
-### 7.1 Screen Observatie
+### 7.1 Screen Observatie & Computer Use
 
-#### ScreenPipe (mediar-ai/screenpipe)
+#### ScreenPipe (screenpipe/screenpipe) — AANBEVOLEN
 - **GitHub:** https://github.com/mediar-ai/screenpipe
-- **Wat:** Open source "Rewind.ai alternatief" — neemt continu scherm en audio op, maakt het doorzoekbaar met AI
-- **Relevantie:** Kan dienen als screen capture engine. Detecteert events (app switches, clicks, foutmeldingen) en maakt screenshots alleen bij veranderingen. Heeft ingebouwde OCR en draait als MCP-server zodat Claude er direct mee kan praten
+- **Wat:** Open source "Rewind.ai alternatief" — neemt continu scherm en audio op, maakt het doorzoekbaar met AI. 12.600+ stars, $2.8M funding
+- **Relevantie:** Detecteert events (app switches, clicks, foutmeldingen) en maakt screenshots alleen bij veranderingen. Heeft ingebouwde OCR en draait als **MCP-server** zodat Claude er direct mee kan praten. Bevat ook "screenpipe terminator" (Playwright-achtige desktop automatisering)
 - **Licentie:** MIT
-- **Status:** Actief, trending op GitHub, gebackt door Founders Inc.
-- **Hergebruik:** Screen Agent component — event-driven screenshots + OCR + AI-doorzoekbaar
+- **Hergebruik:** Screen Agent component — event-driven screenshots + OCR + AI-doorzoekbaar + MCP
+
+#### Agent S (simular-ai/Agent-S)
+- **GitHub:** https://github.com/simular-ai/Agent-S
+- **Wat:** Open-source framework voor autonome GUI-interactie. Agent S3 overtreft menselijke prestaties op OSWorld benchmark (72.6%)
+- **Relevantie:** Kan als "handen" dienen voor de screen observatie-laag — begrijpt en interacteert met GUIs, navigeert foutdialogen, leest applicatiestatus
+- **Licentie:** Apache 2.0
+
+#### UI-TARS Desktop (ByteDance)
+- **GitHub:** https://github.com/bytedance/UI-TARS-desktop
+- **Wat:** Multimodale AI agent-stack die vision-modellen verbindt met terminal, computer, browser. Bevat Remote Computer Operator en Remote Browser Operator
+- **Licentie:** Apache 2.0
 
 ### 7.2 OS Agent / Systeemcontrole
 
 #### Open Interpreter (openinterpreter/open-interpreter)
 - **GitHub:** https://github.com/openinterpreter/open-interpreter
-- **Wat:** Natural language interface voor computers. LLM voert code uit op je lokale machine
-- **Relevantie:** Kan dienen als OS Agent — voert diagnostiek uit, leest logs, herstart services, alles via natural language instructies aan een LLM
+- **Wat:** Natural language interface voor computers. LLM voert code uit op je lokale machine — shell, Python, JavaScript. Volledige toegang tot filesystem en netwerk
+- **Relevantie:** OS Agent — voert diagnostiek uit, leest logs, herstart services via natural language
 - **Licentie:** AGPL-3.0
 - **Status:** 50K+ stars, 100+ contributors
-- **Hergebruik:** OS diagnose & remediatie — "check waarom service X niet draait en herstart hem"
 
-#### Goose (block/goose)
+#### Goose (block/goose) — AANBEVOLEN
 - **GitHub:** https://github.com/block/goose
-- **Wat:** On-machine AI agent van Block (Jack Dorsey). Kan complete projecten bouwen, code uitvoeren, debuggen, en interacteren met externe API's
-- **Relevantie:** Gebouwd op MCP (Model Context Protocol), werkt met elke LLM, kan desktop automatisering doen. Block gebruikt "Headless Goose" in CI voor automatische vulnerability fixes
+- **Wat:** On-machine AI agent van Block. Gebouwd op **MCP**, werkt met elke LLM. Block gebruikt "Headless Goose" in CI voor automatische vulnerability fixes. Lid van Linux Foundation's Agentic AI Foundation
 - **Licentie:** Apache 2.0
-- **Status:** Actief ontwikkeld door Block
-- **Hergebruik:** Agent-framework met MCP-integratie voor systeemtaken
+- **Hergebruik:** MCP-native agent-framework. TOPdesk en BlueDolphin als MCP-servers = direct toegankelijk
 
-### 7.3 TOPdesk Integratie
+### 7.3 Actie-engine / Geautomatiseerde Remediatie
+
+#### Ansible AWX — AANBEVOLEN
+- **GitHub:** https://github.com/ansible/awx
+- **Wat:** Open-source web UI, REST API en task engine voor Ansible. Job scheduling, RBAC, credential management, workflow orchestratie met approval steps
+- **Relevantie:** Perfecte actie-engine. Pre-approved Ansible playbooks voor service herstarts, config fixes, netwerk resets. AWX workflows bevatten approval gates voor risicovolle acties. Event-Driven Ansible kan playbooks automatisch triggeren
+- **Licentie:** Apache 2.0
+- **Status:** Mature project, upstream van Red Hat Ansible Automation Platform
+
+#### StackStorm (ST2)
+- **GitHub:** https://github.com/StackStorm/st2
+- **Wat:** Event-driven automatiseringsplatform ("IFTTT for Ops") voor auto-remediatie. Rules engine, workflow engine, 160 integratiepacks met 6.000+ acties, ChatOps
+- **Relevantie:** Bewezen event-driven remediatie. Sensors detecteren events → rules triggeren acties. Gebruikt door Netflix, Target, CERN
+- **Licentie:** Apache 2.0
+- **Status:** 6.400+ stars, Linux Foundation
+
+### 7.4 TOPdesk Integratie
 
 #### topdesk (PyPI package)
 - **PyPI:** https://pypi.org/project/topdesk/
 - **Wat:** Python API client voor TOPdesk REST API
 - **Relevantie:** Directe integratie voor ticket aanmaken, categoriseren, bijwerken
-- **Status:** v0.0.17, actief onderhouden
-- **Hergebruik:** TOPdesk ticket-integratie out-of-the-box
+- **Licentie:** GPL-3.0
+- **Status:** v0.0.17
 
-#### TOPdeskPy (TwinkelToe/TOPdeskPy)
-- **GitHub:** https://github.com/TwinkelToe/TOPdeskPy
-- **Wat:** Alternatieve Python wrapper voor TOPdesk API
+#### TOPdeskPy & topdesk-api-python
+- https://github.com/TwinkelToe/TOPdeskPy
+- https://github.com/DigizoneICT/topdesk-api-python
+- Alternatieve Python wrappers
 
 #### TOPdesk Developer Portal
 - **URL:** https://developers.topdesk.com/
-- **Wat:** Officiële REST API documentatie + tutorials. Gratis te gebruiken
+- Officiële REST API documentatie + tutorials. Gratis te gebruiken
 
-### 7.4 BlueDolphin / Enterprise Architectuur
+### 7.5 BlueDolphin / Enterprise Architectuur
 
 #### BlueDolphin API (ValueBlue)
 - **URL:** https://www.valueblue.com/bluedolphin
-- **Wat:** Enterprise architectuur tool met volledige ArchiMate support
-- **API:** Public API beschikbaar voor custom integraties. Webhook service in ontwikkeling voor bidirectionele flows
-- **ArchiMate:** Alle objecten en relaties zijn ArchiMate-gebaseerd, waardoor IT-landschap mapping direct bruikbaar is
-- **Hergebruik:** Kennislaag voor impact-analyse en vertaling technisch → begrijpelijk
+- **Wat:** Enterprise architectuur tool met volledige ArchiMate/BPMN support
+- **API:** Public API beschikbaar. Webhook service in ontwikkeling voor bidirectionele flows
+- **ArchiMate:** Alle objecten en relaties zijn ArchiMate-gebaseerd → IT-landschap mapping direct bruikbaar
+- **Let op:** Niet open-source. Custom integratie via Public API nodig
 
-### 7.5 AIOps & Autonome Remediatie
+#### CMDBuild (open-source alternatief)
+- **URL:** https://www.cmdbuild.org/
+- **Wat:** Open-source CMDB voor asset management. Configureerbare workflows, rapporten, webservices. Java/PostgreSQL
+- **Relevantie:** Als open-source CMDB gewenst is naast/i.p.v. BlueDolphin
+- **Licentie:** AGPL
+
+### 7.6 AIOps & Monitoring
+
+#### Keep (keephq/keep) — AANBEVOLEN
+- **GitHub:** https://github.com/keephq/keep
+- **Wat:** Open-source AIOps en alert management platform. Single pane of glass voor alerts van elke monitoring tool. Alert deduplicatie, verrijking, correlatie, workflow automatisering
+- **Relevantie:** Centrale alert-aggregatie. Correleert alerts van Zabbix/PRTG/Grafana tot betekenisvolle incidenten. YAML-based workflow automation kan de schaduwagent triggeren
+- **Licentie:** MIT
+- **Status:** 11.500+ stars, Y Combinator backed
 
 #### Grafana SRE Agent
-- **Wat:** AI assistant die meerdere databronnen (Prometheus, Loki, Tempo) bevraagt, incidenten correleert, en remediatie-stappen voorstelt
-- **Relevantie:** Vendor-neutrale AIOps capabilities, kan monitoring-data leveren aan de schaduwagent
+- **Wat:** AI assistant die Prometheus, Loki, Tempo bevraagt, incidenten correleert, remediatie voorstelt
 - **Hergebruik:** Monitoring-integratie laag
 
 #### OpenTelemetry
 - **URL:** https://opentelemetry.io/
-- **Wat:** Gestandaardiseerde instrumentatie voor logs, metrics en traces
-- **Relevantie:** Universele telemetry standaard, maakt de schaduwagent vendor-onafhankelijk
-- **Hergebruik:** Telemetry-verzameling voor OS Agent
+- **Wat:** Universele telemetry standaard voor logs, metrics en traces
+- **Hergebruik:** Vendor-onafhankelijke telemetry-verzameling
 
-### 7.6 Agent Orchestratie Frameworks
+#### LogAI (Salesforce)
+- **GitHub:** https://github.com/salesforce/logai
+- **Wat:** One-stop library voor log analytics en intelligence. Log summarization, clustering, anomaly detection
+- **Licentie:** BSD 3-Clause
+- **Hergebruik:** OS Agent's log-analyse backend
+
+### 7.7 Agent Orchestratie Frameworks
 
 | Framework   | Geschiktheid | Waarom                                              |
 |-------------|-------------|------------------------------------------------------|
-| LangGraph   | Hoog        | Stateful, multi-agent workflows met cyclische logica |
-| CrewAI      | Hoog        | Role-based agents, goed voor team-achtige samenwerking |
-| AutoGen     | Medium      | Microsoft's multi-agent framework, meer research-gericht |
-| Claude Agent SDK | Hoog  | Native Anthropic SDK voor agent-bouw met Claude      |
+| **LangGraph** | **Hoog** | Stateful, multi-agent workflows met cyclische logica. Referentie-implementatie bestaat: "Autonomous AI Sysadmin" met LangGraph + Ansible |
+| **CrewAI** | **Hoog** | Role-based agents met geheugen. Natuurlijke mapping: Screen Observer, System Diagnostician, Ticket Creator, Remediator als crew |
+| AutoGen | Medium | Microsoft's multi-agent framework, 40K+ stars. Docker-based code execution voor veilige remediatie |
+| Claude Agent SDK | Hoog | Native Anthropic SDK voor agent-bouw met Claude |
+
+#### Referentie-architectuur
+Er bestaat een direct toepasbare referentie-implementatie: **"Autonomous AI Sysadmin with LangGraph + Ansible + RHEL 9"** die exact het OS Agent + Orchestrator patroon implementeert:
+- Ansible verzamelt telemetry en voert remediatie-playbooks uit
+- Python + SQLite berekent baselines en detecteert anomalieën
+- LangGraph beheert de stateful workflow — beslist: auto-heal of escaleren
+- Gemini (vervangbaar door Claude) doet root cause analysis
+
+### 7.8 Chat Widget & Ticket AI
+
+#### Chatwoot — AANBEVOLEN
+- **GitHub:** https://github.com/chatwoot/chatwoot
+- **Wat:** AI-powered, open-source customer support platform. Self-host of cloud. Alternatief voor Intercom/Zendesk
+- **Relevantie:** Chat Widget component met ingebouwde AI, multi-channel support, agent dashboard
+- **Licentie:** MIT
+- **Status:** 20.000+ stars
+
+#### Open Ticket AI
+- **GitHub:** https://github.com/Softoft-Orga/open-ticket-ai
+- **Wat:** Open-source, on-premise AI engine voor ticket classificatie, routing en verwerking. Draait in Docker, ondersteunt lokale LLMs via Ollama
+- **Relevantie:** Geautomatiseerde ticket-classificatie, prioriteitsbepaling, taal/sentiment-analyse. GDPR-compliant met lokale LLM optie
+
+### 7.9 Integratie & Connectiviteit
+
+#### MCP (Model Context Protocol) — KERNSTANDAARD
+- **URL:** https://modelcontextprotocol.io/
+- **Wat:** Open standaard van Anthropic (nu onder Linux Foundation) voor het verbinden van LLMs met externe tools/data. JSON-RPC 2.0 gebaseerd. 16.000+ MCP servers beschikbaar
+- **Relevantie:** De "universele adapter" voor de schaduwagent. ScreenPipe heeft al een MCP server. Goose is gebouwd op MCP. TOPdesk en BlueDolphin als MCP servers bouwen maakt ze direct toegankelijk voor elke MCP-compatible agent
+- **Licentie:** Apache 2.0
+
+#### n8n
+- **GitHub:** https://github.com/n8n-io/n8n
+- **Wat:** Workflow automatisering met 400+ integraties en native AI (LangChain nodes). Self-hostable. 60.000+ stars
+- **Relevantie:** Integratielaag: monitoring alert → log extractie → Claude API voor RCA → TOPdesk ticket → Slack notificatie. Human-in-the-loop approval nodes voor risicovolle acties
+- **Licentie:** Fair-code (Sustainable Use License)
 
 ---
 
@@ -333,28 +409,38 @@ Uit onderzoek blijken er diverse open source projecten te zijn die als bouwstene
 
 ### Wat te bouwen vs. hergebruiken (bijgewerkt)
 
-| Component             | Bouwen / Hergebruiken              | Open Source Project            |
-|-----------------------|------------------------------------|--------------------------------|
-| Screen observatie     | **Hergebruiken**                   | ScreenPipe                     |
-| OCR / Vision          | **Hergebruiken**                   | ScreenPipe OCR + Claude Vision |
-| OS diagnostiek        | **Hergebruiken + aanpassen**       | Open Interpreter / Goose       |
-| LLM Orchestrator      | **Bouwen** (kern-IP)              | LangGraph + Claude API         |
-| TOPdesk integratie    | **Hergebruiken + uitbreiden**      | topdesk PyPI package           |
-| BlueDolphin integratie| **Bouwen**                         | BlueDolphin Public API         |
-| Chat widget           | **Hergebruiken**                   | Open-source chat UI            |
-| Actie-engine          | **Bouwen op basis van**            | Goose / Open Interpreter       |
-| Monitoring            | **Hergebruiken**                   | Grafana + OpenTelemetry        |
+| Component             | Bouwen / Hergebruiken              | Aanbevolen Open Source           | Licentie    |
+|-----------------------|------------------------------------|----------------------------------|-------------|
+| Screen observatie     | **Hergebruiken**                   | ScreenPipe + Agent S             | MIT / Apache 2.0 |
+| OCR / Vision          | **Hergebruiken**                   | ScreenPipe OCR + Claude Vision   | MIT         |
+| OS diagnostiek        | **Hergebruiken + aanpassen**       | Goose (MCP-based)                | Apache 2.0  |
+| LLM Orchestrator      | **Bouwen** (kern-IP)              | LangGraph + Claude API           | MIT         |
+| Actie-engine          | **Hergebruiken + configureren**    | Ansible AWX of StackStorm        | Apache 2.0  |
+| TOPdesk integratie    | **Hergebruiken + MCP server**      | topdesk PyPI + custom MCP        | GPL-3.0     |
+| BlueDolphin integratie| **Bouwen als MCP server**          | BlueDolphin Public API           | N/A (comm.) |
+| Chat widget           | **Hergebruiken**                   | Chatwoot                         | MIT         |
+| Alert aggregatie      | **Hergebruiken**                   | Keep                             | MIT         |
+| Log analyse           | **Hergebruiken**                   | LogAI (Salesforce)               | BSD 3-Clause|
+| Ticket classificatie  | **Hergebruiken**                   | Open Ticket AI                   | Open Source |
+| Monitoring            | **Hergebruiken**                   | Grafana + OpenTelemetry          | AGPLv3/Apache|
+| Workflow integratie   | **Hergebruiken**                   | n8n                              | Fair-code   |
+| Tool connectiviteit   | **Standaard**                      | MCP (Model Context Protocol)     | Apache 2.0  |
 
 ### Technologiestack (voorstel)
 - **Backend:** Python 3.12+
 - **LLM:** Claude API (Opus/Sonnet) voor redeneren, Haiku voor snelle classificatie
-- **Orchestratie:** LangGraph of CrewAI voor agent-workflow
-- **OS Agent:** Open Interpreter of Goose (MCP-based)
-- **Screen capture:** ScreenPipe (Rust, draait als MCP-server)
-- **TOPdesk:** topdesk PyPI package + custom extensies
-- **BlueDolphin:** Custom client op BlueDolphin Public API
+- **Orchestratie:** LangGraph voor stateful agent-workflows
+- **OS Agent:** Goose (MCP-native, Apache 2.0)
+- **Actie-engine:** Ansible AWX met approval workflows
+- **Screen capture:** ScreenPipe (Rust, MCP-server)
+- **Chat widget:** Chatwoot (MIT, self-hosted)
+- **Alert aggregatie:** Keep (AIOps platform)
+- **TOPdesk:** topdesk PyPI package + custom MCP server
+- **BlueDolphin:** Custom MCP server op BlueDolphin Public API
+- **Log analyse:** LogAI voor anomaly detection
 - **Monitoring:** Grafana + OpenTelemetry
-- **Message queue:** Redis of NATS voor agent-communicatie
+- **Workflow glue:** n8n voor complexe integratie-flows
+- **Tool connectivity:** MCP als universele adapter
 - **Database:** PostgreSQL voor kennisbank en logging
 
 ---

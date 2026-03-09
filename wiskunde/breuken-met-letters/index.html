@@ -354,6 +354,28 @@
             <button onclick="checkTry('tryA2')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
             <span id="tryA2fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
         </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: vereenvoudigen met letters</h3>
+            <div class="exercise" id="exMA1">
+                <p class="q">Vereenvoudig: 8p / 12p</p>
+                <input type="text" id="ansMA1" placeholder="?">
+                <button onclick="checkMini('MA1')">Check</button>
+                <div class="feedback" id="fbMA1"></div>
+            </div>
+            <div class="exercise" id="exMA2">
+                <p class="q">Vereenvoudig: 15xy / 5x</p>
+                <input type="text" id="ansMA2" placeholder="?">
+                <button onclick="checkMini('MA2')">Check</button>
+                <div class="feedback" id="fbMA2"></div>
+            </div>
+            <div class="exercise" id="exMA3">
+                <p class="q">Schrijf zonder minteken in de teller: &minus;3 / 7</p>
+                <input type="text" id="ansMA3" placeholder="?">
+                <button onclick="checkMini('MA3')">Check</button>
+                <div class="feedback" id="fbMA3"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== THEORIE B ==================== -->
@@ -409,6 +431,22 @@
             <input type="text" id="tryB1" style="border:1px solid var(--border);border-radius:6px;padding:0.3rem 0.5rem;font-size:1rem;width:120px;" placeholder="?">
             <button onclick="checkTry('tryB1')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
             <span id="tryB1fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: variabelen uit breuken halen</h3>
+            <div class="exercise" id="exMB1">
+                <p class="q">Herleid: 9m / 4 (schrijf als &hellip; &middot; m)</p>
+                <input type="text" id="ansMB1" placeholder="bijv. 2/3 · m">
+                <button onclick="checkMini('MB1')">Check</button>
+                <div class="feedback" id="fbMB1"></div>
+            </div>
+            <div class="exercise" id="exMB2">
+                <p class="q">Herleid: 20t / 8</p>
+                <input type="text" id="ansMB2" placeholder="?">
+                <button onclick="checkMini('MB2')">Check</button>
+                <div class="feedback" id="fbMB2"></div>
+            </div>
         </div>
     </div>
 
@@ -493,6 +531,22 @@
             <button onclick="checkTry('tryC2')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
             <span id="tryC2fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
         </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: vermenigvuldigen &amp; delen</h3>
+            <div class="exercise" id="exMC1">
+                <p class="q">Bereken en vereenvoudig: 2a/3 &times; 6/a</p>
+                <input type="text" id="ansMC1" placeholder="?">
+                <button onclick="checkMini('MC1')">Check</button>
+                <div class="feedback" id="fbMC1"></div>
+            </div>
+            <div class="exercise" id="exMC2">
+                <p class="q">Bereken: 4 &divide; 2/n (herschrijf als vermenigvuldiging)</p>
+                <input type="text" id="ansMC2" placeholder="?">
+                <button onclick="checkMini('MC2')">Check</button>
+                <div class="feedback" id="fbMC2"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== THEORIE D ==================== -->
@@ -543,6 +597,22 @@
                 <li>Kijk of je gelijksoortige termen kunt combineren</li>
                 <li>Als de noemers niet wegvallen: maak ze gelijknamig</li>
             </ol>
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: optellen &amp; aftrekken</h3>
+            <div class="exercise" id="exMD1">
+                <p class="q">Bereken: 5x/7 + 2x/7</p>
+                <input type="text" id="ansMD1" placeholder="?">
+                <button onclick="checkMini('MD1')">Check</button>
+                <div class="feedback" id="fbMD1"></div>
+            </div>
+            <div class="exercise" id="exMD2">
+                <p class="q">Bereken: a/3 + a/4 (maak gelijknamig)</p>
+                <input type="text" id="ansMD2" placeholder="?">
+                <button onclick="checkMini('MD2')">Check</button>
+                <div class="feedback" id="fbMD2"></div>
+            </div>
         </div>
     </div>
 
@@ -842,6 +912,32 @@ const answers = {
           correct: 'Goed! (2a \u00d7 6a)/3 = 12a\u00b2/3 = 4a\u00b2.',
           wrong: 'Niet juist. Schrijf 6a als 6a/1, vermenigvuldig, en vereenvoudig.' }
 };
+
+// Mini-oefeningen per blok
+const miniAnswers = {
+    MA1: { check: v => v.replace(/\s/g,'') === '2/3', correct: 'Goed! 8p/12p: deel door 4p \u2192 2/3.', wrong: 'Niet juist. Deel boven en onder door 4p.' },
+    MA2: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s === '3y' || s === '3y/1'; }, correct: 'Goed! 15xy/5x = 3y (deel door 5x).', wrong: 'Niet juist. Deel boven en onder door 5x.' },
+    MA3: { check: v => { const s = v.replace(/\s/g,''); return s === '-(3/7)' || s === '-3/7'; }, correct: 'Goed! Het minteken mag voor de breuk: \u22123/7.', wrong: 'Het minteken mag ook v\u00f3\u00f3r de breukstreep: \u22123/7.' },
+    MB1: { check: v => { const s = v.replace(/\s/g,'').toLowerCase().replace('·','*').replace('\u00b7','*'); return s === '9/4*m' || s === '9m/4' || s === '9/4m'; }, correct: 'Goed! 9m/4 = (9/4)\u00b7m.', wrong: 'Niet juist. Haal m uit de teller: 9m/4 = (9/4)\u00b7m.' },
+    MB2: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s === '5/2t' || s === '5t/2' || s === '5/2*t'; }, correct: 'Goed! 20t/8 = 5t/2 (deel door 4).', wrong: 'Niet juist. Vereenvoudig eerst: 20/8 = 5/2. Dan haal je t erbij.' },
+    MC1: { check: v => v.replace(/\s/g,'') === '4', correct: 'Goed! 2a\u00d76 = 12a, 3\u00d7a = 3a, 12a/3a = 4.', wrong: 'Niet juist. Teller\u00d7teller = 12a, noemer\u00d7noemer = 3a. Vereenvoudig.' },
+    MC2: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s === '2n' || s === '2n/1'; }, correct: 'Goed! 4 \u00d7 n/2 = 4n/2 = 2n.', wrong: 'Niet juist. Draai 2/n om naar n/2, dan: 4 \u00d7 n/2 = ?' },
+    MD1: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s === '7x/7' || s === 'x' || s === '1x'; }, correct: 'Goed! 5x/7 + 2x/7 = 7x/7 = x.', wrong: 'Niet juist. Zelfde noemer: 5x + 2x = 7x. Dan 7x/7 = ?' },
+    MD2: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s === '7a/12'; }, correct: 'Goed! 4a/12 + 3a/12 = 7a/12.', wrong: 'Niet juist. Noemer 12: a/3 = 4a/12, a/4 = 3a/12. Tel op.' }
+};
+function checkMini(id) {
+    const raw = document.getElementById('ans' + id).value;
+    if (!raw.trim()) return;
+    const fb = document.getElementById('fb' + id);
+    const a = miniAnswers[id];
+    if (a.check(raw.trim())) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.correct;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+}
 
 function checkAnswer(n) {
     const val = document.getElementById('ans' + n).value;

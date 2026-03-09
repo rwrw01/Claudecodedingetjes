@@ -417,6 +417,24 @@
         <div id="stepInfo"></div>
         <canvas id="stepCanvas" class="graph" width="500" height="400"></canvas>
         <div class="legend" id="stepLegend"></div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: transformaties herkennen</h3>
+            <div class="exercise" id="exWA1">
+                <p class="q">Gegeven f(x) = 3&radic;(x &minus; 2) + 1. Wat is a, p en q?</p>
+                <p style="color:var(--muted);font-size:0.9rem;">Schrijf als: a=3, p=2, q=1</p>
+                <input type="text" id="ansWA1" placeholder="a=?, p=?, q=?">
+                <button onclick="checkMini('WA1')">Check</button>
+                <div class="feedback" id="fbWA1"></div>
+            </div>
+            <div class="exercise" id="exWA2">
+                <p class="q">Gegeven g(x) = &minus;2&radic;(x + 5) &minus; 4. Wat is a, p en q?</p>
+                <p style="color:var(--muted);font-size:0.9rem;">Let op: x + 5 = x &minus; (&minus;5)</p>
+                <input type="text" id="ansWA2" placeholder="a=?, p=?, q=?">
+                <button onclick="checkMini('WA2')">Check</button>
+                <div class="feedback" id="fbWA2"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== THEORIE B ==================== -->
@@ -474,6 +492,22 @@
             <button onclick="checkTry('tryB2')" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
             <span id="tryB2fb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
         </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: domein &amp; bereik</h3>
+            <div class="exercise" id="exWB1">
+                <p class="q">f(x) = &radic;(x &minus; 3) + 2. Wat is het domein?</p>
+                <input type="text" id="ansWB1" placeholder="x >= ?">
+                <button onclick="checkMini('WB1')">Check</button>
+                <div class="feedback" id="fbWB1"></div>
+            </div>
+            <div class="exercise" id="exWB2">
+                <p class="q">g(x) = &minus;4&radic;(x + 1) &minus; 3. Wat is het bereik?</p>
+                <input type="text" id="ansWB2" placeholder="y <= ? of y >= ?">
+                <button onclick="checkMini('WB2')">Check</button>
+                <div class="feedback" id="fbWB2"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== THEORIE C ==================== -->
@@ -516,6 +550,24 @@
             <span>)</span>
             <button onclick="checkTryPair('tryC1a','tryC1b',-3,-1)" style="background:var(--primary);color:white;border:none;border-radius:6px;padding:0.3rem 0.8rem;cursor:pointer;font-size:0.9rem;">Check</button>
             <span id="tryC1afb" style="margin-left:0.5rem;font-size:0.9rem;"></span>
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: randpunten</h3>
+            <div class="exercise" id="exWC1">
+                <p class="q">Wat is het randpunt van f(x) = 5&radic;(x &minus; 7) + 2?</p>
+                <p style="color:var(--muted);font-size:0.9rem;">Schrijf als: (7,2)</p>
+                <input type="text" id="ansWC1" placeholder="(?,?)">
+                <button onclick="checkMini('WC1')">Check</button>
+                <div class="feedback" id="fbWC1"></div>
+            </div>
+            <div class="exercise" id="exWC2">
+                <p class="q">Wat is het randpunt van g(x) = &minus;3&radic;(x + 4)?</p>
+                <p style="color:var(--muted);font-size:0.9rem;">Let op: x + 4 = x &minus; (&minus;4), en q = 0</p>
+                <input type="text" id="ansWC2" placeholder="(?,?)">
+                <button onclick="checkMini('WC2')">Check</button>
+                <div class="feedback" id="fbWC2"></div>
+            </div>
         </div>
     </div>
 
@@ -560,6 +612,28 @@
         <div class="tip-box">
             <strong>Vuistregel:</strong> Als het rechterlid negatief is, heeft de wortelvergelijking
             <strong>geen oplossing</strong>. Een wortel geeft altijd een niet-negatief getal.
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: wortelvergelijkingen</h3>
+            <div class="exercise" id="exWD1">
+                <p class="q">Los op: &radic;(3x &minus; 2) = 4</p>
+                <input type="text" id="ansWD1" placeholder="x = ?">
+                <button onclick="checkMini('WD1')">Check</button>
+                <div class="feedback" id="fbWD1"></div>
+            </div>
+            <div class="exercise" id="exWD2">
+                <p class="q">Los op: &radic;(x + 7) = &minus;1. Hoeveel oplossingen?</p>
+                <input type="text" id="ansWD2" placeholder="?">
+                <button onclick="checkMini('WD2')">Check</button>
+                <div class="feedback" id="fbWD2"></div>
+            </div>
+            <div class="exercise" id="exWD3">
+                <p class="q">Los op: &radic;(2x + 1) = 5. Controleer je antwoord!</p>
+                <input type="text" id="ansWD3" placeholder="x = ?">
+                <button onclick="checkMini('WD3')">Check</button>
+                <div class="feedback" id="fbWD3"></div>
+            </div>
         </div>
     </div>
 
@@ -1136,6 +1210,32 @@ const answers = {
           correct: 'Goed! a = \u22122.',
           wrong: 'Niet juist. Vind eerst het randpunt: x = \u22125/a, y = 4. Vul in op y = 2x \u2212 1.' }
 };
+
+// Mini-oefeningen per blok
+const miniAnswers = {
+    WA1: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s.includes('a=3') && s.includes('p=2') && s.includes('q=1'); }, correct: 'Goed! a=3, p=2, q=1.', wrong: 'Niet juist. f(x) = a\u00b7\u221a(x\u2212p) + q. Vergelijk met 3\u221a(x\u22122) + 1.' },
+    WA2: { check: v => { const s = v.replace(/\s/g,'').toLowerCase().replace('\u2212','-'); return s.includes('a=-2') && s.includes('p=-5') && s.includes('q=-4'); }, correct: 'Goed! a=\u22122, p=\u22125, q=\u22124. Let op: x+5 = x\u2212(\u22125).', wrong: 'Niet juist. x+5 = x\u2212(\u22125), dus p=\u22125. a=\u22122 en q=\u22124.' },
+    WB1: { check: v => { const s = v.replace(/\s/g,'').replace(',','.'); return s.includes('3') && (s.includes('>=') || s.includes('\u2265')); }, correct: 'Goed! x \u2265 3. Want x\u22123 \u2265 0.', wrong: 'Niet juist. Onder de wortel: x\u22123 \u2265 0, dus x \u2265 ?' },
+    WB2: { check: v => { const s = v.replace(/\s/g,'').replace('\u2212','-').replace(',','.'); return s.includes('-3') && (s.includes('<=') || s.includes('\u2264')); }, correct: 'Goed! y \u2264 \u22123. Want a<0 (dalend) en q=\u22123.', wrong: 'Niet juist. a=\u22124 (negatief \u2192 dalend), q=\u22123. Bereik: y \u2264 q.' },
+    WC1: { check: v => { const s = v.replace(/\s/g,''); return s === '(7,2)' || s === '(7;2)'; }, correct: 'Goed! Randpunt (p,q) = (7,2).', wrong: 'Niet juist. Het randpunt is (p,q). Hier p=7, q=2.' },
+    WC2: { check: v => { const s = v.replace(/\s/g,'').replace('\u2212','-'); return s === '(-4,0)' || s === '(-4;0)'; }, correct: 'Goed! p=\u22124 (want x+4 = x\u2212(\u22124)), q=0. Randpunt (\u22124,0).', wrong: 'Niet juist. x+4 = x\u2212(\u22124), dus p=\u22124. En q=0 (er staat niets bij).' },
+    WD1: { check: v => { const s = v.replace(/\s/g,'').replace(',','.'); return s === '6' || s === 'x=6'; }, correct: 'Goed! Kwadrateer: 3x\u22122=16, 3x=18, x=6. Check: \u221a16=4 \u2714', wrong: 'Niet juist. Kwadrateer beide kanten: 3x\u22122 = 16. Los op voor x.' },
+    WD2: { check: v => { const s = v.replace(/\s/g,'').toLowerCase(); return s === '0' || s.includes('geen'); }, correct: 'Goed! Geen oplossingen. Een wortel is altijd \u2265 0, dus \u221a(iets) \u2260 \u22121.', wrong: 'Niet juist. Kan een wortel negatief zijn?' },
+    WD3: { check: v => { const s = v.replace(/\s/g,'').replace(',','.'); return s === '12' || s === 'x=12'; }, correct: 'Goed! 2x+1=25, 2x=24, x=12. Check: \u221a(25)=5 \u2714', wrong: 'Niet juist. Kwadrateer: 2x+1 = 25. Los op voor x.' }
+};
+function checkMini(id) {
+    const raw = document.getElementById('ans' + id).value;
+    if (!raw.trim()) return;
+    const fb = document.getElementById('fb' + id);
+    const a = miniAnswers[id];
+    if (a.check(raw.trim())) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.correct;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+}
 
 function checkAnswer(n) {
     const val = document.getElementById('ans' + n).value;

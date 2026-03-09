@@ -352,6 +352,22 @@
         <div class="tip-box">
             <strong>Optellen maakt altijd groter</strong> (zolang je positieve getallen optelt). Dit is de makkelijkste bewerking &mdash; hier gaat bijna niemand de mist in.
         </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: optellen</h3>
+            <div class="exercise" id="exO1">
+                <p class="q">Wat is 4,7 + 3,6?</p>
+                <input type="text" id="ansO1" placeholder="?">
+                <button onclick="checkMini('O1')">Check</button>
+                <div class="feedback" id="fbO1"></div>
+            </div>
+            <div class="exercise" id="exO2">
+                <p class="q">Je hebt &euro;12,50. Je krijgt &euro;3,75 terug. Hoeveel heb je nu?</p>
+                <input type="text" id="ansO2" placeholder="?">
+                <button onclick="checkMini('O2')">Check</button>
+                <div class="feedback" id="fbO2"></div>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== AFTREKKEN ==================== -->
@@ -379,6 +395,22 @@
 
         <div class="tip-box">
             <strong>Aftrekken maakt altijd kleiner</strong> (bij positieve getallen). Ook hier weinig verwarring. Het wordt pas spannend bij de volgende twee&hellip;
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: aftrekken</h3>
+            <div class="exercise" id="exA1">
+                <p class="q">Wat is 7,3 &minus; 2,8?</p>
+                <input type="text" id="ansA1" placeholder="?">
+                <button onclick="checkMini('A1')">Check</button>
+                <div class="feedback" id="fbA1"></div>
+            </div>
+            <div class="exercise" id="exA2">
+                <p class="q">Een fles van 1,5 liter. Je drinkt 0,65 liter. Hoeveel zit er nog in?</p>
+                <input type="text" id="ansA2" placeholder="?">
+                <button onclick="checkMini('A2')">Check</button>
+                <div class="feedback" id="fbA2"></div>
+            </div>
         </div>
     </div>
 
@@ -447,6 +479,28 @@
             <div class="demo-output">
                 10 &times; <span id="multFactor">1,0</span> = <span id="multResult">10</span>
                 <span id="multComment" style="font-weight:normal;font-size:0.85rem;color:#64748b;"></span>
+            </div>
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: vermenigvuldigen</h3>
+            <div class="exercise" id="exV1">
+                <p class="q">Wat is 0,5 &times; 12? (de helft van 12)</p>
+                <input type="text" id="ansV1" placeholder="?">
+                <button onclick="checkMini('V1')">Check</button>
+                <div class="feedback" id="fbV1"></div>
+            </div>
+            <div class="exercise" id="exV2">
+                <p class="q">Wat is 0,2 &times; 0,3?</p>
+                <input type="text" id="ansV2" placeholder="?">
+                <button onclick="checkMini('V2')">Check</button>
+                <div class="feedback" id="fbV2"></div>
+            </div>
+            <div class="exercise" id="exV3">
+                <p class="q">Wordt 8 &times; 0,4 groter of kleiner dan 8? Reken uit.</p>
+                <input type="text" id="ansV3" placeholder="?">
+                <button onclick="checkMini('V3')">Check</button>
+                <div class="feedback" id="fbV3"></div>
             </div>
         </div>
     </div>
@@ -586,6 +640,28 @@
             <div class="demo-output">
                 6 &divide; <span id="divDivisor">1,0</span> = <span id="divResult">6</span>
                 <span id="divComment" style="font-weight:normal;font-size:0.85rem;color:#64748b;"></span>
+            </div>
+        </div>
+
+        <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:2px dashed var(--border);">
+            <h3 style="color:var(--primary);font-size:1.05rem;margin-bottom:0.75rem;">Oefen: delen</h3>
+            <div class="exercise" id="exD1">
+                <p class="q">Hoe vaak past 0,25 in 2? (2 &divide; 0,25 = ?)</p>
+                <input type="text" id="ansD1" placeholder="?">
+                <button onclick="checkMini('D1')">Check</button>
+                <div class="feedback" id="fbD1"></div>
+            </div>
+            <div class="exercise" id="exD2">
+                <p class="q">Wat is 1,5 &divide; 0,5?</p>
+                <input type="text" id="ansD2" placeholder="?">
+                <button onclick="checkMini('D2')">Check</button>
+                <div class="feedback" id="fbD2"></div>
+            </div>
+            <div class="exercise" id="exD3">
+                <p class="q">Gebruik de brugtruc: 0,9 &divide; 0,3 = ? (&times;10 &rarr; 9 &divide; 3)</p>
+                <input type="text" id="ansD3" placeholder="?">
+                <button onclick="checkMini('D3')">Check</button>
+                <div class="feedback" id="fbD3"></div>
             </div>
         </div>
     </div>
@@ -830,6 +906,34 @@ document.querySelectorAll('.exercise input[type=text]').forEach(input => {
         }
     });
 });
+
+// Mini-oefeningen per blok
+const miniAnswers = {
+    O1: { val: 8.3, msg: 'Goed! 4,7 + 3,6 = 8,3.', wrong: 'Niet juist. Tel op: 4,7 + 3,6 = ?' },
+    O2: { val: 16.25, msg: 'Goed! 12,50 + 3,75 = 16,25.', wrong: 'Niet juist. 12,50 + 3,75 = ?' },
+    A1: { val: 4.5, msg: 'Goed! 7,3 − 2,8 = 4,5.', wrong: 'Niet juist. 7,3 − 2,8 = ?' },
+    A2: { val: 0.85, msg: 'Goed! 1,5 − 0,65 = 0,85.', wrong: 'Niet juist. 1,5 − 0,65 = ?' },
+    V1: { val: 6, msg: 'Goed! De helft van 12 = 6.', wrong: 'Niet juist. De helft van 12 is\u2026?' },
+    V2: { val: 0.06, msg: 'Goed! 0,2 \u00d7 0,3 = 0,06. Twee decimalen!', wrong: 'Niet juist. 2\u00d73=6, twee decimalen \u2192 0,06.' },
+    V3: { val: 3.2, msg: 'Goed! 8 \u00d7 0,4 = 3,2. Kleiner dan 8, want 0,4 < 1.', wrong: 'Niet juist. 8 \u00d7 0,4 = ?' },
+    D1: { val: 8, msg: 'Goed! 0,25 past 8 keer in 2.', wrong: 'Niet juist. \u00d7100: 200 \u00f7 25 = ?' },
+    D2: { val: 3, msg: 'Goed! 0,5 past 3 keer in 1,5.', wrong: 'Niet juist. \u00d710: 15 \u00f7 5 = ?' },
+    D3: { val: 3, msg: 'Goed! 9 \u00f7 3 = 3.', wrong: 'Niet juist. \u00d710: 9 \u00f7 3 = ?' }
+};
+function checkMini(id) {
+    const raw = document.getElementById('ans' + id).value;
+    if (!raw.trim()) return;
+    const val = parseFloat(normalize(raw));
+    const fb = document.getElementById('fb' + id);
+    const a = miniAnswers[id];
+    if (Math.abs(val - a.val) < 0.001) {
+        fb.className = 'feedback correct';
+        fb.textContent = a.msg;
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = a.wrong;
+    }
+}
 
 // Try-it check function
 function checkTry(id, expected, btn) {

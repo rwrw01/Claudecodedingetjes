@@ -152,7 +152,96 @@ Een AI-agent die **meedraait bij elke storing** en twee dingen tegelijk doet:
 - Vertaling via CMDB/GGM mapping (CMDBuild of optioneel BlueDolphin)
 - Statusupdates over voortgang diagnose/oplossing
 
-#### D. Orchestrator (LLM-kern)
+#### D. Client Applicatie (Werkstation)
+**Doel:** Lichtgewicht tray-applicatie waarmee de gebruiker de schaduwagent-sessie start, stopt en communiceert.
+
+**Vorm:** System tray app (pictogram naast de klok) met een klein console-venster.
+
+```
+┌─────────────────────────────────────────────────┐
+│  SYSTEM TRAY                                     │
+│                                                  │
+│  Schaduwagent  ● (groen = actief, grijs = uit)   │
+│     ├─ Start sessie                              │
+│     ├─ Stop sessie                               │
+│     ├─ Open console                              │
+│     └─ Instellingen                              │
+└─────────────────────────────────────────────────┘
+```
+
+**Sessie-lifecycle:**
+1. Gebruiker klikt "Start sessie" → opt-in scherm: *"De schaduwagent gaat meekijken om je te helpen. Schermobservatie en systeemdiagnostiek worden gestart. Je kunt op elk moment stoppen."*
+2. Na akkoord: tray-icoon wordt groen, telemetrie begint
+3. Telemetrie (screenshots, OS-events, logs) wordt gestreamd naar de sessie-repository
+4. Gebruiker klikt "Stop sessie" → telemetrie stopt direct, icoon wordt grijs
+5. Gebruiker heeft volledige controle: geen observatie zonder expliciete actie
+
+**Console-venster:**
+Een klein chatvenster waarin de gebruiker in eigen woorden context kan geven:
+
+```
+┌─────────────────────────────────────────────┐
+│ Schaduwagent — Sessie actief (00:03:42)     │
+│─────────────────────────────────────────────│
+│                                             │
+│ [Agent] Sessie gestart. Ik kijk mee en      │
+│         analyseer op de achtergrond.         │
+│                                             │
+│ [Agent] Ik zie dat je in het zaaksysteem     │
+│         werkt. Foutmelding gedetecteerd.     │
+│                                             │
+│ > kijk hier gaat t verkeerd als ik op        │
+│   opslaan klik                              │
+│                                             │
+│ [Agent] Begrepen. Ik zie de "opslaan" knop  │
+│         en de foutmelding. Ik check de       │
+│         achterliggende systemen...           │
+│                                             │
+│ [Agent] Gevonden: de API geeft een 503      │
+│         terug. De ESB-proxy service draait   │
+│         niet. Zal ik herstarten?             │
+│                                             │
+│ > ja doe maar                               │
+│                                             │
+│ [Agent] Service herstart. Probeer opnieuw   │
+│         op te slaan.                         │
+│                                             │
+│ [_____________________________________] >   │
+│                                             │
+│ [Stop sessie]                  [Bijlage]    │
+└─────────────────────────────────────────────┘
+```
+
+**Scope: niet alleen webapps**
+De client werkt met *elk* type applicatie — de Screen Agent kijkt naar het scherm (ongeacht wat erop draait) en de OS Agent kijkt naar het systeem eronder:
+
+| Applicatie-type | Screen Agent ziet | OS Agent checkt | Voorbeeld |
+|---|---|---|---|
+| **Webapp (browser)** | Foutpagina, URL, HTTP errors | DNS, proxy, certificaten, browser cache | Zaaksysteem, formulierenplatform |
+| **Desktop .exe (x86/x64)** | Foutdialoog, crash-melding, applicatie-UI | Process status, crash dumps, Event Viewer, DLL's, registry | TOPdesk client, Office, maatwerk |
+| **Client-server app** | Client-side foutmelding | Backend connectivity, poorten, service status, server-logs | Thick client + backend API |
+| **Citrix/RDP sessie** | Gepubliceerde app in sessie | ICA/RDP sessie, server resources, profielproblemen | Gepubliceerde applicaties |
+| **Systeem/OS-niveau** | Bluescreen, tray-meldingen | BSOD dump, driver issues, Windows Update, disk health | OS crashes, performance |
+
+De kracht zit in de **combinatie**: de Screen Agent ziet *wat de gebruiker ziet* (welke app dan ook), terwijl de OS Agent *onder de motorkap kijkt* naar de technische oorzaak. Dat werkt voor een webpagina met een 503-fout, maar net zo goed voor een .exe die crasht met een cryptische foutcode.
+
+**Telemetrie-stream:**
+De client stuurt events als gestructureerde JSON naar de sessie-repository:
+
+```json
+{"ts": "2026-03-09T09:01:12Z", "type": "screenshot", "file": "screen_001.png"}
+{"ts": "2026-03-09T09:01:12Z", "type": "os_event", "data": {"service": "esb-proxy", "status": "stopped"}}
+{"ts": "2026-03-09T09:01:15Z", "type": "user_message", "text": "kijk hier gaat t verkeerd als ik op opslaan klik"}
+{"ts": "2026-03-09T09:01:18Z", "type": "log_fragment", "source": "esb-proxy.log", "lines": ["OutOfMemoryException..."]}
+```
+
+**Technisch:**
+- **Packaging:** Python + PyInstaller (.exe) voor POC, Rust/Tauri (~5MB) voor productie
+- **Transport:** WebSocket naar backend (productie) of schrijven naar gedeelde map/repo (POC)
+- **Privacy:** Opt-in per sessie, geen achtergrondverzameling, PII-detectie en blurring
+- **OS-support:** Windows 10/11 (primair), Linux (secundair)
+
+#### E. Orchestrator (LLM-kern)
 **Doel:** Het brein dat alles verbindt.
 
 **Werking:**
@@ -678,76 +767,161 @@ Het NanoClaw-patroon (channels → SQLite → polling loop → container agent �
 
 ### Fase 0: Stand-alone POC — "1 medewerker, 1 werkstation, 1 storing" (2-3 weken)
 
-**Scope:** Een servicedeskmedewerker zit naast een werkstation met een storing. De schaduwagent draait op een laptop/server en helpt bij diagnose en oplossing.
+**Scope:** Een servicedeskmedewerker zit naast een werkstation met een storing. De schaduwagent-client draait op het werkstation, de servicedeskmedewerker gebruikt Claude Code in VS Code om de telemetrie live te volgen en te analyseren.
+
+**Kernidee POC:** Geen aparte backend-infrastructuur nodig. De telemetrie van de client stroomt naar een gedeelde werkmap (git repo of netwerk share). Claude Code in VS Code leest deze map direct — Claude *is* de analyse-agent.
 
 **Setup:**
 ```
-┌──────────────────┐     ┌──────────────────────────────┐
-│ WERKSTATION      │     │ SCHADUWAGENT (laptop/server)  │
-│ (met storing)    │     │                              │
-│                  │ SSH │ ┌──────────────────────────┐ │
-│                  │◄───►│ │ OS Agent (in container)  │ │
-│                  │     │ │ - Leest logs             │ │
-│                  │     │ │ - Checkt services        │ │
-│                  │     │ │ - Doet diagnostiek       │ │
-│                  │     │ └──────────┬───────────────┘ │
-│                  │     │            │                  │
-│                  │     │ ┌──────────▼───────────────┐ │
-│                  │     │ │ Claude (analyse-agent)   │ │
-│                  │     │ │ via Bedrock EU           │ │
-│                  │     │ │ - Root cause analysis    │ │
-│                  │     │ │ - Voorgestelde oplossing │ │
-│                  │     │ └──────────┬───────────────┘ │
-│                  │     │            │                  │
-│                  │     │ ┌──────────▼───────────────┐ │
-│                  │     │ │ Terminal UI              │ │
-│                  │     │ │ (voor SD-medewerker)     │ │
-│                  │     │ └──────────────────────────┘ │
-└──────────────────┘     └──────────────────────────────┘
+┌──────────────────────────────┐          ┌────────────────────────────────────┐
+│ WERKSTATION (eindgebruiker)  │          │ SD-WERKPLEK (servicedeskmedewerker)│
+│                              │          │                                    │
+│ ┌──────────────────────────┐ │          │ ┌──────────────────────────────┐  │
+│ │ Schaduwagent Client      │ │          │ │ VS Code + Claude Code        │  │
+│ │ (.exe, tray-applicatie)  │ │          │ │                              │  │
+│ │                          │ │  gedeelde│ │ ┌──────────────────────────┐ │  │
+│ │ - Start/stop sessie      │ │  map /   │ │ │ Sessie-map:              │ │  │
+│ │ - Screenshot capture     │ │  repo    │ │ │ /sessies/2026-03-09_001/ │ │  │
+│ │ - OS telemetrie          │ │────────►│ │ │  ├─ events.jsonl          │ │  │
+│ │ - Console voor gebruiker │ │          │ │ │  ├─ screenshots/         │ │  │
+│ │   "kijk, hier gaat het   │ │          │ │ │  ├─ logs/                │ │  │
+│ │    verkeerd"             │ │          │ │ │  └─ user_messages.jsonl  │ │  │
+│ │                          │ │          │ │ └──────────────────────────┘ │  │
+│ └──────────────────────────┘ │          │ │                              │  │
+│                              │          │ │ SD-medewerker vraagt Claude: │  │
+│                              │          │ │ "Wat zie je in de sessie?"   │  │
+│                              │          │ │ "Kun je de logs analyseren?" │  │
+│                              │          │ │ "Wat is de root cause?"      │  │
+│                              │          │ └──────────────────────────────┘  │
+└──────────────────────────────┘          └────────────────────────────────────┘
 ```
 
-**Wat wordt gebouwd:**
-- OS Agent gebaseerd op NanoClaw/Goose patroon: draait in container, SSH naar werkstation
-- Claude via Bedrock EU als analyse-agent: ontvangt systeemdata, doet diagnose
-- Eenvoudige terminal/CLI interface voor de servicedeskmedewerker
-- Geen fancy UI, geen integraties — puur: "kijk mee en help oplossen"
+**De twee kanten:**
 
-**Wat de SD-medewerker ervaart:**
-```
-$ schaduwagent connect 192.168.1.42
+#### Kant 1: Eindgebruiker (werkstation met storing)
+De gebruiker start de schaduwagent-client (.exe) vanuit de system tray:
 
-[Schaduwagent] Verbonden met werkstation. Bezig met analyse...
-[Schaduwagent] Systeeminfo: Windows 11 Pro, 16GB RAM, domein: gemeente.local
-[Schaduwagent] Checking services...
-[Schaduwagent] ⚠ Service 'esb-proxy' status: STOPPED (crash 5 min geleden)
-[Schaduwagent] Loganalyse: OutOfMemoryException in esb-proxy.log
-[Schaduwagent]
-[Schaduwagent] DIAGNOSE: ESB proxy service is gecrasht door geheugenprobleem.
-[Schaduwagent] Dit verklaart waarom het zaaksysteem niet bereikbaar is.
-[Schaduwagent]
-[Schaduwagent] VOORGESTELDE ACTIE:
-[Schaduwagent]   1. Herstart service 'esb-proxy'
-[Schaduwagent]   2. Verhoog memory limit van 512MB naar 1024MB
-[Schaduwagent]
-[Schaduwagent] Wil je dat ik actie 1 uitvoer? [j/n]
-> j
-[Schaduwagent] Service 'esb-proxy' herstart... OK
-[Schaduwagent] Health check... OK
-[Schaduwagent] Zaaksysteem is weer bereikbaar.
 ```
+┌─────────────────────────────────────────────┐
+│ Schaduwagent — Sessie actief (00:03:42)     │
+│─────────────────────────────────────────────│
+│                                             │
+│ [Agent] Sessie gestart. De servicedesk      │
+│         kan nu meekijken.                    │
+│                                             │
+│ > kijk hier gaat t verkeerd als ik op        │
+│   opslaan klik in het zaaksysteem            │
+│                                             │
+│ [Agent] Begrepen, ik heb een screenshot     │
+│         gemaakt en je bericht doorgestuurd.  │
+│                                             │
+│ > ik krijg steeds een witte pagina           │
+│                                             │
+│ [Agent] Genoteerd. De servicedesk bekijkt   │
+│         het nu.                              │
+│                                             │
+│ [_____________________________________] >   │
+│ [Stop sessie]                               │
+└─────────────────────────────────────────────┘
+```
+
+De client schrijft continu naar de sessie-map:
+```
+sessies/2026-03-09_001/
+├── events.jsonl              # Alle events als JSON Lines
+├── screenshots/
+│   ├── screen_001.png        # Screenshot bij foutmelding
+│   ├── screen_002.png        # Screenshot na user_message
+│   └── ...
+├── logs/
+│   ├── eventlog_system.txt   # Windows Event Log fragment
+│   ├── esb-proxy.log         # Applicatie-log
+│   └── services_status.json  # Draaiende services
+└── user_messages.jsonl       # Berichten van de gebruiker
+```
+
+**events.jsonl** bevat de telemetrie-stream:
+```json
+{"ts": "09:01:12", "type": "session_start", "hostname": "WS-042", "os": "Windows 11 Pro"}
+{"ts": "09:01:12", "type": "screenshot", "file": "screenshots/screen_001.png", "trigger": "error_detected"}
+{"ts": "09:01:13", "type": "os_scan", "services_down": ["esb-proxy"], "cpu": "12%", "mem": "68%"}
+{"ts": "09:01:15", "type": "user_message", "text": "kijk hier gaat t verkeerd als ik op opslaan klik"}
+{"ts": "09:01:16", "type": "screenshot", "file": "screenshots/screen_002.png", "trigger": "user_message"}
+{"ts": "09:01:18", "type": "log_fragment", "source": "esb-proxy.log", "lines": ["OutOfMemoryException at ..."]}
+```
+
+#### Kant 2: Servicedeskmedewerker (VS Code + Claude Code)
+De SD-medewerker opent VS Code met Claude Code. De sessie-map is zichtbaar in de workspace. Claude kan alles lezen — screenshots, logs, gebruikersberichten:
+
+```
+SD-medewerker in VS Code terminal (Claude Code):
+
+> @claude Lees de sessie in /sessies/2026-03-09_001/ en vertel me
+  wat er aan de hand is
+
+Claude: Ik heb de sessie bekeken. Dit is wat ik zie:
+
+  - Werkstation WS-042, Windows 11 Pro
+  - De gebruiker werkt in het zaaksysteem en krijgt een fout bij opslaan
+  - Screenshot toont een HTTP 503 foutpagina
+  - De service 'esb-proxy' is gestopt (crashed)
+  - In esb-proxy.log staat een OutOfMemoryException van 5 minuten geleden
+
+  DIAGNOSE: De ESB proxy is gecrasht door geheugentekort.
+  Het zaaksysteem kan daardoor geen data opslaan.
+
+  VOORGESTELDE ACTIE:
+  1. Herstart service 'esb-proxy' op WS-042
+  2. Verhoog memory limit in configuratie
+
+  Zal ik een herstart-commando klaarzetten?
+
+> ja, doe maar
+
+Claude: Ik heb het volgende script aangemaakt:
+
+  fix_esb.ps1:
+  Restart-Service esb-proxy
+  # Verify
+  Get-Service esb-proxy | Select Status
+
+  Je kunt dit uitvoeren via: ssh ws-042 powershell -File fix_esb.ps1
+
+> [SD-medewerker voert het uit]
+> de gebruiker zegt dat het weer werkt, sluit de sessie maar af
+```
+
+**Wat wordt gebouwd (Fase 0):**
+
+| Component | Wat | Technologie | Omvang |
+|-----------|-----|-------------|--------|
+| **Schaduwagent Client** | Tray-app op werkstation: start/stop sessie, screenshots, OS-telemetrie, console voor gebruiker | Python + PyInstaller (.exe) | ~500 regels |
+| **Telemetrie-collector** | Verzamelt screenshots, services, logs, schrijft naar sessie-map | Python (onderdeel van client) | ~300 regels |
+| **Sessie-repository** | Gedeelde map (SMB/netwerk share of git repo) met gestructureerde telemetrie | Bestandssysteem + JSONL | Configuratie |
+| **Analyse-agent** | Claude Code in VS Code — leest de sessie-map, analyseert, stelt oplossingen voor | Claude Code (bestaand!) | **Niets te bouwen** |
+
+**Wat de POC valideert:**
+1. Kan de client betrouwbaar telemetrie verzamelen (screenshots, logs, services)?
+2. Begrijpt Claude de telemetrie goed genoeg voor root cause analysis?
+3. Voegt de gebruikersinput ("kijk hier gaat t verkeerd") waarde toe voor de diagnose?
+4. Is het werkbaar voor een SD-medewerker om via Claude Code te analyseren?
+5. Hoe snel is de feedback loop (storing → diagnose → oplossing)?
 
 **Deliverables Fase 0:**
-- Werkend prototype: CLI tool die via SSH een werkstation diagnosticeert
-- Claude als analyse-engine via Bedrock EU
-- Container-geïsoleerde agent executie
-- Basis logging van diagnose en acties
-- Demo-klaar voor Marlies en beheersorganisatie
+- Werkende client .exe die een gebruiker kan starten/stoppen
+- Console waarin de gebruiker in eigen woorden context geeft
+- Gestructureerde telemetrie-output (JSONL + screenshots + logs)
+- Sessie-map die Claude Code in VS Code direct kan lezen en analyseren
+- Demo-scenario: 1 SD-medewerker + 1 werkstation + 1 storing, end-to-end
 
 **Technologie:**
-- Python + Anthropic Agent SDK (of TypeScript + NanoClaw-patroon)
-- Docker voor container-isolatie
-- SSH/WinRM voor werkstation-toegang
-- Claude via AWS Bedrock EU (Frankfurt)
+- Python 3.12 + PyInstaller voor client .exe
+- pystray (MIT) voor system tray integratie
+- Pillow (MIT) voor screenshots
+- psutil (BSD) voor OS-telemetrie
+- SMB/netwerk share of rsync voor sessie-synchronisatie
+- Claude Code in VS Code als analyse-agent (geen backend nodig!)
+- Docker voor container-isolatie (optioneel in POC)
 
 ---
 

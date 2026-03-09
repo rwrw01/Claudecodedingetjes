@@ -1,5 +1,7 @@
 # Concept: De Schaduwagent — AI-gestuurd Incidentbeheer
 
+> **Uitgangspunten:** 100% open source | Minimale US footprint | EU-soevereiniteit waar mogelijk | Claude als analyse-agent via EU-regio
+
 ## 1. Probleemstelling
 
 ### Huidige situatie
@@ -92,7 +94,7 @@ Een AI-agent die **meedraait bij elke storing** en twee dingen tegelijk doet:
 │  ┌──────────▼──────────┐  ┌────────▼────────────────────┐      │
 │  │   Kennis & Context  │  │   Actie-engine              │      │
 │  │  ┌───────────────┐  │  │  - Service herstart         │      │
-│  │  │ BlueDolphin   │  │  │  - Config aanpassing        │      │
+│  │  │ CMDB          │  │  │  - Config aanpassing        │      │
 │  │  │ (IT-landschap)│  │  │  - Cache clearing           │      │
 │  │  ├───────────────┤  │  │  - Netwerk reset            │      │
 │  │  │ GGM           │  │  │  - Rechten herstellen       │      │
@@ -106,10 +108,10 @@ Een AI-agent die **meedraait bij elke storing** en twee dingen tegelijk doet:
 │  └─────────────────────┘                                        │
 │                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │   Integraties                                            │   │
+│  │   Integraties (alle open source)                         │   │
 │  │  ┌──────────┐ ┌──────────────┐ ┌───────────────────┐    │   │
-│  │  │ TOPdesk  │ │ BlueDolphin  │ │ Monitoring        │    │   │
-│  │  │ API      │ │ API          │ │ (Zabbix/PRTG/etc) │    │   │
+│  │  │ TOPdesk  │ │ CMDBuild     │ │ Monitoring        │    │   │
+│  │  │ API      │ │ (of BlueDolp)│ │ (Zabbix/PRTG/etc) │    │   │
 │  │  └──────────┘ └──────────────┘ └───────────────────────┘    │   │
 │  └──────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
@@ -147,7 +149,7 @@ Een AI-agent die **meedraait bij elke storing** en twee dingen tegelijk doet:
 **Kenmerken:**
 - Gebruiker kan in eigen woorden beschrijven wat er misgaat
 - Agent communiceert in **begrijpelijke taal** (niet: "ESB storing", maar: "De koppeling tussen uw aanvraagformulier en het achterliggende systeem is tijdelijk verstoord")
-- Vertaling via BlueDolphin/GGM mapping (zie BlueDolphin POC)
+- Vertaling via CMDB/GGM mapping (CMDBuild of optioneel BlueDolphin)
 - Statusupdates over voortgang diagnose/oplossing
 
 #### D. Orchestrator (LLM-kern)
@@ -155,25 +157,25 @@ Een AI-agent die **meedraait bij elke storing** en twee dingen tegelijk doet:
 
 **Werking:**
 1. Ontvangt signalen van Screen Agent + OS Agent + Chat
-2. Correleert: "Gebruiker ziet foutmelding X" + "Service Y is down" + "BlueDolphin zegt: Y is afhankelijk van Z"
+2. Correleert: "Gebruiker ziet foutmelding X" + "Service Y is down" + "CMDB zegt: Y is afhankelijk van Z"
 3. Bepaalt diagnose met confidence score
 4. Kiest actie: automatisch oplossen (hoog vertrouwen) of escaleren (laag vertrouwen)
 5. Documenteert alles in TOPdesk ticket
 
 ---
 
-## 4. Integratie met BlueDolphin & GGM
+## 4. Integratie met CMDB & GGM
 
 ### Vertaling technisch → begrijpelijk
-BlueDolphin bevat het IT-landschap: welke systemen er zijn, hoe ze samenhangen, en wat ze doen.
+De CMDB (CMDBuild, open source — of optioneel BlueDolphin) bevat het IT-landschap: welke systemen er zijn, hoe ze samenhangen, en wat ze doen.
 
 **Voorbeeld flow:**
 ```
 Monitoring detecteert: "ESB-node-03 health check failed"
                               │
                               ▼
-BlueDolphin lookup: ESB-node-03 → Enterprise Servicebus →
-                    Koppelt: Zaaksysteem ↔ Formulierenplatform
+CMDB lookup: ESB-node-03 → Enterprise Servicebus →
+             Koppelt: Zaaksysteem ↔ Formulierenplatform
                               │
                               ▼
 GGM mapping: Zaaksysteem → "Aanvragen en meldingen"
@@ -187,7 +189,7 @@ de storing is opgelost (verwacht: ~30 min)."
 ```
 
 ### Impact-analyse
-Via BlueDolphin kan de schaduwagent automatisch bepalen:
+Via de CMDB kan de schaduwagent automatisch bepalen:
 - Welke gebruikers/afdelingen geraakt worden
 - Welke processen verstoord zijn
 - Wat de prioriteit moet zijn (o.b.v. werkelijke impact, niet gevoel)
@@ -222,7 +224,7 @@ De schaduwagent vervangt de slechte uitvraag door **rijke, automatische ticketre
 09:01  Screen Agent detecteert foutmelding via screenshot-analyse
 09:01  OS Agent start diagnostiek: DNS ✓, Netwerk ✓, Certificaat ✓
 09:02  OS Agent checkt applicatielogs: "Connection refused: esb-proxy:8443"
-09:02  Orchestrator correleert met BlueDolphin: esb-proxy → ESB cluster
+09:02  Orchestrator correleert met CMDB: esb-proxy → ESB cluster
 09:02  Orchestrator checkt monitoring API: ESB-node-03 = DOWN
 09:02  Diagnose: ESB-node storing, impact op zaaksysteem
 09:03  Chat Widget aan gebruiker: "We zien dat het zaaksysteem even
@@ -320,20 +322,19 @@ Uit onderzoek blijken er diverse open source projecten te zijn die als bouwstene
 - **URL:** https://developers.topdesk.com/
 - Officiële REST API documentatie + tutorials. Gratis te gebruiken
 
-### 7.5 BlueDolphin / Enterprise Architectuur
+### 7.5 CMDB / Enterprise Architectuur
 
-#### BlueDolphin API (ValueBlue)
-- **URL:** https://www.valueblue.com/bluedolphin
-- **Wat:** Enterprise architectuur tool met volledige ArchiMate/BPMN support
-- **API:** Public API beschikbaar. Webhook service in ontwikkeling voor bidirectionele flows
-- **ArchiMate:** Alle objecten en relaties zijn ArchiMate-gebaseerd → IT-landschap mapping direct bruikbaar
-- **Let op:** Niet open-source. Custom integratie via Public API nodig
-
-#### CMDBuild (open-source alternatief)
+#### CMDBuild — AANBEVOLEN (open source)
 - **URL:** https://www.cmdbuild.org/
-- **Wat:** Open-source CMDB voor asset management. Configureerbare workflows, rapporten, webservices. Java/PostgreSQL
-- **Relevantie:** Als open-source CMDB gewenst is naast/i.p.v. BlueDolphin
+- **Wat:** Open-source CMDB voor asset management. Configureerbare workflows, rapporten, webservices, REST API. Java/PostgreSQL
+- **Relevantie:** Vervangt BlueDolphin als open-source CMDB voor IT-landschap mapping, impact-analyse, en CI-relaties. Volledig self-hosted, EU-soeverein
 - **Licentie:** AGPL
+- **Hergebruik:** Kennislaag voor impact-analyse en vertaling technisch → begrijpelijk via GGM-mapping
+
+#### BlueDolphin API (ValueBlue) — OPTIONEEL
+- **URL:** https://www.valueblue.com/bluedolphin
+- **Wat:** Commercieel enterprise architectuur tool met ArchiMate/BPMN support
+- **Let op:** **Niet open-source.** Alleen als koppeling als de organisatie BlueDolphin al gebruikt. Integratie via Public API
 
 ### 7.6 AIOps & Monitoring
 
@@ -397,55 +398,154 @@ Er bestaat een direct toepasbare referentie-implementatie: **"Autonomous AI Sysa
 - **Relevantie:** De "universele adapter" voor de schaduwagent. ScreenPipe heeft al een MCP server. Goose is gebouwd op MCP. TOPdesk en BlueDolphin als MCP servers bouwen maakt ze direct toegankelijk voor elke MCP-compatible agent
 - **Licentie:** Apache 2.0
 
-#### n8n
+#### Apache Airflow — AANBEVOLEN
+- **GitHub:** https://github.com/apache/airflow
+- **Wat:** Workflow orchestratie platform. DAG-based, uitbreidbaar met operators, 60.000+ stars. Apache Foundation project
+- **Relevantie:** Integratielaag: monitoring alert → log extractie → LLM voor RCA → TOPdesk ticket. Scheduling, retry-logica, monitoring dashboard
+- **Licentie:** Apache 2.0 (volledig open source)
+
+#### n8n (alternatief, let op licentie)
 - **GitHub:** https://github.com/n8n-io/n8n
-- **Wat:** Workflow automatisering met 400+ integraties en native AI (LangChain nodes). Self-hostable. 60.000+ stars
-- **Relevantie:** Integratielaag: monitoring alert → log extractie → Claude API voor RCA → TOPdesk ticket → Slack notificatie. Human-in-the-loop approval nodes voor risicovolle acties
-- **Licentie:** Fair-code (Sustainable Use License)
+- **Wat:** Workflow automatisering met 400+ integraties en native AI nodes. Self-hostable. 60.000+ stars
+- **Let op:** **Fair-code licentie (Sustainable Use License) — geen OSI-goedgekeurde open source.** Bruikbaar voor evaluatie, maar commercieel gebruik vereist licentie
 
 ---
 
 ## 8. Technische bouwstenen
 
-### Wat te bouwen vs. hergebruiken (bijgewerkt)
+### Wat te bouwen vs. hergebruiken — 100% open source
 
-| Component             | Bouwen / Hergebruiken              | Aanbevolen Open Source           | Licentie    |
-|-----------------------|------------------------------------|----------------------------------|-------------|
-| Screen observatie     | **Hergebruiken**                   | ScreenPipe + Agent S             | MIT / Apache 2.0 |
-| OCR / Vision          | **Hergebruiken**                   | ScreenPipe OCR + Claude Vision   | MIT         |
-| OS diagnostiek        | **Hergebruiken + aanpassen**       | Goose (MCP-based)                | Apache 2.0  |
-| LLM Orchestrator      | **Bouwen** (kern-IP)              | LangGraph + Claude API           | MIT         |
-| Actie-engine          | **Hergebruiken + configureren**    | Ansible AWX of StackStorm        | Apache 2.0  |
-| TOPdesk integratie    | **Hergebruiken + MCP server**      | topdesk PyPI + custom MCP        | GPL-3.0     |
-| BlueDolphin integratie| **Bouwen als MCP server**          | BlueDolphin Public API           | N/A (comm.) |
-| Chat widget           | **Hergebruiken**                   | Chatwoot                         | MIT         |
-| Alert aggregatie      | **Hergebruiken**                   | Keep                             | MIT         |
-| Log analyse           | **Hergebruiken**                   | LogAI (Salesforce)               | BSD 3-Clause|
-| Ticket classificatie  | **Hergebruiken**                   | Open Ticket AI                   | Open Source |
-| Monitoring            | **Hergebruiken**                   | Grafana + OpenTelemetry          | AGPLv3/Apache|
-| Workflow integratie   | **Hergebruiken**                   | n8n                              | Fair-code   |
-| Tool connectiviteit   | **Standaard**                      | MCP (Model Context Protocol)     | Apache 2.0  |
+| Component             | Bouwen / Hergebruiken              | Aanbevolen Open Source           | Licentie     | EU-hosted? |
+|-----------------------|------------------------------------|----------------------------------|--------------|------------|
+| Screen observatie     | **Hergebruiken**                   | ScreenPipe + Agent S             | MIT / Apache 2.0 | Ja (lokaal) |
+| OCR / Vision          | **Hergebruiken**                   | ScreenPipe OCR + Claude Vision   | MIT          | Ja (lokaal) |
+| OS diagnostiek        | **Hergebruiken + aanpassen**       | Goose (MCP-based)                | Apache 2.0   | Ja (lokaal) |
+| LLM Analyse-agent     | **Claude** via EU-regio            | Claude API (Bedrock EU)          | Commercieel  | Ja (EU-regio) |
+| LLM Fallback          | **Hergebruiken**                   | Mistral (self-hosted)            | Apache 2.0   | Ja (lokaal) |
+| LLM Orchestrator      | **Bouwen** (kern-IP)              | LangGraph                        | MIT          | Ja (lokaal) |
+| Actie-engine          | **Hergebruiken + configureren**    | Ansible AWX of StackStorm        | Apache 2.0   | Ja (lokaal) |
+| TOPdesk integratie    | **Hergebruiken + MCP server**      | topdesk PyPI + custom MCP        | GPL-3.0      | Ja         |
+| CMDB                  | **Hergebruiken**                   | CMDBuild                         | AGPL         | Ja (lokaal) |
+| Chat widget           | **Hergebruiken**                   | Chatwoot                         | MIT          | Ja (lokaal) |
+| Alert aggregatie      | **Hergebruiken**                   | Keep                             | MIT          | Ja (lokaal) |
+| Log analyse           | **Hergebruiken**                   | LogAI (Salesforce)               | BSD 3-Clause | Ja (lokaal) |
+| Ticket classificatie  | **Hergebruiken**                   | Open Ticket AI + Ollama          | Open Source  | Ja (lokaal) |
+| Monitoring            | **Hergebruiken**                   | Grafana + OpenTelemetry          | AGPLv3/Apache| Ja (lokaal) |
+| Workflow integratie   | **Hergebruiken**                   | Apache Airflow                   | Apache 2.0   | Ja (lokaal) |
+| Tool connectiviteit   | **Standaard**                      | MCP (Model Context Protocol)     | Apache 2.0   | Ja (lokaal) |
 
 ### Technologiestack (voorstel)
 - **Backend:** Python 3.12+
-- **LLM:** Claude API (Opus/Sonnet) voor redeneren, Haiku voor snelle classificatie
+- **Analyse-agent (LLM):** Claude API via AWS Bedrock EU-regio (Frankfurt/Ierland) — data blijft in EU
+- **LLM fallback/lokaal:** Mistral Large (Apache 2.0, Frans/EU, self-hosted via Ollama/vLLM)
+- **Snelle classificatie:** Mistral Small via Ollama (volledig lokaal, geen data naar buiten)
 - **Orchestratie:** LangGraph voor stateful agent-workflows
 - **OS Agent:** Goose (MCP-native, Apache 2.0)
 - **Actie-engine:** Ansible AWX met approval workflows
 - **Screen capture:** ScreenPipe (Rust, MCP-server)
 - **Chat widget:** Chatwoot (MIT, self-hosted)
+- **CMDB:** CMDBuild (AGPL, self-hosted, Java/PostgreSQL)
 - **Alert aggregatie:** Keep (AIOps platform)
 - **TOPdesk:** topdesk PyPI package + custom MCP server
-- **BlueDolphin:** Custom MCP server op BlueDolphin Public API
 - **Log analyse:** LogAI voor anomaly detection
 - **Monitoring:** Grafana + OpenTelemetry
-- **Workflow glue:** n8n voor complexe integratie-flows
+- **Workflow:** Apache Airflow (Apache 2.0)
 - **Tool connectivity:** MCP als universele adapter
 - **Database:** PostgreSQL voor kennisbank en logging
+- **Hosting:** Volledig on-premise of EU-cloud (geen US-datacenters)
 
 ---
 
-## 8. Toetsing: Security, WCAG & Common Ground — Comply or Explain
+## 8a. EU-soevereiniteit & Open Source Strategie
+
+### Uitgangspunt
+Alle componenten zijn open source (OSI-goedgekeurd). De enige uitzondering is de Claude API als analyse-agent, die via EU-regio's wordt aangeroepen zodat data in de EU blijft.
+
+### LLM-strategie: gelaagd model
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    LLM GELAAGD MODEL                         │
+│                                                             │
+│  Laag 1: LOKAAL (geen data naar buiten)                     │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │ Mistral Small / Mistral NeMo via Ollama                │ │
+│  │ → Snelle classificatie, triage, eenvoudige diagnose    │ │
+│  │ → 100% on-premise, geen netwerk nodig                  │ │
+│  │ → Apache 2.0, Frans/EU bedrijf                         │ │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                             │
+│  Laag 2: EU-REGIO (data blijft in EU)                       │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │ Claude (Opus/Sonnet) via AWS Bedrock EU-regio          │ │
+│  │ → Complexe redenering, root cause analysis, correlatie │ │
+│  │ → EU inference profiles: Frankfurt, Ierland, Spanje    │ │
+│  │ → Data verwerking + opslag binnen EU                   │ │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                             │
+│  Laag 3: FALLBACK SOEVEREIN (optioneel)                     │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │ Mistral Large via vLLM (self-hosted)                   │ │
+│  │ → Volledige fallback als Claude niet beschikbaar       │ │
+│  │ → Of voor organisaties die 0% US-verkeer willen        │ │
+│  │ → Apache 2.0, volledig on-premise                      │ │
+│  └────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Waarom Claude als analyse-agent?
+- **Kwaliteit:** Claude Opus/Sonnet levert de beste resultaten voor complexe redenering, correlatie van schermbeelden met systeemdata, en root cause analysis
+- **MCP-native:** Claude ondersteunt MCP natively — directe integratie met ScreenPipe, Goose, en custom MCP-servers
+- **EU-beschikbaar:** Via AWS Bedrock EU inference profiles (Frankfurt, Ierland, Spanje) blijft alle data binnen de EU
+- **Minimale US footprint:** Alleen het model zelf is van Anthropic (US). Data verlaat de EU niet
+
+### Waarom Mistral als lokale/fallback laag?
+- **EU-soeverein:** Mistral AI is Frans, Apache 2.0 gelicenseerd, expliciet gericht op EU-soevereiniteit
+- **Self-hostable:** Draait volledig on-premise via Ollama, vLLM, of llama.cpp
+- **Efficiënt:** Mistral Small draait op consumer-hardware voor snelle triage
+- **CLOUD Act vrij:** Geen US-bedrijf, dus geen CLOUD Act risico
+
+### Open source audit: alle componenten
+
+| Component | Project | Licentie | OSI-goedgekeurd? | Herkomst |
+|-----------|---------|----------|-------------------|----------|
+| Screen capture | ScreenPipe | MIT | Ja | VS (maar lokaal draaiend) |
+| GUI interactie | Agent S | Apache 2.0 | Ja | VS (maar lokaal draaiend) |
+| OS Agent | Goose | Apache 2.0 | Ja | VS (Block, maar lokaal) |
+| Orchestratie | LangGraph | MIT | Ja | VS (LangChain) |
+| Actie-engine | Ansible AWX | Apache 2.0 | Ja | VS (Red Hat, maar self-hosted) |
+| CMDB | CMDBuild | AGPL | Ja | **Italië** (EU) |
+| Chat widget | Chatwoot | MIT | Ja | **India** (self-hosted) |
+| Alert platform | Keep | MIT | Ja | **Israël** (self-hosted) |
+| Log analyse | LogAI | BSD 3-Clause | Ja | VS (Salesforce, maar self-hosted) |
+| Ticket AI | Open Ticket AI | Open Source | Ja | **Duitsland** (EU) |
+| Monitoring | Grafana | AGPL v3 | Ja | **Zweden** (EU) |
+| Telemetry | OpenTelemetry | Apache 2.0 | Ja | CNCF (vendor-neutraal) |
+| Workflow | Apache Airflow | Apache 2.0 | Ja | Apache Foundation |
+| Connectiviteit | MCP | Apache 2.0 | Ja | Linux Foundation |
+| LLM lokaal | Mistral | Apache 2.0 | Ja | **Frankrijk** (EU) |
+| LLM analyse | Claude API | Commercieel | Nee* | VS (Anthropic) |
+| Database | PostgreSQL | PostgreSQL | Ja | Internationaal |
+
+*\*Claude API is de enige niet-OSI component. Mitigatie: data blijft in EU via Bedrock. Fallback naar Mistral Large (Apache 2.0) beschikbaar.*
+
+### Dataresidentie-garanties
+
+| Datastroom | Waar verwerkt? | Waar opgeslagen? | US-verkeer? |
+|------------|----------------|------------------|-------------|
+| Screenshots | Lokaal werkstation | Lokaal / EU-server | Nee |
+| OS diagnostiek | Lokaal werkstation | EU-server | Nee |
+| LLM triage (Mistral) | Lokaal / EU-server | Niet opgeslagen | Nee |
+| LLM analyse (Claude) | AWS Bedrock EU (Frankfurt) | Niet opgeslagen* | Nee |
+| TOPdesk tickets | TOPdesk cloud (EU) | TOPdesk cloud (EU) | Nee |
+| CMDB data | Self-hosted EU | Self-hosted EU | Nee |
+| Kennisbank | PostgreSQL EU | PostgreSQL EU | Nee |
+
+*\*AWS Bedrock EU inference profiles: verwerking en opslag binnen EU. Geen cross-region routing.*
+
+---
+
+## 8b. Toetsing: Security, WCAG & Common Ground — Comply or Explain
 
 ### 8.1 Security — BIO2 / NIS2 / EU AI-verordening
 
@@ -503,13 +603,13 @@ Common Ground is de VNG-architectuurvisie voor gemeentelijke IT. Principes getoe
 | Common Ground Principe | Status | Toelichting |
 |------------------------|--------|-------------|
 | **Componentgebaseerd** | COMPLY | Schaduwagent is opgebouwd uit losse componenten (Screen Agent, OS Agent, Orchestrator, Chat Widget). Elk component is zelfstandig vervangbaar |
-| **Gegevens bij de bron** | COMPLY | Geen kopieën van data. BlueDolphin wordt bevraagd bij de bron. TOPdesk is de bron voor tickets. OS-data wordt realtime gelezen, niet gekopieerd |
+| **Gegevens bij de bron** | COMPLY | Geen kopieën van data. CMDB wordt bevraagd bij de bron. TOPdesk is de bron voor tickets. OS-data wordt realtime gelezen, niet gekopieerd |
 | **Open standaarden** | COMPLY | OpenAPI specificaties voor alle API's. ArchiMate voor architectuurmodellen. OpenTelemetry voor monitoring |
-| **Open source** | COMPLY | Kern-componenten worden open source ontwikkeld (Apache 2.0, conform LICENSE in deze repo). Hergebruik van bestaande open source projecten |
+| **Open source** | COMPLY | **Alle** componenten zijn open source (Apache 2.0, MIT, AGPL). Enige uitzondering: Claude API via EU Bedrock, met Mistral als open source fallback |
 | **5-lagenmodel** | COMPLY | Schaduwagent past in het 5-lagenmodel: interactielaag (chat widget), proceslaag (orchestrator), integratielaag (API's), servicelaag (agents), datalaag (kennisbank) |
-| **API-first** | COMPLY | Alle communicatie tussen componenten via REST API's met OpenAPI specs. TOPdesk en BlueDolphin via hun publieke API's |
-| **FSC (Federatieve Service Connectiviteit)** | EXPLAIN | FSC vervangt NLX sinds 2025 als standaard in de integratielaag. Voor de POC gebruiken we directe API-calls. FSC-compliance wordt meegenomen in Fase 3 (BlueDolphin/GGM integratie) wanneer we het gemeentelijke datalandschap aansluiten |
-| **GEMMA Gegevenslandschap** | COMPLY | GGM (Gemeentelijk Gegevensmodel) wordt gebruikt voor vertaling technisch → begrijpelijk. BlueDolphin ondersteunt ArchiMate wat aansluit op GEMMA |
+| **API-first** | COMPLY | Alle communicatie tussen componenten via REST API's met OpenAPI specs. TOPdesk en CMDBuild via hun API's |
+| **FSC (Federatieve Service Connectiviteit)** | EXPLAIN | FSC vervangt NLX sinds 2025 als standaard in de integratielaag. Voor de POC gebruiken we directe API-calls. FSC-compliance wordt meegenomen bij opschaling wanneer we het gemeentelijke datalandschap aansluiten |
+| **GEMMA Gegevenslandschap** | COMPLY | GGM (Gemeentelijk Gegevensmodel) wordt gebruikt voor vertaling technisch → begrijpelijk. CMDBuild kan ArchiMate-achtige relaties vastleggen die aansluiten op GEMMA |
 | **ZGW API's (Zaakgericht Werken)** | EXPLAIN | Schaduwagent maakt incidenttickets aan in TOPdesk, niet in een zaaksysteem. Als de gemeente incidenten als zaken wil registreren, kan ZGW API-integratie in een latere fase worden toegevoegd |
 | **Community-gedreven ontwikkeling** | COMPLY | Open source repo, samenwerking met andere gemeenten mogelijk. Referentie-implementatie beschikbaar stellen |
 | **Privacy by design** | COMPLY | DPIA vooraf, dataminimalisatie, opt-in schermobservatie, automatische opschoning |
@@ -561,37 +661,166 @@ EXPLAIN items en planning:
 
 ---
 
-## 9. Fasering
+## 9. Fasering — Van stand-alone POC naar productie
 
-### Fase 1: POC (4-6 weken)
-- Eenvoudige OS Agent: logfile analyse + service checks
-- Basis LLM orchestrator met Claude API
-- TOPdesk ticket aanmaken via API met rijke context
-- Scope: 1 specifieke storing-type (bijv. "applicatie niet bereikbaar")
+### Inspiratie: NanoClaw als blauwdruk
+[NanoClaw](https://github.com/qwibitai/nanoclaw) (MIT, 8.6K stars) biedt een bruikbaar patroon voor de POC:
+- **~3.900 regels code** — klein genoeg om volledig te begrijpen en auditen
+- **Container-isolatie** — agents draaien in Linux containers, veilig sandboxed
+- **Anthropic Agent SDK** — direct gebouwd op Claude's agent-framework
+- **Messaging-kanalen** — plug-in architectuur voor chat (WhatsApp, Slack, etc.)
+- **Agent Swarms** — meerdere gespecialiseerde agents die samenwerken
+- **SQLite geheugen** — per-sessie context en kennisopbouw
 
-### Fase 2: Screen Observatie (4-6 weken)
-- Screen Agent integratie
-- Vision-model voor schermanalyse
-- Correlatie scherm ↔ systeemdata
-- Chat widget voor gebruikersinteractie
+Het NanoClaw-patroon (channels → SQLite → polling loop → container agent → response) kan als startpunt dienen voor de schaduwagent. De containerisatie is direct bruikbaar voor veilige OS Agent executie.
 
-### Fase 3: BlueDolphin & GGM (3-4 weken)
-- BlueDolphin API koppeling
-- IT-landschap mapping voor impact-analyse
-- Vertaling technisch → begrijpelijk via GGM
-- Uitbreiding naar meerdere storingstypen
+---
 
-### Fase 4: Geautomatiseerde Remediatie (4-6 weken)
-- Actie-engine met goedgekeurde fix-scripts
-- Approval workflow voor risicovolle acties
-- Kennisbank opbouw (elke oplossing = nieuw kennisitem)
-- Monitoring-integratie (Zabbix/PRTG)
+### Fase 0: Stand-alone POC — "1 medewerker, 1 werkstation, 1 storing" (2-3 weken)
 
-### Fase 5: Productie & Schaal (doorlopend)
-- Uitrol naar alle werkplekken
+**Scope:** Een servicedeskmedewerker zit naast een werkstation met een storing. De schaduwagent draait op een laptop/server en helpt bij diagnose en oplossing.
+
+**Setup:**
+```
+┌──────────────────┐     ┌──────────────────────────────┐
+│ WERKSTATION      │     │ SCHADUWAGENT (laptop/server)  │
+│ (met storing)    │     │                              │
+│                  │ SSH │ ┌──────────────────────────┐ │
+│                  │◄───►│ │ OS Agent (in container)  │ │
+│                  │     │ │ - Leest logs             │ │
+│                  │     │ │ - Checkt services        │ │
+│                  │     │ │ - Doet diagnostiek       │ │
+│                  │     │ └──────────┬───────────────┘ │
+│                  │     │            │                  │
+│                  │     │ ┌──────────▼───────────────┐ │
+│                  │     │ │ Claude (analyse-agent)   │ │
+│                  │     │ │ via Bedrock EU           │ │
+│                  │     │ │ - Root cause analysis    │ │
+│                  │     │ │ - Voorgestelde oplossing │ │
+│                  │     │ └──────────┬───────────────┘ │
+│                  │     │            │                  │
+│                  │     │ ┌──────────▼───────────────┐ │
+│                  │     │ │ Terminal UI              │ │
+│                  │     │ │ (voor SD-medewerker)     │ │
+│                  │     │ └──────────────────────────┘ │
+└──────────────────┘     └──────────────────────────────┘
+```
+
+**Wat wordt gebouwd:**
+- OS Agent gebaseerd op NanoClaw/Goose patroon: draait in container, SSH naar werkstation
+- Claude via Bedrock EU als analyse-agent: ontvangt systeemdata, doet diagnose
+- Eenvoudige terminal/CLI interface voor de servicedeskmedewerker
+- Geen fancy UI, geen integraties — puur: "kijk mee en help oplossen"
+
+**Wat de SD-medewerker ervaart:**
+```
+$ schaduwagent connect 192.168.1.42
+
+[Schaduwagent] Verbonden met werkstation. Bezig met analyse...
+[Schaduwagent] Systeeminfo: Windows 11 Pro, 16GB RAM, domein: gemeente.local
+[Schaduwagent] Checking services...
+[Schaduwagent] ⚠ Service 'esb-proxy' status: STOPPED (crash 5 min geleden)
+[Schaduwagent] Loganalyse: OutOfMemoryException in esb-proxy.log
+[Schaduwagent]
+[Schaduwagent] DIAGNOSE: ESB proxy service is gecrasht door geheugenprobleem.
+[Schaduwagent] Dit verklaart waarom het zaaksysteem niet bereikbaar is.
+[Schaduwagent]
+[Schaduwagent] VOORGESTELDE ACTIE:
+[Schaduwagent]   1. Herstart service 'esb-proxy'
+[Schaduwagent]   2. Verhoog memory limit van 512MB naar 1024MB
+[Schaduwagent]
+[Schaduwagent] Wil je dat ik actie 1 uitvoer? [j/n]
+> j
+[Schaduwagent] Service 'esb-proxy' herstart... OK
+[Schaduwagent] Health check... OK
+[Schaduwagent] Zaaksysteem is weer bereikbaar.
+```
+
+**Deliverables Fase 0:**
+- Werkend prototype: CLI tool die via SSH een werkstation diagnosticeert
+- Claude als analyse-engine via Bedrock EU
+- Container-geïsoleerde agent executie
+- Basis logging van diagnose en acties
+- Demo-klaar voor Marlies en beheersorganisatie
+
+**Technologie:**
+- Python + Anthropic Agent SDK (of TypeScript + NanoClaw-patroon)
+- Docker voor container-isolatie
+- SSH/WinRM voor werkstation-toegang
+- Claude via AWS Bedrock EU (Frankfurt)
+
+---
+
+### Fase 1: Screen observatie toevoegen (2-3 weken)
+
+**Toevoeging:** Naast OS-diagnose nu ook meekijken met het scherm.
+
+- ScreenPipe installeren op werkstation (of simpeler: periodieke screenshots via SSH)
+- Claude Vision voor interpretatie scherminhoud
+- Correlatie: "Gebruiker ziet fout X" + "Systeem toont Y in logs"
+- Nog steeds CLI-interface, maar nu met schermcontext
+
+---
+
+### Fase 2: Chat interface + TOPdesk (3-4 weken)
+
+**Van CLI naar chat, en eerste integratie:**
+
+- Chat widget (Chatwoot of simpele web UI) vervangt terminal
+- Gebruiker kan zelf een melding doen via chat
+- TOPdesk ticket automatisch aanmaken met diagnose-context
+- Servicedeskmedewerker kan via dashboard meekijken
+
+---
+
+### Fase 3: CMDB & GGM + meerdere storingen (3-4 weken)
+
+- CMDBuild koppeling voor IT-landschap awareness
+- Vertaling technisch → begrijpelijk via GGM mapping
+- Uitbreiding naar 5-10 storingstypen
+- Impact-analyse: welke systemen/gebruikers geraakt?
+
+---
+
+### Fase 4: Geautomatiseerde remediatie (4-6 weken)
+
+- Ansible AWX voor gecontroleerde acties
+- Approval workflow: risicovolle acties vereisen menselijke goedkeuring
+- Kennisbank: elke oplossing wordt vastgelegd
+- Monitoring-integratie (Keep + Grafana)
+
+---
+
+### Fase 5: Opschalen & hardenen (doorlopend)
+
+- Uitrol naar meer werkplekken
+- Mistral als lokale fallback-LLM
+- FSC-compliance voor gemeentelijk dataverkeer
+- NL Design System voor chat widget
 - Continue verbetering op basis van feedback
-- Uitbreiding storingstypen en remediatie-scripts
 - Rapportage en dashboards voor beheersorganisatie
+
+---
+
+### Fasering visueel
+
+```
+Fase 0 (wk 1-3)     Fase 1 (wk 4-6)     Fase 2 (wk 7-10)
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│ 1 SD-mw +    │     │ + Screen     │     │ + Chat UI    │
+│ 1 werkstation│────►│   observatie │────►│ + TOPdesk    │
+│ CLI + SSH    │     │ + Vision     │     │   integratie │
+│ Claude EU    │     │              │     │              │
+└──────────────┘     └──────────────┘     └──────────────┘
+
+Fase 3 (wk 11-14)   Fase 4 (wk 15-20)   Fase 5 (doorlopend)
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│ + CMDBuild   │     │ + Ansible    │     │ + Opschaling │
+│ + GGM        │────►│   AWX        │────►│ + Mistral    │
+│ + Meer       │     │ + Approval   │     │ + FSC        │
+│   storingen  │     │ + Kennisbank │     │ + NL Design  │
+└──────────────┘     └──────────────┘     └──────────────┘
+```
 
 ---
 
@@ -611,8 +840,9 @@ EXPLAIN items en planning:
 
 | Initiatief                        | Relatie met Schaduwagent                                      |
 |-----------------------------------|---------------------------------------------------------------|
-| BlueDolphin POC (vertaling → GGM) | Levert de vertaallaag: technisch → begrijpelijk               |
+| CMDB/GGM (vertaling technisch → begrijpelijk) | Levert de vertaallaag: technisch → begrijpelijk  |
 | TOPdesk categorisering            | Schaduwagent levert de data voor betere categorisering        |
 | Enthousiasme beheersorganisatie   | Schaduwagent is het meest zichtbare, tastbare resultaat       |
+| BlueDolphin (optioneel)           | Bestaande EA-data kan als extra bron dienen via API-koppeling |
 
-De vier ideeën vormen samen één geheel: de schaduwagent is het **platform**, BlueDolphin/GGM is de **kennislaag**, en betere TOPdesk-categorisering is het **resultaat**.
+De vier ideeën vormen samen één geheel: de schaduwagent is het **platform**, CMDB/GGM is de **kennislaag**, en betere TOPdesk-categorisering is het **resultaat**. Alles open source, alles in de EU.

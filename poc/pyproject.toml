@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "schaduwagent"
+version = "0.1.0"
+description = "Schaduwagent POC — Lichtgewicht telemetrie-client voor IT-storingen"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = [
+    "pystray>=0.19",
+    "Pillow>=10.0",
+    "psutil>=5.9",
+]
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.0"]
+dev = ["ruff", "mypy"]
+
+[project.scripts]
+schaduwagent = "schaduwagent.main:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

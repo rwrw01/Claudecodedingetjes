@@ -359,20 +359,119 @@ Uit onderzoek blijken er diverse open source projecten te zijn die als bouwstene
 
 ---
 
-## 8. Privacy & Security
+## 8. Toetsing: Security, WCAG & Common Ground — Comply or Explain
 
-### Principes
-1. **Minimale dataverzameling** — screenshots alleen bij actief incident
-2. **Toestemming gebruiker** — expliciete opt-in voor schermobservatie
-3. **Lokale verwerking waar mogelijk** — screen analyse op werkstation
-4. **Audit trail** — alle acties gelogd en traceerbaar
-5. **Least privilege** — OS Agent heeft alleen rechten die nodig zijn
-6. **Data classificatie** — gevoelige informatie op scherm wordt geblurd/gefilterd
+### 8.1 Security — BIO2 / NIS2 / EU AI-verordening
 
-### BIO/NEN compliance
-- Verwerking conform AVG/GDPR
-- Logging conform NEN 2082 (archiveringsstandaard)
-- Toegangsbeheer conform BIO (Baseline Informatiebeveiliging Overheid)
+De BIO2 (vastgesteld sept 2025, v1.3 gepubliceerd maart 2026) is het verplichte normenkader voor informatiebeveiliging bij de overheid. Daarnaast geldt de EU AI-verordening (in werking sinds aug 2024) voor AI-systemen.
+
+| Eis / Principe | Status | Toelichting |
+|----------------|--------|-------------|
+| **ISMS (ISO 27001)** | COMPLY | Schaduwagent wordt opgenomen in het ISMS van de organisatie. Risicoanalyse per component |
+| **Risicogestuurde benadering (BIO2)** | COMPLY | Geen vaste BBN-niveaus meer; per component risicobeoordeling uitvoeren (screen agent = hoger risico dan chat widget) |
+| **Least privilege** | COMPLY | OS Agent krijgt minimale rechten via service account. Alleen goedgekeurde acties in whitelist |
+| **Logging & audit trail** | COMPLY | Alle agent-acties worden gelogd (wie, wat, wanneer, waarom). Conform NEN 2082 |
+| **Dataminimalisatie (AVG)** | COMPLY | Screenshots alleen bij actief incident met expliciete opt-in. Automatische verwijdering na afhandeling |
+| **Encryptie in transit & at rest** | COMPLY | TLS 1.3 voor alle API-communicatie. Versleutelde opslag van screenshots en logs |
+| **Toegangsbeheer** | COMPLY | RBAC voor beheerders. MFA voor toegang tot orchestrator en actie-engine |
+| **NIS2 / Cyberbeveiligingswet** | COMPLY | Supply chain security: open source dependencies scannen (SCA). Incidentmelding <24u bij NCSC |
+| **EU AI-verordening — risicoclassificatie** | EXPLAIN | Schaduwagent is waarschijnlijk **hoog-risico** (overheids-AI die autonome besluiten neemt). Vereist: grondrechteneffectbeoordeling, registratie in EU AI-database (per aug 2026), menselijk toezicht, transparantie |
+| **EU AI-verordening — transparantie** | COMPLY | Gebruiker weet dat AI meedraait. Elke actie wordt uitgelegd. Geen "black box" beslissingen |
+| **EU AI-verordening — menselijk toezicht** | COMPLY | Risicovolle acties vereisen menselijke goedkeuring (approval workflow). Alleen low-risk acties zijn volledig autonoom |
+| **AI-geletterdheid medewerkers** | COMPLY | Training voor beheerders en gebruikers over werking schaduwagent (eis vanuit AI-verordening) |
+| **DPIA (Data Protection Impact Assessment)** | COMPLY | Verplicht vanwege schermobservatie. Uitvoeren vóór POC-start |
+| **Lokale verwerking** | COMPLY | Screen analyse op werkstation waar mogelijk. LLM-calls naar API bevatten geanonimiseerde/geminimaliseerde data |
+
+**Belangrijkste aandachtspunt:** De schaduwagent valt vrijwel zeker onder **hoog-risico AI** vanwege overheidsinzet met autonome acties. Dit betekent:
+- Grondrechteneffectbeoordeling vóór ingebruikname
+- Registratie in EU AI-database vóór augustus 2026
+- Conformiteitsbeoordeling
+- Continue monitoring en logging van AI-beslissingen
+
+---
+
+### 8.2 WCAG — Digitale Toegankelijkheid
+
+Wettelijk verplicht: **WCAG 2.1 niveau A en AA** (via EN 301 549 / Wet digitale overheid). WCAG 2.2 is aanbevolen maar nog niet verplicht.
+
+| WCAG Eis | Component | Status | Toelichting |
+|----------|-----------|--------|-------------|
+| **Perceivable (waarneembaar)** | Chat Widget | COMPLY | Tekstalternatieven voor niet-tekst content, voldoende contrast, aanpasbare tekst |
+| **Operable (bedienbaar)** | Chat Widget | COMPLY | Volledig bedienbaar met toetsenbord. Geen tijdslimieten op gebruikersinteractie |
+| **Understandable (begrijpelijk)** | Chat Widget | COMPLY | Taal is begrijpelijk (kernfunctie!). Voorspelbaar gedrag. Foutherstel |
+| **Robust** | Chat Widget | COMPLY | Compatibel met hulptechnologieën (screenreaders). Semantische HTML |
+| **WCAG 2.2 — Focus appearance** | Chat Widget | COMPLY | Nieuwe eis in 2.2: duidelijke focusindicator. Nemen we mee |
+| **WCAG 2.2 — Dragging movements** | Chat Widget | COMPLY | Alternatieven voor drag-acties |
+| **Screen Agent output** | Statusberichten | COMPLY | Statusupdates via ARIA live regions, ook bruikbaar voor screenreaders |
+| **Meertaligheid** | Chat Widget | EXPLAIN | Initieel alleen Nederlands. Uitbreiding naar andere talen in latere fase. Geen barrière voor gebruik maar beperkt bereik |
+| **Cognitieve toegankelijkheid** | Alle UI | COMPLY | Eenvoudige taal, duidelijke stappen, geen jargon — dit is juist de kernwaarde van de schaduwagent |
+
+**Scope:** WCAG is van toepassing op de **Chat Widget** (het gebruikersinterface-deel). De Screen Agent en OS Agent zijn backend-componenten zonder directe gebruikersinteractie en vallen niet onder WCAG. Het **beheerdersinterface** (dashboard, configuratie) valt wél onder WCAG.
+
+---
+
+### 8.3 Common Ground — VNG Architectuurprincipes
+
+Common Ground is de VNG-architectuurvisie voor gemeentelijke IT. Principes getoetst:
+
+| Common Ground Principe | Status | Toelichting |
+|------------------------|--------|-------------|
+| **Componentgebaseerd** | COMPLY | Schaduwagent is opgebouwd uit losse componenten (Screen Agent, OS Agent, Orchestrator, Chat Widget). Elk component is zelfstandig vervangbaar |
+| **Gegevens bij de bron** | COMPLY | Geen kopieën van data. BlueDolphin wordt bevraagd bij de bron. TOPdesk is de bron voor tickets. OS-data wordt realtime gelezen, niet gekopieerd |
+| **Open standaarden** | COMPLY | OpenAPI specificaties voor alle API's. ArchiMate voor architectuurmodellen. OpenTelemetry voor monitoring |
+| **Open source** | COMPLY | Kern-componenten worden open source ontwikkeld (Apache 2.0, conform LICENSE in deze repo). Hergebruik van bestaande open source projecten |
+| **5-lagenmodel** | COMPLY | Schaduwagent past in het 5-lagenmodel: interactielaag (chat widget), proceslaag (orchestrator), integratielaag (API's), servicelaag (agents), datalaag (kennisbank) |
+| **API-first** | COMPLY | Alle communicatie tussen componenten via REST API's met OpenAPI specs. TOPdesk en BlueDolphin via hun publieke API's |
+| **FSC (Federatieve Service Connectiviteit)** | EXPLAIN | FSC vervangt NLX sinds 2025 als standaard in de integratielaag. Voor de POC gebruiken we directe API-calls. FSC-compliance wordt meegenomen in Fase 3 (BlueDolphin/GGM integratie) wanneer we het gemeentelijke datalandschap aansluiten |
+| **GEMMA Gegevenslandschap** | COMPLY | GGM (Gemeentelijk Gegevensmodel) wordt gebruikt voor vertaling technisch → begrijpelijk. BlueDolphin ondersteunt ArchiMate wat aansluit op GEMMA |
+| **ZGW API's (Zaakgericht Werken)** | EXPLAIN | Schaduwagent maakt incidenttickets aan in TOPdesk, niet in een zaaksysteem. Als de gemeente incidenten als zaken wil registreren, kan ZGW API-integratie in een latere fase worden toegevoegd |
+| **Community-gedreven ontwikkeling** | COMPLY | Open source repo, samenwerking met andere gemeenten mogelijk. Referentie-implementatie beschikbaar stellen |
+| **Privacy by design** | COMPLY | DPIA vooraf, dataminimalisatie, opt-in schermobservatie, automatische opschoning |
+| **NLDesign System** | EXPLAIN | Voor de Chat Widget is het wenselijk om NL Design System componenten te gebruiken voor een herkenbare overheidslook-and-feel. Dit wordt meegenomen in Fase 2 bij de chat widget-ontwikkeling |
+
+---
+
+### 8.4 Samenvatting: Comply or Explain
+
+```
+COMPLY:  25 van 30 eisen ✓
+EXPLAIN:  5 van 30 eisen (met mitigatieplan)
+
+EXPLAIN items en planning:
+1. EU AI-verordening hoog-risico    → Grondrechteneffectbeoordeling in Fase 1
+2. Meertaligheid (WCAG)             → Nederlands eerst, uitbreiden in Fase 5
+3. FSC (Common Ground)              → Directe API's in POC, FSC in Fase 3
+4. ZGW API's (Common Ground)        → TOPdesk-first, ZGW optioneel in Fase 5
+5. NL Design System (Common Ground) → Meenemen in Fase 2 (Chat Widget)
+```
+
+---
+
+### 8.5 Security-specifieke maatregelen
+
+#### Architectuur security
+- **Zero Trust model** — geen component vertrouwt een ander component impliciet
+- **API Gateway** — alle externe API-calls via gateway met rate limiting, auth en logging
+- **Secrets management** — API keys en credentials in vault (HashiCorp Vault of Azure Key Vault)
+- **Network segmentation** — OS Agent communiceert via dedicated, versleuteld kanaal met backend
+
+#### OS Agent security (kritisch component)
+- **Whitelist-only acties** — OS Agent kan alleen vooraf goedgekeurde commando's uitvoeren
+- **Sandboxing** — agent draait in geïsoleerde context (container of restricted shell)
+- **Geen persistentie** — agent bewaart geen credentials of gevoelige data lokaal
+- **Code signing** — alle fix-scripts zijn getekend en geverifieerd voor uitvoering
+- **Kill switch** — beheerder kan agent per direct uitschakelen via beheerinterface
+
+#### Screen Agent security
+- **Opt-in per sessie** — gebruiker moet per incident toestemmen
+- **PII-detectie** — automatische detectie en blurring van BSN, wachtwoorden, financiële data
+- **Tijdsgebonden** — screenshots worden na ticketafhandeling automatisch verwijderd
+- **Geen opslag van volledige schermvideo** — alleen event-driven snapshots
+
+#### Supply chain security
+- **SBOM (Software Bill of Materials)** — voor alle dependencies
+- **Dependency scanning** — automatische CVE-checks (Dependabot/Renovate)
+- **Container image scanning** — bij gebruik van containers (Trivy/Grype)
 
 ---
 

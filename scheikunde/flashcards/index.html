@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards &mdash; Scheikunde HAVO 3</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-light: #d1fae5;
+            --primary-dark: #064e3b;
+            --accent: #e11d48;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .breadcrumb {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .breadcrumb:hover { text-decoration: underline; }
+
+        /* Filter knoppen */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            background: var(--card);
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Score balk */
+        .score-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+        .score-bar strong { color: var(--primary); font-size: 1.1rem; }
+        .progress-track {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 999px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .reset-btn {
+            padding: 0.3rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card);
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+        .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Flashcard grid */
+        .flash-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Flashcard */
+        .flashcard {
+            perspective: 800px;
+            min-height: 160px;
+            cursor: pointer;
+        }
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 160px;
+            transition: transform 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .flashcard-front {
+            background: var(--card);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+        .flashcard-front .term {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .flashcard-front .hint {
+            font-size: 0.75rem;
+            color: var(--muted);
+            margin-top: 0.75rem;
+        }
+        .flashcard-front .category-tag {
+            position: absolute;
+            top: 0.6rem;
+            right: 0.6rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+        .flashcard-back {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white;
+            transform: rotateY(180deg);
+            box-shadow: 0 2px 8px rgba(5,150,105,0.3);
+        }
+        .flashcard-back .definition {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .flashcard-back .mark-btns {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .flashcard-back .mark-btn {
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            border: 1.5px solid rgba(255,255,255,0.5);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: background 0.15s;
+        }
+        .flashcard-back .mark-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .flashcard-back .mark-btn.known {
+            border-color: #86efac;
+        }
+        .flashcard.known .flashcard-front {
+            border-color: #86efac;
+            background: #f0fdf4;
+        }
+        .flashcard.known .flashcard-front .term::after {
+            content: ' \2713';
+            color: #16a34a;
+        }
+
+        /* Shuffle knop */
+        .action-bar {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .action-btn {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--primary);
+            border-radius: var(--radius);
+            background: var(--card);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .action-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        footer a { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Flashcards</h1>
+    <p>Klik op een term &rarr; zie de definitie &middot; Scheikunde HAVO 3</p>
+</header>
+
+<div class="container">
+
+    <a href="../" class="breadcrumb">&larr; Scheikunde overzicht</a>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-cat="alle">Alle</button>
+        <button class="filter-btn" data-cat="basis">Basisbegrippen</button>
+        <button class="filter-btn" data-cat="massa">Massaverhoudingen</button>
+        <button class="filter-btn" data-cat="koolstof">Koolstofchemie</button>
+        <button class="filter-btn" data-cat="binding">Bindingen</button>
+    </div>
+
+    <!-- Score -->
+    <div class="score-bar">
+        <span>Geweten: <strong id="knownCount">0</strong> / <span id="totalCount">0</span></span>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <button class="reset-btn" onclick="resetAll()">Reset</button>
+    </div>
+
+    <!-- Acties -->
+    <div class="action-bar">
+        <button class="action-btn" onclick="shuffleCards()">Schud kaarten</button>
+        <button class="action-btn" onclick="flipAll()">Alles omdraaien</button>
+    </div>
+
+    <!-- Flashcards -->
+    <div class="flash-grid" id="flashGrid"></div>
+
+</div>
+
+<footer>
+    <p>Scheikunde HAVO 3 &middot; Flashcards</p>
+    <p style="margin-top:0.75rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script>
+const cards = [
+    // ─── Basisbegrippen ───
+    { term: "Atoom", def: "Het kleinste deeltje van een element dat nog de eigenschappen van dat element heeft. Bestaat uit protonen, neutronen en elektronen.", cat: "basis" },
+    { term: "Molecuul", def: "Een deeltje dat bestaat uit twee of meer atomen die met een covalente binding aan elkaar vast zitten. Bijv. H\u2082O bestaat uit 2 waterstof- en 1 zuurstofatoom.", cat: "basis" },
+    { term: "Element", def: "Een zuivere stof die uit \u00e9\u00e9n soort atomen bestaat. Bijv. zuurstof (O), ijzer (Fe), koolstof (C). Er zijn er circa 118 bekend.", cat: "basis" },
+    { term: "Verbinding", def: "Een zuivere stof die uit twee of meer soorten atomen bestaat, in een vaste verhouding. Bijv. water (H\u2082O), koolstofdioxide (CO\u2082).", cat: "basis" },
+    { term: "Mengsel", def: "Een combinatie van twee of meer stoffen die niet chemisch gebonden zijn. De stoffen behouden hun eigen eigenschappen en zijn te scheiden.", cat: "basis" },
+    { term: "Ion", def: "Een atoom (of groep atomen) dat elektronen heeft opgenomen of afgegeven, waardoor het een elektrische lading heeft. Bijv. Na\u207a, Cl\u207b.", cat: "basis" },
+    { term: "Reactieproducten", def: "De stoffen die ontstaan bij een chemische reactie. Ze staan rechts van de reactiepijl.", cat: "basis" },
+    { term: "Beginstoffen (reactanten)", def: "De stoffen waarmee een chemische reactie begint. Ze staan links van de reactiepijl.", cat: "basis" },
+
+    // ─── Massaverhoudingen ───
+    { term: "Massaverhouding", def: "De verhouding tussen de massa\u2019s van de stoffen in een chemische reactie. Bijv. bij verbranding van magnesium: magnesium : zuurstof : magnesiumoxide = 3 : 2 : 5.", cat: "massa" },
+    { term: "Wet van behoud van massa", def: "Bij een chemische reactie gaat er geen massa verloren en komt er geen massa bij. De totale massa van de beginstoffen is gelijk aan de totale massa van de reactieproducten.", cat: "massa" },
+    { term: "Verhoudingstabel", def: "Een tabel waarin je de massa\u2019s van stoffen in een reactie overzichtelijk noteert. Bovenste rij: de massaverhouding, onderste rij: de werkelijke massa\u2019s.", cat: "massa" },
+    { term: "Kruislings vermenigvuldigen", def: "Een rekenmethode bij verhoudingstabellen: vermenigvuldig de bekende massa kruislings met het verhoudingsgetal van de onbekende, en deel door het verhoudingsgetal van de bekende.", cat: "massa" },
+    { term: "Atoommassa", def: "De massa van \u00e9\u00e9n atoom, uitgedrukt in de eenheid u (unified atomic mass unit). Bijv. C = 12 u, O = 16 u, H = 1 u.", cat: "massa" },
+    { term: "Molecuulmassa", def: "De som van alle atoommassa\u2019s in een molecuul. Bijv. H\u2082O = 2\u00d71 + 1\u00d716 = 18 u.", cat: "massa" },
+    { term: "Massapercentage", def: "Het percentage van de totale massa dat door een bepaald element wordt ingenomen. Berekening: (massa element / totale massa) \u00d7 100%.", cat: "massa" },
+
+    // ─── Koolstofchemie ───
+    { term: "Alkaan", def: "Een koolwaterstof met alleen enkele bindingen (C\u2013C). Algemene formule: C\u2099H\u2082\u2099\u208a\u2082. Bijv. methaan (CH\u2084), ethaan (C\u2082H\u2086), propaan (C\u2083H\u2088).", cat: "koolstof" },
+    { term: "Alkeen", def: "Een koolwaterstof met minstens \u00e9\u00e9n dubbele binding (C=C). Algemene formule: C\u2099H\u2082\u2099. Bijv. etheen (C\u2082H\u2084), propeen (C\u2083H\u2086).", cat: "koolstof" },
+    { term: "Isomeren", def: "Moleculen met dezelfde molecuulformule maar een andere structuurformule. Ze hebben daardoor verschillende eigenschappen. Bijv. butaan en 2-methylpropaan.", cat: "koolstof" },
+    { term: "Structuurformule", def: "Een tekening van een molecuul waarin alle bindingen tussen atomen zichtbaar zijn. Geeft meer informatie dan de molecuulformule.", cat: "koolstof" },
+    { term: "Molecuulformule", def: "Formule die aangeeft welke atomen en hoeveel er in een molecuul zitten, maar niet hoe ze verbonden zijn. Bijv. C\u2084H\u2081\u2080.", cat: "koolstof" },
+    { term: "Systematische naam", def: "De offici\u00eble IUPAC-naam van een stof, opgebouwd uit: voorvoegsels (zijgroepen) + stamnaam (langste keten) + achtervoegsel (-aan, -een).", cat: "koolstof" },
+    { term: "Hoofdketen", def: "De langste aaneengesloten keten van koolstofatomen in een molecuul. Deze bepaalt de stamnaam (meth-, eth-, prop-, but-, pent-, hex-).", cat: "koolstof" },
+    { term: "Zijgroep (vertakking)", def: "Een korte koolstofketen die aan de hoofdketen vastzit. Krijgt het achtervoegsel -yl. Bijv. een CH\u2083-groep = methylgroep.", cat: "koolstof" },
+    { term: "Homologe reeks", def: "Een reeks koolwaterstoffen waarbij elk volgend molecuul \u00e9\u00e9n CH\u2082-groep meer heeft. Bijv. methaan, ethaan, propaan, butaan, \u2026", cat: "koolstof" },
+    { term: "Verzadigd", def: "Een koolwaterstof met alleen enkele bindingen. Er kunnen geen extra atomen meer \u201ctussen\u201d. Alkanen zijn verzadigd.", cat: "koolstof" },
+    { term: "Onverzadigd", def: "Een koolwaterstof met minstens \u00e9\u00e9n dubbele of driedubbele binding. Er kunnen nog atomen worden opgenomen. Alkenen zijn onverzadigd.", cat: "koolstof" },
+
+    // ─── Bindingen ───
+    { term: "Covalente binding", def: "Een binding waarbij twee atomen \u00e9\u00e9n of meer elektronenparen delen. Komt voor in moleculaire stoffen zoals H\u2082O, CO\u2082, CH\u2084.", cat: "binding" },
+    { term: "Ionbinding", def: "Een binding door de aantrekkingskracht tussen positief en negatief geladen ionen. Komt voor in zouten zoals NaCl, MgO.", cat: "binding" },
+    { term: "Enkele binding", def: "Een covalente binding waarbij \u00e9\u00e9n elektronenpaar gedeeld wordt (bijv. C\u2013C of C\u2013H). Wordt getekend als \u00e9\u00e9n streepje.", cat: "binding" },
+    { term: "Dubbele binding", def: "Een covalente binding waarbij twee elektronenparen gedeeld worden (bijv. C=C in alkenen of O=O in zuurstof). Wordt getekend als twee streepjes.", cat: "binding" },
+    { term: "Bindingshoek", def: "De hoek tussen twee bindingen rondom een centraal atoom. Bij vier enkele bindingen (bijv. in methaan): circa 109,5\u00b0.", cat: "binding" },
+    { term: "Valentie-elektronen", def: "De elektronen in de buitenste schil van een atoom. Deze elektronen bepalen hoeveel bindingen een atoom kan vormen. Bijv. koolstof heeft er 4.", cat: "binding" },
+];
+
+const grid = document.getElementById('flashGrid');
+const knownCountEl = document.getElementById('knownCount');
+const totalCountEl = document.getElementById('totalCount');
+const progressFill = document.getElementById('progressFill');
+
+let currentFilter = 'alle';
+let knownSet = new Set();
+
+function renderCards() {
+    const filtered = currentFilter === 'alle' ? cards : cards.filter(c => c.cat === currentFilter);
+    totalCountEl.textContent = filtered.length;
+    grid.innerHTML = '';
+
+    filtered.forEach((card, i) => {
+        const catLabels = { basis: 'Basis', massa: 'Massa', koolstof: 'Koolstof', binding: 'Binding' };
+        const isKnown = knownSet.has(card.term);
+        const el = document.createElement('div');
+        el.className = 'flashcard' + (isKnown ? ' known' : '');
+        el.innerHTML = `
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <span class="category-tag">${catLabels[card.cat]}</span>
+                    <div class="term">${card.term}</div>
+                    <div class="hint">Klik om te draaien</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="definition">${card.def}</div>
+                    <div class="mark-btns">
+                        <button class="mark-btn known" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', true)">Geweten</button>
+                        <button class="mark-btn" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', false)">Nog niet</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        el.addEventListener('click', function(e) {
+            if (e.target.closest('.mark-btn')) return;
+            this.classList.toggle('flipped');
+        });
+        grid.appendChild(el);
+    });
+    updateScore();
+}
+
+function markKnown(e, term, known) {
+    e.stopPropagation();
+    if (known) {
+        knownSet.add(term);
+    } else {
+        knownSet.delete(term);
+    }
+    const card = e.target.closest('.flashcard');
+    if (known) {
+        card.classList.add('known');
+        // Flip terug na korte vertraging
+        setTimeout(() => card.classList.remove('flipped'), 400);
+    } else {
+        card.classList.remove('known');
+    }
+    updateScore();
+}
+
+function updateScore() {
+    const filtered = currentFilter === 'alle' ? cards : cards.filter(c => c.cat === currentFilter);
+    const count = filtered.filter(c => knownSet.has(c.term)).length;
+    knownCountEl.textContent = count;
+    const pct = filtered.length > 0 ? (count / filtered.length) * 100 : 0;
+    progressFill.style.width = pct + '%';
+}
+
+function resetAll() {
+    knownSet.clear();
+    document.querySelectorAll('.flashcard').forEach(el => {
+        el.classList.remove('flipped', 'known');
+    });
+    updateScore();
+}
+
+function shuffleCards() {
+    const container = document.getElementById('flashGrid');
+    const items = Array.from(container.children);
+    for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        container.appendChild(items[j]);
+        items.splice(j, 1, items[i]);
+    }
+}
+
+function flipAll() {
+    const all = document.querySelectorAll('.flashcard');
+    const anyFlipped = Array.from(all).some(c => c.classList.contains('flipped'));
+    all.forEach(c => {
+        if (anyFlipped) c.classList.remove('flipped');
+        else c.classList.add('flipped');
+    });
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.cat;
+        renderCards();
+    });
+});
+
+// Shuffle array in-place (Fisher-Yates)
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
+// Init: shuffle en toon
+shuffleArray(cards);
+renderCards();
+</script>
+
+</body>
+</html>

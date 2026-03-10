@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Massaverhoudingen &mdash; Scheikunde HAVO 3</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-light: #d1fae5;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+        .breadcrumb {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem; }
+        h3 { color: var(--text); margin: 1.5rem 0 0.75rem; font-size: 1.15rem; }
+
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.15rem;
+        }
+
+        .tip-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 1rem 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: #fee2e2;
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+        }
+
+        .toc {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .toc a {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.15s;
+        }
+        .toc a:hover { background: #a7f3d0; }
+
+        .reaction {
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .reaction sub { font-size: 0.75em; }
+
+        /* Ratio table */
+        .ratio-table {
+            border-collapse: collapse;
+            margin: 1rem auto;
+            font-size: 1rem;
+        }
+        .ratio-table th, .ratio-table td {
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
+        .ratio-table th {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .ratio-table .highlight {
+            background: #fef9c3;
+            font-weight: 700;
+        }
+
+        /* Interactive inputs */
+        .exercise {
+            background: #f1f5f9;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .exercise input[type="text"] {
+            width: 80px;
+            padding: 0.4rem 0.6rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .exercise input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .exercise button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+            transition: background 0.15s;
+        }
+        .exercise button:hover { background: #047857; }
+        .feedback {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .feedback.correct { background: #dcfce7; color: #166534; }
+        .feedback.wrong { background: #fee2e2; color: #991b1b; }
+
+        /* Step reveal */
+        .step-container { margin: 1rem 0; }
+        .step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .step-num {
+            background: var(--primary);
+            color: white;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .step.hidden { display: none; }
+        .reveal-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            transition: all 0.15s;
+        }
+        .reveal-btn:hover { background: var(--primary); color: white; }
+
+        /* Slider demo */
+        .slider-demo {
+            background: #f1f5f9;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .slider-demo input[type="range"] {
+            width: 100%;
+            max-width: 400px;
+            margin: 0.5rem 0;
+            accent-color: var(--primary);
+        }
+        .slider-demo .result {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        /* Mini exercises */
+        .mini-exercises { margin-top: 2rem; }
+        .mini-ex {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .mini-ex .q { margin-bottom: 0.5rem; }
+        .mini-ex-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .mini-fb { font-size: 0.9rem; margin-left: 0.5rem; }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .ratio-table { font-size: 0.85rem; }
+            .ratio-table th, .ratio-table td { padding: 0.35rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Massaverhoudingen</h1>
+    <p>Scheikunde HAVO 3 &mdash; Hoofdstuk 1</p>
+</header>
+
+<div class="breadcrumb">
+    <a href="../">Scheikunde</a> &rsaquo; Massaverhoudingen
+</div>
+
+<div class="container">
+
+    <div class="toc">
+        <a href="#rekenen">Rekenen met massaverhoudingen</a>
+        <a href="#afleiden">Massaverhouding afleiden</a>
+        <a href="#oefenen">Oefenen</a>
+    </div>
+
+    <!-- ===== SECTIE 1: Rekenen met massaverhoudingen ===== -->
+    <div class="card" id="rekenen">
+        <h2>Rekenen met massaverhoudingen</h2>
+
+        <p>Bij een chemische reactie reageren stoffen altijd in een vaste <strong>massaverhouding</strong>. Bekijk de reactie van magnesium met zuurstof tot magnesiumoxide:</p>
+
+        <div class="reaction">
+            2 Mg (s) + O<sub>2</sub> (g) &rarr; 2 MgO (s)
+        </div>
+
+        <p>Als je 24,3 gram magnesium en 16,0 gram zuurstof bij elkaar brengt, reageren beide beginstoffen volledig op. De <strong>massaverhouding</strong> waarin magnesium en zuurstof reageren is dus 24,3 : 16,0.</p>
+
+        <div class="tip-box">
+            <strong>Massaverhouding staat vast:</strong> als je twee keer zo veel magnesium neemt (48,6 g), heb je ook twee keer zo veel zuurstof nodig (32,0 g). De verhouding 24,3 : 16,0 blijft gelijk!
+        </div>
+
+        <!-- Interactive slider -->
+        <div class="slider-demo" id="ratioSlider">
+            <p><strong>Probeer het zelf:</strong> sleep de slider om de hoeveelheid magnesium te kiezen</p>
+            <input type="range" min="5" max="100" value="24.3" step="0.1" oninput="updateRatioSlider()">
+            <div class="result">
+                <span id="sliderMg">24,3</span> g Mg reageert met <span id="sliderO">16,0</span> g O<sub>2</sub>
+            </div>
+            <div style="color:var(--muted);font-size:0.85rem;margin-top:0.25rem;">
+                Verhouding blijft: 24,3 : 16,0
+            </div>
+        </div>
+
+        <h3>Wet van behoud van massa</h3>
+        <p>Bij een reactie is de totale massa van de beginstoffen gelijk aan de totale massa van de reactieproducten. Dit heet de <strong>wet van behoud van massa</strong>.</p>
+
+        <div class="formula">
+            massa beginstoffen = massa reactieproducten
+        </div>
+
+        <p>In ons voorbeeld: 24,3 + 16,0 = <strong>40,3 g magnesiumoxide</strong>.</p>
+
+        <!-- Tussenvraag -->
+        <div class="exercise">
+            <p><strong>Tussenvraag:</strong> als je 48,6 g magnesium volledig laat reageren met zuurstof, hoeveel gram magnesiumoxide ontstaat er?</p>
+            <div class="mini-ex-row">
+                <input type="text" id="tussen1" placeholder="?"> g MgO
+                <button onclick="checkTussen1()">Check</button>
+                <span id="tussen1fb" class="feedback"></span>
+            </div>
+            <div id="tussen1hint" style="display:none;margin-top:0.5rem;color:var(--muted);font-size:0.9rem;">
+                Hint: 48,6 g Mg is twee keer 24,3 g. Dan heb je ook twee keer zo veel O<sub>2</sub> nodig&hellip;
+            </div>
+            <button onclick="document.getElementById('tussen1hint').style.display='block'" style="background:none;border:none;color:var(--primary);cursor:pointer;font-size:0.85rem;margin-top:0.5rem;">Hint nodig?</button>
+        </div>
+
+        <h3>Kruislings vermenigvuldigen</h3>
+        <p>Met een <strong>verhoudingstabel</strong> kun je berekenen hoeveel gram van een stof je nodig hebt. Vul de bekende massaverhouding en de gegeven hoeveelheid in, en los de onbekende op met kruislings vermenigvuldigen.</p>
+
+        <!-- Voorbeeld 1 met stap-voor-stap -->
+        <div class="example-box">
+            <h3 style="margin-top:0;">Voorbeeld: Magnesium en zuurstof</h3>
+            <p>De massaverhouding van Mg en O<sub>2</sub> is 24,3 : 16,0.<br>
+            <strong>a)</strong> Hoeveel gram zuurstof reageert met 50,0 g magnesium?<br>
+            <strong>b)</strong> Hoeveel gram magnesiumoxide ontstaat er?</p>
+
+            <div class="step-container" id="ex1steps">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <div>
+                        <strong>Maak een verhoudingstabel:</strong>
+                        <table class="ratio-table" style="margin-top:0.5rem;">
+                            <tr><th></th><th>Mg</th><th>O<sub>2</sub></th></tr>
+                            <tr><td>massaverhouding</td><td>24,3</td><td>16,0</td></tr>
+                            <tr><td>hoeveelheid (g)</td><td>50,0</td><td class="highlight">x</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Tussenvraag bij stap 2 -->
+                <div class="exercise" style="margin:0.5rem 0;">
+                    <p>Wat is de formule om x te berekenen? Vul het antwoord in:</p>
+                    <div class="mini-ex-row">
+                        x =
+                        <input type="text" id="ex1step2a" placeholder="teller" style="width:100px;">
+                        /
+                        <input type="text" id="ex1step2b" placeholder="noemer" style="width:60px;">
+                        <button onclick="checkEx1Step2()">Check</button>
+                        <span id="ex1step2fb" class="feedback"></span>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="ex1s2">
+                    <span class="step-num">2</span>
+                    <div>
+                        <strong>Kruislings vermenigvuldigen:</strong><br>
+                        x = (50,0 &times; 16,0) / 24,3 = <strong>32,9 g O<sub>2</sub></strong>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="ex1s3">
+                    <span class="step-num">3</span>
+                    <div>
+                        <strong>Wet van behoud van massa:</strong><br>
+                        massa MgO = 50,0 + 32,9 = <strong>82,9 g MgO</strong>
+                    </div>
+                </div>
+            </div>
+
+            <button class="reveal-btn" onclick="revealSteps('ex1')">Toon volgende stap</button>
+        </div>
+    </div>
+
+    <!-- ===== SECTIE 2: Massaverhouding afleiden ===== -->
+    <div class="card" id="afleiden">
+        <h2>Massaverhouding afleiden</h2>
+
+        <p>Alle stoffen in een reactie &mdash; ook de reactieproducten &mdash; hebben een massaverhouding ten opzichte van elkaar. Uit de gegeven massa's en de wet van behoud van massa kun je de massaverhouding tussen stoffen bepalen.</p>
+
+        <!-- Voorbeeld 2 met stap-voor-stap -->
+        <div class="example-box">
+            <h3 style="margin-top:0;">Voorbeeld: Waterstof en zuurstof</h3>
+            <p>Waterstof reageert met zuurstof tot water:</p>
+            <div class="reaction">
+                2 H<sub>2</sub> (g) + O<sub>2</sub> (g) &rarr; 2 H<sub>2</sub>O (l)
+            </div>
+            <p>Je laat 80,0 kg waterstof reageren volgens bovenstaande reactie. Daarbij ontstaat 32,0 kg zuurstof als restproduct is er niet, maar er wordt 720 kg water gevormd.<br>
+            Wacht &mdash; laten we dit stap voor stap doen:</p>
+            <p><strong>Gegeven:</strong> 4,0 g H<sub>2</sub> reageert volledig met 32,0 g O<sub>2</sub>.</p>
+            <p><strong>a)</strong> Bereken de massaverhouding tussen H<sub>2</sub> en O<sub>2</sub>.<br>
+            <strong>b)</strong> Bereken hoeveel gram water er ontstaat.<br>
+            <strong>c)</strong> Bereken hoeveel gram O<sub>2</sub> nodig is om 54,0 g water te maken.</p>
+
+            <div class="step-container" id="ex2steps">
+                <div class="step">
+                    <span class="step-num">a</span>
+                    <div>
+                        <strong>Massaverhouding H<sub>2</sub> : O<sub>2</sub></strong><br>
+                        Direct uit de gegevens: <strong>4,0 : 32,0</strong> (of vereenvoudigd: 1 : 8)
+                    </div>
+                </div>
+
+                <!-- Tussenvraag -->
+                <div class="exercise" style="margin:0.5rem 0;">
+                    <p>Hoeveel gram water ontstaat er? (wet van behoud van massa)</p>
+                    <div class="mini-ex-row">
+                        massa H<sub>2</sub>O =
+                        <input type="text" id="ex2tussen" placeholder="?"> g
+                        <button onclick="checkEx2Tussen()">Check</button>
+                        <span id="ex2tussenfb" class="feedback"></span>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="ex2s2">
+                    <span class="step-num">b</span>
+                    <div>
+                        <strong>Wet van behoud van massa:</strong><br>
+                        massa H<sub>2</sub>O = massa H<sub>2</sub> + massa O<sub>2</sub> = 4,0 + 32,0 = <strong>36,0 g</strong>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="ex2s3">
+                    <span class="step-num">c</span>
+                    <div>
+                        <strong>Verhoudingstabel:</strong>
+                        <table class="ratio-table" style="margin:0.5rem 0;">
+                            <tr><th></th><th>O<sub>2</sub></th><th>H<sub>2</sub>O</th></tr>
+                            <tr><td>massaverhouding</td><td>32,0</td><td>36,0</td></tr>
+                            <tr><td>hoeveelheid (g)</td><td class="highlight">x</td><td>54,0</td></tr>
+                        </table>
+                        x = (32,0 &times; 54,0) / 36,0 = <strong>48,0 g O<sub>2</sub></strong>
+                    </div>
+                </div>
+            </div>
+
+            <button class="reveal-btn" onclick="revealSteps('ex2')">Toon volgende stap</button>
+        </div>
+
+        <div class="tip-box">
+            <strong>Stappenplan massaverhoudingen:</strong>
+            <ol style="margin:0.5rem 0 0 1.25rem;">
+                <li>Schrijf de reactievergelijking op</li>
+                <li>Zoek de massaverhouding (gegeven of afleiden uit massa's)</li>
+                <li>Maak een verhoudingstabel</li>
+                <li>Los op met kruislings vermenigvuldigen</li>
+                <li>Controleer met de wet van behoud van massa</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ===== SECTIE 3: Oefensommen ===== -->
+    <div class="card" id="oefenen">
+        <h2>Oefensommen</h2>
+
+        <div class="mini-exercises">
+
+            <!-- Opgave 1 -->
+            <div class="mini-ex">
+                <p class="q"><strong>1.</strong> Koper reageert met zwavel tot kopersulfide: Cu (s) + S (s) &rarr; CuS (s).<br>
+                De massaverhouding Cu : S is 63,5 : 32,1.<br>
+                Hoeveel gram zwavel reageert met 25,0 g koper? (twee decimalen)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef1" placeholder="?"> g S
+                    <button onclick="checkOef(1)">Check</button>
+                    <span id="oef1fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 2 -->
+            <div class="mini-ex">
+                <p class="q"><strong>2.</strong> (vervolg opgave 1) Hoeveel gram kopersulfide ontstaat er? (twee decimalen)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef2" placeholder="?"> g CuS
+                    <button onclick="checkOef(2)">Check</button>
+                    <span id="oef2fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 3 -->
+            <div class="mini-ex">
+                <p class="q"><strong>3.</strong> Aluminium reageert met zuurstof tot aluminiumoxide:<br>
+                4 Al (s) + 3 O<sub>2</sub> (g) &rarr; 2 Al<sub>2</sub>O<sub>3</sub> (s).<br>
+                De massaverhouding Al : O<sub>2</sub> is 54,0 : 48,0.<br>
+                Hoeveel gram zuurstof is nodig om 81,0 g aluminium te laten reageren? (een decimaal)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef3" placeholder="?"> g O<sub>2</sub>
+                    <button onclick="checkOef(3)">Check</button>
+                    <span id="oef3fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 4 -->
+            <div class="mini-ex">
+                <p class="q"><strong>4.</strong> (vervolg opgave 3) Hoeveel gram aluminiumoxide ontstaat er? (een decimaal)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef4" placeholder="?"> g Al<sub>2</sub>O<sub>3</sub>
+                    <button onclick="checkOef(4)">Check</button>
+                    <span id="oef4fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 5 -->
+            <div class="mini-ex">
+                <p class="q"><strong>5.</strong> Bij de verbranding van methaan geldt:<br>
+                CH<sub>4</sub> (g) + 2 O<sub>2</sub> (g) &rarr; CO<sub>2</sub> (g) + 2 H<sub>2</sub>O (g)<br>
+                Er verbrandt 40,0 g methaan. Daarbij ontstaat 110,0 g CO<sub>2</sub>.<br>
+                Bereken de massa van het gevormde water. (een decimaal)<br>
+                <em>Tip: bereken eerst de totale massa O<sub>2</sub> met de massaverhouding CH<sub>4</sub> : O<sub>2</sub> = 16,0 : 64,0.</em></p>
+                <div style="margin:0.5rem 0;">
+                    <p>Stap 1: Hoeveel g O<sub>2</sub> reageert met 40,0 g CH<sub>4</sub>?</p>
+                    <div class="mini-ex-row">
+                        <input type="text" id="oef5a" placeholder="?"> g O<sub>2</sub>
+                        <button onclick="checkOef('5a')">Check</button>
+                        <span id="oef5afb" class="feedback"></span>
+                    </div>
+                </div>
+                <div>
+                    <p>Stap 2: Hoeveel g H<sub>2</sub>O ontstaat er?</p>
+                    <div class="mini-ex-row">
+                        <input type="text" id="oef5b" placeholder="?"> g H<sub>2</sub>O
+                        <button onclick="checkOef('5b')">Check</button>
+                        <span id="oef5bfb" class="feedback"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 6 -->
+            <div class="mini-ex">
+                <p class="q"><strong>6.</strong> Stikstof reageert met waterstof tot ammoniak:<br>
+                N<sub>2</sub> (g) + 3 H<sub>2</sub> (g) &rarr; 2 NH<sub>3</sub> (g)<br>
+                De massaverhouding N<sub>2</sub> : H<sub>2</sub> is 28,0 : 6,0.<br>
+                Hoeveel gram ammoniak ontstaat als 42,0 g stikstof reageert? (een decimaal)</p>
+                <div style="margin:0.5rem 0;">
+                    <p>Tussenstap: hoeveel g H<sub>2</sub> is nodig?</p>
+                    <div class="mini-ex-row">
+                        <input type="text" id="oef6a" placeholder="?"> g H<sub>2</sub>
+                        <button onclick="checkOef('6a')">Check</button>
+                        <span id="oef6afb" class="feedback"></span>
+                    </div>
+                </div>
+                <div>
+                    <p>Eindantwoord: hoeveel g NH<sub>3</sub>?</p>
+                    <div class="mini-ex-row">
+                        <input type="text" id="oef6b" placeholder="?"> g NH<sub>3</sub>
+                        <button onclick="checkOef('6b')">Check</button>
+                        <span id="oef6bfb" class="feedback"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 7 -->
+            <div class="mini-ex">
+                <p class="q"><strong>7.</strong> Zink reageert met zoutzuur:<br>
+                Zn (s) + 2 HCl (aq) &rarr; ZnCl<sub>2</sub> (aq) + H<sub>2</sub> (g)<br>
+                Er reageert 130,8 g zink. Daarbij ontstaat 4,0 g waterstof.<br>
+                Wat is de massaverhouding Zn : H<sub>2</sub>?</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef7a" placeholder="Zn" style="width:60px;"> :
+                    <input type="text" id="oef7b" placeholder="H2" style="width:60px;">
+                    <button onclick="checkOef(7)">Check</button>
+                    <span id="oef7fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 8 -->
+            <div class="mini-ex">
+                <p class="q"><strong>8.</strong> (vervolg opgave 7) Bereken hoeveel gram ZnCl<sub>2</sub> er ontstaat als 130,8 g zink reageert met 146,0 g HCl. (een decimaal)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef8" placeholder="?"> g ZnCl<sub>2</sub>
+                    <button onclick="checkOef(8)">Check</button>
+                    <span id="oef8fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 9 -->
+            <div class="mini-ex">
+                <p class="q"><strong>9.</strong> Calciumcarbonaat ontleedt bij verhitting:<br>
+                CaCO<sub>3</sub> (s) &rarr; CaO (s) + CO<sub>2</sub> (g)<br>
+                Je verhit 75,0 g calciumcarbonaat. Er ontstaat 42,0 g calciumoxide.<br>
+                <strong>a)</strong> Hoeveel gram CO<sub>2</sub> komt er vrij?</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef9a" placeholder="?"> g CO<sub>2</sub>
+                    <button onclick="checkOef('9a')">Check</button>
+                    <span id="oef9afb" class="feedback"></span>
+                </div>
+                <p style="margin-top:0.5rem;"><strong>b)</strong> Hoeveel gram CaCO<sub>3</sub> moet je verhitten om 100,0 g CaO te krijgen? (een decimaal)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef9b" placeholder="?"> g CaCO<sub>3</sub>
+                    <button onclick="checkOef('9b')">Check</button>
+                    <span id="oef9bfb" class="feedback"></span>
+                </div>
+            </div>
+
+            <!-- Opgave 10 -->
+            <div class="mini-ex">
+                <p class="q"><strong>10.</strong> Natrium reageert met chloor tot natriumchloride (keukenzout):<br>
+                2 Na (s) + Cl<sub>2</sub> (g) &rarr; 2 NaCl (s)<br>
+                De massaverhouding Na : Cl<sub>2</sub> is 46,0 : 71,0.<br>
+                Je wilt 234,0 g natriumchloride maken.<br>
+                <strong>a)</strong> Hoeveel gram natrium heb je nodig? (een decimaal)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef10a" placeholder="?"> g Na
+                    <button onclick="checkOef('10a')">Check</button>
+                    <span id="oef10afb" class="feedback"></span>
+                </div>
+                <p style="margin-top:0.5rem;"><strong>b)</strong> Hoeveel gram chloorgas heb je nodig? (een decimaal)</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef10b" placeholder="?"> g Cl<sub>2</sub>
+                    <button onclick="checkOef('10b')">Check</button>
+                    <span id="oef10bfb" class="feedback"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    <p>Scheikunde HAVO 3 &middot; Interactieve gids</p>
+    <p style="margin-top:0.5rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:var(--primary);">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script>
+    // === Slider demo ===
+    function updateRatioSlider() {
+        const slider = document.querySelector('#ratioSlider input[type=range]');
+        const mg = parseFloat(slider.value);
+        const o2 = (mg * 16.0) / 24.3;
+        document.getElementById('sliderMg').textContent = mg.toFixed(1).replace('.', ',');
+        document.getElementById('sliderO').textContent = o2.toFixed(1).replace('.', ',');
+    }
+
+    // === Tussenvraag 1 ===
+    function checkTussen1() {
+        const val = document.getElementById('tussen1').value.trim().replace(',', '.');
+        const fb = document.getElementById('tussen1fb');
+        if (Math.abs(parseFloat(val) - 80.6) < 0.15) {
+            fb.className = 'feedback correct';
+            fb.textContent = 'Goed! 48,6 + 32,0 = 80,6 g MgO';
+        } else {
+            fb.className = 'feedback wrong';
+            fb.textContent = 'Niet juist. Denk aan: massa MgO = massa Mg + massa O\u2082';
+        }
+    }
+
+    // === Voorbeeld 1 stap-check ===
+    function checkEx1Step2() {
+        const teller = document.getElementById('ex1step2a').value.trim().replace(',', '.').replace(/\s/g, '');
+        const noemer = document.getElementById('ex1step2b').value.trim().replace(',', '.').replace(/\s/g, '');
+        const fb = document.getElementById('ex1step2fb');
+
+        // Accept "50*16" or "50.0*16.0" or "800" for numerator, "24.3" for denominator
+        const tellerOk = teller.includes('50') && teller.includes('16') || parseFloat(teller) === 800;
+        const noemerOk = parseFloat(noemer) === 24.3;
+
+        if (tellerOk && noemerOk) {
+            fb.className = 'feedback correct';
+            fb.textContent = 'Goed! Kruislings vermenigvuldigen.';
+            document.getElementById('ex1s2').classList.remove('hidden');
+            document.getElementById('ex1s3').classList.remove('hidden');
+        } else {
+            fb.className = 'feedback wrong';
+            fb.textContent = 'Denk aan kruislings: (hoeveelheid \u00d7 andere massaverhouding) / eigen massaverhouding';
+        }
+    }
+
+    // === Voorbeeld 2 tussenvraag ===
+    function checkEx2Tussen() {
+        const val = document.getElementById('ex2tussen').value.trim().replace(',', '.');
+        const fb = document.getElementById('ex2tussenfb');
+        if (Math.abs(parseFloat(val) - 36.0) < 0.15) {
+            fb.className = 'feedback correct';
+            fb.textContent = 'Goed! 4,0 + 32,0 = 36,0 g water';
+            document.getElementById('ex2s2').classList.remove('hidden');
+            document.getElementById('ex2s3').classList.remove('hidden');
+        } else {
+            fb.className = 'feedback wrong';
+            fb.textContent = 'Niet juist. massa H\u2082O = massa H\u2082 + massa O\u2082';
+        }
+    }
+
+    // === Step reveal ===
+    const revealState = {};
+    function revealSteps(prefix) {
+        if (!revealState[prefix]) revealState[prefix] = 1;
+        else revealState[prefix]++;
+        const step = document.getElementById(prefix + 's' + revealState[prefix]);
+        if (step) step.classList.remove('hidden');
+    }
+
+    // === Oefensommen ===
+    const oefAnswers = {
+        1: { answer: 12.64, tolerance: 0.02, correct: 'Goed! 25,0 \u00d7 32,1 / 63,5 = 12,64 g', wrong: 'Niet juist. Kruislings: 25,0 \u00d7 32,1 / 63,5' },
+        2: { answer: 37.64, tolerance: 0.02, correct: 'Goed! 25,0 + 12,64 = 37,64 g CuS', wrong: 'Niet juist. Wet van behoud: massa CuS = massa Cu + massa S' },
+        3: { answer: 72.0, tolerance: 0.15, correct: 'Goed! 81,0 \u00d7 48,0 / 54,0 = 72,0 g', wrong: 'Niet juist. Kruislings: 81,0 \u00d7 48,0 / 54,0' },
+        4: { answer: 153.0, tolerance: 0.15, correct: 'Goed! 81,0 + 72,0 = 153,0 g', wrong: 'Niet juist. Wet van behoud: 81,0 + 72,0' },
+        '5a': { answer: 160.0, tolerance: 0.15, correct: 'Goed! 40,0 \u00d7 64,0 / 16,0 = 160,0 g O\u2082', wrong: 'Niet juist. Kruislings: 40,0 \u00d7 64,0 / 16,0' },
+        '5b': { answer: 90.0, tolerance: 0.15, correct: 'Goed! (40,0 + 160,0) \u2212 110,0 = 90,0 g H\u2082O', wrong: 'Niet juist. Totale massa = 40,0 + 160,0 = 200,0. Minus CO\u2082 (110,0) = ...' },
+        '6a': { answer: 9.0, tolerance: 0.15, correct: 'Goed! 42,0 \u00d7 6,0 / 28,0 = 9,0 g H\u2082', wrong: 'Niet juist. Kruislings: 42,0 \u00d7 6,0 / 28,0' },
+        '6b': { answer: 51.0, tolerance: 0.15, correct: 'Goed! 42,0 + 9,0 = 51,0 g NH\u2083', wrong: 'Niet juist. Wet van behoud: 42,0 + 9,0' },
+        7: { type: 'ratio', a: 130.8, b: 4.0, correct: 'Goed! De verhouding is 130,8 : 4,0 (of 32,7 : 1)', wrong: 'Niet juist. Lees de massa\u2019s direct uit de opgave.' },
+        8: { answer: 272.8, tolerance: 0.15, correct: 'Goed! (130,8 + 146,0) \u2212 4,0 = 272,8 g', wrong: 'Niet juist. Wet van behoud: totaal beginstoffen \u2212 waterstof' },
+        '9a': { answer: 33.0, tolerance: 0.15, correct: 'Goed! 75,0 \u2212 42,0 = 33,0 g CO\u2082', wrong: 'Niet juist. Wet van behoud: 75,0 \u2212 42,0' },
+        '9b': { answer: 178.6, tolerance: 0.2, correct: 'Goed! 100,0 \u00d7 75,0 / 42,0 = 178,6 g', wrong: 'Niet juist. Verhoudingstabel: CaCO\u2083:CaO = 75,0:42,0. Kruislings voor 100,0 g CaO.' },
+        '10a': { answer: 92.0, tolerance: 0.15, correct: 'Goed! Massaverhouding Na:NaCl = 46,0:117,0. 234,0 \u00d7 46,0 / 117,0 = 92,0 g', wrong: 'Niet juist. Bepaal eerst de massaverhouding Na:NaCl = 46,0:(46,0+71,0) = 46,0:117,0' },
+        '10b': { answer: 142.0, tolerance: 0.15, correct: 'Goed! 234,0 \u2212 92,0 = 142,0 g (of via verhouding: 234,0 \u00d7 71,0 / 117,0)', wrong: 'Niet juist. Wet van behoud: 234,0 \u2212 92,0 = 142,0' }
+    };
+
+    function checkOef(n) {
+        const info = oefAnswers[n];
+        const fb = document.getElementById('oef' + n + 'fb');
+
+        if (info.type === 'ratio') {
+            const a = parseFloat(document.getElementById('oef' + n + 'a').value.trim().replace(',', '.'));
+            const b = parseFloat(document.getElementById('oef' + n + 'b').value.trim().replace(',', '.'));
+            if (!isNaN(a) && !isNaN(b) && Math.abs(a / b - info.a / info.b) < 0.1) {
+                fb.className = 'feedback correct';
+                fb.textContent = info.correct;
+            } else {
+                fb.className = 'feedback wrong';
+                fb.textContent = info.wrong;
+            }
+            return;
+        }
+
+        const val = parseFloat(document.getElementById('oef' + n).value.trim().replace(',', '.'));
+        if (!isNaN(val) && Math.abs(val - info.answer) < info.tolerance) {
+            fb.className = 'feedback correct';
+            fb.textContent = info.correct;
+        } else {
+            fb.className = 'feedback wrong';
+            fb.textContent = info.wrong;
+        }
+    }
+
+    // Enter key support
+    document.querySelectorAll('.mini-ex-row input[type=text], .exercise input[type=text]').forEach(input => {
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const btn = this.closest('.mini-ex-row, .exercise')?.querySelector('button');
+                if (btn) btn.click();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactieve lesstof &mdash; HAVO</title>
+    <style>
+        :root {
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.8; font-size: 1.1rem; }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2.5rem 1rem;
+            flex: 1;
+        }
+        .vak-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .vak-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+        .vak-icon {
+            width: 56px; height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        .vak-card h2 { font-size: 1.25rem; margin-bottom: 0.2rem; }
+        .vak-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+        .vak-card .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 999px;
+            display: inline-block;
+            margin-top: 0.4rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Interactieve lesstof</h1>
+    <p>Beter dan het boek &mdash; kies je vak</p>
+</header>
+
+<div class="container">
+
+    <a href="wiskunde/" class="vak-card">
+        <div class="vak-icon" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">Wi</div>
+        <div>
+            <h2 style="color:#2563eb;">Wiskunde</h2>
+            <p>Rekenen, breuken, wortelfuncties &amp; meer. Onderbouw t/m HAVO 4.</p>
+            <span class="badge" style="background:#dbeafe;color:#2563eb;">5 hoofdstukken</span>
+        </div>
+    </a>
+
+    <a href="scheikunde/" class="vak-card">
+        <div class="vak-icon" style="background:linear-gradient(135deg,#064e3b,#059669);">Sk</div>
+        <div>
+            <h2 style="color:#059669;">Scheikunde</h2>
+            <p>Massaverhoudingen &amp; koolstofchemie met interactieve molecuulmodellen. HAVO 3.</p>
+            <span class="badge" style="background:#d1fae5;color:#059669;">2 hoofdstukken</span>
+        </div>
+    </a>
+
+</div>
+
+<footer>
+    <p>Interactieve lesstof &middot; HAVO</p>
+    <p style="margin-top:0.75rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:#2563eb;">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:#2563eb;">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#2563eb;">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+</body>
+</html>

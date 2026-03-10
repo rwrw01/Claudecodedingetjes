@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koolstofchemie &mdash; Systematische namen &mdash; Scheikunde HAVO 3</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-light: #d1fae5;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+        .breadcrumb {
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 1rem 2rem; }
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.5rem; }
+        h3 { color: var(--text); margin: 1.5rem 0 0.75rem; font-size: 1.15rem; }
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+            font-family: 'Cambria Math', 'Times New Roman', serif;
+            font-size: 1.15rem;
+        }
+        .tip-box {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            padding: 1rem 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+        }
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            padding: 1.25rem;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 1rem 0;
+        }
+        .toc {
+            display: flex; flex-wrap: wrap; gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .toc a {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: background 0.15s;
+        }
+        .toc a:hover { background: #a7f3d0; }
+        .data-table {
+            border-collapse: collapse;
+            margin: 1rem 0;
+            width: 100%;
+            max-width: 400px;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid var(--border);
+            padding: 0.4rem 0.75rem;
+            text-align: left;
+        }
+        .data-table th {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        /* Molecule viewer */
+        .molecule-viewer {
+            background: #f8fafcee;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .molecule-viewer svg { max-width: 100%; height: auto; }
+        /* Molecule builder */
+        .mol-builder {
+            background: #f1f5f9;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .mol-builder-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            align-items: center;
+        }
+        .mol-builder-controls label { font-weight: 600; font-size: 0.9rem; }
+        .mol-builder-controls select, .mol-builder-controls input[type=range] {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.95rem;
+        }
+        .mol-builder-controls input[type=range] { accent-color: var(--primary); width: 140px; }
+        .mol-canvas {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        .mol-info {
+            margin-top: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+        .mol-info strong { color: var(--text); }
+        /* Interactive inputs */
+        .exercise {
+            background: #f1f5f9;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .exercise input[type="text"], .exercise select {
+            padding: 0.4rem 0.6rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .exercise input[type="text"]:focus, .exercise select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .exercise button, .mini-ex button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.15s;
+        }
+        .exercise button:hover, .mini-ex button:hover { background: #047857; }
+        .feedback {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .feedback.correct { background: #dcfce7; color: #166534; }
+        .feedback.wrong { background: #fee2e2; color: #991b1b; }
+        /* Step reveal */
+        .step {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .step-num {
+            background: var(--primary);
+            color: white;
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        .step.hidden { display: none; }
+        .reveal-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            transition: all 0.15s;
+        }
+        .reveal-btn:hover { background: var(--primary); color: white; }
+        /* Mini exercises */
+        .mini-ex {
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+        .mini-ex .q { margin-bottom: 0.5rem; }
+        .mini-ex-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .mini-ex-row input[type="text"] {
+            padding: 0.4rem 0.6rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        .mini-ex-row input[type="text"]:focus { outline: none; border-color: var(--primary); }
+        .mini-ex-row select {
+            padding: 0.4rem 0.6rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        /* Slider demo */
+        .slider-demo {
+            background: #f1f5f9;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .slider-demo input[type="range"] {
+            width: 100%;
+            max-width: 400px;
+            margin: 0.5rem 0;
+            accent-color: var(--primary);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .data-table { font-size: 0.85rem; }
+            .mol-builder-controls { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Koolstofchemie</h1>
+    <p>Systematische namen &mdash; Scheikunde HAVO 3</p>
+</header>
+
+<div class="breadcrumb">
+    <a href="../">Scheikunde</a> &rsaquo; Koolstofchemie
+</div>
+
+<div class="container">
+
+    <div class="toc">
+        <a href="#alkanen">Alkanen &amp; alkenen</a>
+        <a href="#builder">Molecuulbouwer</a>
+        <a href="#naamgeving">Naamgeving</a>
+        <a href="#isomerie">Isomerie</a>
+        <a href="#oefenen">Oefenen</a>
+    </div>
+
+    <!-- ===== SECTIE 1: Alkanen en alkenen ===== -->
+    <div class="card" id="alkanen">
+        <h2>Alkanen en alkenen</h2>
+
+        <p>Koolwaterstoffen zijn moleculen die alleen uit koolstof (C) en waterstof (H) bestaan. Ze komen voor in korte en langere ketens. Zo'n verzameling stoffen met een vast patroon heet een <strong>homologe reeks</strong>.</p>
+
+        <h3>Alkanen</h3>
+        <p><strong>Alkanen</strong> bevatten alleen <em>enkelvoudige</em> bindingen (C&ndash;C). Ze zijn <strong>verzadigd</strong>: elk koolstofatoom maakt vier bindingen.</p>
+
+        <div class="formula">
+            Algemene formule alkanen: C<sub>n</sub>H<sub>2n+2</sub>
+        </div>
+
+        <table class="data-table">
+            <tr><th>naam</th><th>molecuulformule</th><th>n</th></tr>
+            <tr><td>methaan</td><td>CH<sub>4</sub></td><td>1</td></tr>
+            <tr><td>ethaan</td><td>C<sub>2</sub>H<sub>6</sub></td><td>2</td></tr>
+            <tr><td>propaan</td><td>C<sub>3</sub>H<sub>8</sub></td><td>3</td></tr>
+            <tr><td>butaan</td><td>C<sub>4</sub>H<sub>10</sub></td><td>4</td></tr>
+            <tr><td>pentaan</td><td>C<sub>5</sub>H<sub>12</sub></td><td>5</td></tr>
+            <tr><td>hexaan</td><td>C<sub>6</sub>H<sub>14</sub></td><td>6</td></tr>
+        </table>
+
+        <!-- Interactive formula slider -->
+        <div class="slider-demo">
+            <p><strong>Probeer het zelf:</strong> kies het aantal C-atomen en zie de formule</p>
+            <input type="range" min="1" max="10" value="3" id="alkaanSlider" oninput="updateAlkaan()">
+            <div style="font-size:1.2rem;margin-top:0.5rem;">
+                <span id="alkaanN">3</span> C-atomen &rarr;
+                C<sub><span id="alkaanC">3</span></sub>H<sub><span id="alkaanH">8</span></sub>
+                &nbsp;= <strong id="alkaanNaam">propaan</strong>
+            </div>
+        </div>
+
+        <!-- Tussenvraag -->
+        <div class="exercise">
+            <p><strong>Tussenvraag:</strong> wat is de molecuulformule van een alkaan met 8 C-atomen?</p>
+            <div class="mini-ex-row">
+                C<sub><input type="text" id="tvAlkaanC" style="width:40px;" placeholder="?"></sub>H<sub><input type="text" id="tvAlkaanH" style="width:40px;" placeholder="?"></sub>
+                <button onclick="checkTvAlkaan()">Check</button>
+                <span id="tvAlkaanfb" class="feedback"></span>
+            </div>
+        </div>
+
+        <!-- Structuurformules -->
+        <h3>Structuurformules alkanen</h3>
+        <p>In een structuurformule teken je alle bindingen. Elk C-atoom maakt altijd <strong>4 bindingen</strong>, elk H-atoom <strong>1 binding</strong>.</p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+            <div class="molecule-viewer" style="flex:1;min-width:140px;">
+                <p style="font-weight:600;margin-bottom:0.5rem;">Methaan CH<sub>4</sub></p>
+                <svg width="120" height="120" viewBox="0 0 120 120">
+                    <line x1="60" y1="60" x2="60" y2="15" stroke="#555" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="105" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="60" y2="105" stroke="#555" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="15" y2="60" stroke="#555" stroke-width="2"/>
+                    <circle cx="60" cy="60" r="16" fill="#333"/>
+                    <text x="60" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="14">C</text>
+                    <circle cx="60" cy="15" r="10" fill="#fff" stroke="#999" stroke-width="1"/>
+                    <text x="60" y="19" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="105" cy="60" r="10" fill="#fff" stroke="#999" stroke-width="1"/>
+                    <text x="105" y="64" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="60" cy="105" r="10" fill="#fff" stroke="#999" stroke-width="1"/>
+                    <text x="60" y="109" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="15" cy="60" r="10" fill="#fff" stroke="#999" stroke-width="1"/>
+                    <text x="15" y="64" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                </svg>
+            </div>
+            <div class="molecule-viewer" style="flex:1;min-width:200px;">
+                <p style="font-weight:600;margin-bottom:0.5rem;">Ethaan C<sub>2</sub>H<sub>6</sub></p>
+                <svg width="200" height="120" viewBox="0 0 200 120">
+                    <line x1="70" y1="60" x2="130" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="70" y1="60" x2="70" y2="15" stroke="#555" stroke-width="2"/>
+                    <line x1="70" y1="60" x2="25" y2="40" stroke="#555" stroke-width="2"/>
+                    <line x1="70" y1="60" x2="25" y2="80" stroke="#555" stroke-width="2"/>
+                    <line x1="130" y1="60" x2="130" y2="15" stroke="#555" stroke-width="2"/>
+                    <line x1="130" y1="60" x2="175" y2="40" stroke="#555" stroke-width="2"/>
+                    <line x1="130" y1="60" x2="175" y2="80" stroke="#555" stroke-width="2"/>
+                    <circle cx="70" cy="60" r="16" fill="#333"/>
+                    <text x="70" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="14">C</text>
+                    <circle cx="130" cy="60" r="16" fill="#333"/>
+                    <text x="130" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="14">C</text>
+                    <circle cx="70" cy="15" r="10" fill="#fff" stroke="#999"/><text x="70" y="19" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="25" cy="40" r="10" fill="#fff" stroke="#999"/><text x="25" y="44" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="25" cy="80" r="10" fill="#fff" stroke="#999"/><text x="25" y="84" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="130" cy="15" r="10" fill="#fff" stroke="#999"/><text x="130" y="19" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="175" cy="40" r="10" fill="#fff" stroke="#999"/><text x="175" y="44" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                    <circle cx="175" cy="80" r="10" fill="#fff" stroke="#999"/><text x="175" y="84" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                </svg>
+            </div>
+        </div>
+
+        <h3>Alkenen</h3>
+        <p><strong>Alkenen</strong> bevatten precies &eacute;&eacute;n <em>dubbele</em> binding (C=C). Ze zijn <strong>onverzadigd</strong>.</p>
+
+        <div class="formula">
+            Algemene formule alkenen: C<sub>n</sub>H<sub>2n</sub> &nbsp;(n &ge; 2)
+        </div>
+
+        <table class="data-table">
+            <tr><th>naam</th><th>molecuulformule</th><th>n</th></tr>
+            <tr><td>etheen</td><td>C<sub>2</sub>H<sub>4</sub></td><td>2</td></tr>
+            <tr><td>propeen</td><td>C<sub>3</sub>H<sub>6</sub></td><td>3</td></tr>
+            <tr><td>but-1-een</td><td>C<sub>4</sub>H<sub>8</sub></td><td>4</td></tr>
+            <tr><td>pent-1-een</td><td>C<sub>5</sub>H<sub>10</sub></td><td>5</td></tr>
+        </table>
+
+        <div class="molecule-viewer" style="max-width:250px;margin:1rem auto;">
+            <p style="font-weight:600;margin-bottom:0.5rem;">Etheen C<sub>2</sub>H<sub>4</sub></p>
+            <svg width="200" height="110" viewBox="0 0 200 110">
+                <line x1="70" y1="52" x2="130" y2="52" stroke="#555" stroke-width="2"/>
+                <line x1="70" y1="66" x2="130" y2="66" stroke="#555" stroke-width="2"/>
+                <line x1="70" y1="59" x2="25" y2="25" stroke="#555" stroke-width="2"/>
+                <line x1="70" y1="59" x2="25" y2="93" stroke="#555" stroke-width="2"/>
+                <line x1="130" y1="59" x2="175" y2="25" stroke="#555" stroke-width="2"/>
+                <line x1="130" y1="59" x2="175" y2="93" stroke="#555" stroke-width="2"/>
+                <circle cx="70" cy="59" r="16" fill="#333"/>
+                <text x="70" y="64" text-anchor="middle" fill="white" font-weight="bold" font-size="14">C</text>
+                <circle cx="130" cy="59" r="16" fill="#333"/>
+                <text x="130" y="64" text-anchor="middle" fill="white" font-weight="bold" font-size="14">C</text>
+                <circle cx="25" cy="25" r="10" fill="#fff" stroke="#999"/><text x="25" y="29" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                <circle cx="25" cy="93" r="10" fill="#fff" stroke="#999"/><text x="25" y="97" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                <circle cx="175" cy="25" r="10" fill="#fff" stroke="#999"/><text x="175" y="29" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+                <circle cx="175" cy="93" r="10" fill="#fff" stroke="#999"/><text x="175" y="97" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>
+            </svg>
+        </div>
+
+        <div class="tip-box">
+            <strong>Verschil alkaan vs alkeen:</strong> alkanen hebben alleen enkelvoudige bindingen (C&ndash;C), alkenen hebben &eacute;&eacute;n dubbele binding (C=C). Daardoor hebben alkenen twee H-atomen minder dan het alkaan met hetzelfde aantal C-atomen.
+        </div>
+
+        <div class="exercise">
+            <p><strong>Tussenvraag:</strong> wat is de molecuulformule van een alkeen met 6 C-atomen?</p>
+            <div class="mini-ex-row">
+                C<sub><input type="text" id="tvAlkeenC" style="width:40px;" placeholder="?"></sub>H<sub><input type="text" id="tvAlkeenH" style="width:40px;" placeholder="?"></sub>
+                <button onclick="checkTvAlkeen()">Check</button>
+                <span id="tvAlkeenfb" class="feedback"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTIE 2: Interactieve molecuulbouwer ===== -->
+    <div class="card" id="builder">
+        <h2>Interactieve molecuulbouwer</h2>
+        <p>Bouw zelf alkanen en alkenen! Kies het aantal koolstofatomen en het type. De structuurformule wordt automatisch getekend met alle C- en H-atomen.</p>
+
+        <div class="mol-builder">
+            <div class="mol-builder-controls">
+                <label>C-atomen:</label>
+                <input type="range" id="builderN" min="1" max="8" value="3" oninput="buildMolecule()">
+                <span id="builderNval" style="font-weight:700;min-width:20px;">3</span>
+                <label style="margin-left:1rem;">Type:</label>
+                <select id="builderType" onchange="buildMolecule()">
+                    <option value="alkaan">Alkaan (C&ndash;C)</option>
+                    <option value="alkeen">Alkeen (C=C)</option>
+                </select>
+            </div>
+            <div class="mol-canvas" id="molCanvas"></div>
+            <div class="mol-info">
+                <strong>Naam:</strong> <span id="molName">propaan</span> &nbsp;|&nbsp;
+                <strong>Formule:</strong> C<sub><span id="molC">3</span></sub>H<sub><span id="molH">8</span></sub> &nbsp;|&nbsp;
+                <strong>C:</strong> <span id="molCcount">3</span> &nbsp;
+                <strong>H:</strong> <span id="molHcount">8</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SECTIE 3: Naamgeving ===== -->
+    <div class="card" id="naamgeving">
+        <h2>Systematische naamgeving</h2>
+
+        <h3>Naamgeving van onvertakte alkanen</h3>
+        <p>De namen van de eerste zes onvertakte alkanen moet je uit je hoofd leren. Alle namen eindigen op <strong>-aan</strong>. Het eerste deel is de <strong>stamnaam</strong> (meth-, eth-, prop-, but-, pent-, hex-).</p>
+
+        <h3>Naamgeving van vertakkingen</h3>
+        <p>Vertakkingen (zijketens) worden <strong>alkylgroepen</strong> genoemd en krijgen de uitgang <strong>-yl</strong>:</p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:1.5rem;">
+            <table class="data-table" style="flex:1;min-width:180px;">
+                <tr><th>groep</th><th>naam</th></tr>
+                <tr><td>&ndash;CH<sub>3</sub></td><td>methyl</td></tr>
+                <tr><td>&ndash;C<sub>2</sub>H<sub>5</sub></td><td>ethyl</td></tr>
+            </table>
+            <table class="data-table" style="flex:1;min-width:180px;">
+                <tr><th>aantal</th><th>voorvoegsel</th></tr>
+                <tr><td>1</td><td>(geen)</td></tr>
+                <tr><td>2</td><td>di-</td></tr>
+                <tr><td>3</td><td>tri-</td></tr>
+                <tr><td>4</td><td>tetra-</td></tr>
+            </table>
+        </div>
+
+        <h3>Stappenplan naamgeving vertakte alkanen</h3>
+        <div class="tip-box">
+            <ol style="margin:0 0 0 1.25rem;">
+                <li><strong>Zoek de langste onvertakte keten</strong> van C-atomen &rarr; dit is de hoofdketen. De naam komt van het alkaan met evenveel C-atomen.</li>
+                <li><strong>Zoek de vertakkingen op.</strong> Gebruik een voorvoegsel (di-, tri-) als een vertakking vaker voorkomt.</li>
+                <li><strong>Nummer de C-atomen</strong> van de hoofdketen zo dat de vertakkingen zo laag mogelijke nummers krijgen.</li>
+            </ol>
+        </div>
+
+        <!-- Voorbeeld met stap-voor-stap onthulling -->
+        <div class="example-box">
+            <h3 style="margin-top:0;">Voorbeeld: Naamgeving vertakt alkaan</h3>
+            <p>Geef de naam van het volgende molecuul:</p>
+            <div class="molecule-viewer" style="margin:0.5rem 0;">
+                <svg width="380" height="150" viewBox="0 0 380 150">
+                    <!-- Main chain: 5 C atoms -->
+                    <line x1="40" y1="75" x2="100" y2="75" stroke="#555" stroke-width="2"/>
+                    <line x1="100" y1="75" x2="160" y2="75" stroke="#555" stroke-width="2"/>
+                    <line x1="160" y1="75" x2="220" y2="75" stroke="#555" stroke-width="2"/>
+                    <line x1="220" y1="75" x2="280" y2="75" stroke="#555" stroke-width="2"/>
+                    <!-- Branch at C3 -->
+                    <line x1="160" y1="75" x2="160" y2="28" stroke="#555" stroke-width="2"/>
+                    <!-- C atoms -->
+                    <circle cx="40" cy="75" r="15" fill="#333"/><text x="40" y="80" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="40" y="110" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">1</text>
+                    <circle cx="100" cy="75" r="15" fill="#333"/><text x="100" y="80" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="100" y="110" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">2</text>
+                    <circle cx="160" cy="75" r="15" fill="#333"/><text x="160" y="80" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="160" y="110" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">3</text>
+                    <circle cx="220" cy="75" r="15" fill="#333"/><text x="220" y="80" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="220" y="110" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">4</text>
+                    <circle cx="280" cy="75" r="15" fill="#333"/><text x="280" y="80" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="280" y="110" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">5</text>
+                    <!-- Branch C as green -->
+                    <circle cx="160" cy="28" r="14" fill="#059669"/>
+                    <text x="160" y="33" text-anchor="middle" fill="white" font-weight="bold" font-size="11">CH3</text>
+                    <!-- Arrow label -->
+                    <text x="320" y="30" fill="#64748b" font-size="11">vertakking</text>
+                    <line x1="195" y1="28" x2="310" y2="28" stroke="#64748b" stroke-width="1" stroke-dasharray="4"/>
+                </svg>
+            </div>
+
+            <div id="naam1steps">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <div>Langste keten telt <strong>5 C-atomen</strong> &rarr; hoofdketen = <strong>pentaan</strong></div>
+                </div>
+
+                <div class="exercise" style="margin:0.5rem 0;">
+                    <p>Welke vertakking zit er aan de keten?</p>
+                    <div class="mini-ex-row">
+                        <input type="text" id="naam1tv" style="width:100px;" placeholder="naam vertakking">
+                        <button onclick="checkNaam1tv()">Check</button>
+                        <span id="naam1tvfb" class="feedback"></span>
+                    </div>
+                </div>
+
+                <div class="step hidden" id="naam1s2">
+                    <span class="step-num">2</span>
+                    <div>Er is &eacute;&eacute;n &ndash;CH<sub>3</sub> vertakking = <strong>methyl</strong>. Eenmaal, dus geen voorvoegsel.</div>
+                </div>
+                <div class="step hidden" id="naam1s3">
+                    <span class="step-num">3</span>
+                    <div>De methylgroep zit aan <strong>C-3</strong>.<br>Naam: <strong>3-methylpentaan</strong></div>
+                </div>
+            </div>
+            <button class="reveal-btn" onclick="revealSteps('naam1')">Toon volgende stap</button>
+        </div>
+
+        <h3>Naamgeving van alkenen</h3>
+        <p>De naamgeving van alkenen is afgeleid van de alkanen, met twee aanvullingen:</p>
+        <ol style="margin:0.5rem 0 0 1.25rem;">
+            <li>De uitgang is niet -aan maar <strong>-een</strong>.</li>
+            <li>Vanaf 4 C-atomen geef je de <strong>plaats van de dubbele binding</strong> aan met een cijfer (zo laag mogelijk).</li>
+        </ol>
+
+        <div class="example-box">
+            <h3 style="margin-top:0;">Voorbeeld: Naamgeving vertakt alkeen</h3>
+            <p>Geef de naam van:</p>
+            <div class="molecule-viewer" style="margin:0.5rem 0;">
+                <svg width="320" height="140" viewBox="0 0 320 140">
+                    <!-- C=C-C-C -->
+                    <line x1="40" y1="67" x2="100" y2="67" stroke="#555" stroke-width="2"/>
+                    <line x1="40" y1="81" x2="100" y2="81" stroke="#555" stroke-width="2"/>
+                    <line x1="100" y1="74" x2="160" y2="74" stroke="#555" stroke-width="2"/>
+                    <line x1="160" y1="74" x2="220" y2="74" stroke="#555" stroke-width="2"/>
+                    <!-- Branch at C2 -->
+                    <line x1="100" y1="74" x2="100" y2="28" stroke="#555" stroke-width="2"/>
+                    <!-- C atoms -->
+                    <circle cx="40" cy="74" r="15" fill="#333"/><text x="40" y="79" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="40" y="109" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">1</text>
+                    <circle cx="100" cy="74" r="15" fill="#333"/><text x="100" y="79" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="100" y="109" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">2</text>
+                    <circle cx="160" cy="74" r="15" fill="#333"/><text x="160" y="79" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="160" y="109" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">3</text>
+                    <circle cx="220" cy="74" r="15" fill="#333"/><text x="220" y="79" text-anchor="middle" fill="white" font-weight="bold" font-size="13">C</text>
+                    <text x="220" y="109" text-anchor="middle" fill="#059669" font-size="12" font-weight="700">4</text>
+                    <!-- Branch -->
+                    <circle cx="100" cy="28" r="14" fill="#059669"/>
+                    <text x="100" y="33" text-anchor="middle" fill="white" font-weight="bold" font-size="11">CH3</text>
+                    <!-- = label -->
+                    <text x="70" y="56" fill="#e11d48" font-size="12" font-weight="700">=</text>
+                </svg>
+            </div>
+
+            <div id="naam2steps">
+                <div class="step">
+                    <span class="step-num">1</span>
+                    <div>Langste keten met de dubbele binding: <strong>4 C-atomen</strong> met C=C &rarr; <strong>buteen</strong></div>
+                </div>
+                <div class="step hidden" id="naam2s2">
+                    <span class="step-num">2</span>
+                    <div>Methylvertakking aan C-2 &rarr; <strong>methylbuteen</strong></div>
+                </div>
+                <div class="step hidden" id="naam2s3">
+                    <span class="step-num">3</span>
+                    <div>C=C zit tussen C-1 en C-2, methylgroep aan C-2.<br>Naam: <strong>2-methylbut-1-een</strong></div>
+                </div>
+            </div>
+            <button class="reveal-btn" onclick="revealSteps('naam2')">Toon volgende stap</button>
+        </div>
+    </div>
+
+    <!-- ===== SECTIE 4: Isomerie ===== -->
+    <div class="card" id="isomerie">
+        <h2>Isomerie</h2>
+        <p>Bij grotere moleculen zijn er vaak meerdere structuurformules mogelijk voor dezelfde molecuulformule. Dit heet <strong>isomerie</strong>. Verschillende stoffen met dezelfde molecuulformule zijn <strong>isomeren</strong>.</p>
+
+        <div class="example-box">
+            <h3 style="margin-top:0;">Voorbeeld: Isomeren van C<sub>5</sub>H<sub>12</sub></h3>
+            <p>De molecuulformule C<sub>5</sub>H<sub>12</sub> heeft drie verschillende structuren:</p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+            <div class="molecule-viewer" style="flex:1;min-width:180px;">
+                <p style="font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;">pentaan</p>
+                <svg width="240" height="60" viewBox="0 0 240 60">
+                    <line x1="20" y1="30" x2="60" y2="30" stroke="#555" stroke-width="2"/>
+                    <line x1="60" y1="30" x2="100" y2="30" stroke="#555" stroke-width="2"/>
+                    <line x1="100" y1="30" x2="140" y2="30" stroke="#555" stroke-width="2"/>
+                    <line x1="140" y1="30" x2="180" y2="30" stroke="#555" stroke-width="2"/>
+                    <circle cx="20" cy="30" r="13" fill="#333"/><text x="20" y="35" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="60" cy="30" r="13" fill="#333"/><text x="60" y="35" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="100" cy="30" r="13" fill="#333"/><text x="100" y="35" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="140" cy="30" r="13" fill="#333"/><text x="140" y="35" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="180" cy="30" r="13" fill="#333"/><text x="180" y="35" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                </svg>
+                <p style="color:var(--muted);font-size:0.8rem;">C&ndash;C&ndash;C&ndash;C&ndash;C</p>
+            </div>
+            <div class="molecule-viewer" style="flex:1;min-width:180px;">
+                <p style="font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;">2-methylbutaan</p>
+                <svg width="200" height="100" viewBox="0 0 200 100">
+                    <line x1="20" y1="60" x2="60" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="100" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="100" y1="60" x2="140" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="60" y1="60" x2="60" y2="18" stroke="#555" stroke-width="2"/>
+                    <circle cx="20" cy="60" r="13" fill="#333"/><text x="20" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="60" cy="60" r="13" fill="#333"/><text x="60" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="100" cy="60" r="13" fill="#333"/><text x="100" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="140" cy="60" r="13" fill="#333"/><text x="140" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="60" cy="18" r="13" fill="#333"/><text x="60" y="23" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                </svg>
+                <p style="color:var(--muted);font-size:0.8rem;">vertakking op C-2</p>
+            </div>
+            <div class="molecule-viewer" style="flex:1;min-width:150px;">
+                <p style="font-weight:600;font-size:0.9rem;margin-bottom:0.5rem;">2,2-dimethylpropaan</p>
+                <svg width="140" height="120" viewBox="0 0 140 120">
+                    <line x1="70" y1="60" x2="15" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="70" y1="60" x2="125" y2="60" stroke="#555" stroke-width="2"/>
+                    <line x1="70" y1="60" x2="70" y2="15" stroke="#555" stroke-width="2"/>
+                    <line x1="70" y1="60" x2="70" y2="105" stroke="#555" stroke-width="2"/>
+                    <circle cx="70" cy="60" r="13" fill="#333"/><text x="70" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="15" cy="60" r="13" fill="#333"/><text x="15" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="125" cy="60" r="13" fill="#333"/><text x="125" y="65" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="70" cy="15" r="13" fill="#333"/><text x="70" y="20" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                    <circle cx="70" cy="105" r="13" fill="#333"/><text x="70" y="110" text-anchor="middle" fill="white" font-weight="bold" font-size="12">C</text>
+                </svg>
+                <p style="color:var(--muted);font-size:0.8rem;">twee vertakkingen</p>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <strong>Onthoud:</strong> isomeren hebben dezelfde molecuulformule maar een andere structuurformule. Het zijn <em>verschillende stoffen</em> met verschillende eigenschappen!
+        </div>
+    </div>
+
+    <!-- ===== SECTIE 5: Oefensommen ===== -->
+    <div class="card" id="oefenen">
+        <h2>Oefensommen</h2>
+        <div class="mini-exercises">
+
+            <div class="mini-ex">
+                <p class="q"><strong>1.</strong> Geef de molecuulformule van het alkaan met 7 C-atomen.</p>
+                <div class="mini-ex-row">
+                    C<sub><input type="text" id="oef1a" style="width:40px;" placeholder="?"></sub>H<sub><input type="text" id="oef1b" style="width:40px;" placeholder="?"></sub>
+                    <button onclick="checkOef(1)">Check</button>
+                    <span id="oef1fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>2.</strong> Geef de molecuulformule van het alkeen met 5 C-atomen.</p>
+                <div class="mini-ex-row">
+                    C<sub><input type="text" id="oef2a" style="width:40px;" placeholder="?"></sub>H<sub><input type="text" id="oef2b" style="width:40px;" placeholder="?"></sub>
+                    <button onclick="checkOef(2)">Check</button>
+                    <span id="oef2fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>3.</strong> Is C<sub>6</sub>H<sub>12</sub> een alkaan of een alkeen?</p>
+                <div class="mini-ex-row">
+                    <select id="oef3"><option value="">Kies...</option><option value="alkaan">Alkaan</option><option value="alkeen">Alkeen</option></select>
+                    <button onclick="checkOef(3)">Check</button>
+                    <span id="oef3fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>4.</strong> Hoe heet het alkaan met 4 C-atomen?</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef4" style="width:120px;" placeholder="naam">
+                    <button onclick="checkOef(4)">Check</button>
+                    <span id="oef4fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>5.</strong> Geef de systematische naam van dit vertakte alkaan:</p>
+                <div class="molecule-viewer" style="margin:0.5rem 0;padding:0.5rem;">
+                    <svg width="330" height="110" viewBox="0 0 330 110">
+                        <line x1="25" y1="55" x2="75" y2="55" stroke="#555" stroke-width="2"/>
+                        <line x1="75" y1="55" x2="125" y2="55" stroke="#555" stroke-width="2"/>
+                        <line x1="125" y1="55" x2="175" y2="55" stroke="#555" stroke-width="2"/>
+                        <line x1="175" y1="55" x2="225" y2="55" stroke="#555" stroke-width="2"/>
+                        <line x1="225" y1="55" x2="275" y2="55" stroke="#555" stroke-width="2"/>
+                        <line x1="125" y1="55" x2="125" y2="14" stroke="#555" stroke-width="2"/>
+                        <circle cx="25" cy="55" r="12" fill="#333"/><text x="25" y="59" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="75" cy="55" r="12" fill="#333"/><text x="75" y="59" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="125" cy="55" r="12" fill="#333"/><text x="125" y="59" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="175" cy="55" r="12" fill="#333"/><text x="175" y="59" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="225" cy="55" r="12" fill="#333"/><text x="225" y="59" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="275" cy="55" r="12" fill="#333"/><text x="275" y="59" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="125" cy="14" r="11" fill="#059669"/><text x="125" y="18" text-anchor="middle" fill="white" font-weight="bold" font-size="9">CH3</text>
+                    </svg>
+                </div>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef5" style="width:180px;" placeholder="systematische naam">
+                    <button onclick="checkOef(5)">Check</button>
+                    <span id="oef5fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>6.</strong> Geef de systematische naam van dit vertakte alkaan:</p>
+                <div class="molecule-viewer" style="margin:0.5rem 0;padding:0.5rem;">
+                    <svg width="260" height="130" viewBox="0 0 260 130">
+                        <line x1="30" y1="65" x2="80" y2="65" stroke="#555" stroke-width="2"/>
+                        <line x1="80" y1="65" x2="130" y2="65" stroke="#555" stroke-width="2"/>
+                        <line x1="130" y1="65" x2="180" y2="65" stroke="#555" stroke-width="2"/>
+                        <line x1="80" y1="65" x2="80" y2="20" stroke="#555" stroke-width="2"/>
+                        <line x1="80" y1="65" x2="80" y2="110" stroke="#555" stroke-width="2"/>
+                        <circle cx="30" cy="65" r="12" fill="#333"/><text x="30" y="69" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="80" cy="65" r="12" fill="#333"/><text x="80" y="69" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="130" cy="65" r="12" fill="#333"/><text x="130" y="69" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="180" cy="65" r="12" fill="#333"/><text x="180" y="69" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="80" cy="20" r="11" fill="#059669"/><text x="80" y="24" text-anchor="middle" fill="white" font-weight="bold" font-size="9">CH3</text>
+                        <circle cx="80" cy="110" r="11" fill="#059669"/><text x="80" y="114" text-anchor="middle" fill="white" font-weight="bold" font-size="9">CH3</text>
+                    </svg>
+                </div>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef6" style="width:180px;" placeholder="systematische naam">
+                    <button onclick="checkOef(6)">Check</button>
+                    <span id="oef6fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>7.</strong> Een stof heeft de molecuulformule C<sub>3</sub>H<sub>6</sub>. Is dit een alkaan of een alkeen? Geef ook de naam.</p>
+                <div class="mini-ex-row">
+                    <select id="oef7type"><option value="">Kies...</option><option value="alkaan">Alkaan</option><option value="alkeen">Alkeen</option></select>
+                    Naam: <input type="text" id="oef7naam" style="width:100px;" placeholder="naam">
+                    <button onclick="checkOef(7)">Check</button>
+                    <span id="oef7fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>8.</strong> Hoeveel C-atomen heeft 3-ethylhexaan in de hoofdketen?</p>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef8" style="width:50px;" placeholder="?"> C-atomen
+                    <button onclick="checkOef(8)">Check</button>
+                    <span id="oef8fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>9.</strong> Geef de molecuulformule van 2-methylpropaan. (Tel alle C-atomen!)</p>
+                <div class="mini-ex-row">
+                    C<sub><input type="text" id="oef9a" style="width:40px;" placeholder="?"></sub>H<sub><input type="text" id="oef9b" style="width:40px;" placeholder="?"></sub>
+                    <button onclick="checkOef(9)">Check</button>
+                    <span id="oef9fb" class="feedback"></span>
+                </div>
+            </div>
+
+            <div class="mini-ex">
+                <p class="q"><strong>10.</strong> Geef de systematische naam van dit onvertakte alkeen:</p>
+                <div class="molecule-viewer" style="margin:0.5rem 0;padding:0.5rem;">
+                    <svg width="280" height="60" viewBox="0 0 280 60">
+                        <line x1="25" y1="24" x2="75" y2="24" stroke="#555" stroke-width="2"/>
+                        <line x1="25" y1="36" x2="75" y2="36" stroke="#555" stroke-width="2"/>
+                        <line x1="75" y1="30" x2="125" y2="30" stroke="#555" stroke-width="2"/>
+                        <line x1="125" y1="30" x2="175" y2="30" stroke="#555" stroke-width="2"/>
+                        <line x1="175" y1="30" x2="225" y2="30" stroke="#555" stroke-width="2"/>
+                        <circle cx="25" cy="30" r="12" fill="#333"/><text x="25" y="34" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="75" cy="30" r="12" fill="#333"/><text x="75" y="34" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="125" cy="30" r="12" fill="#333"/><text x="125" y="34" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="175" cy="30" r="12" fill="#333"/><text x="175" y="34" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <circle cx="225" cy="30" r="12" fill="#333"/><text x="225" y="34" text-anchor="middle" fill="white" font-weight="bold" font-size="11">C</text>
+                        <text x="50" y="14" fill="#e11d48" font-size="11" font-weight="700">=</text>
+                    </svg>
+                </div>
+                <div class="mini-ex-row">
+                    <input type="text" id="oef10" style="width:150px;" placeholder="systematische naam">
+                    <button onclick="checkOef(10)">Check</button>
+                    <span id="oef10fb" class="feedback"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <a href="../" style="color:var(--primary);text-decoration:none;">Terug naar overzicht</a><br><br>
+    <p>Scheikunde HAVO 3 &middot; Interactieve gids</p>
+    <p style="margin-top:0.5rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:var(--primary);">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script>
+// === Alkaan namen ===
+const alkaanNamen = ['methaan','ethaan','propaan','butaan','pentaan','hexaan','heptaan','octaan','nonaan','decaan'];
+const alkeenNamen = ['','etheen','propeen','but-1-een','pent-1-een','hex-1-een','hept-1-een','oct-1-een','non-1-een','dec-1-een'];
+
+// === Alkaan slider ===
+function updateAlkaan() {
+    const n = parseInt(document.getElementById('alkaanSlider').value);
+    const h = 2 * n + 2;
+    document.getElementById('alkaanN').textContent = n;
+    document.getElementById('alkaanC').textContent = n;
+    document.getElementById('alkaanH').textContent = h;
+    document.getElementById('alkaanNaam').textContent = alkaanNamen[n - 1] || 'C' + n + 'H' + h;
+}
+
+// === Tussenvraag alkaan ===
+function checkTvAlkaan() {
+    const c = document.getElementById('tvAlkaanC').value.trim();
+    const h = document.getElementById('tvAlkaanH').value.trim();
+    const fb = document.getElementById('tvAlkaanfb');
+    if (c === '8' && h === '18') {
+        fb.className = 'feedback correct';
+        fb.textContent = 'Goed! 2\u00d78+2 = 18 waterstofatomen';
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = 'Niet juist. Gebruik: H = 2n+2 met n=8';
+    }
+}
+
+// === Tussenvraag alkeen ===
+function checkTvAlkeen() {
+    const c = document.getElementById('tvAlkeenC').value.trim();
+    const h = document.getElementById('tvAlkeenH').value.trim();
+    const fb = document.getElementById('tvAlkeenfb');
+    if (c === '6' && h === '12') {
+        fb.className = 'feedback correct';
+        fb.textContent = 'Goed! 2\u00d76 = 12 waterstofatomen';
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = 'Niet juist. Gebruik: H = 2n met n=6';
+    }
+}
+
+// === Naamgeving tussenvraag ===
+function checkNaam1tv() {
+    const val = document.getElementById('naam1tv').value.trim().toLowerCase();
+    const fb = document.getElementById('naam1tvfb');
+    if (val === 'methyl' || val === 'methylgroep' || val === 'ch3' || val === '-ch3') {
+        fb.className = 'feedback correct';
+        fb.textContent = 'Goed! Een methylgroep (\u2013CH\u2083)';
+        document.getElementById('naam1s2').classList.remove('hidden');
+        document.getElementById('naam1s3').classList.remove('hidden');
+    } else {
+        fb.className = 'feedback wrong';
+        fb.textContent = 'Niet juist. Welke alkylgroep is \u2013CH\u2083?';
+    }
+}
+
+// === Step reveal ===
+const revealState = {};
+function revealSteps(prefix) {
+    if (!revealState[prefix]) revealState[prefix] = 1;
+    else revealState[prefix]++;
+    const step = document.getElementById(prefix + 's' + revealState[prefix]);
+    if (step) step.classList.remove('hidden');
+}
+
+// ==============================================
+// === INTERACTIEVE MOLECUULBOUWER (pure SVG) ===
+// ==============================================
+function buildMolecule() {
+    const n = parseInt(document.getElementById('builderN').value);
+    const type = document.getElementById('builderType').value;
+    document.getElementById('builderNval').textContent = n;
+
+    const isAlkeen = type === 'alkeen';
+    if (isAlkeen && n < 2) {
+        document.getElementById('builderType').value = 'alkaan';
+        buildMolecule();
+        return;
+    }
+
+    const hCount = isAlkeen ? 2 * n : 2 * n + 2;
+    const naam = isAlkeen
+        ? (alkeenNamen[n - 1] || 'C' + n + 'H' + hCount)
+        : (alkaanNamen[n - 1] || 'C' + n + 'H' + hCount);
+
+    document.getElementById('molName').textContent = naam;
+    document.getElementById('molC').textContent = n;
+    document.getElementById('molH').textContent = hCount;
+    document.getElementById('molCcount').textContent = n;
+    document.getElementById('molHcount').textContent = hCount;
+
+    // Build SVG
+    const sp = 60;
+    const sx = 40;
+    const cy = 80;
+    const w = Math.max(sx * 2 + (n - 1) * sp, 180);
+    const h = 170;
+    let s = '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '">';
+
+    // C-C bonds
+    for (let i = 0; i < n - 1; i++) {
+        const x1 = sx + i * sp, x2 = sx + (i + 1) * sp;
+        if (isAlkeen && i === 0) {
+            s += '<line x1="'+x1+'" y1="'+(cy-4)+'" x2="'+x2+'" y2="'+(cy-4)+'" stroke="#555" stroke-width="2"/>';
+            s += '<line x1="'+x1+'" y1="'+(cy+4)+'" x2="'+x2+'" y2="'+(cy+4)+'" stroke="#555" stroke-width="2"/>';
+        } else {
+            s += '<line x1="'+x1+'" y1="'+cy+'" x2="'+x2+'" y2="'+cy+'" stroke="#555" stroke-width="2"/>';
+        }
+    }
+
+    // H bonds for each C
+    for (let i = 0; i < n; i++) {
+        const cx = sx + i * sp;
+        let hb;
+        if (n === 1) hb = 4;
+        else if (isAlkeen && i === 0) hb = 2;
+        else if (isAlkeen && i === 1) hb = (n === 2) ? 2 : 1;
+        else if (i === 0 || i === n - 1) hb = 3;
+        else hb = 2;
+
+        const pos = [];
+        if (hb >= 1) pos.push([cx, cy - 40]);
+        if (hb >= 2) pos.push([cx, cy + 40]);
+        if (hb >= 3) pos.push(i === 0 ? [cx - 35, cy] : [cx + 35, cy]);
+        if (hb >= 4) pos.push([cx - 35, cy]);
+
+        for (const p of pos) {
+            s += '<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'" stroke="#555" stroke-width="2"/>';
+        }
+        for (const p of pos) {
+            s += '<circle cx="'+p[0]+'" cy="'+p[1]+'" r="10" fill="#fff" stroke="#999" stroke-width="1"/>';
+            s += '<text x="'+p[0]+'" y="'+(p[1]+4)+'" text-anchor="middle" fill="#333" font-weight="bold" font-size="11">H</text>';
+        }
+    }
+
+    // C atoms on top
+    for (let i = 0; i < n; i++) {
+        const cx = sx + i * sp;
+        s += '<circle cx="'+cx+'" cy="'+cy+'" r="16" fill="#333"/>';
+        s += '<text x="'+cx+'" y="'+(cy+5)+'" text-anchor="middle" fill="white" font-weight="bold" font-size="14">C</text>';
+    }
+
+    // Double bond indicator
+    if (isAlkeen) {
+        const midX = sx + sp / 2;
+        s += '<text x="'+midX+'" y="'+(cy-16)+'" text-anchor="middle" fill="#e11d48" font-size="11" font-weight="700">=</text>';
+    }
+
+    s += '</svg>';
+    document.getElementById('molCanvas').innerHTML = s;
+}
+
+buildMolecule();
+
+// === Oefensommen ===
+function checkOef(n) {
+    const fb = document.getElementById('oef' + n + 'fb');
+    switch (n) {
+        case 1: {
+            const c = document.getElementById('oef1a').value.trim();
+            const h = document.getElementById('oef1b').value.trim();
+            fb.className = (c === '7' && h === '16') ? 'feedback correct' : 'feedback wrong';
+            fb.textContent = (c === '7' && h === '16') ? 'Goed! C\u2087H\u2081\u2086 = heptaan' : 'Niet juist. H = 2\u00d77+2 = 16';
+            break;
+        }
+        case 2: {
+            const c = document.getElementById('oef2a').value.trim();
+            const h = document.getElementById('oef2b').value.trim();
+            fb.className = (c === '5' && h === '10') ? 'feedback correct' : 'feedback wrong';
+            fb.textContent = (c === '5' && h === '10') ? 'Goed! C\u2085H\u2081\u2080 = pent-1-een' : 'Niet juist. H = 2\u00d75 = 10';
+            break;
+        }
+        case 3: {
+            const v = document.getElementById('oef3').value;
+            fb.className = v === 'alkeen' ? 'feedback correct' : 'feedback wrong';
+            fb.textContent = v === 'alkeen' ? 'Goed! 2\u00d76=12 past bij C\u2099H\u2082\u2099 (alkeen)' : 'Niet juist. 2\u00d76+2=14\u226012, maar 2\u00d76=12';
+            break;
+        }
+        case 4: {
+            const v = document.getElementById('oef4').value.trim().toLowerCase();
+            fb.className = v === 'butaan' ? 'feedback correct' : 'feedback wrong';
+            fb.textContent = v === 'butaan' ? 'Goed!' : 'Niet juist. meth-, eth-, prop-, but-...';
+            break;
+        }
+        case 5: {
+            const v = document.getElementById('oef5').value.trim().toLowerCase().replace(/\s+/g, '');
+            if (v === '3-methylhexaan' || v === '3methylhexaan') {
+                fb.className = 'feedback correct'; fb.textContent = 'Goed! Hoofdketen=hexaan, methyl op C-3';
+            } else if (v === '4-methylhexaan' || v === '4methylhexaan') {
+                fb.className = 'feedback wrong'; fb.textContent = 'Bijna! Nummer van de andere kant: zo laag mogelijk.';
+            } else {
+                fb.className = 'feedback wrong'; fb.textContent = 'Niet juist. Hoofdketen=6C=hexaan, \u00e9\u00e9n CH\u2083 vertakking.';
+            }
+            break;
+        }
+        case 6: {
+            const v = document.getElementById('oef6').value.trim().toLowerCase().replace(/\s+/g, '');
+            if (v === '2,2-dimethylbutaan' || v === '2,2dimethylbutaan' || v === '2.2-dimethylbutaan') {
+                fb.className = 'feedback correct'; fb.textContent = 'Goed! Twee methylgroepen op C-2';
+            } else {
+                fb.className = 'feedback wrong'; fb.textContent = 'Niet juist. Hoofdketen=4C=butaan, twee CH\u2083 op C-2 = dimethyl.';
+            }
+            break;
+        }
+        case 7: {
+            const t = document.getElementById('oef7type').value;
+            const nm = document.getElementById('oef7naam').value.trim().toLowerCase();
+            if (t === 'alkeen' && nm === 'propeen') {
+                fb.className = 'feedback correct'; fb.textContent = 'Goed! C\u2083H\u2086 is propeen (alkeen)';
+            } else if (t !== 'alkeen') {
+                fb.className = 'feedback wrong'; fb.textContent = '2\u00d73+2=8\u22606, maar 2\u00d73=6 \u2192 alkeen';
+            } else {
+                fb.className = 'feedback wrong'; fb.textContent = 'Type klopt! Alkeen met 3 C = prop + een';
+            }
+            break;
+        }
+        case 8: {
+            const v = document.getElementById('oef8').value.trim();
+            fb.className = v === '6' ? 'feedback correct' : 'feedback wrong';
+            fb.textContent = v === '6' ? 'Goed! hex- = 6 C-atomen' : 'Niet juist. \u201chexaan\u201d \u2192 hex- = ?';
+            break;
+        }
+        case 9: {
+            const c = document.getElementById('oef9a').value.trim();
+            const h = document.getElementById('oef9b').value.trim();
+            if (c === '4' && h === '10') {
+                fb.className = 'feedback correct'; fb.textContent = 'Goed! 3C hoofdketen + 1C methyl = C\u2084H\u2081\u2080';
+            } else {
+                fb.className = 'feedback wrong'; fb.textContent = 'Niet juist. propaan=3C + methyl=1C \u2192 totaal 4C. H=2\u00d74+2=10';
+            }
+            break;
+        }
+        case 10: {
+            const v = document.getElementById('oef10').value.trim().toLowerCase().replace(/\s+/g, '');
+            if (v === 'pent-1-een' || v === 'pent1een' || v === 'penteen') {
+                fb.className = 'feedback correct'; fb.textContent = 'Goed! 5 C-atomen, C=C bij C-1 = pent-1-een';
+            } else {
+                fb.className = 'feedback wrong'; fb.textContent = 'Niet juist. 5C = pent-, dubbele binding bij C-1 \u2192 pent-1-een';
+            }
+            break;
+        }
+    }
+}
+
+// Enter key support
+document.querySelectorAll('.mini-ex-row input[type=text], .exercise input[type=text]').forEach(input => {
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const btn = this.closest('.mini-ex-row, .mini-ex, .exercise')?.querySelector('button');
+            if (btn) btn.click();
+        }
+    });
+});
+</script>
+
+</body>
+</html>

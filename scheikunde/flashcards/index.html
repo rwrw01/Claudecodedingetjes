@@ -267,7 +267,7 @@
 
     <!-- Score -->
     <div class="score-bar">
-        <span>Geweten: <strong id="knownCount">0</strong> / <span id="totalCount">0</span></span>
+        <span>Wist ik: <strong id="knownCount">0</strong> / <span id="totalCount">0</span></span>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
         <button class="reset-btn" onclick="resetAll()">Reset</button>
     </div>
@@ -363,7 +363,7 @@ function renderCards() {
                 <div class="flashcard-back">
                     <div class="definition">${card.def}</div>
                     <div class="mark-btns">
-                        <button class="mark-btn known" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', true)">Geweten</button>
+                        <button class="mark-btn known" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', true)">Wist ik</button>
                         <button class="mark-btn" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', false)">Nog niet</button>
                     </div>
                 </div>

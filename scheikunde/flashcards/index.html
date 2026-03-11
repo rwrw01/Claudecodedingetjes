@@ -267,7 +267,7 @@
 
     <!-- Score -->
     <div class="score-bar">
-        <span>Geweten: <strong id="knownCount">0</strong> / <span id="totalCount">0</span></span>
+        <span>Wist ik: <strong id="knownCount">0</strong> / <span id="totalCount">0</span></span>
         <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
         <button class="reset-btn" onclick="resetAll()">Reset</button>
     </div>
@@ -296,7 +296,7 @@
 const cards = [
     // ─── Basisbegrippen ───
     { term: "Atoom", def: "Het kleinste deeltje van een element. Een atoom bestaat uit protonen, neutronen en elektronen. Alles om je heen is opgebouwd uit atomen!", cat: "basis" },
-    { term: "Molecuul", def: "Een groepje van twee of meer atomen die aan elkaar vast zitten door een covalente binding. Bijvoorbeeld: een watermolecuul (H₂O) bevat 2 waterstofatomen en 1 zuurstofatoom.", cat: "basis" },
+    { term: "Molecuul", def: "Een groepje van twee of meer atomen die aan elkaar vast zitten doordat ze elektronen delen. Bijvoorbeeld: een watermolecuul (H₂O) bevat 2 waterstofatomen en 1 zuurstofatoom.", cat: "basis" },
     { term: "Element", def: "Een stof die uit maar één soort atoom bestaat. Denk aan zuurstof (O), ijzer (Fe) of koolstof (C). Er zijn er ongeveer 118 bekend.", cat: "basis" },
     { term: "Verbinding", def: "Een stof die uit twee of meer soorten atomen bestaat, altijd in dezelfde verhouding. Bijvoorbeeld: water (H₂O) of koolstofdioxide (CO₂).", cat: "basis" },
     { term: "Mengsel", def: "Een mix van twee of meer stoffen die niet chemisch aan elkaar vast zitten. Je kunt ze weer scheiden. Denk aan limonade of lucht.", cat: "basis" },
@@ -308,29 +308,29 @@ const cards = [
     { term: "Massaverhouding", def: "Geeft aan hoeveel gram van elke stof je nodig hebt of krijgt bij een reactie. Bijvoorbeeld bij magnesium verbranden: magnesium : zuurstof : magnesiumoxide = 3 : 2 : 5.", cat: "massa" },
     { term: "Wet van behoud van massa", def: "Er gaat bij een chemische reactie geen massa verloren en er komt ook geen massa bij. Wat erin gaat, komt er ook weer uit — alleen in een andere vorm.", cat: "massa" },
     { term: "Verhoudingstabel", def: "Een handig tabelletje om mee te rekenen bij reacties. Bovenste rij: de massaverhouding uit de reactie. Onderste rij: de echte massa's waarmee je rekent.", cat: "massa" },
-    { term: "Kruislings vermenigvuldigen", def: "Een rekentruck bij verhoudingstabellen: je vermenigvuldigt de massa die je weet 'over kruis' met het verhoudingsgetal van de onbekende, en deelt door het andere verhoudingsgetal.", cat: "massa" },
+    { term: "Kruislings vermenigvuldigen", def: "Een rekentruck om een onbekende massa te berekenen. Je zet de massaverhouding en de bekende massa in een tabel, vermenigvuldigt 'over kruis' en deelt door het andere verhoudingsgetal.", cat: "massa" },
     { term: "Atoommassa", def: "Hoe zwaar één atoom is, uitgedrukt in de eenheid u (atomaire massa-eenheid). Bijvoorbeeld: C = 12 u, O = 16 u, H = 1 u. Je vindt ze in Binas.", cat: "massa" },
-    { term: "Molecuulmassa", def: "Tel alle atoommassa's in een molecuul bij elkaar op. Bijvoorbeeld: H₂O = 2×1 + 1×16 = 18 u.", cat: "massa" },
-    { term: "Massapercentage", def: "Hoeveel procent van de totale massa door één element wordt ingenomen. Rekenen: (massa van dat element ÷ totale massa) × 100%.", cat: "massa" },
+    { term: "Molecuulmassa", def: "Tel de massa's van alle atomen in een molecuul bij elkaar op. De eenheid is u (atomaire massa-eenheid). Bijvoorbeeld: H₂O → waterstof is 1 u, zuurstof is 16 u, dus 2×1 + 1×16 = 18 u.", cat: "massa" },
+    { term: "Massapercentage", def: "Hoeveel procent van de totale molecuulmassa door één element wordt ingenomen. Rekenen: (atoommassa's van dat element bij elkaar ÷ molecuulmassa) × 100%.", cat: "massa" },
 
     // ─── Koolstofchemie ───
-    { term: "Alkaan", def: "Een koolwaterstof met alleen enkele bindingen (C–C). Formule: CₙH₂ₙ₊₂. Voorbeelden: methaan (CH₄), ethaan (C₂H₆), propaan (C₃H₈).", cat: "koolstof" },
-    { term: "Alkeen", def: "Een koolwaterstof met minstens één dubbele binding (C=C). Formule: CₙH₂ₙ. Voorbeelden: etheen (C₂H₄), propeen (C₃H₆).", cat: "koolstof" },
-    { term: "Isomeren", def: "Moleculen met dezelfde molecuulformule, maar de atomen zitten op een andere manier aan elkaar. Daardoor hebben ze andere eigenschappen. Bijv. butaan en 2-methylpropaan.", cat: "koolstof" },
+    { term: "Alkaan", def: "Een koolwaterstof met alleen enkele bindingen — één streepje tussen elk koolstofatoom (C–C). Formule: CₙH₂ₙ₊₂. Voorbeelden: methaan (CH₄), ethaan (C₂H₆), propaan (C₃H₈).", cat: "koolstof" },
+    { term: "Alkeen", def: "Een koolwaterstof met minstens één dubbele binding — twee streepjes tussen twee koolstofatomen (C=C). Formule: CₙH₂ₙ. Voorbeelden: etheen (C₂H₄), propeen (C₃H₆).", cat: "koolstof" },
+    { term: "Isomeren", def: "Moleculen met dezelfde soort en hoeveelheid atomen, maar op een andere manier aan elkaar gezet. Daardoor hebben ze andere eigenschappen. Bijv. butaan en 2-methylpropaan: allebei C₄H₁₀, maar anders gebouwd.", cat: "koolstof" },
     { term: "Structuurformule", def: "Een tekening van een molecuul waarbij je alle bindingen (streepjes) tussen de atomen kunt zien. Zo zie je precies hoe het molecuul in elkaar zit.", cat: "koolstof" },
     { term: "Molecuulformule", def: "Laat zien welke atomen er in een molecuul zitten en hoeveel, maar niet hoe ze verbonden zijn. Bijvoorbeeld: C₄H₁₀.", cat: "koolstof" },
     { term: "Systematische naam", def: "De officiële naam van een stof volgens vaste regels (IUPAC). Opgebouwd uit: voorvoegsel (zijgroepen) + stamnaam (langste keten) + uitgang (-aan, -een).", cat: "koolstof" },
     { term: "Hoofdketen", def: "De langste keten van koolstofatomen achter elkaar in een molecuul. Die bepaalt de stamnaam: meth-, eth-, prop-, but-, pent-, hex-.", cat: "koolstof" },
     { term: "Zijgroep (vertakking)", def: "Een kort koolstofketinkje dat aan de hoofdketen vastzit. Het krijgt de uitgang -yl. Bijvoorbeeld: een CH₃-groepje heet een methylgroep.", cat: "koolstof" },
     { term: "Homologe reeks", def: "Een rijtje koolwaterstoffen waarbij elk volgend molecuul één CH₂-groep meer heeft. Dus: methaan → ethaan → propaan → butaan, enzovoort.", cat: "koolstof" },
-    { term: "Verzadigd", def: "Een koolwaterstof met alleen enkele bindingen. Er past niks meer tussen — het molecuul zit 'vol'. Alkanen zijn verzadigd.", cat: "koolstof" },
-    { term: "Onverzadigd", def: "Een koolwaterstof met een dubbele (of driedubbele) binding. Daar kunnen nog extra atomen bij. Alkenen zijn onverzadigd.", cat: "koolstof" },
+    { term: "Verzadigd", def: "Een koolwaterstof met alleen enkele bindingen (één streepje). Er past niks meer tussen — het molecuul zit 'vol'. Bijv. methaan, ethaan, propaan.", cat: "koolstof" },
+    { term: "Onverzadigd", def: "Een koolwaterstof met een dubbele binding (twee streepjes, C=C). Die dubbele binding kan openbreken, zodat er extra atomen bij kunnen. Bijv. etheen, propeen.", cat: "koolstof" },
 
     // ─── Bindingen ───
     { term: "Covalente binding", def: "Twee atomen delen samen één of meer elektronenparen. Komt voor in moleculen zoals water (H₂O), CO₂ en methaan (CH₄).", cat: "binding" },
-    { term: "Ionbinding", def: "Plusgeladen en mingeladen ionen trekken elkaar aan — zo zitten ze aan elkaar vast. Komt voor in zouten zoals keukenzout (NaCl).", cat: "binding" },
-    { term: "Enkele binding", def: "Eén gedeeld elektronenpaar tussen twee atomen (bijv. C–C of C–H). Je tekent het als één streepje.", cat: "binding" },
-    { term: "Dubbele binding", def: "Twee gedeelde elektronenparen tussen twee atomen (bijv. C=C in alkenen). Je tekent het als twee streepjes.", cat: "binding" },
+    { term: "Ionbinding", def: "Een binding tussen een positief geladen deeltje (bijv. Na⁺) en een negatief geladen deeltje (bijv. Cl⁻). Ze trekken elkaar aan, zoals magneetjes. Komt voor in zouten zoals keukenzout (NaCl).", cat: "binding" },
+    { term: "Enkele binding", def: "Twee atomen delen één paar elektronen (bijv. C–C of C–H). Je tekent het als één streepje. De meest voorkomende binding in koolwaterstoffen.", cat: "binding" },
+    { term: "Dubbele binding", def: "Twee atomen delen twee paar elektronen (bijv. C=C of O=O). Je tekent het als twee streepjes. Sterker dan een enkele binding, maar kan ook openbreken.", cat: "binding" },
     { term: "Bindingshoek", def: "De hoek tussen twee bindingen rondom een atoom. Bij vier enkele bindingen (zoals in methaan) is die hoek ongeveer 109,5°.", cat: "binding" },
     { term: "Valentie-elektronen", def: "De elektronen in de buitenste schil van een atoom. Zij bepalen hoeveel bindingen dat atoom kan maken. Koolstof heeft er 4, dus die maakt 4 bindingen.", cat: "binding" },
 ];
@@ -363,7 +363,7 @@ function renderCards() {
                 <div class="flashcard-back">
                     <div class="definition">${card.def}</div>
                     <div class="mark-btns">
-                        <button class="mark-btn known" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', true)">Geweten</button>
+                        <button class="mark-btn known" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', true)">Wist ik</button>
                         <button class="mark-btn" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', false)">Nog niet</button>
                     </div>
                 </div>

@@ -36,7 +36,8 @@ PROVIDERS = {
     "claude": {
         "name": "Claude",
         "api_url": "https://api.anthropic.com/v1/messages",
-        "model": "claude-sonnet-4-5-20250929",
+        "model": "auto",  # Wordt automatisch bepaald via /v1/models
+        "model_preference": ["claude-sonnet"],  # Voorkeur: nieuwste Sonnet
         "max_tokens": 16000,
         "env_key": "ANTHROPIC_API_KEY",
     },
@@ -59,6 +60,47 @@ def get_provider() -> str:
         print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik deepseek.")
         provider = "deepseek"
     return provider
+
+
+def resolve_claude_model(api_key: str) -> str:
+    """Vraag de Anthropic /v1/models API op en kies het nieuwste Sonnet model."""
+    try:
+        req = urllib.request.Request(
+            "https://api.anthropic.com/v1/models?limit=50",
+            headers={
+                'x-api-key': api_key,
+                'anthropic-version': '2023-06-01',
+            },
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            result = json.loads(resp.read().decode('utf-8'))
+
+        models = result.get('data', [])
+        # Filter op sonnet modellen, sorteer op created_at (nieuwste eerst)
+        sonnet_models = [
+            m for m in models
+            if 'sonnet' in m.get('id', '').lower()
+        ]
+        sonnet_models.sort(key=lambda m: m.get('created_at', ''), reverse=True)
+
+        if sonnet_models:
+            model_id = sonnet_models[0]['id']
+            print(f"  Automatisch gekozen model: {model_id} (nieuwste Sonnet)")
+            return model_id
+
+        # Fallback: neem het eerste beschikbare model
+        if models:
+            model_id = models[0]['id']
+            print(f"  Geen Sonnet gevonden, gebruik: {model_id}")
+            return model_id
+
+    except Exception as e:
+        print(f"  WAARSCHUWING: Kon modellen niet ophalen ({e})")
+
+    # Hardcoded fallback
+    fallback = "claude-sonnet-4-5-20250929"
+    print(f"  Gebruik fallback model: {fallback}")
+    return fallback
 
 
 def slugify(text: str) -> str:
@@ -385,7 +427,13 @@ def extract_html(response: str) -> str:
 def main():
     # Bepaal provider
     provider = get_provider()
-    config = PROVIDERS[provider]
+    config = PROVIDERS[provider].copy()
+
+    # Voor Claude: bepaal automatisch het nieuwste model
+    if provider == "claude" and config["model"] == "auto":
+        api_key = get_env(config["env_key"])
+        config["model"] = resolve_claude_model(api_key)
+
     print(f"AI Provider: {config['name']} ({config['model']})")
 
     # Haal de API key op voor de gekozen provider

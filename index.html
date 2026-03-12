@@ -93,6 +93,9 @@
 
 <div class="container">
 
+    <!-- Handmatig gemaakte lessen (wiskunde, scheikunde) -->
+    <h2 style="font-size:1.3rem; color:var(--muted); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">Lessen van Ralph Wagter</h2>
+
     <a href="wiskunde/" class="vak-card">
         <div class="vak-icon" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">Wi</div>
         <div>
@@ -111,10 +114,8 @@
         </div>
     </a>
 
-    <div id="user-lessons" style="display:none; margin-top:2rem;">
-        <h2 style="font-size:1.3rem; color:var(--muted); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">Lessen van gebruikers</h2>
-        <div id="user-lessons-list"></div>
-    </div>
+    <!-- Automatisch gegenereerde lessen per gebruiker -->
+    <div id="user-lessons"></div>
 
 </div>
 
@@ -128,7 +129,6 @@
 </footer>
 
 <script>
-// Vak-kleuren en afkortingen
 const vakConfig = {
     wiskunde:       { color: '#2563eb', bg: '#dbeafe', gradient: '#1e3a5f,#2563eb', icon: 'Wi' },
     scheikunde:     { color: '#059669', bg: '#d1fae5', gradient: '#064e3b,#059669', icon: 'Sk' },
@@ -143,57 +143,73 @@ const vakConfig = {
 };
 const defaultVak = { color: '#6366f1', bg: '#e0e7ff', gradient: '#3730a3,#6366f1', icon: '?' };
 
-// Haal gebruikerslessen op via GitHub API (repo contents)
+// Haal automatisch gegenereerde lessen op per gebruiker
 const repo = 'rwrw01/Claudecodedingetjes';
-const apiUrl = `https://api.github.com/repos/${repo}/contents`;
+const apiBase = `https://api.github.com/repos/${repo}/contents`;
 const skipDirs = ['wiskunde', 'scheikunde', '.github'];
+const container = document.getElementById('user-lessons');
 
-fetch(apiUrl)
+fetch(apiBase)
     .then(r => r.json())
     .then(items => {
-        // Filter op directories die geen standaard-mappen zijn
         const userDirs = items.filter(i => i.type === 'dir' && !skipDirs.includes(i.name) && !i.name.startsWith('.'));
         if (userDirs.length === 0) return;
 
-        const container = document.getElementById('user-lessons');
-        const list = document.getElementById('user-lessons-list');
-        container.style.display = 'block';
-
-        // Per gebruikersmap: haal submappen op
         userDirs.forEach(userDir => {
-            fetch(userDir.url)
-                .then(r => r.json())
-                .then(vakDirs => {
-                    vakDirs.filter(v => v.type === 'dir').forEach(vakDir => {
-                        fetch(vakDir.url)
-                            .then(r => r.json())
-                            .then(lessons => {
-                                lessons.filter(l => l.type === 'dir').forEach(lesson => {
-                                    const vak = vakDir.name;
-                                    const cfg = vakConfig[vak] || defaultVak;
-                                    // Parse niveau en titel uit mapnaam (bijv. "havo-3-onderwerp")
-                                    const parts = lesson.name.split('-');
-                                    const titel = parts.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+            // Haal profile.json op voor friendly name
+            fetch(`https://raw.githubusercontent.com/${repo}/main/${userDir.name}/profile.json`)
+                .then(r => r.ok ? r.json() : {})
+                .catch(() => ({}))
+                .then(profile => {
+                    const displayName = profile.display_name || userDir.name;
 
-                                    const card = document.createElement('a');
-                                    card.href = `${userDir.name}/${vak}/${lesson.name}/`;
-                                    card.className = 'vak-card';
-                                    card.innerHTML = `
-                                        <div class="vak-icon" style="background:linear-gradient(135deg,${cfg.gradient});">${cfg.icon}</div>
-                                        <div>
-                                            <h2 style="color:${cfg.color};">${titel}</h2>
-                                            <p>${vak.charAt(0).toUpperCase() + vak.slice(1)} &middot; door ${userDir.name}</p>
-                                            <span class="badge" style="background:${cfg.bg};color:${cfg.color};">automatisch gegenereerd</span>
-                                        </div>
-                                    `;
-                                    list.appendChild(card);
-                                });
+                    // Maak sectie-header per gebruiker
+                    const section = document.createElement('div');
+                    section.style.marginTop = '2rem';
+                    section.innerHTML = `<h2 style="font-size:1.3rem; color:#64748b; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid #e2e8f0;">Lessen van ${displayName}</h2>`;
+                    container.appendChild(section);
+
+                    // Link naar het gebruikersoverzicht
+                    const userCard = document.createElement('a');
+                    userCard.href = `${userDir.name}/`;
+                    userCard.className = 'vak-card';
+                    userCard.innerHTML = `
+                        <div class="vak-icon" style="background:linear-gradient(135deg,#334155,#64748b);">👤</div>
+                        <div>
+                            <h2 style="color:#334155;">${displayName}</h2>
+                            <p>Bekijk alle lessen van ${displayName}</p>
+                            <span class="badge" style="background:#f1f5f9;color:#64748b;">overzicht</span>
+                        </div>
+                    `;
+                    section.appendChild(userCard);
+
+                    // Haal vakken op
+                    fetch(userDir.url)
+                        .then(r => r.json())
+                        .then(vakDirs => {
+                            vakDirs.filter(v => v.type === 'dir').forEach(vakDir => {
+                                const vak = vakDir.name;
+                                const cfg = vakConfig[vak] || defaultVak;
+                                const prettyVak = vak.charAt(0).toUpperCase() + vak.slice(1);
+
+                                const card = document.createElement('a');
+                                card.href = `${userDir.name}/${vak}/`;
+                                card.className = 'vak-card';
+                                card.innerHTML = `
+                                    <div class="vak-icon" style="background:linear-gradient(135deg,${cfg.gradient});">${cfg.icon}</div>
+                                    <div>
+                                        <h2 style="color:${cfg.color};">${prettyVak}</h2>
+                                        <p>door ${displayName}</p>
+                                        <span class="badge" style="background:${cfg.bg};color:${cfg.color};">automatisch gegenereerd</span>
+                                    </div>
+                                `;
+                                section.appendChild(card);
                             });
-                    });
+                        });
                 });
         });
     })
-    .catch(() => {}); // Stil falen als API niet bereikbaar is
+    .catch(() => {});
 </script>
 
 </body>

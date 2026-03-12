@@ -10,6 +10,15 @@ body:
         Upload een of meerdere foto's (bijv. van een lesboekpagina, werkblad, of aantekeningen) en er wordt automatisch een interactieve les van gemaakt.
 
   - type: input
+    id: naam
+    attributes:
+      label: Je naam (wordt getoond op de site)
+      description: Hoe wil je genoemd worden? Dit verschijnt bij je lessen.
+      placeholder: "bijv. Ralph W."
+    validations:
+      required: false
+
+  - type: input
     id: titel
     attributes:
       label: Titel van de les

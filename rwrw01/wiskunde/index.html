@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiskunde HAVO &mdash; Overzicht</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.85; font-size: 1.1rem; }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .chapter-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.15s, box-shadow 0.15s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .chapter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .chapter-card .chapter-num {
+            background: var(--primary);
+            color: white;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .chapter-card h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 0;
+        }
+        .chapter-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .chapter-card .tag {
+            display: inline-block;
+            background: var(--primary-light);
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            width: fit-content;
+        }
+        .chapter-card.coming-soon {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .chapter-card.coming-soon .tag {
+            background: #f1f5f9;
+            color: var(--muted);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Wiskunde HAVO</h1>
+    <p>Interactieve uitleg &mdash; beter dan het boek</p>
+</header>
+
+<div class="container">
+
+    <nav style="font-size:0.9rem;margin-bottom:0.5rem;">
+        <a href="../../" style="color:var(--primary);text-decoration:none;">Home</a>
+        <span style="color:var(--muted);margin:0 0.3rem;">&rsaquo;</span>
+        <a href="../" style="color:var(--primary);text-decoration:none;">Ralph Wagter</a>
+        <span style="color:var(--muted);margin:0 0.3rem;">&rsaquo;</span>
+        <span style="color:var(--muted);">Wiskunde</span>
+    </nav>
+
+    <h2 style="font-size:1.1rem;color:#64748b;margin-top:1rem;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Onderbouw (klas 1&ndash;2)</h2>
+    <div class="chapter-grid">
+
+        <a href="onderbouw/rekenen-basis/" class="chapter-card">
+            <div class="chapter-num">1</div>
+            <h2>Rekenen &mdash; wat doe je eigenlijk?</h2>
+            <p>Optellen, aftrekken, vermenigvuldigen &amp; delen. Waarom 0,5 &divide; 0,5 = 1 is en niet iets raars. Met interactieve schuifjes en 10 oefensommen.</p>
+            <span class="tag">Beschikbaar</span>
+        </a>
+
+        <a href="onderbouw/van-getallen-naar-breuken/" class="chapter-card">
+            <div class="chapter-num">2</div>
+            <h2>Van getallen naar breuken</h2>
+            <p>Wat is een breuk? Vereenvoudigen, vermenigvuldigen, delen, optellen &amp; aftrekken. De brug naar algebra. Met 10 oefensommen.</p>
+            <span class="tag">Beschikbaar</span>
+        </a>
+
+    </div>
+
+    <h2 style="font-size:1.1rem;color:#64748b;margin:2rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">HAVO 3</h2>
+    <div class="chapter-grid">
+
+        <a href="havo-3/breuken-met-letters/" class="chapter-card">
+            <div class="chapter-num">1</div>
+            <h2>Breuken met letters herleiden</h2>
+            <p>Vereenvoudigen, variabelen eruit halen, vermenigvuldigen, delen, optellen &amp; aftrekken. Met 10 oefensommen.</p>
+            <span class="tag">Beschikbaar</span>
+        </a>
+
+    </div>
+
+    <h2 style="font-size:1.1rem;color:#64748b;margin:2rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">HAVO 4</h2>
+    <div class="chapter-grid">
+
+        <a href="havo-4/wortelfuncties/" class="chapter-card">
+            <div class="chapter-num">1</div>
+            <h2>Wortelfuncties</h2>
+            <p>Transformaties, domein &amp; bereik, randpunten, en wortelvergelijkingen. Met interactieve grafieken en 10 oefensommen.</p>
+            <span class="tag">Beschikbaar</span>
+        </a>
+
+        <div class="chapter-card coming-soon">
+            <div class="chapter-num">2</div>
+            <h2>Machten met gebroken exponenten</h2>
+            <p>Gebroken en negatieve exponenten, herleiden, en schrijven als machten van x.</p>
+            <span class="tag">Binnenkort</span>
+        </div>
+
+        <div class="chapter-card coming-soon">
+            <div class="chapter-num">3</div>
+            <h2>Wortelvergelijkingen</h2>
+            <p>Algebraisch oplossen, kwadrateren, en controleren op schijnoplossingen.</p>
+            <span class="tag">Binnenkort</span>
+        </div>
+
+    </div>
+
+    <h2 style="font-size:1.1rem;color:#64748b;margin:2rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Geavanceerd &mdash; Calculus-voorbereiding</h2>
+    <div class="chapter-grid">
+
+        <a href="geavanceerd/grondslagen-getallen/" class="chapter-card">
+            <div class="chapter-num">1</div>
+            <h2>Grondslagen van getallen</h2>
+            <p>De 12 axioma&rsquo;s (P1&ndash;P12) achter al het rekenen. Associativiteit, inverse, distributiviteit, orde en absolute waarde. Met interactieve bewijzen en 12 oefenopgaven.</p>
+            <span class="tag">Beschikbaar</span>
+        </a>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>Wiskunde HAVO &middot; Interactieve gids</p>
+    <p style="margin-top:0.75rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:var(--primary);">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+</body>
+</html>

@@ -146,7 +146,8 @@ jobs:
           EOFCOMMENT
               )"
 
-              # Label als verwerkt en sluit
+              # Label als verwerkt en sluit (maak label aan als het niet bestaat)
+              gh label create "verwerkt" --color "0e8a16" --description "Les is gegenereerd" 2>/dev/null || true
               gh issue edit "$ISSUE_NUM" --add-label "verwerkt"
               gh issue close "$ISSUE_NUM" --reason completed
             else

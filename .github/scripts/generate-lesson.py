@@ -406,7 +406,8 @@ PRICING = {
     "claude-sonnet": {"input": 3.00, "output": 15.00},   # Sonnet 4.x
     "claude-opus": {"input": 15.00, "output": 75.00},     # Opus 4.x
     "claude-haiku": {"input": 0.80, "output": 4.00},      # Haiku
-    "deepseek-chat": {"input": 0.14, "output": 0.28},     # DeepSeek V3
+    "deepseek-chat": {"input": 0.28, "output": 0.42},      # DeepSeek V3.2 (cache miss)
+    "deepseek-reasoner": {"input": 0.28, "output": 0.42}, # DeepSeek V3.2 reasoner
 }
 
 

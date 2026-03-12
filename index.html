@@ -111,6 +111,11 @@
         </div>
     </a>
 
+    <div id="user-lessons" style="display:none; margin-top:2rem;">
+        <h2 style="font-size:1.3rem; color:var(--muted); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">Lessen van gebruikers</h2>
+        <div id="user-lessons-list"></div>
+    </div>
+
 </div>
 
 <footer>
@@ -121,6 +126,75 @@
         <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#2563eb;">github.com/rwrw01/Claudecodedingetjes</a>
     </p>
 </footer>
+
+<script>
+// Vak-kleuren en afkortingen
+const vakConfig = {
+    wiskunde:       { color: '#2563eb', bg: '#dbeafe', gradient: '#1e3a5f,#2563eb', icon: 'Wi' },
+    scheikunde:     { color: '#059669', bg: '#d1fae5', gradient: '#064e3b,#059669', icon: 'Sk' },
+    biologie:       { color: '#16a34a', bg: '#dcfce7', gradient: '#14532d,#16a34a', icon: 'Bi' },
+    natuurkunde:    { color: '#7c3aed', bg: '#ede9fe', gradient: '#4c1d95,#7c3aed', icon: 'Na' },
+    maatschappijleer:{ color: '#dc2626', bg: '#fee2e2', gradient: '#7f1d1d,#dc2626', icon: 'Ma' },
+    geschiedenis:   { color: '#b45309', bg: '#fef3c7', gradient: '#78350f,#b45309', icon: 'Gs' },
+    aardrijkskunde: { color: '#0891b2', bg: '#cffafe', gradient: '#164e63,#0891b2', icon: 'Ak' },
+    economie:       { color: '#4f46e5', bg: '#e0e7ff', gradient: '#312e81,#4f46e5', icon: 'Ec' },
+    nederlands:     { color: '#e11d48', bg: '#ffe4e6', gradient: '#881337,#e11d48', icon: 'Ne' },
+    engels:         { color: '#0284c7', bg: '#e0f2fe', gradient: '#0c4a6e,#0284c7', icon: 'En' },
+};
+const defaultVak = { color: '#6366f1', bg: '#e0e7ff', gradient: '#3730a3,#6366f1', icon: '?' };
+
+// Haal gebruikerslessen op via GitHub API (repo contents)
+const repo = 'rwrw01/Claudecodedingetjes';
+const apiUrl = `https://api.github.com/repos/${repo}/contents`;
+const skipDirs = ['wiskunde', 'scheikunde', '.github'];
+
+fetch(apiUrl)
+    .then(r => r.json())
+    .then(items => {
+        // Filter op directories die geen standaard-mappen zijn
+        const userDirs = items.filter(i => i.type === 'dir' && !skipDirs.includes(i.name) && !i.name.startsWith('.'));
+        if (userDirs.length === 0) return;
+
+        const container = document.getElementById('user-lessons');
+        const list = document.getElementById('user-lessons-list');
+        container.style.display = 'block';
+
+        // Per gebruikersmap: haal submappen op
+        userDirs.forEach(userDir => {
+            fetch(userDir.url)
+                .then(r => r.json())
+                .then(vakDirs => {
+                    vakDirs.filter(v => v.type === 'dir').forEach(vakDir => {
+                        fetch(vakDir.url)
+                            .then(r => r.json())
+                            .then(lessons => {
+                                lessons.filter(l => l.type === 'dir').forEach(lesson => {
+                                    const vak = vakDir.name;
+                                    const cfg = vakConfig[vak] || defaultVak;
+                                    // Parse niveau en titel uit mapnaam (bijv. "havo-3-onderwerp")
+                                    const parts = lesson.name.split('-');
+                                    const titel = parts.map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+                                    const card = document.createElement('a');
+                                    card.href = `${userDir.name}/${vak}/${lesson.name}/`;
+                                    card.className = 'vak-card';
+                                    card.innerHTML = `
+                                        <div class="vak-icon" style="background:linear-gradient(135deg,${cfg.gradient});">${cfg.icon}</div>
+                                        <div>
+                                            <h2 style="color:${cfg.color};">${titel}</h2>
+                                            <p>${vak.charAt(0).toUpperCase() + vak.slice(1)} &middot; door ${userDir.name}</p>
+                                            <span class="badge" style="background:${cfg.bg};color:${cfg.color};">automatisch gegenereerd</span>
+                                        </div>
+                                    `;
+                                    list.appendChild(card);
+                                });
+                            });
+                    });
+                });
+        });
+    })
+    .catch(() => {}); // Stil falen als API niet bereikbaar is
+</script>
 
 </body>
 </html>

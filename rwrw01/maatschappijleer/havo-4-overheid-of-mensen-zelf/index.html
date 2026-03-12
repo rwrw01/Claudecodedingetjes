@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overheid of mensen zelf — Maatschappijleer HAVO 4</title>
+    <style>
+        :root {
+            --primary: #dc2626;
+            --primary-light: #fecaca;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        header {
+            background: linear-gradient(135deg, #881337 0%, #dc2626 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .breadcrumb {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .toc {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary);
+        }
+
+        .toc h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: var(--primary);
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.5rem;
+        }
+
+        .card h3 {
+            color: var(--text);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            margin-bottom: 1rem;
+        }
+
+        .card ul, .card ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card li {
+            margin: 0.5rem 0;
+        }
+
+        .formula {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .tip-box {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .tip-box::before {
+            content: "💡 Tip: ";
+            font-weight: bold;
+            color: #854d0e;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box::before {
+            content: "⚠️ Let op: ";
+            font-weight: bold;
+            color: #991b1b;
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .example-box strong:first-child {
+            color: #15803d;
+        }
+
+        .try-it {
+            background: #f8fafc;
+            border: 2px solid var(--primary-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .try-it h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: #b91c1c;
+        }
+
+        button.secondary {
+            background: var(--muted);
+        }
+
+        button.secondary:hover {
+            background: #475569;
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #86efac;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            display: block;
+        }
+
+        .mini-exercises {
+            background: #faf5ff;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .mini-exercises h4 {
+            color: #7c3aed;
+            margin-bottom: 1rem;
+        }
+
+        .exercise {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .exercise-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .reveal-button {
+            margin-top: 1rem;
+        }
+
+        .reveal-content {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .reveal-content.visible {
+            display: block;
+        }
+
+        .slider-demo {
+            margin: 1.5rem 0;
+        }
+
+        .slider-demo input[type="range"] {
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .slider-output {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 6px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Overheid of mensen zelf?</h1>
+        <p>De verzorgingsstaat en politieke stromingen</p>
+    </header>
+
+    <nav class="breadcrumb">
+        <a href="#">Home</a> › <a href="#">Maatschappijleer</a> › <a href="#">HAVO 4</a> › Overheid of mensen zelf
+    </nav>
+
+    <div class="container">
+        <div class="toc">
+            <h2>📚 Inhoudsopgave</h2>
+            <ul>
+                <li><a href="#intro">1. Inleiding: de verzorgingsstaat</a></li>
+                <li><a href="#welfare">2. De welfare triangle</a></li>
+                <li><a href="#mechanismen">3. Drie belangrijke mechanismen</a></li>
+                <li><a href="#stromingen">4. Politieke stromingen over zorg</a></li>
+                <li><a href="#hypothese">5. Onderzoekshypothesen formuleren</a></li>
+                <li><a href="#oefeningen">6. Oefeningen</a></li>
+            </ul>
+        </div>
+
+        <div class="card" id="intro">
+            <h2>1. Inleiding: de verzorgingsstaat</h2>
+            <p>Nederland is een <strong>verzorgingsstaat</strong>. Dat betekent dat de overheid een belangrijke rol speelt bij het zorgen voor het welzijn van burgers. Denk aan zorg, onderwijs, uitkeringen en pensioenen.</p>
+            
+            <p>Maar moet de overheid dat allemaal regelen? Of kunnen mensen dat ook zelf, bijvoorbeeld via verzekeringen of familieleden? Deze vraag staat centraal in het politieke debat.</p>
+
+            <div class="example-box">
+                <strong>Voorbeeld:</strong> Als je ziek wordt, ga je naar de dokter. De zorg wordt betaald via je zorgverzekering, maar de overheid heeft wel regels gemaakt over wat verzekeraars moeten vergoeden. De overheid zorgt ook dat iedereen verplicht verzekerd is.
+            </div>
+
+            <div class="try-it">
+                <h4>🤔 Denk mee: Wie zorgt er voor jou?</h4>
+                <p>Welke mensen of organisaties helpen jou als je iets nodig hebt? Denk aan geld, hulp bij problemen, of zorg als je ziek bent.</p>
+                <div class="input-group">
+                    <label>Noem drie voorbeelden:</label>
+                    <textarea id="intro-input" placeholder="Bijvoorbeeld: mijn ouders, school, gemeente..."></textarea>
+                </div>
+                <button onclick="saveIntroAnswer()">💾 Bewaar je antwoord</button>
+                <div id="intro-feedback" class="feedback"></div>
+            </div>
+
+            <div class="tip-box">
+                In Nederland zijn overheid, bedrijven én gezinnen/vrijwilligers allemaal betrokken bij het zorgen voor mensen. Dit noemen we de <strong>welfare triangle</strong>.
+            </div>
+        </div>
+
+        <div class="card" id="welfare">
+            <h2>2. De welfare triangle (welzijnsdriehoek)</h2>
+            <p>De welfare triangle laat zien dat hulp en ondersteuning uit drie hoeken kan komen:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: #eff6ff; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #2563eb;">
+                    <h3 style="color: #1e40af; margin-top: 0;">🏛️ Overheid</h3>
+                    <p><strong>Wat doet de overheid?</strong></p>
+                    <ul>
+                        <li>Zorgt voor wetten en regels</li>
+                        <li>Geeft uitkeringen en pensioenen</li>
+                        <li>Biedt basis gezondheidszorg</li>
+                        <li>Regelt onderwijs</li>
+                    </ul>
+                    <p><em>Financiering:</em> belastingen</p>
+                </div>
+
+                <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #16a34a;">
+                    <h3 style="color: #15803d; margin-top: 0;">🏢 Markt/bedrijven</h3>
+                    <p><strong>Wat doen bedrijven?</strong></p>
+                    <ul>
+                        <li>Bieden commerciële zorg</li>
+                        <li>Verkopen verzekeringen</li>
+                        <li>Creëren banen en inkomen</li>
+                        <li>Bieden diensten aan</li>
+                    </ul>
+                    <p><em>Financiering:</em> betalen voor diensten</p>
+                </div>
+
+                <div style="background: #fef3c7; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #f59e0b;">
+                    <h3 style="color: #92400e; margin-top: 0;">👨‍👩‍👧‍👦 Familie/vrijwilligers</h3>
+                    <p><strong>Wat doen naasten?</strong></p>
+                    <ul>
+                        <li>Zorgen voor elkaar</li>
+                        <li>Geven ondersteuning</li>
+                        <li>Helpen bij problemen</li>
+                        <li>Vrijwilligerswerk</li>
+                    </ul>
+                    <p><em>Financiering:</em> gratis/vrijwillig</p>
+                </div>
+            </div>
+
+            <div class="try-it">
+                <h4>🎯 Oefening: Wie doet wat?</h4>
+                <p>Hieronder staan verschillende situaties. Kies voor elke situatie welk onderdeel van de welfare triangle de hoofdrol speelt.</p>
+                
+                <div class="input-group">
+                    <label>1. Je oma wordt vergeten en je moeder gaat drie dagen per week bij haar helpen:</label>
+                    <select id="welfare1">
+                        <option value="">-- Maak een keuze --</option>
+                        <option value="overheid">Overheid</option>
+                        <option value="markt">Markt/bedrijven</option>
+                        <option value="familie">Familie/vrijwilligers</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>2. Je sluit een ziektekostenverzekering af bij een verzekeringsmaatschappij:</label>
+                    <select id="welfare2">
+                        <option value="">-- Maak een keuze --</option>
+                        <option value="overheid">Overheid</option>
+                        <option value="markt">Markt/bedrijven</option>
+                        <option value="familie">Familie/vrijwilligers</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>3. Iemand krijgt een WW-uitkering omdat hij werkloos is geworden:</label>
+                    <select id="welfare3">
+                        <option value="">-- Maak een keuze --</option>
+                        <option value="overheid">Overheid</option>
+                        <option value="markt">Markt/bedrijven</option>
+                        <option value="familie">Familie/vrijwilligers</option>
+                    </select>
+                </div>
+
+                <button onclick="checkWelfareAnswers()">Controleer antwoorden</button>
+                <div id="welfare-feedback" class="feedback"></div>
+            </div>
+
+            <div class="warning-box">
+                In werkelijkheid werken de drie hoeken vaak samen. Bijvoorbeeld: de overheid verplicht iedereen om een zorgverzekering af te sluiten (overheid maakt regels), maar je sluit die af bij een commercieel bedrijf (markt).
+            </div>
+        </div>
+
+        <div class="card" id="mechanismen">
+            <h2>3. Drie belangrijke mechanismen voor hulp</h2>
+            <p>In de maatschappij zijn er drie verschillende manieren waarop hulp en diensten georganiseerd kunnen worden:</p>
+
+            <h3>A. Wederkerigheid</h3>
+            <p><strong>Wat is het?</strong> Mensen helpen elkaar uit vriendschap of sociale verplichting. Niet omdat ze ervoor betaald worden, maar omdat ze elkaar kennen en voor elkaar zorgen.</p>
+            
+            <div class="example-box">
+                <strong>Voorbeelden van wederkerigheid:</strong>
+                <ul>
+                    <li>Je buurman helpt je met het repareren van je fiets, volgende week help jij hem met verhuizen</li>
+                    <li>Ouders zorgen voor hun kinderen, later zorgen kinderen voor hun ouders</li>
+                    <li>Vrienden lenen elkaar geld zonder rente</li>
+                    <li>Mantelzorg: familie zorgt voor een ziek familielid</li>
+                </ul>
+            </div>
+
+            <h3>B. Marktwerking</h3>
+            <p><strong>Wat is het?</strong> Diensten worden gekocht en verkocht. Je betaalt voor wat je krijgt. Bedrijven bieden diensten aan en mensen kiezen wat het beste bij hen past.</p>
+            
+            <div class="example-box">
+                <strong>Voorbeelden van marktwerking:</strong>
+                <ul>
+                    <li>Je gaat naar een commerciële tandarts en betaalt voor de behandeling</li>
+                    <li>Je koopt een zorgverzekering bij een verzekeraar die je zelf uitkiest</li>
+                    <li>Een thuiszorgbedrijf biedt zorg aan huis aan voor geld</li>
+                    <li>Je koopt een fiets bij een fietsenwinkel</li>
+                </ul>
+            </div>
+
+            <h3>C. Herverdeling</h3>
+            <p><strong>Wat is het?</strong> De overheid haalt geld op via belastingen en deelt dat uit via voorzieningen en uitkeringen. Mensen met meer geld betalen meer belasting, zodat iedereen toegang heeft tot belangrijke dingen.</p>
+            
+            <div class="example-box">
+                <strong>Voorbeelden van herverdeling:</strong>
+                <ul>
+                    <li>De overheid betaalt voor openbare scholen uit belastinggeld</li>
+                    <li>Werklozen krijgen een WW-uitkering</li>
+                    <li>Zorgtoeslag voor mensen met een laag inkomen</li>
+                    <li>Ouderen krijgen AOW-pensioen van de overheid</li>
+                </ul>
+            </div>
+
+            <div class="try-it">
+                <h4>🔍 Interactief: Herken het mechanisme</h4>
+                <p>Sleep met de slider om verschillende situaties te bekijken. Bedenk welk mechanisme hier het belangrijkste is.</p>
+                
+                <div class="slider-demo">
+                    <input type="range" min="1" max="5" value="1" id="mechanism-slider" oninput="updateMechanism()">
+                    <div class="slider-output" id="mechanism-output"></div>
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label>Welk mechanisme is dit vooral?</label>
+                        <select id="mechanism-answer">
+                            <option value="">-- Maak een keuze --</option>
+                            <option value="wederkerigheid">Wederkerigheid</option>
+                            <option value="markt">Marktwerking</option>
+                            <option value="herverdeling">Herverdeling</option>
+                        </select>
+                    </div>
+                    <button onclick="checkMechanism()">Controleer</button>
+                    <div id="mechanism-feedback" class="feedback"></div>
+                </div>
+            </div>
+
+            <div class="mini-exercises">
+                <h4>⚡ Snelle check</h4>
+                <div class="exercise">
+                    <p><strong>1.</strong> De gemeente bouwt een nieuw ziekenhuis en betaalt dit uit belastinggeld. Welk mechanisme?</p>
+                    <div class="input-group">
+                        <input type="text" id="mini1" placeholder="Je antwoord...">
+                    </div>
+                    <button onclick="checkMini(1, 'herverdeling')">Check</button>
+                    <div id="mini1-feedback" class="feedback"></div>
+                </div>
+
+                <div class="exercise">
+                    <p><strong>2.</strong> Je koopt bij de supermarkt een fles water. Welk mechanisme?</p>
+                    <div class="input-group">
+                        <input type="text" id="mini2" placeholder="Je antwoord...">
+                    </div>
+                    <button onclick="checkMini(2, 'marktwerking')">Check</button>
+                    <div id="mini2-feedback" class="feedback"></div>
+                </div>
+
+                <div class="exercise">
+                    <p><strong>3.</strong> Je helpt je buurvrouw met boodschappen, zij past regelmatig op jouw hond. Welk mechanisme?</p>
+                    <div class="input-group">
+                        <input type="text" id="mini3" placeholder="Je antwoord...">
+                    </div>
+                    <button onclick="checkMini(3, 'wederkerigheid')">Check</button>
+                    <div id="mini3-feedback" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="stromingen">
+            <h2>4. Politieke stromingen over zorg</h2>
+            <p>Verschillende politieke partijen hebben verschillende ideeën over hoe de verzorgingsstaat georganiseerd moet worden. Ze verschillen vooral van mening over de vraag: <em>hoeveel moet de overheid regelen, en hoeveel laten we aan mensen zelf of aan de markt?</em></p>
+
+            <h3>Liberalisme</h3>
+            <p><strong>Belangrijkste idee:</strong> Mensen zijn zelf verantwoordelijk voor hun leven. De overheid moet vooral de vrijheid van mensen beschermen en zo min mogelijk regelen.</p>
+            
+            <div style="background: #eff6ff; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Liberalen vinden:</strong></p>
+                <ul>
+                    <li>✓ Marktwerking is de beste manier om zorg te organiseren</li>
+                    <li>✓ Mensen moeten zelf kiezen en betalen voor verzekeringen</li>
+                    <li>✓ Weinig belasting, mensen houden meer van hun eigen geld</li>
+                    <li>✓ Alleen een vangnet voor mensen die écht niet kunnen werken</li>
+                    <li>✗ Niet te veel overheidsbemoeienis</li>
+                </ul>
+                <p><strong>Voorbeeld in Nederland:</strong> VVD, D66</p>
+            </div>
+
+            <div class="example-box">
+                <strong>Liberaal idee in de praktijk:</strong> "Laat zorgverzekeraars meer vrijheid om verschillende pakketten aan te bieden. Wie meer zorg wil, betaalt meer premie. Mensen kunnen zo zelf kiezen wat ze belangrijk vinden."
+            </div>
+
+            <h3>Sociaaldemocratische stroming</h3>
+            <p><strong>Belangrijkste idee:</strong> Iedereen heeft recht op goede zorg, onderwijs en een fatsoenlijk leven. De overheid moet daarvoor zorgen door via belastingen geld te herverdelen.</p>
+            
+            <div style="background: #fef2f2; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Sociaaldemocraten vinden:</strong></p>
+                <ul>
+                    <li>✓ Sterke overheid die zorgt voor iedereen</li>
+                    <li>✓ Betaalbare zorg en onderwijs voor iedereen</li>
+                    <li>✓ Hogere belastingen om goede voorzieningen te financieren</li>
+                    <li>✓ Ruime sociale zekerheid (uitkeringen, toeslagen)</li>
+                    <li>✗ Niet alles overlaten aan de markt (winst niet belangrijker dan zorg)</li>
+                </ul>
+                <p><strong>Voorbeeld in Nederland:</strong> PvdA, GroenLinks</p>
+            </div>
+
+            <div class="example-box">
+                <strong>Sociaaldemocratisch idee in de praktijk:</strong> "Zorg is een basisrecht. De overheid moet de basiszorg volledig betalen uit belastinggeld, zodat ook mensen met weinig geld goede zorg krijgen. Niet de portemonnee maar de behoefte moet bepalen welke zorg je krijgt."
+            </div>
+
+            <h3>Christendemocratie</h3>
+            <p><strong>Belangrijkste idee:</strong> Mensen hebben verantwoordelijkheid voor elkaar. Familie, kerken en maatschappelijke organisaties moeten een belangrijke rol spelen. De overheid helpt waar nodig.</p>
+            
+            <div style="background: #f0fdf4; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Christendemocraten vinden:</strong></p>
+                <ul>
+                    <li>✓ Samenleving draait om gemeenschap en solidariteit</li>
+                    <li>✓ Eigen verantwoordelijkheid én zorg voor elkaar</li>
+                    <li>✓ Rol voor maatschappelijke organisaties (kerken, scholen, verenigingen)</li>
+                    <li>✓ Overheid ondersteunt, maar neemt niet alles over</li>
+                    <li>✓ Mantelzorg en vrijwilligerswerk zijn belangrijk</li>
+                </ul>
+                <p><strong>Voorbeeld in Nederland:</strong> CDA, ChristenUnie</p>
+            </div>
+
+            <div class="example-box">
+                <strong>Christendemocratisch idee in de praktijk:</strong> "Stimuleer dat kinderen voor hun oudere ouders zorgen door mantelzorg beter te belonen. De overheid kan hulp bieden, maar de basis ligt bij familie en gemeenschap. Ook kerken en buurtinitiatieven moeten een rol krijgen."
+            </div>
+
+            <div class="try-it">
+                <h4>🎭 Welke stroming denkt dit?</h4>
+                <p>Lees onderstaande uitspraken en bepaal bij welke politieke stroming ze het beste passen.</p>
+
+                <div class="input-group">
+                    <label><strong>Uitspraak 1:</strong> "We moeten de zorgtoeslag verhogen, zodat ook mensen met een laag inkomen zich geen zorgen hoeven te maken over hun zorgkosten."</label>
+                    <select id="stroming1">
+                        <option value="">-- Kies een stroming --</option>
+                        <option value="liberaal">Liberalisme</option>
+                        <option value="sociaaldemocratie">Sociaaldemocratische stroming</option>
+                        <option value="christendemocratie">Christendemocratie</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label><strong>Uitspraak 2:</strong> "Laten we gezinnen financieel ondersteunen die mantelzorg verlenen, in plaats van alles via dure professionele zorg te laten lopen."</label>
+                    <select id="stroming2">
+                        <option value="">-- Kies een stroming --</option>
+                        <option value="liberaal">Liberalisme</option>
+                        <option value="sociaaldemocratie">Sociaaldemocratische stroming</option>
+                        <option value="christendemocratie">Christendemocratie</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label><strong>Uitspraak 3:</strong> "Mensen moeten zelf kunnen kiezen bij welke zorgverzekeraar ze zitten en welk pakket ze willen. Concurrentie zorgt voor betere en goedkopere zorg."</label>
+                    <select id="stroming3">
+                        <option value="">-- Kies een stroming --</option>
+                        <option value="liberaal">Liberalisme</option>
+                        <option value="sociaaldemocratie">Sociaaldemocratische stroming</option>
+                        <option value="christendemocratie">Christendemocratie</option>
+                    </select>
+                </div>
+
+                <button onclick="checkStromingen()">Controleer alle antwoorden</button>
+                <div id="stroming-feedback" class="feedback"></div>
+            </div>
+
+            <div class="tip-box">
+                In werkelijkheid zijn partijen vaak een mix van verschillende ideeën. De drie stromingen zijn ideaaltypen: ze helpen je om verschillen te begrijpen, maar in de praktijk zijn politieke standpunten genuanceerder.
+            </div>
+        </div>
+
+        <div class="card" id="hypothese">
+            <h2>5. Onderzoekshypothesen formuleren</h2>
+            <p>In maatschappijleer doe je vaak onderzoek. Daarbij formuleer je een <strong>hypothese</strong>: een verwachting die je gaat onderzoeken. Een hypothese beschrijft een verband tussen twee dingen.</p>
+
+            <h3>Wat is een goede hypothese?</h3>
+            <p>Een hypothese bestaat uit twee delen:</p>
+            <ol>
+                <li>Een oorzaak (onafhankelijke variabele)</li>
+                <li>Een gevolg (afhankelijke variabele)</li>
+            </ol>
+
+            <div class="formula">
+                Hoe meer/minder [oorzaak], hoe meer/minder [gevolg]
+            </div>
+
+            <div class="example-box">
+                <strong>Voorbeelden van goede hypothesen:</strong>
+                <ul>
+                    <li>Hoe hoger iemands inkomen, hoe minder gebruik hij maakt van overheidsvoorzieningen.</li>
+                    <li>Hoe ouder mensen zijn, hoe belangrijker zij mantelzorg vinden.</li>
+                    <li>Hoe meer marktwerking in de zorg, hoe lager de kosten voor de overheid.</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                Een hypothese is geen vraag! Het is een bewering die je gaat onderzoeken. Je zegt dus niet: "Is er een verband tussen A en B?" maar: "Hoe meer A, hoe meer B."
+            </div>
+
+            <h3>Oefenen met hypothesen</h3>
+            <div class="try-it">
+                <h4>📝 Maak zelf een hypothese</h4>
+                <p>Formuleer een hypothese over de verzorgingsstaat. Denk aan het verband tussen twee dingen, bijvoorbeeld:</p>
+                <ul>
+                    <li>Leeftijd en mening over de verzorgingsstaat</li>
+                    <li>Inkomen en gebruik van voorzieningen</li>
+                    <li>Politieke voorkeur en ideeën over marktwerking</li>
+                </ul>
+
+                <div class="input-group">
+                    <label>Jouw hypothese:</label>
+                    <textarea id="hypothese-input" placeholder="Begin met: Hoe meer/minder..."></textarea>
+                </div>
+
+                <button onclick="checkHypothese()">Controleer je hypothese</button>
+                <button class="secondary" onclick="showHypotheseHelp()">💡 Hulp nodig?</button>
+                <div id="hypothese-feedback" class="feedback"></div>
+                
+                <div id="hypothese-help" class="reveal-content">
+                    <h4>Tips voor een goede hypothese:</h4>
+                    <ul>
+                        <li>Begin met "Hoe meer..." of "Hoe minder..."</li>
+                        <li>Benoem eerst de oorzaak (wat beïnvloedt iets anders?)</li>
+                        <li>Benoem dan het gevolg (wat wordt beïnvloed?)</li>
+                        <li>Maak het concreet en meetbaar</li>
+                        <li>Voorbeeld: "Hoe hoger iemands opleiding, hoe meer hij vindt dat mensen zelf verantwoordelijk zijn voor hun pensioen."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mini-exercises">
+                <h4>⚡ Hypothesen beoordelen</h4>
+                <p>Hieronder staan drie zinnen. Welke zijn goede hypothesen?</p>
+
+                <div class="exercise">
+                    <p><strong>A.</strong> "Jongeren vinden de verzorgingsstaat minder belangrijk dan ouderen."</p>
+                    <div class="input-group">
+                        <select id="hypo1">
+                            <option value="">-- Maak een keuze --</option>
+                            <option value="ja">Dit is een goede hypothese</option>
+                            <option value="nee">Dit is geen goede hypothese</option>
+                        </select>
+                    </div>
+                    <button onclick="checkHypoFormat(1, 'nee')">Check</button>
+                    <button class="secondary" onclick="toggleReveal('hypo1-explain')">Uitleg</button>
+                    <div id="hypo1-feedback" class="feedback"></div>
+                    <div id="hypo1-explain" class="reveal-content">
+                        <p>Dit is <strong>geen goede hypothese</strong> in de juiste vorm. Er staat wel een verband, maar niet in de vorm "hoe meer... hoe meer...". Een betere versie zou zijn: "Hoe jonger iemand is, hoe minder belangrijk hij de verzorgingsstaat vindt."</p>
+                    </div>
+                </div>
+
+                <div class="exercise">
+                    <p><strong>B.</strong> "Hoe meer overheidsuitgaven aan zorg, hoe tevredener burgers zijn over het zorgstelsel."</p>
+                    <div class="input-group">
+                        <select id="hypo2">
+                            <option value="">-- Maak een keuze --</option>
+                            <option value="ja">Dit is een goede hypothese</option>
+                            <option value="nee">Dit is geen goede hypothese</option>
+                        </select>
+                    </div>
+                    <button onclick="checkHypoFormat(2, 'ja')">Check</button>
+                    <button class="secondary" onclick="toggleReveal('hypo2-explain')">Uitleg</button>
+                    <div id="hypo2-feedback" class="feedback"></div>
+                    <div id="hypo2-explain" class="reveal-content">
+                        <p>Dit <strong>is een goede hypothese</strong>! Er is een duidelijke oorzaak (overheidsuitgaven) en een gevolg (tevredenheid van burgers). Het is in de juiste vorm geformuleerd.</p>
+                    </div>
+                </div>
+
+                <div class="exercise">
+                    <p><strong>C.</strong> "Is er een verband tussen inkomen en gebruik van de verzorgingsstaat?"</p>
+                    <div class="input-group">
+                        <select id="hypo3">
+                            <option value="">-- Maak een keuze --</option>
+                            <option value="ja">Dit is een goede hypothese</option>
+                            <option value="nee">Dit is geen goede hypothese</option>
+                        </select>
+                    </div>
+                    <button onclick="checkHypoFormat(3, 'nee')">Check</button>
+                    <button class="secondary" onclick="toggleReveal('hypo3-explain')">Uitleg</button>
+                    <div id="hypo3-feedback" class="feedback"></div>
+                    <div id="hypo3-explain" class="reveal-content">
+                        <p>Dit is <strong>geen hypothese</strong>, maar een onderzoeksvraag. Een hypothese is een bewering, geen vraag. Een betere versie: "Hoe hoger iemands inkomen, hoe minder gebruik hij maakt van voorzieningen uit de verzorgingsstaat."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="oefeningen">
+            <h2>6. Oefeningen</h2>
+            <p>Test je kennis met deze oefeningen over de verzorgingsstaat en politieke stromingen.</p>
+
+            <div class="exercise">
+                <span class="exercise-number">1</span>
+                <strong>In de welfare triangle zijn drie partijen betrokken bij hulpverlening. Welke drie?</strong>
+                <div class="input-group">
+                    <input type="text" id="ex1" placeholder="Bijvoorbeeld: overheid, ...">
+                </div>
+                <button onclick="checkExercise(1, ['overheid', 'markt', 'familie'])">Controleer</button>
+                <button class="secondary" onclick="showHint(1)">💡 Hint</button>
+                <div id="ex1-feedback" class="feedback"></div>
+                <div id="hint1" class="reveal-content">
+                    Denk aan: wie maakt wetten? Waar koop je dingen? Wie helpt je als je ziek bent?
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">2</span>
+                <strong>Welk mechanisme past bij de volgende situatie: "De gemeente bouwt een speeltuin die iedereen gratis mag gebruiken."</strong>
+                <div class="input-group">
+                    <input type="text" id="ex2" placeholder="Je antwoord...">
+                </div>
+                <button onclick="checkExercise(2, ['herverdeling'])">Controleer</button>
+                <button class="secondary" onclick="showHint(2)">💡 Hint</button>
+                <div id="ex2-feedback" class="feedback"></div>
+                <div id="hint2" class="reveal-content">
+                    De gemeente betaalt met belastinggeld. Welk mechanisme gebruikt belastinggeld om voorzieningen te betalen?
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">3</span>
+                <strong>Je vader betaalt voor een privékliniek omdat hij snel geholpen wil worden. Welk mechanisme?</strong>
+                <div class="input-group">
+                    <input type="text" id="ex3" placeholder="Je antwoord...">
+                </div>
+                <button onclick="checkExercise(3, ['marktwerking', 'markt'])">Controleer</button>
+                <button class="secondary" onclick="showHint(3)">💡 Hint</button>
+                <div id="ex3-feedback" class="feedback"></div>
+                <div id="hint3" class="reveal-content">
+                    Er wordt betaald voor een dienst. Welk mechanisme werkt met kopen en verkopen?
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">4</span>
+                <strong>Welke politieke stroming vindt dat de overheid zo min mogelijk moet regelen en dat mensen vooral zelf verantwoordelijk zijn?</strong>
+                <div class="input-group">
+                    <input type="text" id="ex4" placeholder="Je antwoord...">
+                </div>
+                <button onclick="checkExercise(4, ['liberalisme', 'liberaal'])">Controleer</button>
+                <button class="secondary" onclick="showHint(4)">💡 Hint</button>
+                <div id="ex4-feedback" class="feedback"></div>
+                <div id="hint4" class="reveal-content">
+                    Deze stroming houdt van vrijheid en marktwerking. De VVD is een voorbeeld van zo'n partij.
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">5</span>
+                <strong>Een politicus zegt: "Iedereen heeft recht op goede zorg, dus de overheid moet dat voor iedereen regelen en betalen via belastingen." Bij welke stroming past dit?</strong>
+                <div class="input-group">
+                    <input type="text" id="ex5" placeholder="Je antwoord...">
+                </div>
+                <button onclick="checkExercise(5, ['sociaaldemocrati', 'sociaaldemocraat'])">Controleer</button>
+                <button class="secondary" onclick="showHint(5)">💡 Hint</button>
+                <div id="ex5-feedback" class="feedback"></div>
+                <div id="hint5" class="reveal-content">
+                    Deze stroming wil een sterke overheid die voor iedereen zorgt via herverdeling. De PvdA is een voorbeeld.
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">6</span>
+                <strong>Wat is het verschil tussen een onderzoeksvraag en een hypothese?</strong>
+                <div class="input-group">
+                    <textarea id="ex6" placeholder="Leg uit..."></textarea>
+                </div>
+                <button onclick="checkExercise(6, ['vraag', 'bewering'])">Controleer</button>
+                <button class="secondary" onclick="showHint(6)">💡 Hint</button>
+                <div id="ex6-feedback" class="feedback"></div>
+                <div id="hint6" class="reveal-content">
+                    Een onderzoeksvraag eindigt met een vraagteken. Een hypothese is een bewering over een verband.
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">7</span>
+                <strong>Geef een voorbeeld van wederkerigheid binnen een gezin.</strong>
+                <div class="input-group">
+                    <textarea id="ex7" placeholder="Je voorbeeld..."></textarea>
+                </div>
+                <button onclick="checkOpenAnswer(7)">Bewaar antwoord</button>
+                <button class="secondary" onclick="showHint(7)">💡 Hint</button>
+                <div id="ex7-feedback" class="feedback"></div>
+                <div id="hint7" class="reveal-content">
+                    Denk aan: hoe helpen gezinsleden elkaar zonder dat er betaald wordt? Bijvoorbeeld zorgen voor elkaar als iemand ziek is.
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">8</span>
+                <strong>Welke stroming vindt dat familie, kerken en buurtorganisaties een belangrijke rol moeten spelen in de zorg?</strong>
+                <div class="input-group">
+                    <input type="text" id="ex8" placeholder="Je antwoord...">
+                </div>
+                <button onclick="checkExercise(8, ['christendemocratie', 'christendemocr'])">Controleer</button>
+                <button class="secondary" onclick="showHint(8)">💡 Hint</button>
+                <div id="ex8-feedback" class="feedback"></div>
+                <div id="hint8" class="reveal-content">
+                    Deze stroming vindt gemeenschap en maatschappelijke organisaties belangrijk. Het CDA is een voorbeeld.
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">9</span>
+                <strong>Formuleer een hypothese over het verband tussen leeftijd en het vinden van een sterke verzorgingsstaat.</strong>
+                <div class="input-group">
+                    <textarea id="ex9" placeholder="Hoe..."></textarea>
+                </div>
+                <button onclick="checkOpenAnswer(9)">Bewaar antwoord</button>
+                <button class="secondary" onclick="showHint(9)">💡 Hint</button>
+                <div id="ex9-feedback" class="feedback"></div>
+                <div id="hint9" class="reveal-content">
+                    Begin met "Hoe ouder/jonger..." en maak een verband met hoe belangrijk iemand de verzorgingsstaat vindt.
+                </div>
+            </div>
+
+            <div class="exercise">
+                <span class="exercise-number">10</span>
+                <strong>Leg uit waarom de verzorgingsstaat in Nederland een mix is van overheid, markt en familie.</strong>
+                <div class="input-group">
+                    <textarea id="ex10" placeholder="Je uitleg..." rows="4"></textarea>
+                </div>
+                <button onclick="checkOpenAnswer(10)">Bewaar antwoord</button>
+                <button class="secondary" onclick="showHint(10)">💡 Hint</button>
+                <div id="ex10-feedback" class="feedback"></div>
+                <div id="hint10" class="reveal-content">
+                    Denk aan concrete voorbeelden: de overheid maakt regels en geeft uitkeringen, maar je koopt je zorgverzekering bij een bedrijf, en familie helpt ook. Dit noemen we de welfare triangle.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        Gemaakt door Ralph Wagter (rwrw01) met <a href="https://claude.ai">Claude Code</a>.
+        Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+        <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+    </footer>
+
+    <script>
+        // Mechanism slider
+        const mechanismTexts = [
+            "",
+            "Je helpt je oma met de boodschappen. Zij breit een sjaal voor jou.",
+            "Je koopt een abonnement bij een sportschool voor €35 per maand.",
+            "De overheid geeft studiefinanciering aan studenten uit belastinggeld.",
+            "Je sluit een schadeverzekering af voor je telefoon bij een verzekeraar.",
+            "Vrijwilligers van de voedselbank delen gratis eten uit aan mensen die dat nodig hebben."
+        ];
+
+        const mechanismAnswers = [
+            "",
+            "wederkerigheid",
+            "markt",
+            "herverdeling",
+            "markt",
+            "wederkerigheid"
+        ];
+
+        let currentMechanism = 1;
+
+        function updateMechanism() {
+            const slider = document.getElementById('mechanism-slider');
+            currentMechanism = parseInt(slider.value);
+            document.getElementById('mechanism-output').textContent = mechanismTexts[currentMechanism];
+            document.getElementById('mechanism-feedback').style.display = 'none';
+        }
+
+        function checkMechanism() {
+            const answer = document.getElementById('mechanism-answer').value.toLowerCase();
+            const feedback = document.getElementById('mechanism-feedback');
+            const correct = mechanismAnswers[currentMechanism];
+
+            if (!answer) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = 'Kies eerst een antwoord!';
+                return;
+            }
+
+            if (answer.includes(correct)) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✓ Correct! Dit is inderdaad ' + correct + '.';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Niet helemaal. Het juiste antwoord is: ' + correct + '.';
+            }
+        }
+
+        // Initialize mechanism slider
+        updateMechanism();
+
+        // Welfare triangle checker
+        function checkWelfareAnswers() {
+            const answers = {
+                welfare1: 'familie',
+                welfare2: 'markt',
+                welfare3: 'overheid'
+            };
+
+            let correct = 0;
+            let total = 3;
+
+            for (let key in answers) {
+                const userAnswer = document.getElementById(key).value;
+                if (userAnswer === answers[key]) {
+                    correct++;
+                }
+            }
+
+            const feedback = document.getElementById('welfare-feedback');
+            if (correct === total) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✓ Perfect! Alle antwoorden zijn goed. Je begrijpt de welfare triangle!';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `Je hebt ${correct} van de ${total} goed. Kijk nog eens naar de foute antwoorden:<br>`;
+                feedback.innerHTML += '1. Familie/vrijwilligers (moeder zorgt voor oma)<br>';
+                feedback.innerHTML += '2. Markt/bedrijven (je koopt een verzekering)<br>';
+                feedback.innerHTML += '3. Overheid (WW is een overheidsuitkering)';
+            }
+        }
+
+        // Mini exercises checker
+        function checkMini(num, expected) {
+            const input = document.getElementById('mini' + num).value.toLowerCase().trim();
+            const feedback = document.getElementById('mini' + num + '-feedback');
+
+            if (input.includes(expected.toLowerCase())) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✓ Correct! Dit is inderdaad ' + expected + '.';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Niet helemaal. Het juiste antwoord is: ' + expected + '.';
+            }
+        }
+
+        // Political streams checker
+        function checkStromingen() {
+            const answers = {
+                stroming1: 'sociaaldemocratie',
+                stroming2: 'christendemocratie',
+                stroming3: 'liberaal'
+            };
+
+            let correct = 0;
+            let total = 3;
+
+            for (let key in answers) {
+                const userAnswer = document.getElementById(key).value;
+                if (userAnswer === answers[key]) {
+                    correct++;
+                }
+            }
+
+            const feedback = document.getElementById('stroming-feedback');
+            if (correct === total) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✓ Uitstekend! Je hebt alle drie de stromingen goed herkend!';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.innerHTML = `Je hebt ${correct} van de ${total} goed.<br>`;
+                feedback.innerHTML += 'Uitleg:<br>';
+                feedback.innerHTML += '1. Sociaaldemocratische stroming (zorgtoeslag verhogen = herverdeling via overheid)<br>';
+                feedback.innerHTML += '2. Christendemocratie (nadruk op familie en mantelzorg)<br>';
+                feedback.innerHTML += '3. Liberalisme (vrijheid van keuze en marktwerking)';
+            }
+        }
+
+        // Hypothesis checker
+        function checkHypothese() {
+            const input = document.getElementById('hypothese-input').value.trim();
+            const feedback = document.getElementById('hypothese-feedback');
+
+            if (input.length < 20) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Je hypothese is te kort. Probeer een volledig verband te beschrijven.';
+                return;
+            }
+
+            if (!input.toLowerCase().startsWith('hoe')) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Een hypothese begint meestal met "Hoe meer..." of "Hoe minder...". Probeer het opnieuw.';
+                return;
+            }
+
+            if (!input.includes(',')) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Je hypothese moet twee delen hebben gescheiden door een komma: oorzaak en gevolg.';
+                return;
+            }
+
+            feedback.className = 'feedback correct';
+            feedback.textContent = '✓ Goed geformuleerd! Je hypothese beschrijft een verband tussen twee variabelen. Zo kan je dit onderzoeken in een studie.';
+        }
+
+        function showHypotheseHelp() {
+            const help = document.getElementById('hypothese-help');
+            help.classList.toggle('visible');
+        }
+
+        // Hypothesis format checker
+        function checkHypoFormat(num, expected) {
+            const input = document.getElementById('hypo' + num).value;
+            const feedback = document.getElementById('hypo' + num + '-feedback');
+
+            if (input === expected) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✓ Correct!';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Niet helemaal. Klik op "Uitleg" voor de juiste uitleg.';
+            }
+        }
+
+        function toggleReveal(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('visible');
+        }
+
+        // Main exercises
+        function checkExercise(num, expectedAnswers) {
+            const input = document.getElementById('ex' + num).value.toLowerCase().trim();
+            const feedback = document.getElementById('ex' + num + '-feedback');
+
+            if (!input) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Vul eerst een antwoord in!';
+                return;
+            }
+
+            let isCorrect = false;
+            for (let expected of expectedAnswers) {
+                if (input.includes(expected.toLowerCase())) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                feedback.textContent = '✓ Correct! Goed gedaan.';
+            } else {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Niet helemaal. Probeer het nog eens of klik op de hint.';
+            }
+        }
+
+        function checkOpenAnswer(num) {
+            const input = document.getElementById('ex' + num).value.trim();
+            const feedback = document.getElementById('ex' + num + '-feedback');
+
+            if (input.length < 15) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Je antwoord is wel erg kort. Probeer iets uitgebreider te antwoorden.';
+                return;
+            }
+
+            feedback.className = 'feedback correct';
+            feedback.textContent = '✓ Je antwoord is opgeslagen! Bespreek dit eventueel met je docent of klasgenoten.';
+        }
+
+        function showHint(num) {
+            const hint = document.getElementById('hint' + num);
+            hint.classList.toggle('visible');
+        }
+
+        // Intro answer
+        function saveIntroAnswer() {
+            const input = document.getElementById('intro-input').value.trim();
+            const feedback = document.getElementById('intro-feedback');
+
+            if (input.length < 20) {
+                feedback.className = 'feedback incorrect';
+                feedback.textContent = '✗ Probeer iets uitgebreider te antwoorden. Noem minstens drie dingen.';
+                return;
+            }
+
+            feedback.className = 'feedback correct';
+            feedback.textContent = '✓ Mooi! Je hebt nagedacht over wie jou helpt. Dit zijn voorbeelden van de welfare triangle in actie!';
+        }
+
+        // Enter key support
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter' && input.tagName === 'INPUT') {
+                        e.preventDefault();
+                        const button = input.closest('.try-it, .exercise')?.querySelector('button');
+                        if (button) button.click();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

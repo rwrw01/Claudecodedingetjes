@@ -4,9 +4,13 @@ Automatische lesgeneratie vanuit GitHub Issues.
 
 Dit script:
 1. Leest een GitHub Issue met foto's en metadata
-2. Stuurt de foto's naar Claude API met een lesgeneratie-prompt
+2. Stuurt de foto's naar DeepSeek of Claude API met een lesgeneratie-prompt
 3. Slaat de gegenereerde les op in de juiste map
 4. Update het issue met de resultaten
+
+Ondersteunde providers:
+- deepseek (standaard) — goedkoop, OpenAI-compatibel
+- claude — hogere kwaliteit, duurder
 """
 
 import os
@@ -19,13 +23,41 @@ import urllib.error
 from pathlib import Path
 
 
-def get_env(name: str) -> str:
-    """Haal een vereiste environment variable op."""
+# Provider configuratie
+PROVIDERS = {
+    "deepseek": {
+        "name": "DeepSeek",
+        "api_url": "https://api.deepseek.com/chat/completions",
+        "model": "deepseek-chat",
+        "max_tokens": 16000,
+        "env_key": "DEEPSEEK_API_KEY",
+    },
+    "claude": {
+        "name": "Claude",
+        "api_url": "https://api.anthropic.com/v1/messages",
+        "model": "claude-sonnet-4-6-20250514",
+        "max_tokens": 16000,
+        "env_key": "ANTHROPIC_API_KEY",
+    },
+}
+
+
+def get_env(name: str, required: bool = True) -> str:
+    """Haal een environment variable op."""
     value = os.environ.get(name, "").strip()
-    if not value:
+    if not value and required:
         print(f"FOUT: Environment variable {name} is niet gezet.")
         sys.exit(1)
     return value
+
+
+def get_provider() -> str:
+    """Bepaal welke AI-provider te gebruiken. Standaard: deepseek."""
+    provider = os.environ.get("AI_PROVIDER", "deepseek").strip().lower()
+    if provider not in PROVIDERS:
+        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik deepseek.")
+        provider = "deepseek"
+    return provider
 
 
 def slugify(text: str) -> str:
@@ -58,12 +90,9 @@ def parse_issue_body(body: str) -> dict:
 
     lines = body.split('\n')
     for line in lines:
-        # Detecteer headers van issue form velden
         if line.startswith('### '):
-            # Sla vorig veld op
             if current_field:
                 result[current_field] = '\n'.join(current_value_lines).strip()
-            # Bepaal welk veld dit is
             header = line[4:].strip().lower()
             if 'titel' in header:
                 current_field = 'titel'
@@ -83,24 +112,20 @@ def parse_issue_body(body: str) -> dict:
         elif current_field:
             current_value_lines.append(line)
 
-    # Laatste veld opslaan
     if current_field:
         result[current_field] = '\n'.join(current_value_lines).strip()
 
-    # Parse foto URLs uit de foto-sectie en de hele body
+    # Parse foto URLs
     foto_text = result.get('fotos_raw', '') or body
-    # Match GitHub-hosted afbeeldingen
     foto_urls = re.findall(
         r'https://(?:user-images\.githubusercontent\.com|github\.com)[^\s\)\"\']+\.(?:png|jpg|jpeg|gif|webp)',
         foto_text,
         re.IGNORECASE,
     )
-    # Match ook markdown image syntax
     foto_urls += re.findall(
         r'!\[.*?\]\((https://[^\s\)]+)\)',
         foto_text,
     )
-    # Deduplicate
     seen = set()
     unique_urls = []
     for url in foto_urls:
@@ -109,11 +134,9 @@ def parse_issue_body(body: str) -> dict:
             unique_urls.append(url)
     result['fotos'] = unique_urls
 
-    # Gebruik "anders" vak als dat is ingevuld
     if result.get('vak', '').lower() == 'anders' and result.get('vak_anders'):
         result['vak'] = result['vak_anders']
 
-    # Verwijder tijdelijke velden
     result.pop('fotos_raw', None)
     result.pop('vak_anders', None)
 
@@ -127,7 +150,6 @@ def download_image(url: str) -> tuple[bytes, str]:
         data = resp.read()
         content_type = resp.headers.get('Content-Type', 'image/png')
 
-    # Bepaal media type
     if 'jpeg' in content_type or 'jpg' in content_type or url.lower().endswith(('.jpg', '.jpeg')):
         media_type = 'image/jpeg'
     elif 'gif' in content_type or url.lower().endswith('.gif'):
@@ -140,12 +162,75 @@ def download_image(url: str) -> tuple[bytes, str]:
     return data, media_type
 
 
-def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
-    """Roep de Claude API aan met afbeeldingen en prompt."""
-    # Bouw de content array op
+def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
+    """Roep de DeepSeek API aan (OpenAI-compatibel format)."""
+    config = PROVIDERS["deepseek"]
+
+    # Bouw de content array op (OpenAI vision format)
     content = []
 
-    # Voeg alle afbeeldingen toe
+    for img in images:
+        content.append({
+            "type": "image_url",
+            "image_url": {
+                "url": f"data:{img['media_type']};base64,{img['data_b64']}",
+            },
+        })
+
+    content.append({
+        "type": "text",
+        "text": user_context,
+    })
+
+    payload = {
+        "model": config["model"],
+        "max_tokens": config["max_tokens"],
+        "messages": [
+            {
+                "role": "system",
+                "content": prompt_text,
+            },
+            {
+                "role": "user",
+                "content": content,
+            },
+        ],
+    }
+
+    data = json.dumps(payload).encode('utf-8')
+    req = urllib.request.Request(
+        config["api_url"],
+        data=data,
+        headers={
+            'Content-Type': 'application/json',
+            'Authorization': f'Bearer {api_key}',
+        },
+        method='POST',
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            result = json.loads(resp.read().decode('utf-8'))
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
+        print(f"DeepSeek API fout ({e.code}): {error_body}")
+        sys.exit(1)
+
+    # OpenAI-compatibel antwoord format
+    choices = result.get('choices', [])
+    if choices:
+        return choices[0].get('message', {}).get('content', '')
+
+    print("FOUT: Geen antwoord van DeepSeek API.")
+    print(f"  Response: {json.dumps(result, indent=2)[:500]}")
+    sys.exit(1)
+
+
+def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
+    """Roep de Claude API aan (Anthropic format)."""
+    config = PROVIDERS["claude"]
+
+    content = []
     for img in images:
         content.append({
             "type": "image",
@@ -156,15 +241,14 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
             },
         })
 
-    # Voeg de gebruikersinstructies toe
     content.append({
         "type": "text",
         "text": user_context,
     })
 
     payload = {
-        "model": "claude-sonnet-4-6-20250514",
-        "max_tokens": 16000,
+        "model": config["model"],
+        "max_tokens": config["max_tokens"],
         "messages": [
             {
                 "role": "user",
@@ -176,7 +260,7 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
 
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
-        'https://api.anthropic.com/v1/messages',
+        config["api_url"],
         data=data,
         headers={
             'Content-Type': 'application/json',
@@ -194,7 +278,6 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
         print(f"Claude API fout ({e.code}): {error_body}")
         sys.exit(1)
 
-    # Extraheer de tekst uit het antwoord
     for block in result.get('content', []):
         if block.get('type') == 'text':
             return block['text']
@@ -203,19 +286,27 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
     sys.exit(1)
 
 
+def call_ai_api(provider: str, api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
+    """Roep de juiste AI API aan op basis van de provider."""
+    if provider == "deepseek":
+        return call_deepseek_api(api_key, images, prompt_text, user_context)
+    elif provider == "claude":
+        return call_claude_api(api_key, images, prompt_text, user_context)
+    else:
+        print(f"FOUT: Onbekende provider '{provider}'")
+        sys.exit(1)
+
+
 def extract_html(response: str) -> str:
-    """Extraheer het HTML-bestand uit het Claude-antwoord."""
-    # Probeer eerst een HTML code block te vinden
+    """Extraheer het HTML-bestand uit het API-antwoord."""
     match = re.search(r'```html?\s*\n(.*?)```', response, re.DOTALL)
     if match:
         return match.group(1).strip()
 
-    # Anders: zoek naar <!DOCTYPE of <html
     match = re.search(r'(<!DOCTYPE html>.*</html>)', response, re.DOTALL | re.IGNORECASE)
     if match:
         return match.group(1).strip()
 
-    # Fallback: gebruik het hele antwoord als het op HTML lijkt
     if '<html' in response.lower() and '</html>' in response.lower():
         return response.strip()
 
@@ -223,33 +314,16 @@ def extract_html(response: str) -> str:
     return response
 
 
-def github_api(method: str, endpoint: str, token: str, data: dict | None = None) -> dict:
-    """Doe een GitHub API call."""
-    url = f"https://api.github.com{endpoint}" if endpoint.startswith('/') else endpoint
-    payload = json.dumps(data).encode('utf-8') if data else None
-    req = urllib.request.Request(
-        url,
-        data=payload,
-        headers={
-            'Authorization': f'token {token}',
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json',
-            'User-Agent': 'GitHub-Actions-Lesson-Generator',
-        },
-        method=method,
-    )
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode('utf-8'))
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
-        print(f"GitHub API fout ({e.code} {method} {url}): {error_body}")
-        return {}
-
-
 def main():
-    # Environment variables
-    api_key = get_env('ANTHROPIC_API_KEY')
+    # Bepaal provider
+    provider = get_provider()
+    config = PROVIDERS[provider]
+    print(f"AI Provider: {config['name']} ({config['model']})")
+
+    # Haal de API key op voor de gekozen provider
+    api_key = get_env(config["env_key"])
+
+    # Overige environment variables
     github_token = get_env('GITHUB_TOKEN')
     repo = get_env('GITHUB_REPOSITORY')
     issue_number = get_env('ISSUE_NUMBER')
@@ -309,9 +383,9 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     if extra:
         user_context += f"\nExtra instructies van de aanvrager:\n{extra}\n"
 
-    # Roep Claude API aan
-    print("Claude API aanroepen...")
-    response = call_claude_api(api_key, images, prompt_text, user_context)
+    # Roep AI API aan
+    print(f"{config['name']} API aanroepen...")
+    response = call_ai_api(provider, api_key, images, prompt_text, user_context)
     print(f"  Antwoord ontvangen ({len(response)} karakters)")
 
     # Extraheer HTML
@@ -331,7 +405,7 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     full_output.write_text(html_content, encoding='utf-8')
     print(f"  Les opgeslagen: {output_path}")
 
-    # Schrijf metadata als JSON (handig voor tracking)
+    # Schrijf metadata als JSON
     metadata = {
         "issue_number": int(issue_number),
         "issue_author": issue_author,
@@ -340,20 +414,19 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
         "niveau": niveau,
         "fotos_count": len(fotos),
         "generated_path": str(output_path),
+        "ai_provider": provider,
+        "ai_model": config["model"],
     }
     meta_path = full_output.parent / 'metadata.json'
     meta_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
 
     # Output voor GitHub Actions
-    print(f"::set-output name=lesson_path::{output_path}")
-    print(f"::set-output name=lesson_dir::{lesson_dir}")
-
-    # Schrijf ook naar GITHUB_OUTPUT als dat beschikbaar is
     github_output = os.environ.get('GITHUB_OUTPUT')
     if github_output:
         with open(github_output, 'a') as f:
             f.write(f"lesson_path={output_path}\n")
             f.write(f"lesson_dir={lesson_dir}\n")
+            f.write(f"ai_provider={config['name']}\n")
 
     print("Klaar!")
 

@@ -16,6 +16,14 @@ on:
         description: 'Issue nummer om te verwerken'
         required: true
         type: number
+      ai_provider:
+        description: 'AI provider (deepseek of claude)'
+        required: false
+        default: 'deepseek'
+        type: choice
+        options:
+          - deepseek
+          - claude
 
 permissions:
   contents: write
@@ -61,7 +69,11 @@ jobs:
       - name: Verwerk issues
         if: steps.issues.outputs.issue_numbers != ''
         env:
+          # Beide API keys beschikbaar — script kiest de juiste op basis van AI_PROVIDER
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          # Standaard: deepseek. Bij workflow_dispatch kan je kiezen.
+          AI_PROVIDER: ${{ inputs.ai_provider || 'deepseek' }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -70,7 +82,7 @@ jobs:
 
           for ISSUE_NUM in ${{ steps.issues.outputs.issue_numbers }}; do
             echo "=========================================="
-            echo "Verwerk issue #${ISSUE_NUM}"
+            echo "Verwerk issue #${ISSUE_NUM} met ${AI_PROVIDER}"
             echo "=========================================="
 
             # Haal issue data op
@@ -81,7 +93,7 @@ jobs:
 
             # Reactie: bezig
             gh issue comment "$ISSUE_NUM" \
-              --body "⏳ **Bezig met genereren...** De les wordt nu automatisch gemaakt. Dit duurt 1-3 minuten."
+              --body "⏳ **Bezig met genereren...** De les wordt nu automatisch gemaakt met **${AI_PROVIDER}**. Dit duurt 1-3 minuten."
 
             # Draai het generatiescript
             export ISSUE_NUMBER="$ISSUE_NUM"
@@ -104,7 +116,7 @@ jobs:
 
               # Commit en push
               git add -A
-              git commit -m "Nieuwe les: ${ISSUE_TITLE} (issue #${ISSUE_NUM})"
+              git commit -m "Nieuwe les: ${ISSUE_TITLE} (issue #${ISSUE_NUM}, ${AI_PROVIDER})"
               git push
 
               # GitHub Pages URL
@@ -114,7 +126,7 @@ jobs:
 
               # Reactie: klaar
               gh issue comment "$ISSUE_NUM" --body "$(cat <<EOF
-          ✅ **Les gegenereerd!**
+          ✅ **Les gegenereerd!** (met ${AI_PROVIDER})
 
           De les is aangemaakt en direct naar main gecommit.
 
@@ -129,7 +141,7 @@ jobs:
             else
               echo "FOUT bij verwerken van issue #${ISSUE_NUM}"
               gh issue comment "$ISSUE_NUM" \
-                --body "❌ **Fout bij genereren.** Er ging iets mis. Controleer of de foto's zichtbaar zijn en het formulier correct is ingevuld."
+                --body "❌ **Fout bij genereren met ${AI_PROVIDER}.** Er ging iets mis. Controleer of de foto's zichtbaar zijn en het formulier correct is ingevuld."
             fi
           done
 

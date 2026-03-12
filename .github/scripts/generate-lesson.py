@@ -272,8 +272,8 @@ def download_image(url: str) -> tuple[bytes, str]:
     return data, media_type
 
 
-def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
-    """Roep de DeepSeek API aan (OpenAI-compatibel format)."""
+def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> tuple[str, dict]:
+    """Roep de DeepSeek API aan (OpenAI-compatibel format). Retourneert (tekst, usage)."""
     config = PROVIDERS["deepseek"]
 
     # Bouw de content array op (OpenAI vision format)
@@ -326,19 +326,22 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
         print(f"DeepSeek API fout ({e.code}): {error_body}")
         sys.exit(1)
 
+    usage = log_usage(result, "deepseek", config["model"])
+
     # OpenAI-compatibel antwoord format
     choices = result.get('choices', [])
     if choices:
-        return choices[0].get('message', {}).get('content', '')
+        return choices[0].get('message', {}).get('content', ''), usage
 
     print("FOUT: Geen antwoord van DeepSeek API.")
     print(f"  Response: {json.dumps(result, indent=2)[:500]}")
     sys.exit(1)
 
 
-def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
-    """Roep de Claude API aan (Anthropic format)."""
+def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_context: str, model: str = "") -> tuple[str, dict]:
+    """Roep de Claude API aan (Anthropic format). Retourneert (tekst, usage)."""
     config = PROVIDERS["claude"]
+    model = model or config["model"]
 
     content = []
     for img in images:
@@ -357,7 +360,7 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
     })
 
     payload = {
-        "model": config["model"],
+        "model": model,
         "max_tokens": config["max_tokens"],
         "messages": [
             {
@@ -388,20 +391,86 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
         print(f"Claude API fout ({e.code}): {error_body}")
         sys.exit(1)
 
+    usage = log_usage(result, "claude", model)
+
     for block in result.get('content', []):
         if block.get('type') == 'text':
-            return block['text']
+            return block['text'], usage
 
     print("FOUT: Geen tekstantwoord van Claude API.")
     sys.exit(1)
 
 
-def call_ai_api(provider: str, api_key: str, images: list[dict], prompt_text: str, user_context: str) -> str:
-    """Roep de juiste AI API aan op basis van de provider."""
+# Prijzen per 1M tokens (USD) — bijwerken als prijzen veranderen
+PRICING = {
+    "claude-sonnet": {"input": 3.00, "output": 15.00},   # Sonnet 4.x
+    "claude-opus": {"input": 15.00, "output": 75.00},     # Opus 4.x
+    "claude-haiku": {"input": 0.80, "output": 4.00},      # Haiku
+    "deepseek-chat": {"input": 0.14, "output": 0.28},     # DeepSeek V3
+}
+
+
+def log_usage(result: dict, provider: str, model: str) -> dict:
+    """Log token-gebruik en geschatte kosten. Retourneert usage-dict voor metadata."""
+    usage = result.get('usage', {})
+    if not usage:
+        return {}
+
+    if provider == "claude":
+        input_tokens = usage.get('input_tokens', 0)
+        output_tokens = usage.get('output_tokens', 0)
+        cache_read = usage.get('cache_read_input_tokens', 0)
+    else:
+        # OpenAI-compatibel (DeepSeek)
+        input_tokens = usage.get('prompt_tokens', 0)
+        output_tokens = usage.get('completion_tokens', 0)
+        cache_read = 0
+
+    total_tokens = input_tokens + output_tokens
+
+    # Zoek prijzen op basis van model naam
+    pricing = None
+    for key, prices in PRICING.items():
+        if key in model:
+            pricing = prices
+            break
+
+    if pricing:
+        input_cost = (input_tokens / 1_000_000) * pricing["input"]
+        output_cost = (output_tokens / 1_000_000) * pricing["output"]
+        total_cost = input_cost + output_cost
+
+        print(f"\n  === Token-gebruik ===")
+        print(f"  Input tokens:  {input_tokens:>8,}")
+        if cache_read:
+            print(f"  Cache read:    {cache_read:>8,}")
+        print(f"  Output tokens: {output_tokens:>8,}")
+        print(f"  Totaal tokens: {total_tokens:>8,}")
+        print(f"  ---")
+        print(f"  Input kosten:  ${input_cost:.4f}")
+        print(f"  Output kosten: ${output_cost:.4f}")
+        print(f"  Totaal kosten: ${total_cost:.4f} (~€{total_cost * 0.92:.4f})")
+        print(f"  ===================\n")
+    else:
+        print(f"\n  Tokens: {input_tokens} input + {output_tokens} output = {total_tokens} totaal")
+        print(f"  (Prijzen onbekend voor model {model})\n")
+        total_cost = None
+
+    return {
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "total_tokens": total_tokens,
+        "cache_read_tokens": cache_read,
+        "estimated_cost_usd": round(total_cost, 4) if total_cost else None,
+    }
+
+
+def call_ai_api(provider: str, api_key: str, images: list[dict], prompt_text: str, user_context: str, model: str = "") -> tuple[str, dict]:
+    """Roep de juiste AI API aan op basis van de provider. Retourneert (tekst, usage)."""
     if provider == "deepseek":
         return call_deepseek_api(api_key, images, prompt_text, user_context)
     elif provider == "claude":
-        return call_claude_api(api_key, images, prompt_text, user_context)
+        return call_claude_api(api_key, images, prompt_text, user_context, model)
     else:
         print(f"FOUT: Onbekende provider '{provider}'")
         sys.exit(1)
@@ -513,7 +582,7 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
 
     # Roep AI API aan
     print(f"{config['name']} API aanroepen...")
-    response = call_ai_api(provider, api_key, images, prompt_text, user_context)
+    response, usage = call_ai_api(provider, api_key, images, prompt_text, user_context, config["model"])
     print(f"  Antwoord ontvangen ({len(response)} karakters)")
 
     # Extraheer HTML
@@ -544,6 +613,7 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
         "generated_path": str(output_path),
         "ai_provider": provider,
         "ai_model": config["model"],
+        "usage": usage,
     }
     meta_path = full_output.parent / 'metadata.json'
     meta_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')

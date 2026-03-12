@@ -643,6 +643,48 @@ def generate_index_pages(author: str):
         vak_name = vak_dir.name
         pretty_vak = vak_name.replace('-', ' ').title()
         niveau_dirs = sorted([d for d in vak_dir.iterdir() if d.is_dir()])
+
+        # Sla handmatige hub-pagina's over (alleen overschrijven als het auto-generated is)
+        index_path = vak_dir / 'index.html'
+        if index_path.exists():
+            content = index_path.read_text(encoding='utf-8')
+            if 'Interactieve lesstof' not in content:
+                print(f"  {index_path.relative_to(Path.cwd())} (handmatig, overgeslagen)")
+                # Genereer wel de niveau-pagina's eronder
+                for niveau_dir in niveau_dirs:
+                    niveau_name = niveau_dir.name
+                    pretty_niveau = niveau_name.replace('-', ' ').upper()
+                    lesson_dirs = sorted([d for d in niveau_dir.iterdir() if d.is_dir()])
+                    cards = []
+                    for les_dir in lesson_dirs:
+                        meta_file = les_dir / 'metadata.json'
+                        if meta_file.exists():
+                            meta = json.loads(meta_file.read_text(encoding='utf-8'))
+                            titel = meta.get('titel', les_dir.name.replace('-', ' ').title())
+                            subtitle = f"Issue #{meta.get('issue_number', '?')}" if meta.get('issue_number') else ""
+                        else:
+                            titel = les_dir.name.replace('-', ' ').title()
+                            subtitle = ""
+                        cards.append(_card_html(
+                            href=f"{les_dir.name}/",
+                            title=titel,
+                            subtitle=subtitle,
+                            vak_slug=vak_name,
+                        ))
+
+                    breadcrumb = (
+                        f'<a href="{HOME_URL}">Home</a> &rsaquo; '
+                        f'<a href="../../">{display_name}</a> &rsaquo; '
+                        f'<a href="../">{pretty_vak}</a> &rsaquo; {pretty_niveau}'
+                    )
+                    niveau_index = niveau_dir / 'index.html'
+                    niveau_index.write_text(
+                        _index_template(f"{pretty_vak} {pretty_niveau} — {display_name}", breadcrumb, '\n'.join(cards)),
+                        encoding='utf-8',
+                    )
+                    print(f"  {niveau_index.relative_to(Path.cwd())}")
+                continue
+
         cards = []
         for niveau_dir in niveau_dirs:
             niveau_name = niveau_dir.name
@@ -657,7 +699,6 @@ def generate_index_pages(author: str):
             ))
 
         breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; <a href="../">{display_name}</a> &rsaquo; {pretty_vak}'
-        index_path = vak_dir / 'index.html'
         index_path.write_text(
             _index_template(f"{pretty_vak} — {display_name}", breadcrumb, '\n'.join(cards)),
             encoding='utf-8',
@@ -675,7 +716,13 @@ def generate_index_pages(author: str):
                 if meta_file.exists():
                     meta = json.loads(meta_file.read_text(encoding='utf-8'))
                     titel = meta.get('titel', les_dir.name.replace('-', ' ').title())
-                    subtitle = f"Issue #{meta.get('issue_number', '?')}"
+                    ai = meta.get('ai_provider', '')
+                    if meta.get('issue_number'):
+                        subtitle = f"Issue #{meta['issue_number']}"
+                    elif ai == 'handmatig':
+                        subtitle = "Handgemaakt"
+                    else:
+                        subtitle = ""
                 else:
                     titel = les_dir.name.replace('-', ' ').title()
                     subtitle = ""

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactieve lesstof &mdash; HAVO</title>
+    <title>Interactieve lesstof</title>
     <style>
         :root {
             --bg: #f8fafc;
@@ -12,6 +12,7 @@
             --muted: #64748b;
             --border: #e2e8f0;
             --radius: 12px;
+            --primary: #2563eb;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -37,7 +38,7 @@
             padding: 2.5rem 1rem;
             flex: 1;
         }
-        .vak-card {
+        .user-card {
             display: flex;
             align-items: center;
             gap: 1.25rem;
@@ -51,31 +52,35 @@
             color: var(--text);
             transition: transform 0.15s, box-shadow 0.15s;
         }
-        .vak-card:hover {
+        .user-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
-        .vak-icon {
+        .user-avatar {
             width: 56px; height: 56px;
-            border-radius: 14px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #334155, #64748b);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: white;
             flex-shrink: 0;
         }
-        .vak-card h2 { font-size: 1.25rem; margin-bottom: 0.2rem; }
-        .vak-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
-        .vak-card .badge {
+        .user-card h2 { font-size: 1.25rem; margin-bottom: 0.2rem; }
+        .user-card p { color: var(--muted); font-size: 0.9rem; margin: 0; }
+        .user-card .badge {
             font-size: 0.75rem;
             font-weight: 600;
             padding: 0.15rem 0.5rem;
             border-radius: 999px;
             display: inline-block;
             margin-top: 0.4rem;
+            margin-right: 0.3rem;
+            background: #f1f5f9;
+            color: var(--muted);
         }
+        .loading { text-align: center; color: var(--muted); padding: 2rem; }
         footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -88,128 +93,97 @@
 
 <header>
     <h1>Interactieve lesstof</h1>
-    <p>Beter dan het boek &mdash; kies je vak</p>
+    <p>Beter dan het boek &mdash; kies een auteur</p>
 </header>
 
 <div class="container">
-
-    <!-- Handmatig gemaakte lessen (wiskunde, scheikunde) -->
-    <h2 style="font-size:1.3rem; color:var(--muted); margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border);">Lessen van Ralph Wagter</h2>
-
-    <a href="wiskunde/" class="vak-card">
-        <div class="vak-icon" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">Wi</div>
-        <div>
-            <h2 style="color:#2563eb;">Wiskunde</h2>
-            <p>Rekenen, breuken, wortelfuncties &amp; meer. Onderbouw t/m HAVO 4.</p>
-            <span class="badge" style="background:#dbeafe;color:#2563eb;">5 hoofdstukken</span>
-        </div>
-    </a>
-
-    <a href="scheikunde/" class="vak-card">
-        <div class="vak-icon" style="background:linear-gradient(135deg,#064e3b,#059669);">Sk</div>
-        <div>
-            <h2 style="color:#059669;">Scheikunde</h2>
-            <p>Massaverhoudingen &amp; koolstofchemie met interactieve molecuulmodellen. HAVO 3.</p>
-            <span class="badge" style="background:#d1fae5;color:#059669;">2 hoofdstukken</span>
-        </div>
-    </a>
-
-    <!-- Automatisch gegenereerde lessen per gebruiker -->
-    <div id="user-lessons"></div>
-
+    <div id="users"><p class="loading">Laden...</p></div>
 </div>
 
 <footer>
-    <p>Interactieve lesstof &middot; HAVO</p>
+    <p>Interactieve lesstof</p>
     <p style="margin-top:0.75rem;font-size:0.8rem;line-height:1.6;">
-        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:#2563eb;">Claude Code</a>.<br>
-        Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:#2563eb;">EUPL-1.2 licentie</a>.<br>
-        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#2563eb;">github.com/rwrw01/Claudecodedingetjes</a>
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:var(--primary);">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">github.com/rwrw01/Claudecodedingetjes</a>
     </p>
 </footer>
 
 <script>
 const vakConfig = {
-    wiskunde:       { color: '#2563eb', bg: '#dbeafe', gradient: '#1e3a5f,#2563eb', icon: 'Wi' },
-    scheikunde:     { color: '#059669', bg: '#d1fae5', gradient: '#064e3b,#059669', icon: 'Sk' },
-    biologie:       { color: '#16a34a', bg: '#dcfce7', gradient: '#14532d,#16a34a', icon: 'Bi' },
-    natuurkunde:    { color: '#7c3aed', bg: '#ede9fe', gradient: '#4c1d95,#7c3aed', icon: 'Na' },
-    maatschappijleer:{ color: '#dc2626', bg: '#fee2e2', gradient: '#7f1d1d,#dc2626', icon: 'Ma' },
-    geschiedenis:   { color: '#b45309', bg: '#fef3c7', gradient: '#78350f,#b45309', icon: 'Gs' },
-    aardrijkskunde: { color: '#0891b2', bg: '#cffafe', gradient: '#164e63,#0891b2', icon: 'Ak' },
-    economie:       { color: '#4f46e5', bg: '#e0e7ff', gradient: '#312e81,#4f46e5', icon: 'Ec' },
-    nederlands:     { color: '#e11d48', bg: '#ffe4e6', gradient: '#881337,#e11d48', icon: 'Ne' },
-    engels:         { color: '#0284c7', bg: '#e0f2fe', gradient: '#0c4a6e,#0284c7', icon: 'En' },
+    wiskunde:       { color: '#2563eb', bg: '#dbeafe', icon: 'Wi' },
+    scheikunde:     { color: '#059669', bg: '#d1fae5', icon: 'Sk' },
+    biologie:       { color: '#16a34a', bg: '#dcfce7', icon: 'Bi' },
+    natuurkunde:    { color: '#7c3aed', bg: '#ede9fe', icon: 'Na' },
+    maatschappijleer:{ color: '#dc2626', bg: '#fee2e2', icon: 'Ma' },
+    geschiedenis:   { color: '#b45309', bg: '#fef3c7', icon: 'Gs' },
+    aardrijkskunde: { color: '#0891b2', bg: '#cffafe', icon: 'Ak' },
+    economie:       { color: '#4f46e5', bg: '#e0e7ff', icon: 'Ec' },
+    nederlands:     { color: '#e11d48', bg: '#ffe4e6', icon: 'Ne' },
+    engels:         { color: '#0284c7', bg: '#e0f2fe', icon: 'En' },
 };
-const defaultVak = { color: '#6366f1', bg: '#e0e7ff', gradient: '#3730a3,#6366f1', icon: '?' };
 
-// Haal automatisch gegenereerde lessen op per gebruiker
 const repo = 'rwrw01/Claudecodedingetjes';
 const apiBase = `https://api.github.com/repos/${repo}/contents`;
-const skipDirs = ['wiskunde', 'scheikunde', '.github'];
-const container = document.getElementById('user-lessons');
+const container = document.getElementById('users');
 
 fetch(apiBase)
     .then(r => r.json())
-    .then(items => {
-        const userDirs = items.filter(i => i.type === 'dir' && !skipDirs.includes(i.name) && !i.name.startsWith('.'));
-        if (userDirs.length === 0) return;
+    .then(async items => {
+        // Zoek mappen met een profile.json (= gebruikers)
+        const dirs = items.filter(i => i.type === 'dir' && !i.name.startsWith('.'));
+        const users = [];
 
-        userDirs.forEach(userDir => {
-            // Haal profile.json op voor friendly name
-            fetch(`https://raw.githubusercontent.com/${repo}/main/${userDir.name}/profile.json`)
-                .then(r => r.ok ? r.json() : {})
-                .catch(() => ({}))
-                .then(profile => {
-                    const displayName = profile.display_name || userDir.name;
+        for (const dir of dirs) {
+            try {
+                const r = await fetch(`https://raw.githubusercontent.com/${repo}/main/${dir.name}/profile.json`);
+                if (!r.ok) continue;
+                const profile = await r.json();
+                users.push({ dir: dir.name, profile, url: dir.url });
+            } catch { continue; }
+        }
 
-                    // Maak sectie-header per gebruiker
-                    const section = document.createElement('div');
-                    section.style.marginTop = '2rem';
-                    section.innerHTML = `<h2 style="font-size:1.3rem; color:#64748b; margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid #e2e8f0;">Lessen van ${displayName}</h2>`;
-                    container.appendChild(section);
+        container.innerHTML = '';
+        if (users.length === 0) {
+            container.innerHTML = '<p class="loading">Geen gebruikers gevonden.</p>';
+            return;
+        }
 
-                    // Link naar het gebruikersoverzicht
-                    const userCard = document.createElement('a');
-                    userCard.href = `${userDir.name}/`;
-                    userCard.className = 'vak-card';
-                    userCard.innerHTML = `
-                        <div class="vak-icon" style="background:linear-gradient(135deg,#334155,#64748b);">👤</div>
-                        <div>
-                            <h2 style="color:#334155;">${displayName}</h2>
-                            <p>Bekijk alle lessen van ${displayName}</p>
-                            <span class="badge" style="background:#f1f5f9;color:#64748b;">overzicht</span>
-                        </div>
-                    `;
-                    section.appendChild(userCard);
+        for (const user of users) {
+            const name = user.profile.display_name || user.dir;
 
-                    // Haal vakken op
-                    fetch(userDir.url)
-                        .then(r => r.json())
-                        .then(vakDirs => {
-                            vakDirs.filter(v => v.type === 'dir').forEach(vakDir => {
-                                const vak = vakDir.name;
-                                const cfg = vakConfig[vak] || defaultVak;
-                                const prettyVak = vak.charAt(0).toUpperCase() + vak.slice(1);
+            // Tel vakken
+            let vakken = [];
+            try {
+                const r = await fetch(user.url);
+                const contents = await r.json();
+                vakken = contents.filter(c => c.type === 'dir').map(c => c.name);
+            } catch {}
 
-                                const card = document.createElement('a');
-                                card.href = `${userDir.name}/${vak}/`;
-                                card.className = 'vak-card';
-                                card.innerHTML = `
-                                    <div class="vak-icon" style="background:linear-gradient(135deg,${cfg.gradient});">${cfg.icon}</div>
-                                    <div>
-                                        <h2 style="color:${cfg.color};">${prettyVak}</h2>
-                                        <p>door ${displayName}</p>
-                                        <span class="badge" style="background:${cfg.bg};color:${cfg.color};">automatisch gegenereerd</span>
-                                    </div>
-                                `;
-                                section.appendChild(card);
-                            });
-                        });
-                });
-        });
+            const card = document.createElement('a');
+            card.href = `${user.dir}/`;
+            card.className = 'user-card';
+
+            const badges = vakken.map(v => {
+                const cfg = vakConfig[v] || { color: '#6366f1', bg: '#e0e7ff' };
+                const pretty = v.charAt(0).toUpperCase() + v.slice(1);
+                return `<span class="badge" style="background:${cfg.bg};color:${cfg.color};">${pretty}</span>`;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="user-avatar">${name.charAt(0).toUpperCase()}</div>
+                <div>
+                    <h2>${name}</h2>
+                    <p>${vakken.length} vak${vakken.length !== 1 ? 'ken' : ''}</p>
+                    <div>${badges}</div>
+                </div>
+            `;
+            container.appendChild(card);
+        }
     })
-    .catch(() => {});
+    .catch(() => {
+        container.innerHTML = '<p class="loading">Kon gebruikers niet laden.</p>';
+    });
 </script>
 
 </body>

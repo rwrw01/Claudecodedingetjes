@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiskunde HAVO &mdash; Overzicht</title>
+    <title>Scheikunde HAVO 3 &mdash; Overzicht</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-light: #dbeafe;
+            --primary: #059669;
+            --primary-light: #d1fae5;
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
@@ -23,7 +23,7 @@
             line-height: 1.6;
         }
         header {
-            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
             color: white;
             padding: 2.5rem 1rem;
             text-align: center;
@@ -85,14 +85,14 @@
             border-radius: 999px;
             width: fit-content;
         }
-        .chapter-card.coming-soon {
-            opacity: 0.5;
-            pointer-events: none;
+        .nav-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
         }
-        .chapter-card.coming-soon .tag {
-            background: #f1f5f9;
-            color: var(--muted);
-        }
+        .nav-link:hover { text-decoration: underline; }
         footer {
             text-align: center;
             padding: 2rem 1rem;
@@ -104,78 +104,41 @@
 <body>
 
 <header>
-    <h1>Wiskunde HAVO</h1>
+    <h1>Scheikunde HAVO 3</h1>
     <p>Interactieve uitleg &mdash; beter dan het boek</p>
 </header>
 
 <div class="container">
 
-    <a href="../" style="color:var(--primary);text-decoration:none;font-size:0.9rem;">&larr; Alle vakken</a>
+    <nav style="font-size:0.9rem;margin-bottom:0.5rem;">
+        <a href="../../" style="color:var(--primary);text-decoration:none;">Home</a>
+        <span style="color:var(--muted);margin:0 0.3rem;">&rsaquo;</span>
+        <a href="../" style="color:var(--primary);text-decoration:none;">Ralph Wagter</a>
+        <span style="color:var(--muted);margin:0 0.3rem;">&rsaquo;</span>
+        <span style="color:var(--muted);">Scheikunde</span>
+    </nav>
 
-    <h2 style="font-size:1.1rem;color:#64748b;margin-top:1rem;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Onderbouw (klas 1&ndash;2)</h2>
+    <h2 style="font-size:1.1rem;color:#64748b;margin-bottom:0.75rem;text-transform:uppercase;letter-spacing:0.05em;">HAVO 3 &mdash; Scheikunde</h2>
     <div class="chapter-grid">
 
-        <a href="rekenen-basis/" class="chapter-card">
+        <a href="havo-3/massaverhoudingen/" class="chapter-card">
             <div class="chapter-num">1</div>
-            <h2>Rekenen &mdash; wat doe je eigenlijk?</h2>
-            <p>Optellen, aftrekken, vermenigvuldigen &amp; delen. Waarom 0,5 &divide; 0,5 = 1 is en niet iets raars. Met interactieve schuifjes en 10 oefensommen.</p>
+            <h2>Massaverhoudingen</h2>
+            <p>Rekenen met massaverhoudingen, kruislings vermenigvuldigen, wet van behoud van massa. Met interactieve verhoudingstabellen en oefensommen.</p>
             <span class="tag">Beschikbaar</span>
         </a>
 
-        <a href="van-getallen-naar-breuken/" class="chapter-card">
+        <a href="havo-3/koolstofchemie/" class="chapter-card">
             <div class="chapter-num">2</div>
-            <h2>Van getallen naar breuken</h2>
-            <p>Wat is een breuk? Vereenvoudigen, vermenigvuldigen, delen, optellen &amp; aftrekken. De brug naar algebra. Met 10 oefensommen.</p>
+            <h2>Koolstofchemie &mdash; Systematische namen</h2>
+            <p>Alkanen, alkenen, isomerie en systematische naamgeving. Met interactieve molecuulmodellen en naamgeving-oefeningen.</p>
             <span class="tag">Beschikbaar</span>
         </a>
 
-    </div>
-
-    <h2 style="font-size:1.1rem;color:#64748b;margin:2rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">HAVO 3</h2>
-    <div class="chapter-grid">
-
-        <a href="breuken-met-letters/" class="chapter-card">
-            <div class="chapter-num">1</div>
-            <h2>Breuken met letters herleiden</h2>
-            <p>Vereenvoudigen, variabelen eruit halen, vermenigvuldigen, delen, optellen &amp; aftrekken. Met 10 oefensommen.</p>
-            <span class="tag">Beschikbaar</span>
-        </a>
-
-    </div>
-
-    <h2 style="font-size:1.1rem;color:#64748b;margin:2rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">HAVO 4</h2>
-    <div class="chapter-grid">
-
-        <a href="wortelfuncties/" class="chapter-card">
-            <div class="chapter-num">1</div>
-            <h2>Wortelfuncties</h2>
-            <p>Transformaties, domein &amp; bereik, randpunten, en wortelvergelijkingen. Met interactieve grafieken en 10 oefensommen.</p>
-            <span class="tag">Beschikbaar</span>
-        </a>
-
-        <div class="chapter-card coming-soon">
-            <div class="chapter-num">2</div>
-            <h2>Machten met gebroken exponenten</h2>
-            <p>Gebroken en negatieve exponenten, herleiden, en schrijven als machten van x.</p>
-            <span class="tag">Binnenkort</span>
-        </div>
-
-        <div class="chapter-card coming-soon">
-            <div class="chapter-num">3</div>
-            <h2>Wortelvergelijkingen</h2>
-            <p>Algebraisch oplossen, kwadrateren, en controleren op schijnoplossingen.</p>
-            <span class="tag">Binnenkort</span>
-        </div>
-
-    </div>
-
-    <h2 style="font-size:1.1rem;color:#64748b;margin:2rem 0 0.75rem;text-transform:uppercase;letter-spacing:0.05em;">Geavanceerd &mdash; Calculus-voorbereiding</h2>
-    <div class="chapter-grid">
-
-        <a href="grondslagen-getallen/" class="chapter-card">
-            <div class="chapter-num">1</div>
-            <h2>Grondslagen van getallen</h2>
-            <p>De 12 axioma&rsquo;s (P1&ndash;P12) achter al het rekenen. Associativiteit, inverse, distributiviteit, orde en absolute waarde. Met interactieve bewijzen en 12 oefenopgaven.</p>
+        <a href="havo-3/flashcards/" class="chapter-card">
+            <div class="chapter-num" style="background:#0d9488;">&#x1F4AC;</div>
+            <h2>Flashcards</h2>
+            <p>Klik op een term, zie de definitie. Oefen alle belangrijke begrippen van scheikunde met interactieve flashcards.</p>
             <span class="tag">Beschikbaar</span>
         </a>
 
@@ -184,7 +147,7 @@
 </div>
 
 <footer>
-    <p>Wiskunde HAVO &middot; Interactieve gids</p>
+    <p>Scheikunde HAVO 3 &middot; Interactieve gids</p>
     <p style="margin-top:0.75rem;font-size:0.8rem;line-height:1.6;">
         Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.<br>
         Vrij hergebruik onder de <a href="https://eupl.eu/" style="color:var(--primary);">EUPL-1.2 licentie</a>.<br>

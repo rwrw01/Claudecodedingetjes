@@ -493,6 +493,183 @@ def extract_html(response: str) -> str:
     return response
 
 
+# Vak-kleuren (zelfde als index.html)
+VAK_KLEUREN = {
+    'wiskunde':       {'color': '#2563eb', 'bg': '#dbeafe', 'gradient': '#1e3a5f,#2563eb', 'icon': 'Wi'},
+    'scheikunde':     {'color': '#059669', 'bg': '#d1fae5', 'gradient': '#064e3b,#059669', 'icon': 'Sk'},
+    'biologie':       {'color': '#16a34a', 'bg': '#dcfce7', 'gradient': '#14532d,#16a34a', 'icon': 'Bi'},
+    'natuurkunde':    {'color': '#7c3aed', 'bg': '#ede9fe', 'gradient': '#4c1d95,#7c3aed', 'icon': 'Na'},
+    'maatschappijleer': {'color': '#dc2626', 'bg': '#fee2e2', 'gradient': '#7f1d1d,#dc2626', 'icon': 'Ma'},
+    'geschiedenis':   {'color': '#b45309', 'bg': '#fef3c7', 'gradient': '#78350f,#b45309', 'icon': 'Gs'},
+    'aardrijkskunde': {'color': '#0891b2', 'bg': '#cffafe', 'gradient': '#164e63,#0891b2', 'icon': 'Ak'},
+    'economie':       {'color': '#4f46e5', 'bg': '#e0e7ff', 'gradient': '#312e81,#4f46e5', 'icon': 'Ec'},
+    'nederlands':     {'color': '#e11d48', 'bg': '#ffe4e6', 'gradient': '#881337,#e11d48', 'icon': 'Ne'},
+    'engels':         {'color': '#0284c7', 'bg': '#e0f2fe', 'gradient': '#0c4a6e,#0284c7', 'icon': 'En'},
+}
+VAK_DEFAULT = {'color': '#6366f1', 'bg': '#e0e7ff', 'gradient': '#3730a3,#6366f1', 'icon': '?'}
+
+HOME_URL = "https://rwrw01.github.io/Claudecodedingetjes/"
+
+
+def _index_template(title: str, breadcrumb_html: str, cards_html: str) -> str:
+    """Genereer een index-pagina HTML."""
+    return f"""<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title} — Interactieve lesstof</title>
+    <style>
+        :root {{ --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }}
+        * {{ margin:0; padding:0; box-sizing:border-box; }}
+        body {{ font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }}
+        header {{ background:linear-gradient(135deg,#1e293b,#334155); color:white; padding:2.5rem 1rem; text-align:center; }}
+        header h1 {{ font-size:2rem; margin-bottom:0.3rem; }}
+        header p {{ opacity:0.8; font-size:1rem; }}
+        .breadcrumb {{ padding:1rem; max-width:700px; margin:0 auto; font-size:0.9rem; color:var(--muted); }}
+        .breadcrumb a {{ color:#2563eb; text-decoration:none; }}
+        .breadcrumb a:hover {{ text-decoration:underline; }}
+        .container {{ max-width:700px; margin:0 auto; padding:1rem 1rem 2.5rem; flex:1; }}
+        .card {{ display:flex; align-items:center; gap:1.25rem; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:0 1px 3px rgba(0,0,0,0.08); padding:1.5rem; margin-bottom:1.25rem; text-decoration:none; color:var(--text); transition:transform 0.15s,box-shadow 0.15s; }}
+        .card:hover {{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,0.1); }}
+        .card-icon {{ width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.3rem; color:white; flex-shrink:0; }}
+        .card h2 {{ font-size:1.2rem; margin-bottom:0.2rem; }}
+        .card p {{ color:var(--muted); font-size:0.9rem; margin:0; }}
+        .badge {{ font-size:0.75rem; font-weight:600; padding:0.15rem 0.5rem; border-radius:999px; display:inline-block; margin-top:0.4rem; }}
+        footer {{ text-align:center; padding:2rem 1rem; color:var(--muted); font-size:0.85rem; }}
+    </style>
+</head>
+<body>
+<header>
+    <h1>{title}</h1>
+    <p>Interactieve lesstof</p>
+</header>
+<nav class="breadcrumb">{breadcrumb_html}</nav>
+<div class="container">
+{cards_html}
+</div>
+<footer>
+    <p>Interactieve lesstof</p>
+    <p style="margin-top:0.75rem;font-size:0.8rem;">
+        Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code" style="color:#2563eb;">Claude Code</a>.
+        Vrij hergebruik onder <a href="https://eupl.eu/" style="color:#2563eb;">EUPL-1.2</a>.
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#2563eb;">GitHub</a>
+    </p>
+</footer>
+</body>
+</html>"""
+
+
+def _card_html(href: str, title: str, subtitle: str, vak_slug: str = "", badge: str = "") -> str:
+    """Genereer een enkele kaart."""
+    cfg = VAK_KLEUREN.get(vak_slug, VAK_DEFAULT)
+    icon = cfg['icon']
+    badge_html = f'<span class="badge" style="background:{cfg["bg"]};color:{cfg["color"]};">{badge}</span>' if badge else ''
+    return f"""    <a href="{href}" class="card">
+        <div class="card-icon" style="background:linear-gradient(135deg,{cfg['gradient']});">{icon}</div>
+        <div>
+            <h2 style="color:{cfg['color']};">{title}</h2>
+            <p>{subtitle}</p>
+            {badge_html}
+        </div>
+    </a>"""
+
+
+def generate_index_pages(author: str):
+    """Genereer index-pagina's op elk niveau: user/ user/vak/ user/vak/niveau/"""
+    author_dir = Path.cwd() / author
+    if not author_dir.is_dir():
+        return
+
+    print(f"Index-pagina's genereren voor {author}...")
+
+    # Niveau 1: user/index.html — overzicht van vakken
+    vak_dirs = sorted([d for d in author_dir.iterdir() if d.is_dir()])
+    cards = []
+    for vak_dir in vak_dirs:
+        vak_name = vak_dir.name
+        # Tel lessen
+        lesson_count = sum(1 for _ in vak_dir.rglob('metadata.json'))
+        pretty_name = vak_name.replace('-', ' ').title()
+        cards.append(_card_html(
+            href=f"{vak_name}/",
+            title=pretty_name,
+            subtitle=f"{lesson_count} {'les' if lesson_count == 1 else 'lessen'}",
+            vak_slug=vak_name,
+            badge=f"{lesson_count} {'les' if lesson_count == 1 else 'lessen'}",
+        ))
+
+    breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; {author}'
+    index_path = author_dir / 'index.html'
+    index_path.write_text(
+        _index_template(f"Lessen van {author}", breadcrumb, '\n'.join(cards)),
+        encoding='utf-8',
+    )
+    print(f"  {index_path.relative_to(Path.cwd())}")
+
+    # Niveau 2: user/vak/index.html — overzicht van niveaus
+    for vak_dir in vak_dirs:
+        vak_name = vak_dir.name
+        pretty_vak = vak_name.replace('-', ' ').title()
+        niveau_dirs = sorted([d for d in vak_dir.iterdir() if d.is_dir()])
+        cards = []
+        for niveau_dir in niveau_dirs:
+            niveau_name = niveau_dir.name
+            lesson_count = sum(1 for _ in niveau_dir.rglob('metadata.json'))
+            pretty_niveau = niveau_name.replace('-', ' ').upper()
+            cards.append(_card_html(
+                href=f"{niveau_name}/",
+                title=pretty_niveau,
+                subtitle=f"{lesson_count} {'les' if lesson_count == 1 else 'lessen'}",
+                vak_slug=vak_name,
+                badge=f"{lesson_count} {'les' if lesson_count == 1 else 'lessen'}",
+            ))
+
+        breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; <a href="../">{author}</a> &rsaquo; {pretty_vak}'
+        index_path = vak_dir / 'index.html'
+        index_path.write_text(
+            _index_template(f"{pretty_vak} — {author}", breadcrumb, '\n'.join(cards)),
+            encoding='utf-8',
+        )
+        print(f"  {index_path.relative_to(Path.cwd())}")
+
+        # Niveau 3: user/vak/niveau/index.html — overzicht van lessen
+        for niveau_dir in niveau_dirs:
+            niveau_name = niveau_dir.name
+            pretty_niveau = niveau_name.replace('-', ' ').upper()
+            lesson_dirs = sorted([d for d in niveau_dir.iterdir() if d.is_dir()])
+            cards = []
+            for les_dir in lesson_dirs:
+                meta_file = les_dir / 'metadata.json'
+                if meta_file.exists():
+                    meta = json.loads(meta_file.read_text(encoding='utf-8'))
+                    titel = meta.get('titel', les_dir.name.replace('-', ' ').title())
+                    subtitle = f"Issue #{meta.get('issue_number', '?')}"
+                else:
+                    titel = les_dir.name.replace('-', ' ').title()
+                    subtitle = ""
+                cards.append(_card_html(
+                    href=f"{les_dir.name}/",
+                    title=titel,
+                    subtitle=subtitle,
+                    vak_slug=vak_name,
+                ))
+
+            breadcrumb = (
+                f'<a href="{HOME_URL}">Home</a> &rsaquo; '
+                f'<a href="../../">{author}</a> &rsaquo; '
+                f'<a href="../">{pretty_vak}</a> &rsaquo; {pretty_niveau}'
+            )
+            index_path = niveau_dir / 'index.html'
+            index_path.write_text(
+                _index_template(f"{pretty_vak} {pretty_niveau} — {author}", breadcrumb, '\n'.join(cards)),
+                encoding='utf-8',
+            )
+            print(f"  {index_path.relative_to(Path.cwd())}")
+
+    print("  Index-pagina's klaar.")
+
+
 def main():
     # Bepaal provider
     provider = get_provider()
@@ -589,11 +766,11 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     html_content = extract_html(response)
     print(f"  HTML geëxtraheerd ({len(html_content)} karakters)")
 
-    # Bepaal de uitvoermap
+    # Bepaal de uitvoermap: user/vak/niveau/hoofdstuk/
     vak_slug = slugify(vak) if vak else 'overig'
     niveau_slug = slugify(niveau) if niveau else 'algemeen'
     titel_slug = slugify(titel)
-    lesson_dir = Path(issue_author) / vak_slug / f"{niveau_slug}-{titel_slug}"
+    lesson_dir = Path(issue_author) / vak_slug / niveau_slug / titel_slug
     output_path = lesson_dir / 'index.html'
 
     # Maak de map aan en schrijf het bestand
@@ -617,6 +794,9 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     }
     meta_path = full_output.parent / 'metadata.json'
     meta_path.write_text(json.dumps(metadata, indent=2, ensure_ascii=False), encoding='utf-8')
+
+    # Genereer index-pagina's op elk niveau
+    generate_index_pages(issue_author)
 
     # Output voor GitHub Actions
     github_output = os.environ.get('GITHUB_OUTPUT')

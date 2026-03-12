@@ -9,8 +9,8 @@ Dit script:
 4. Update het issue met de resultaten
 
 Ondersteunde providers:
-- deepseek (standaard) — goedkoop, OpenAI-compatibel
-- claude — hogere kwaliteit, duurder
+- claude (standaard) — ondersteunt afbeeldingen, hogere kwaliteit
+- deepseek — goedkoop, alleen tekst (geen afbeeldingen)
 """
 
 import os
@@ -52,8 +52,8 @@ def get_env(name: str, required: bool = True) -> str:
 
 
 def get_provider() -> str:
-    """Bepaal welke AI-provider te gebruiken. Standaard: deepseek."""
-    provider = os.environ.get("AI_PROVIDER", "deepseek").strip().lower()
+    """Bepaal welke AI-provider te gebruiken. Standaard: claude (ondersteunt afbeeldingen)."""
+    provider = os.environ.get("AI_PROVIDER", "claude").strip().lower()
     if provider not in PROVIDERS:
         print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik deepseek.")
         provider = "deepseek"

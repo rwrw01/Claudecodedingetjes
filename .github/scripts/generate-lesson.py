@@ -120,6 +120,7 @@ def slugify(text: str) -> str:
 def parse_issue_body(body: str) -> dict:
     """Parse de gestructureerde issue body (GitHub issue form format)."""
     result = {
+        "naam": "",
         "titel": "",
         "vak": "",
         "vak_anders": "",
@@ -137,7 +138,9 @@ def parse_issue_body(body: str) -> dict:
             if current_field:
                 result[current_field] = '\n'.join(current_value_lines).strip()
             header = line[4:].strip().lower()
-            if 'titel' in header:
+            if 'naam' in header and 'je naam' in header:
+                current_field = 'naam'
+            elif 'titel' in header:
                 current_field = 'titel'
             elif 'vak' in header and 'ander' in header:
                 current_field = 'vak_anders'
@@ -576,20 +579,47 @@ def _card_html(href: str, title: str, subtitle: str, vak_slug: str = "", badge: 
     </a>"""
 
 
+def get_display_name(author_dir: Path, author: str) -> str:
+    """Lees de friendly name uit profile.json, of gebruik de GitHub username."""
+    profile_path = author_dir / 'profile.json'
+    if profile_path.exists():
+        try:
+            profile = json.loads(profile_path.read_text(encoding='utf-8'))
+            return profile.get('display_name', author)
+        except Exception:
+            pass
+    return author
+
+
+def save_display_name(author_dir: Path, author: str, name: str):
+    """Sla de friendly name op in profile.json (update alleen als naam niet leeg is)."""
+    profile_path = author_dir / 'profile.json'
+    profile = {}
+    if profile_path.exists():
+        try:
+            profile = json.loads(profile_path.read_text(encoding='utf-8'))
+        except Exception:
+            pass
+    if name:
+        profile['display_name'] = name
+        profile['github_username'] = author
+        profile_path.write_text(json.dumps(profile, indent=2, ensure_ascii=False), encoding='utf-8')
+
+
 def generate_index_pages(author: str):
     """Genereer index-pagina's op elk niveau: user/ user/vak/ user/vak/niveau/"""
     author_dir = Path.cwd() / author
     if not author_dir.is_dir():
         return
 
-    print(f"Index-pagina's genereren voor {author}...")
+    display_name = get_display_name(author_dir, author)
+    print(f"Index-pagina's genereren voor {display_name} ({author})...")
 
     # Niveau 1: user/index.html — overzicht van vakken
     vak_dirs = sorted([d for d in author_dir.iterdir() if d.is_dir()])
     cards = []
     for vak_dir in vak_dirs:
         vak_name = vak_dir.name
-        # Tel lessen
         lesson_count = sum(1 for _ in vak_dir.rglob('metadata.json'))
         pretty_name = vak_name.replace('-', ' ').title()
         cards.append(_card_html(
@@ -600,10 +630,10 @@ def generate_index_pages(author: str):
             badge=f"{lesson_count} {'les' if lesson_count == 1 else 'lessen'}",
         ))
 
-    breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; {author}'
+    breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; {display_name}'
     index_path = author_dir / 'index.html'
     index_path.write_text(
-        _index_template(f"Lessen van {author}", breadcrumb, '\n'.join(cards)),
+        _index_template(f"Lessen van {display_name}", breadcrumb, '\n'.join(cards)),
         encoding='utf-8',
     )
     print(f"  {index_path.relative_to(Path.cwd())}")
@@ -626,10 +656,10 @@ def generate_index_pages(author: str):
                 badge=f"{lesson_count} {'les' if lesson_count == 1 else 'lessen'}",
             ))
 
-        breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; <a href="../">{author}</a> &rsaquo; {pretty_vak}'
+        breadcrumb = f'<a href="{HOME_URL}">Home</a> &rsaquo; <a href="../">{display_name}</a> &rsaquo; {pretty_vak}'
         index_path = vak_dir / 'index.html'
         index_path.write_text(
-            _index_template(f"{pretty_vak} — {author}", breadcrumb, '\n'.join(cards)),
+            _index_template(f"{pretty_vak} — {display_name}", breadcrumb, '\n'.join(cards)),
             encoding='utf-8',
         )
         print(f"  {index_path.relative_to(Path.cwd())}")
@@ -658,12 +688,12 @@ def generate_index_pages(author: str):
 
             breadcrumb = (
                 f'<a href="{HOME_URL}">Home</a> &rsaquo; '
-                f'<a href="../../">{author}</a> &rsaquo; '
+                f'<a href="../../">{display_name}</a> &rsaquo; '
                 f'<a href="../">{pretty_vak}</a> &rsaquo; {pretty_niveau}'
             )
             index_path = niveau_dir / 'index.html'
             index_path.write_text(
-                _index_template(f"{pretty_vak} {pretty_niveau} — {author}", breadcrumb, '\n'.join(cards)),
+                _index_template(f"{pretty_vak} {pretty_niveau} — {display_name}", breadcrumb, '\n'.join(cards)),
                 encoding='utf-8',
             )
             print(f"  {index_path.relative_to(Path.cwd())}")
@@ -711,8 +741,9 @@ def main():
     niveau = parsed['niveau']
     fotos = parsed['fotos']
     extra = parsed['extra']
+    friendly_name = parsed.get('naam', '').strip()
 
-    print(f"  Parsed: titel='{titel}', vak='{vak}', niveau='{niveau}', fotos={len(fotos)}, extra={len(extra)} chars")
+    print(f"  Parsed: titel='{titel}', vak='{vak}', niveau='{niveau}', fotos={len(fotos)}, naam='{friendly_name}'")
 
     if not titel:
         print("FOUT: Geen titel gevonden in het issue.")
@@ -780,10 +811,17 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     full_output.write_text(html_content, encoding='utf-8')
     print(f"  Les opgeslagen: {output_path}")
 
+    # Sla friendly name op in profile.json (als opgegeven)
+    author_dir = Path.cwd() / issue_author
+    if friendly_name:
+        save_display_name(author_dir, issue_author, friendly_name)
+        print(f"  Friendly name opgeslagen: {friendly_name}")
+
     # Schrijf metadata als JSON
     metadata = {
         "issue_number": int(issue_number),
         "issue_author": issue_author,
+        "display_name": friendly_name or get_display_name(author_dir, issue_author),
         "titel": titel,
         "vak": vak,
         "niveau": niveau,

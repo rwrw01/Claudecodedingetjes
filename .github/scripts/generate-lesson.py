@@ -13,6 +13,7 @@ Ondersteunde providers:
 - deepseek — goedkoop, alleen tekst (geen afbeeldingen)
 """
 
+import io
 import os
 import re
 import sys
@@ -149,21 +150,82 @@ def parse_issue_body(body: str) -> dict:
     return result
 
 
+def resize_image(data: bytes, max_bytes: int = 3_500_000, max_dim: int = 2048) -> tuple[bytes, str]:
+    """Verklein een afbeelding zodat deze binnen de API-limieten past.
+
+    Retourneert (bytes, media_type). Altijd JPEG output voor compressie.
+    Claude API max: ~5MB per afbeelding, we mikken op 3.5MB voor marge.
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        # Pillow niet beschikbaar — geef origineel terug en hoop op het beste
+        print("  WAARSCHUWING: Pillow niet geïnstalleerd, afbeelding niet verkleind")
+        return data, 'image/jpeg'
+
+    img = Image.open(io.BytesIO(data))
+
+    # Converteer naar RGB als nodig (bijv. RGBA, palette)
+    if img.mode not in ('RGB', 'L'):
+        img = img.convert('RGB')
+
+    # Verklein als de dimensies te groot zijn
+    w, h = img.size
+    if w > max_dim or h > max_dim:
+        ratio = min(max_dim / w, max_dim / h)
+        new_w, new_h = int(w * ratio), int(h * ratio)
+        img = img.resize((new_w, new_h), Image.LANCZOS)
+        print(f"  Verkleind van {w}x{h} naar {new_w}x{new_h}")
+
+    # Probeer met afnemende kwaliteit tot het past
+    for quality in (85, 70, 55, 40):
+        buf = io.BytesIO()
+        img.save(buf, format='JPEG', quality=quality, optimize=True)
+        result = buf.getvalue()
+        if len(result) <= max_bytes:
+            print(f"  JPEG kwaliteit {quality}: {len(result) // 1024}KB")
+            return result, 'image/jpeg'
+
+    # Als het nog steeds te groot is, verklein verder
+    for scale in (0.75, 0.5, 0.35):
+        w, h = img.size
+        img_small = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+        buf = io.BytesIO()
+        img_small.save(buf, format='JPEG', quality=50, optimize=True)
+        result = buf.getvalue()
+        if len(result) <= max_bytes:
+            print(f"  Verder verkleind ({scale}x): {len(result) // 1024}KB")
+            return result, 'image/jpeg'
+
+    print(f"  WAARSCHUWING: afbeelding nog steeds {len(result) // 1024}KB na maximale compressie")
+    return result, 'image/jpeg'
+
+
 def download_image(url: str) -> tuple[bytes, str]:
-    """Download een afbeelding en retourneer (bytes, media_type)."""
+    """Download een afbeelding, verklein indien nodig, en retourneer (bytes, media_type)."""
     req = urllib.request.Request(url, headers={'User-Agent': 'GitHub-Actions-Lesson-Generator'})
     with urllib.request.urlopen(req, timeout=30) as resp:
         data = resp.read()
-        content_type = resp.headers.get('Content-Type', 'image/png')
 
-    if 'jpeg' in content_type or 'jpg' in content_type or url.lower().endswith(('.jpg', '.jpeg')):
-        media_type = 'image/jpeg'
-    elif 'gif' in content_type or url.lower().endswith('.gif'):
-        media_type = 'image/gif'
-    elif 'webp' in content_type or url.lower().endswith('.webp'):
-        media_type = 'image/webp'
+    original_kb = len(data) // 1024
+    print(f"  Origineel: {original_kb}KB")
+
+    # Verklein als groter dan 3.5MB (Claude API limiet ~5MB per afbeelding)
+    if len(data) > 3_500_000:
+        data, media_type = resize_image(data)
     else:
-        media_type = 'image/png'
+        # Bepaal media type
+        if url.lower().endswith(('.jpg', '.jpeg')) or data[:3] == b'\xff\xd8\xff':
+            media_type = 'image/jpeg'
+        elif url.lower().endswith('.png') or data[:4] == b'\x89PNG':
+            media_type = 'image/png'
+        elif url.lower().endswith('.gif') or data[:3] == b'GIF':
+            media_type = 'image/gif'
+        elif url.lower().endswith('.webp') or data[8:12] == b'WEBP':
+            media_type = 'image/webp'
+        else:
+            # Onbekend format — converteer naar JPEG voor veiligheid
+            data, media_type = resize_image(data)
 
     return data, media_type
 

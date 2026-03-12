@@ -36,7 +36,7 @@ PROVIDERS = {
     "claude": {
         "name": "Claude",
         "api_url": "https://api.anthropic.com/v1/messages",
-        "model": "claude-sonnet-4-5-latest",
+        "model": "claude-sonnet-4-5-20250929",
         "max_tokens": 16000,
         "env_key": "ANTHROPIC_API_KEY",
     },

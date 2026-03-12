@@ -87,6 +87,11 @@ Genereer EEN compleet HTML-bestand met de volgende structuur:
 - Sliders met `oninput` event handlers
 - Gebruik komma's als decimaalteken in de UI (Nederlands)
 - Parse invoer met `.replace(',', '.')` voor berekeningen
+- Gebruik ook OPEN VRAGEN (niet alleen invulvelden met exact antwoord):
+  - Vraag de leerling om in eigen woorden iets uit te leggen
+  - Toon een "Toon antwoord" knop die een voorbeeldantwoord onthult
+- Bij FOUTE antwoorden: toon ALTIJD een "Toon juiste antwoord" knop zodat de leerling kan zien wat het goede antwoord is
+- Feedback bij fout antwoord moet constructief zijn: leg kort uit waarom het fout is en toon het juiste antwoord
 
 ## Kleurenschema per vak
 - Wiskunde: --primary: #2563eb (blauw), gradient: #1e3a5f → #2563eb

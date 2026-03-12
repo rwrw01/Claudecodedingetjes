@@ -40,7 +40,7 @@ Genereer EEN compleet HTML-bestand met de volgende structuur:
         <h1>{titel}</h1>
         <p>{ondertitel}</p>
     </header>
-    <nav class="breadcrumb">...</nav>
+    <nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; {vak} &rsaquo; {titel}</nav>
     <div class="container">
         <!-- Inhoudsopgave -->
         <!-- Theorie-secties met .card -->
@@ -56,7 +56,7 @@ Genereer EEN compleet HTML-bestand met de volgende structuur:
 
 ## Verplichte componenten
 1. **Header** met gradient achtergrond, titel en ondertitel
-2. **Breadcrumb** navigatie
+2. **Breadcrumb** navigatie met werkende link naar Home (https://rwrw01.github.io/Claudecodedingetjes/)
 3. **Inhoudsopgave** met anchor links
 4. **Theorie-secties** in .card containers met:
    - .formula boxes voor formules (blauwe linkerborder)

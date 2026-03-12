@@ -135,16 +135,38 @@ jobs:
               REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
               PAGES_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}"
 
+              # Lees kosten uit metadata
+              META_FILE="${LESSON_PATH%/*}/metadata.json"
+              COST_INFO=$(python3 -c "
+          import json
+          try:
+              meta = json.load(open('${META_FILE}'))
+              u = meta.get('usage', {})
+              if u and u.get('estimated_cost_usd'):
+                  inp = u.get('input_tokens', 0)
+                  out = u.get('output_tokens', 0)
+                  cost = u['estimated_cost_usd']
+                  print(f'💰 **Kosten:** {inp:,} input + {out:,} output tokens = **\${cost:.4f}** (~€{cost*0.92:.4f})')
+              else:
+                  print('')
+          except: print('')
+          ")
+
               # Reactie: klaar
-              gh issue comment "$ISSUE_NUM" --body "$(cat <<EOFCOMMENT
-          ✅ **Les gegenereerd!** (met ${AI_PROVIDER})
+              COMMENT_BODY="✅ **Les gegenereerd!** (met ${AI_PROVIDER})
 
           De les is aangemaakt en direct naar main gecommit.
 
           📄 [Bekijk de bestanden](https://github.com/${{ github.repository }}/tree/main/${LESSON_PATH%/*})
-          🌐 [Bekijk de les](${PAGES_URL}/${LESSON_PATH})
-          EOFCOMMENT
-              )"
+          🌐 [Bekijk de les](${PAGES_URL}/${LESSON_PATH})"
+
+              if [ -n "$COST_INFO" ]; then
+                COMMENT_BODY="${COMMENT_BODY}
+
+          ${COST_INFO}"
+              fi
+
+              gh issue comment "$ISSUE_NUM" --body "$COMMENT_BODY"
 
               # Label als verwerkt en sluit (maak label aan als het niet bestaat)
               gh label create "verwerkt" --color "0e8a16" --description "Les is gegenereerd" 2>/dev/null || true

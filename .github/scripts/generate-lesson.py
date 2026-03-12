@@ -115,15 +115,21 @@ def parse_issue_body(body: str) -> dict:
     if current_field:
         result[current_field] = '\n'.join(current_value_lines).strip()
 
-    # Parse foto URLs
+    # Parse foto URLs — ondersteunt diverse GitHub image hosting domeinen
     foto_text = result.get('fotos_raw', '') or body
     foto_urls = re.findall(
-        r'https://(?:user-images\.githubusercontent\.com|github\.com)[^\s\)\"\']+\.(?:png|jpg|jpeg|gif|webp)',
+        r'https://(?:user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|github\.user-content\.com|github\.com/user-attachments|github\.com)[^\s\)\"\']+\.(?:png|jpg|jpeg|gif|webp)',
         foto_text,
         re.IGNORECASE,
     )
+    # Markdown afbeeldingen: ![alt](url)
     foto_urls += re.findall(
         r'!\[.*?\]\((https://[^\s\)]+)\)',
+        foto_text,
+    )
+    # GitHub attachment URLs zonder extensie (bijv. github.com/user-attachments/assets/...)
+    foto_urls += re.findall(
+        r'https://github\.com/user-attachments/assets/[^\s\)\"\']+',
         foto_text,
     )
     seen = set()
@@ -327,10 +333,19 @@ def main():
     github_token = get_env('GITHUB_TOKEN')
     repo = get_env('GITHUB_REPOSITORY')
     issue_number = get_env('ISSUE_NUMBER')
-    issue_body = get_env('ISSUE_BODY')
     issue_author = get_env('ISSUE_AUTHOR')
 
+    # Issue body: lees uit bestand (veiliger dan env var bij multiline content)
+    issue_body_file = os.environ.get('ISSUE_BODY_FILE', '').strip()
+    if issue_body_file and Path(issue_body_file).exists():
+        issue_body = Path(issue_body_file).read_text(encoding='utf-8')
+        print(f"  Issue body gelezen uit bestand: {issue_body_file} ({len(issue_body)} chars)")
+    else:
+        issue_body = get_env('ISSUE_BODY')
+        print(f"  Issue body gelezen uit env var ({len(issue_body)} chars)")
+
     print(f"Verwerk issue #{issue_number} van {issue_author}...")
+    print(f"  Issue body (eerste 500 chars): {issue_body[:500]}")
 
     # Parse issue
     parsed = parse_issue_body(issue_body)
@@ -340,11 +355,14 @@ def main():
     fotos = parsed['fotos']
     extra = parsed['extra']
 
+    print(f"  Parsed: titel='{titel}', vak='{vak}', niveau='{niveau}', fotos={len(fotos)}, extra={len(extra)} chars")
+
     if not titel:
         print("FOUT: Geen titel gevonden in het issue.")
         sys.exit(1)
     if not fotos:
         print("FOUT: Geen foto's gevonden in het issue.")
+        print(f"  Volledige issue body:\n{issue_body}")
         sys.exit(1)
 
     print(f"  Titel: {titel}")

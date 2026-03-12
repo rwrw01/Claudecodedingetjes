@@ -76,7 +76,10 @@ jobs:
           AI_PROVIDER: ${{ inputs.ai_provider || 'claude' }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
         run: |
+          set -euo pipefail
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
@@ -85,19 +88,24 @@ jobs:
             echo "Verwerk issue #${ISSUE_NUM} met ${AI_PROVIDER}"
             echo "=========================================="
 
-            # Haal issue data op
-            ISSUE_JSON=$(gh issue view "$ISSUE_NUM" --json body,author,title)
-            ISSUE_BODY=$(echo "$ISSUE_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['body'])")
-            ISSUE_AUTHOR=$(echo "$ISSUE_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['author']['login'])")
-            ISSUE_TITLE=$(echo "$ISSUE_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['title'][:60])")
+            # Haal issue data op en schrijf naar tijdelijk bestand (voorkomt shell-escaping problemen)
+            gh issue view "$ISSUE_NUM" --json body,author,title > /tmp/issue.json
+            echo "Issue JSON opgehaald:"
+            python3 -c "import json; d=json.load(open('/tmp/issue.json')); print(f'  Titel: {d[\"title\"][:60]}'); print(f'  Auteur: {d[\"author\"][\"login\"]}'); print(f'  Body lengte: {len(d[\"body\"])} chars')"
+
+            ISSUE_AUTHOR=$(python3 -c "import json; print(json.load(open('/tmp/issue.json'))['author']['login'])")
+            ISSUE_TITLE=$(python3 -c "import json; print(json.load(open('/tmp/issue.json'))['title'][:60])")
+
+            # Schrijf issue body naar apart bestand (kan multiline + speciale tekens bevatten)
+            python3 -c "import json; f=open('/tmp/issue_body.txt','w'); f.write(json.load(open('/tmp/issue.json'))['body']); f.close()"
 
             # Reactie: bezig
             gh issue comment "$ISSUE_NUM" \
               --body "⏳ **Bezig met genereren...** De les wordt nu automatisch gemaakt met **${AI_PROVIDER}**. Dit duurt 1-3 minuten."
 
-            # Draai het generatiescript
+            # Draai het generatiescript — body via bestand, niet via env var
             export ISSUE_NUMBER="$ISSUE_NUM"
-            export ISSUE_BODY
+            export ISSUE_BODY_FILE="/tmp/issue_body.txt"
             export ISSUE_AUTHOR
 
             if python3 .github/scripts/generate-lesson.py; then
@@ -125,14 +133,14 @@ jobs:
               PAGES_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}"
 
               # Reactie: klaar
-              gh issue comment "$ISSUE_NUM" --body "$(cat <<EOF
+              gh issue comment "$ISSUE_NUM" --body "$(cat <<EOFCOMMENT
           ✅ **Les gegenereerd!** (met ${AI_PROVIDER})
 
           De les is aangemaakt en direct naar main gecommit.
 
           📄 [Bekijk de bestanden](https://github.com/${{ github.repository }}/tree/main/${LESSON_PATH%/*})
           🌐 [Bekijk de les](${PAGES_URL}/${LESSON_PATH})
-          EOF
+          EOFCOMMENT
               )"
 
               # Label als verwerkt en sluit
@@ -141,7 +149,7 @@ jobs:
             else
               echo "FOUT bij verwerken van issue #${ISSUE_NUM}"
               gh issue comment "$ISSUE_NUM" \
-                --body "❌ **Fout bij genereren met ${AI_PROVIDER}.** Er ging iets mis. Controleer of de foto's zichtbaar zijn en het formulier correct is ingevuld."
+                --body "❌ **Fout bij genereren met ${AI_PROVIDER}.** Er ging iets mis. Controleer de Actions-log voor details."
             fi
           done
 

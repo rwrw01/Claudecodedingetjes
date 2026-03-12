@@ -1,0 +1,138 @@
+name: Automatische lesgeneratie
+
+on:
+  # Trigger bij het toevoegen van het label 'nieuwe-les'
+  issues:
+    types: [labeled]
+
+  # Elk uur als vangnet voor gemiste issues
+  schedule:
+    - cron: '0 * * * *'
+
+  # Handmatige trigger voor testen
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Issue nummer om te verwerken'
+        required: true
+        type: number
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    if: >
+      (github.event_name == 'issues' && github.event.label.name == 'nieuwe-les') ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Python opzetten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Bepaal te verwerken issues
+        id: issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "issue_numbers=${{ inputs.issue_number }}" >> "$GITHUB_OUTPUT"
+          elif [ "${{ github.event_name }}" = "issues" ]; then
+            echo "issue_numbers=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+          else
+            # Cron: zoek open issues met 'nieuwe-les' maar zonder 'verwerkt'
+            ISSUES=$(gh issue list \
+              --label "nieuwe-les" \
+              --state open \
+              --json number,labels \
+              --jq '[.[] | select(.labels | map(.name) | index("verwerkt") | not)] | .[].number' \
+              | tr '\n' ' ')
+            echo "issue_numbers=$ISSUES" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Verwerk issues
+        if: steps.issues.outputs.issue_numbers != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          for ISSUE_NUM in ${{ steps.issues.outputs.issue_numbers }}; do
+            echo "=========================================="
+            echo "Verwerk issue #${ISSUE_NUM}"
+            echo "=========================================="
+
+            # Haal issue data op
+            ISSUE_JSON=$(gh issue view "$ISSUE_NUM" --json body,author,title)
+            ISSUE_BODY=$(echo "$ISSUE_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['body'])")
+            ISSUE_AUTHOR=$(echo "$ISSUE_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['author']['login'])")
+            ISSUE_TITLE=$(echo "$ISSUE_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['title'][:60])")
+
+            # Reactie: bezig
+            gh issue comment "$ISSUE_NUM" \
+              --body "⏳ **Bezig met genereren...** De les wordt nu automatisch gemaakt. Dit duurt 1-3 minuten."
+
+            # Draai het generatiescript
+            export ISSUE_NUMBER="$ISSUE_NUM"
+            export ISSUE_BODY
+            export ISSUE_AUTHOR
+
+            if python3 .github/scripts/generate-lesson.py; then
+              # Lees het gegenereerde pad uit metadata
+              LESSON_PATH=$(python3 -c "
+          import os, json
+          from pathlib import Path
+          author = os.environ['ISSUE_AUTHOR']
+          issue_nr = os.environ['ISSUE_NUMBER']
+          for p in Path(author).rglob('metadata.json'):
+              meta = json.loads(p.read_text())
+              if str(meta.get('issue_number')) == issue_nr:
+                  print(meta['generated_path'])
+                  break
+          ")
+
+              # Commit en push
+              git add -A
+              git commit -m "Nieuwe les: ${ISSUE_TITLE} (issue #${ISSUE_NUM})"
+              git push
+
+              # GitHub Pages URL
+              REPO_OWNER=$(echo "${{ github.repository }}" | cut -d'/' -f1)
+              REPO_NAME=$(echo "${{ github.repository }}" | cut -d'/' -f2)
+              PAGES_URL="https://${REPO_OWNER}.github.io/${REPO_NAME}"
+
+              # Reactie: klaar
+              gh issue comment "$ISSUE_NUM" --body "$(cat <<EOF
+          ✅ **Les gegenereerd!**
+
+          De les is aangemaakt en direct naar main gecommit.
+
+          📄 [Bekijk de bestanden](https://github.com/${{ github.repository }}/tree/main/${LESSON_PATH%/*})
+          🌐 [Bekijk de les](${PAGES_URL}/${LESSON_PATH})
+          EOF
+              )"
+
+              # Label als verwerkt en sluit
+              gh issue edit "$ISSUE_NUM" --add-label "verwerkt"
+              gh issue close "$ISSUE_NUM" --reason completed
+            else
+              echo "FOUT bij verwerken van issue #${ISSUE_NUM}"
+              gh issue comment "$ISSUE_NUM" \
+                --body "❌ **Fout bij genereren.** Er ging iets mis. Controleer of de foto's zichtbaar zijn en het formulier correct is ingevuld."
+            fi
+          done
+
+      - name: Geen issues gevonden
+        if: steps.issues.outputs.issue_numbers == ''
+        run: echo "Geen onverwerkte issues gevonden met label 'nieuwe-les'."

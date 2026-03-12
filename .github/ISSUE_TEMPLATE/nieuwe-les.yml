@@ -1,0 +1,87 @@
+name: "\U0001F4DA Nieuwe les aanvragen"
+description: Upload een of meerdere foto's en laat automatisch een interactieve les genereren
+title: "[Les] "
+labels: ["nieuwe-les"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Nieuwe les aanvragen
+        Upload een of meerdere foto's (bijv. van een lesboekpagina, werkblad, of aantekeningen) en er wordt automatisch een interactieve les van gemaakt.
+
+  - type: input
+    id: titel
+    attributes:
+      label: Titel van de les
+      description: Geef een korte, beschrijvende titel
+      placeholder: "bijv. Kwadratische functies"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: vak
+    attributes:
+      label: Vak
+      description: Kies het vak voor deze les
+      options:
+        - Wiskunde
+        - Scheikunde
+        - Biologie
+        - Natuurkunde
+        - Maatschappijleer
+        - Geschiedenis
+        - Aardrijkskunde
+        - Economie
+        - Nederlands
+        - Engels
+        - Anders
+    validations:
+      required: true
+
+  - type: input
+    id: vak_anders
+    attributes:
+      label: Ander vak (optioneel)
+      description: Vul hier het vak in als je "Anders" hebt gekozen
+      placeholder: "bijv. Filosofie"
+
+  - type: dropdown
+    id: niveau
+    attributes:
+      label: Niveau
+      description: Kies het onderwijsniveau
+      options:
+        - Onderbouw
+        - HAVO 3
+        - HAVO 4
+        - HAVO 5
+        - VWO 3
+        - VWO 4
+        - VWO 5
+        - VWO 6
+        - MBO
+        - Geavanceerd
+    validations:
+      required: true
+
+  - type: textarea
+    id: fotos
+    attributes:
+      label: "Foto's"
+      description: |
+        Sleep hier een of meerdere foto's naartoe, of plak ze in dit veld.
+        Ondersteunde formaten: PNG, JPG, GIF, WEBP.
+      placeholder: "Sleep foto's hierheen of plak ze..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Extra instructies (optioneel)
+      description: |
+        Geef eventueel extra context of instructies mee, bijvoorbeeld:
+        - Welke onderwerpen uit de foto moeten behandeld worden
+        - Specifieke oefentypen die je wilt
+        - Doelgroep of moeilijkheidsgraad
+      placeholder: "bijv. Focus op de eerste 3 opgaven, maak het geschikt voor herhalingsles"

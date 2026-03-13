@@ -276,24 +276,14 @@ def download_image(url: str) -> tuple[bytes, str]:
 
 
 def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> tuple[str, dict]:
-    """Roep de DeepSeek API aan (OpenAI-compatibel format). Retourneert (tekst, usage)."""
+    """Roep de DeepSeek API aan (OpenAI-compatibel format). Retourneert (tekst, usage).
+
+    Let op: DeepSeek ondersteunt GEEN afbeeldingen. Images worden genegeerd.
+    """
     config = PROVIDERS["deepseek"]
 
-    # Bouw de content array op (OpenAI vision format)
-    content = []
-
-    for img in images:
-        content.append({
-            "type": "image_url",
-            "image_url": {
-                "url": f"data:{img['media_type']};base64,{img['data_b64']}",
-            },
-        })
-
-    content.append({
-        "type": "text",
-        "text": user_context,
-    })
+    if images:
+        print(f"  DeepSeek ondersteunt geen afbeeldingen — {len(images)} foto('s) overgeslagen.")
 
     payload = {
         "model": config["model"],
@@ -305,7 +295,7 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
             },
             {
                 "role": "user",
-                "content": content,
+                "content": user_context,
             },
         ],
     }
@@ -830,7 +820,22 @@ def main():
         print(f"  Prompt: {base_prompt_path.name} (standaard)")
 
     # Bouw de gebruikerscontext op
-    user_context = f"""Maak een interactieve les met de volgende gegevens:
+    if provider == "deepseek":
+        # DeepSeek kan geen afbeeldingen verwerken — geef duidelijke tekstinstructies
+        user_context = f"""Maak een interactieve les met de volgende gegevens:
+
+- Titel: {titel}
+- Vak: {vak}
+- Niveau: {niveau}
+- Auteur (GitHub): {issue_author}
+
+LET OP: Er zijn foto's van lesmateriaal geüpload, maar jij kunt deze niet zien.
+Maak de les op basis van de titel, het vak en het niveau.
+Gebruik je eigen kennis over dit onderwerp om een complete les te maken.
+Maak EIGEN voorbeelden die passen bij het niveau.
+"""
+    else:
+        user_context = f"""Maak een interactieve les met de volgende gegevens:
 
 - Titel: {titel}
 - Vak: {vak}

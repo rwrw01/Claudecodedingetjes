@@ -25,7 +25,7 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     if: >
-      (github.event_name == 'issues' && github.event.label.name == 'nieuwe-les') ||
+      (github.event_name == 'issues' && (github.event.label.name == 'nieuwe-les' || github.event.label.name == 'deepseek')) ||
       github.event_name == 'schedule' ||
       github.event_name == 'workflow_dispatch'
 
@@ -95,6 +95,13 @@ jobs:
 
             # Schrijf issue body naar apart bestand (kan multiline + speciale tekens bevatten)
             python3 -c "import json; f=open('/tmp/issue_body.txt','w'); f.write(json.load(open('/tmp/issue.json'))['body']); f.close()"
+
+            # Check of issue het 'nieuwe-les' label heeft (vereist)
+            HAS_NIEUWE_LES=$(gh issue view "$ISSUE_NUM" --json labels --jq '.labels[].name' | grep -c '^nieuwe-les$' || true)
+            if [ "$HAS_NIEUWE_LES" -eq 0 ]; then
+              echo "  Issue #${ISSUE_NUM} heeft geen 'nieuwe-les' label, overgeslagen."
+              continue
+            fi
 
             # Bepaal provider uit issue-labels (deepseek label overschrijft default)
             HAS_DEEPSEEK=$(gh issue view "$ISSUE_NUM" --json labels --jq '.labels[].name' | grep -c '^deepseek$' || true)

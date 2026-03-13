@@ -125,9 +125,10 @@ jobs:
                   break
           ")
 
-              # Commit en push
+              # Commit en push (met pull --rebase als remote vooruit is)
               git add -A
               git commit -m "Nieuwe les: ${ISSUE_TITLE} (issue #${ISSUE_NUM}, ${AI_PROVIDER})"
+              git pull --rebase origin main || true
               git push
 
               # GitHub Pages URL

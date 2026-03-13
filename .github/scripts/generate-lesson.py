@@ -30,7 +30,7 @@ PROVIDERS = {
         "name": "DeepSeek",
         "api_url": "https://api.deepseek.com/chat/completions",
         "model": "deepseek-chat",
-        "max_tokens": 16000,
+        "max_tokens": 8192,
         "env_key": "DEEPSEEK_API_KEY",
     },
     "claude": {

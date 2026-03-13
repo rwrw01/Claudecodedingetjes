@@ -9,8 +9,8 @@ Dit script:
 4. Update het issue met de resultaten
 
 Ondersteunde providers:
-- deepseek (standaard) — goedkoop, eigen prompt met didactische instructies
-- claude — ondersteunt afbeeldingen, hogere kwaliteit
+- claude (standaard) — ondersteunt afbeeldingen, hogere kwaliteit
+- deepseek — goedkoop, gebruikt Tesseract OCR voor tekst uit foto's
 """
 
 import io
@@ -54,11 +54,11 @@ def get_env(name: str, required: bool = True) -> str:
 
 
 def get_provider() -> str:
-    """Bepaal welke AI-provider te gebruiken. Standaard: deepseek (goedkoop)."""
-    provider = os.environ.get("AI_PROVIDER", "deepseek").strip().lower()
+    """Bepaal welke AI-provider te gebruiken. Standaard: claude."""
+    provider = os.environ.get("AI_PROVIDER", "claude").strip().lower()
     if provider not in PROVIDERS:
-        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik deepseek.")
-        provider = "deepseek"
+        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik claude.")
+        provider = "claude"
     return provider
 
 
@@ -275,15 +275,54 @@ def download_image(url: str) -> tuple[bytes, str]:
     return data, media_type
 
 
+def ocr_images(images: list[dict]) -> str:
+    """Extraheer tekst uit afbeeldingen met Tesseract OCR. Retourneert alle tekst samengevoegd."""
+    import subprocess
+    import tempfile
+
+    all_text = []
+    for i, img in enumerate(images):
+        img_data = base64.b64decode(img['data_b64'])
+
+        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
+            f.write(img_data)
+            tmp_path = f.name
+
+        try:
+            # Tesseract met Nederlandse + Engelse taalondersteuning
+            result = subprocess.run(
+                ['tesseract', tmp_path, 'stdout', '-l', 'nld+eng'],
+                capture_output=True, text=True, timeout=30,
+            )
+            text = result.stdout.strip()
+            if text:
+                all_text.append(f"--- Foto {i+1} ---\n{text}")
+                print(f"  OCR foto {i+1}: {len(text)} tekens geëxtraheerd")
+            else:
+                print(f"  OCR foto {i+1}: geen tekst gevonden")
+        except Exception as e:
+            print(f"  OCR foto {i+1} fout: {e}")
+        finally:
+            os.unlink(tmp_path)
+
+    return '\n\n'.join(all_text)
+
+
 def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> tuple[str, dict]:
     """Roep de DeepSeek API aan (OpenAI-compatibel format). Retourneert (tekst, usage).
 
-    Let op: DeepSeek ondersteunt GEEN afbeeldingen. Images worden genegeerd.
+    DeepSeek ondersteunt geen afbeeldingen. Tekst wordt via Tesseract OCR geëxtraheerd.
     """
     config = PROVIDERS["deepseek"]
 
     if images:
-        print(f"  DeepSeek ondersteunt geen afbeeldingen — {len(images)} foto('s) overgeslagen.")
+        print(f"  Tesseract OCR op {len(images)} foto('s)...")
+        ocr_text = ocr_images(images)
+        if ocr_text:
+            user_context += f"\n\n## Tekst geëxtraheerd uit de foto's (via OCR)\n\n{ocr_text}\n"
+            print(f"  Totaal {len(ocr_text)} tekens uit OCR toegevoegd aan context.")
+        else:
+            print(f"  WAARSCHUWING: Geen tekst uit foto's geëxtraheerd.")
 
     payload = {
         "model": config["model"],
@@ -821,7 +860,7 @@ def main():
 
     # Bouw de gebruikerscontext op
     if provider == "deepseek":
-        # DeepSeek kan geen afbeeldingen verwerken — geef duidelijke tekstinstructies
+        # DeepSeek: tekst uit foto's wordt via Tesseract OCR toegevoegd door call_deepseek_api
         user_context = f"""Maak een interactieve les met de volgende gegevens:
 
 - Titel: {titel}
@@ -829,10 +868,9 @@ def main():
 - Niveau: {niveau}
 - Auteur (GitHub): {issue_author}
 
-LET OP: Er zijn foto's van lesmateriaal geüpload, maar jij kunt deze niet zien.
-Maak de les op basis van de titel, het vak en het niveau.
-Gebruik je eigen kennis over dit onderwerp om een complete les te maken.
-Maak EIGEN voorbeelden die passen bij het niveau.
+Hieronder staat tekst die via OCR uit de foto's van het lesmateriaal is gehaald.
+Gebruik deze tekst als basis voor de les. Maak EIGEN voorbeelden, kopieer niet letterlijk.
+Vul aan met je eigen kennis waar de OCR-tekst onvolledig is.
 """
     else:
         user_context = f"""Maak een interactieve les met de volgende gegevens:

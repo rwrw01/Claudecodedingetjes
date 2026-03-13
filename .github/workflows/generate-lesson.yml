@@ -17,13 +17,13 @@ on:
         required: true
         type: number
       ai_provider:
-        description: 'AI provider (deepseek of claude)'
+        description: 'AI provider'
         required: false
-        default: 'deepseek'
+        default: 'claude'
         type: choice
         options:
-          - deepseek
           - claude
+          - deepseek
 
 permissions:
   contents: write
@@ -46,8 +46,10 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Pillow installeren (afbeeldingscompressie)
-        run: pip install Pillow
+      - name: Dependencies installeren
+        run: |
+          pip install Pillow
+          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-nld
 
       - name: Bepaal te verwerken issues
         id: issues
@@ -75,8 +77,8 @@ jobs:
           # Beide API keys beschikbaar — script kiest de juiste op basis van AI_PROVIDER
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Standaard: deepseek (goedkoop). Bij workflow_dispatch kan je kiezen.
-          AI_PROVIDER: ${{ inputs.ai_provider || 'deepseek' }}
+          # Standaard: claude. Bij workflow_dispatch kan je kiezen.
+          AI_PROVIDER: ${{ inputs.ai_provider || 'claude' }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -101,6 +103,15 @@ jobs:
 
             # Schrijf issue body naar apart bestand (kan multiline + speciale tekens bevatten)
             python3 -c "import json; f=open('/tmp/issue_body.txt','w'); f.write(json.load(open('/tmp/issue.json'))['body']); f.close()"
+
+            # Bepaal provider uit issue-labels (deepseek label overschrijft default)
+            if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+              HAS_DEEPSEEK=$(gh issue view "$ISSUE_NUM" --json labels --jq '.labels[].name' | grep -c '^deepseek$' || true)
+              if [ "$HAS_DEEPSEEK" -gt 0 ]; then
+                export AI_PROVIDER="deepseek"
+                echo "  Provider overschreven door issue-label: deepseek"
+              fi
+            fi
 
             # Reactie: bezig
             gh issue comment "$ISSUE_NUM" \

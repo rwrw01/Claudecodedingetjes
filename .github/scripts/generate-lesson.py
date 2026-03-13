@@ -29,8 +29,8 @@ PROVIDERS = {
     "deepseek": {
         "name": "DeepSeek",
         "api_url": "https://api.deepseek.com/chat/completions",
-        "model": "deepseek-chat",
-        "max_tokens": 8192,
+        "model": "deepseek-reasoner",
+        "max_tokens": 16000,
         "env_key": "DEEPSEEK_API_KEY",
     },
     "claude": {
@@ -324,17 +324,16 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
         else:
             print(f"  WAARSCHUWING: Geen tekst uit foto's geëxtraheerd.")
 
+    # deepseek-reasoner ondersteunt geen system messages — combineer in user message
+    combined_prompt = f"{prompt_text}\n\n---\n\n{user_context}"
+
     payload = {
         "model": config["model"],
         "max_tokens": config["max_tokens"],
         "messages": [
             {
-                "role": "system",
-                "content": prompt_text,
-            },
-            {
                 "role": "user",
-                "content": user_context,
+                "content": combined_prompt,
             },
         ],
     }
@@ -351,7 +350,7 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=300) as resp:
+        with urllib.request.urlopen(req, timeout=600) as resp:
             result = json.loads(resp.read().decode('utf-8'))
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
@@ -457,7 +456,10 @@ def log_usage(result: dict, provider: str, model: str) -> dict:
         # OpenAI-compatibel (DeepSeek)
         input_tokens = usage.get('prompt_tokens', 0)
         output_tokens = usage.get('completion_tokens', 0)
+        reasoning_tokens = usage.get('completion_tokens_details', {}).get('reasoning_tokens', 0)
         cache_read = 0
+        if reasoning_tokens:
+            print(f"  Reasoning tokens: {reasoning_tokens:,} (niet meegerekend in kosten)")
 
     total_tokens = input_tokens + output_tokens
 

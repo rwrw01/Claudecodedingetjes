@@ -11,9 +11,9 @@
   "ai_model": "deepseek-reasoner",
   "usage": {
     "input_tokens": 6745,
-    "output_tokens": 12275,
-    "total_tokens": 19020,
+    "output_tokens": 9668,
+    "total_tokens": 16413,
     "cache_read_tokens": 0,
-    "estimated_cost_usd": 0.007
+    "estimated_cost_usd": 0.0059
   }
 }

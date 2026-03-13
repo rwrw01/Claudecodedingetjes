@@ -9,8 +9,8 @@ Dit script:
 4. Update het issue met de resultaten
 
 Ondersteunde providers:
-- claude (standaard) — ondersteunt afbeeldingen, hogere kwaliteit
-- deepseek — goedkoop, alleen tekst (geen afbeeldingen)
+- deepseek (standaard) — goedkoop, eigen prompt met didactische instructies
+- claude — ondersteunt afbeeldingen, hogere kwaliteit
 """
 
 import io
@@ -54,8 +54,8 @@ def get_env(name: str, required: bool = True) -> str:
 
 
 def get_provider() -> str:
-    """Bepaal welke AI-provider te gebruiken. Standaard: claude (ondersteunt afbeeldingen)."""
-    provider = os.environ.get("AI_PROVIDER", "claude").strip().lower()
+    """Bepaal welke AI-provider te gebruiken. Standaard: deepseek (goedkoop)."""
+    provider = os.environ.get("AI_PROVIDER", "deepseek").strip().lower()
     if provider not in PROVIDERS:
         print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik deepseek.")
         provider = "deepseek"
@@ -817,10 +817,17 @@ def main():
         })
     print(f"  {len(images)} foto's gedownload.")
 
-    # Lees de prompt template
+    # Lees de prompt template (provider-specifiek indien beschikbaar)
     script_dir = Path(__file__).parent
-    prompt_path = script_dir / 'lesson-prompt.txt'
-    prompt_text = prompt_path.read_text(encoding='utf-8')
+    provider_prompt_path = script_dir / f'lesson-prompt-{provider}.txt'
+    base_prompt_path = script_dir / 'lesson-prompt.txt'
+
+    if provider_prompt_path.exists():
+        prompt_text = provider_prompt_path.read_text(encoding='utf-8')
+        print(f"  Prompt: {provider_prompt_path.name} (provider-specifiek)")
+    else:
+        prompt_text = base_prompt_path.read_text(encoding='utf-8')
+        print(f"  Prompt: {base_prompt_path.name} (standaard)")
 
     # Bouw de gebruikerscontext op
     user_context = f"""Maak een interactieve les met de volgende gegevens:

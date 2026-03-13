@@ -19,11 +19,11 @@ on:
       ai_provider:
         description: 'AI provider (deepseek of claude)'
         required: false
-        default: 'claude'
+        default: 'deepseek'
         type: choice
         options:
-          - claude
           - deepseek
+          - claude
 
 permissions:
   contents: write
@@ -75,8 +75,8 @@ jobs:
           # Beide API keys beschikbaar — script kiest de juiste op basis van AI_PROVIDER
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          # Standaard: claude (ondersteunt afbeeldingen). Bij workflow_dispatch kan je kiezen.
-          AI_PROVIDER: ${{ inputs.ai_provider || 'claude' }}
+          # Standaard: deepseek (goedkoop). Bij workflow_dispatch kan je kiezen.
+          AI_PROVIDER: ${{ inputs.ai_provider || 'deepseek' }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}

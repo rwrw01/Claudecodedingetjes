@@ -1,0 +1,41 @@
+name: Check DeepSeek Models
+
+on:
+  workflow_dispatch:
+
+jobs:
+  list-models:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lijst beschikbare DeepSeek modellen
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          echo "=== DeepSeek /models ==="
+          curl -s https://api.deepseek.com/models \
+            -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" | python3 -m json.tool
+
+          echo ""
+          echo "=== Test: stuur image_url naar deepseek-chat ==="
+          curl -s https://api.deepseek.com/chat/completions \
+            -H "Authorization: Bearer ${DEEPSEEK_API_KEY}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "model": "deepseek-chat",
+              "max_tokens": 100,
+              "messages": [{
+                "role": "user",
+                "content": [
+                  {
+                    "type": "image_url",
+                    "image_url": {
+                      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/320px-Camponotus_flavomarginatus_ant.jpg"
+                    }
+                  },
+                  {
+                    "type": "text",
+                    "text": "What is in this image? Reply in 1 sentence."
+                  }
+                ]
+              }]
+            }' | python3 -m json.tool

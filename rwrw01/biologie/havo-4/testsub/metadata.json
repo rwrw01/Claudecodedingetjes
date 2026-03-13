@@ -1,0 +1,19 @@
+{
+  "issue_number": 30,
+  "issue_author": "rwrw01",
+  "display_name": "Ralph",
+  "titel": "Testsub",
+  "vak": "Biologie",
+  "niveau": "HAVO 4",
+  "fotos_count": 3,
+  "generated_path": "rwrw01/biologie/havo-4/testsub/index.html",
+  "ai_provider": "deepseek",
+  "ai_model": "deepseek-reasoner",
+  "usage": {
+    "input_tokens": 6745,
+    "output_tokens": 12275,
+    "total_tokens": 19020,
+    "cache_read_tokens": 0,
+    "estimated_cost_usd": 0.007
+  }
+}

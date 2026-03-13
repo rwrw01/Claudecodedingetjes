@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testsub — Biologie HAVO 4</title>
+    <style>
+        :root {
+            --primary: #16a34a;
+            --primary-light: #dcfce7;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background: linear-gradient(135deg, #14532d 0%, var(--primary) 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .breadcrumb {
+            padding: 1rem 1.5rem;
+            background-color: var(--card);
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .toc {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .toc h2 {
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .toc a:hover {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .card {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-top: 1px solid var(--border);
+        }
+
+        .card h2, .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+        }
+
+        .card p, .card ul, .card ol {
+            margin-bottom: 1rem;
+        }
+
+        .card ul, .card ol {
+            padding-left: 1.5rem;
+        }
+
+        .formula-box {
+            background-color: #f0f9ff;
+            border-left: 5px solid #2563eb;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .tip-box {
+            background-color: #fefce8;
+            border-left: 5px solid #f59e0b;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .warning-box {
+            background-color: #fef2f2;
+            border-left: 5px solid var(--accent);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .example-box {
+            background-color: #f0fdf4;
+            border-left: 5px solid var(--success);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .try-it {
+            background-color: var(--primary-light);
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .try-it h4 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .input-group {
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 0.5rem;
+        }
+
+        input.correct {
+            border-color: var(--success);
+            background-color: #f0fdf4;
+        }
+
+        input.incorrect {
+            border-color: var(--accent);
+            background-color: #fef2f2;
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #14532d;
+        }
+
+        button.secondary {
+            background-color: var(--muted);
+        }
+
+        button.secondary:hover {
+            background-color: #475569;
+        }
+
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.7rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background-color: #f0fdf4;
+            color: var(--success);
+            border: 1px solid var(--success);
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background-color: #fef2f2;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            display: block;
+        }
+
+        .slider-demo {
+            padding: 1.5rem;
+            background-color: #f8fafc;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        .slider-container {
+            margin: 1.5rem 0;
+        }
+
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            -webkit-appearance: none;
+            background: var(--border);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .output {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .mini-exercises, .main-exercises {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            border-top: 4px solid var(--primary);
+        }
+
+        .exercise {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .exercise:last-child {
+            border-bottom: none;
+        }
+
+        .exercise h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .hint {
+            background-color: var(--primary-light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .hint.visible {
+            display: block;
+        }
+
+        .show-answer {
+            margin-top: 1rem;
+        }
+
+        .answer {
+            background-color: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+            border-left: 4px solid var(--primary);
+        }
+
+        .answer.visible {
+            display: block;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .step-reveal {
+            background-color: #f8fafc;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Testsub</h1>
+        <p>Fotosynthese en celademhaling: twee cruciale processen voor leven op aarde</p>
+    </header>
+    <nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; Biologie &rsaquo; Testsub</nav>
+    <div class="container">
+        <div class="toc">
+            <h2>Inhoudsopgave</h2>
+            <ul>
+                <li><a href="#intro">1. Inleiding: energie voor het leven</a></li>
+                <li><a href="#fotosynthese">2. Fotosynthese: van licht tot voedsel</a></li>
+                <li><a href="#factoren">3. Factoren die fotosynthese beïnvloeden</a></li>
+                <li><a href="#celademhaling">4. Celademhaling: energie vrijmaken</a></li>
+                <li><a href="#vergelijking">5. Fotosynthese vs. celademhaling</a></li>
+                <li><a href="#mini">6. Mini-oefeningen</a></li>
+                <li><a href="#hoofd">7. Hoofdoefeningen</a></li>
+            </ul>
+        </div>
+
+        <section id="intro" class="card">
+            <h2>1. Inleiding: energie voor het leven</h2>
+            <p>Alle levende wezens hebben energie nodig om te groeien, bewegen en zich voort te planten. Planten en sommige bacteriën halen deze energie rechtstreeks uit zonlicht via <strong>fotosynthese</strong>. Dieren en schimmels halen energie uit voedsel via <strong>celademhaling</strong>.</p>
+            <p>Deze twee processen zijn elkaars tegenovergestelde en vullen elkaar perfect aan in de natuur. Ze zorgen voor een kringloop van zuurstof, koolstofdioxide en voedsel.</p>
+            <div class="tip-box">
+                <strong>💡 Onthoud:</strong> Planten doen aan fotosynthese én celademhaling. Overdag doen ze vooral fotosynthese, 's nachts alleen celademhaling.
+            </div>
+        </section>
+
+        <section id="fotosynthese" class="card">
+            <h2>2. Fotosynthese: van licht tot voedsel</h2>
+            <p>Fotosynthese vindt plaats in de <strong>bladgroenkorrels (chloroplasten)</strong> van plantencellen. Hier wordt lichtenergie omgezet in chemische energie in de vorm van glucose (suiker).</p>
+            
+            <div class="formula-box">
+                <strong>De formule voor fotosynthese:</strong><br>
+                6 CO₂ + 6 H₂O + lichtenergie → C₆H₁₂O₆ + 6 O₂
+            </div>
+
+            <p><strong>Wat betekent dit?</strong></p>
+            <ul>
+                <li><strong>6 CO₂:</strong> zes moleculen koolstofdioxide (uit de lucht)</li>
+                <li><strong>6 H₂O:</strong> zes moleculen water (uit de bodem)</li>
+                <li><strong>Lichtenergie:</strong> opgevangen door het bladgroen (chlorofyl)</li>
+                <li><strong>→ C₆H₁₂O₆:</strong> wordt omgezet in één molecuul glucose (voedsel)</li>
+                <li><strong>6 O₂:</strong> en zes moleculen zuurstof (die vrijkomt in de lucht)</li>
+            </ul>
+
+            <div class="try-it">
+                <h4>👨‍🔬 Probeer het zelf: vul de formule in</h4>
+                <p>Sleep de juiste termen naar de juiste plek in de formule. Typ het nummer van de term in het vakje.</p>
+                <p>1 = koolstofdioxide, 2 = water, 3 = glucose, 4 = zuurstof</p>
+                <div style="font-family: 'Courier New', monospace; font-size: 1.2rem; margin: 1rem 0;">
+                    <span>6 </span><input type="text" id="form1" style="width: 80px;" placeholder="..."> + 6 <input type="text" id="form2" style="width: 80px;" placeholder="..."> + licht → <input type="text" id="form3" style="width: 80px;" placeholder="..."> + 6 <input type="text" id="form4" style="width: 80px;" placeholder="...">
+                </div>
+                <button onclick="checkFormula()">Controleer</button>
+                <div id="formFeedback" class="feedback"></div>
+            </div>
+
+            <div class="step-reveal">
+                <h4>Stap voor stap: hoe werkt fotosynthese?</h4>
+                <button onclick="revealStep(1)">Stap 1: Licht opvangen</button>
+                <button onclick="revealStep(2)">Stap 2: Water splitsen</button>
+                <button onclick="revealStep(3)">Stap 3: Glucose maken</button>
+                
+                <div id="step1" class="step">
+                    <h5>Stap 1: Licht opvangen</h5>
+                    <p>Chlorofyl in de bladgroenkorrels vangt zonlicht op. Dit geeft energie om de reactie te starten.</p>
+                </div>
+                <div id="step2" class="step">
+                    <h5>Stap 2: Water splitsen</h5>
+                    <p>Met die energie wordt water (H₂O) gesplitst in waterstof (H) en zuurstof (O₂). De zuurstof verdwijnt als gas.</p>
+                </div>
+                <div id="step3" class="step">
+                    <h5>Stap 3: Glucose maken</h5>
+                    <p>De waterstof reageert met koolstofdioxide (CO₂) om glucose (C₆H₁₂O₆) te vormen. Dit kost energie, maar die hadden we al van het licht.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="factoren" class="card">
+            <h2>3. Factoren die fotosynthese beïnvloeden</h2>
+            <p>De snelheid van fotosynthese hangt af van verschillende factoren. Als één factor te weinig aanwezig is, wordt het de <strong>beperkende factor</strong>.</p>
+            
+            <div class="slider-demo">
+                <h4>🌡️ Onderzoek zelf het effect van lichtintensiteit</h4>
+                <p>Hoe meer licht, hoe sneller de fotosynthese... tot een bepaald punt.</p>
+                
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Lichtintensiteit</span>
+                        <span class="output" id="lightOutput">50%</span>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider" id="lightSlider" oninput="updateLight()">
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Fotosynthesesnelheid</span>
+                        <span class="output" id="rateOutput">50%</span>
+                    </div>
+                    <div style="height: 20px; background: linear-gradient(to right, #dcfce7, #16a34a); border-radius: 10px;">
+                        <div id="rateBar" style="height: 100%; width: 50%; background-color: #14532d; border-radius: 10px;"></div>
+                    </div>
+                </div>
+                
+                <p id="lightComment">Bij deze lichtintensiteit stijgt de fotosynthese nog lineair.</p>
+            </div>
+            
+            <div class="try-it">
+                <h4>🤔 Beperkende factoren</h4>
+                <p>Een plant krijgt veel licht, maar de fotosynthese verbetert niet. Wat zou de beperkende factor kunnen zijn?</p>
+                <input type="text" id="factorInput" placeholder="Typ je antwoord hier..." style="width: 100%; max-width: 400px;">
+                <button onclick="checkFactor()">Controleer idee</button>
+                <div id="factorFeedback" class="feedback"></div>
+                <button onclick="showFactorAnswer()" class="secondary">Toon voorbeeldantwoord</button>
+                <div id="factorAnswer" class="answer">
+                    Mogelijke antwoorden: te weinig CO₂ in de lucht, te lage temperatuur, te weinig water of voedingsstoffen.
+                </div>
+            </div>
+        </section>
+
+        <section id="celademhaling" class="card">
+            <h2>4. Celademhaling: energie vrijmaken</h2>
+            <p>Bij celademhaling wordt glucose afgebroken om energie (ATP) vrij te maken. Dit gebeurt in de <strong>mitochondriën</strong> van cellen, bij zowel planten als dieren.</p>
+            
+            <div class="formula-box">
+                <strong>De formule voor celademhaling:</strong><br>
+                C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O + energie (ATP)
+            </div>
+            
+            <p>Vergelijk dit eens met de formule van fotosynthese! Het is precies omgekeerd.</p>
+            
+            <div class="warning-box">
+                <strong>⚠️ Let op:</strong> Celademhaling wordt soms verward met ademhaling (het in- en uitademen). Celademhaling is een chemisch proces in cellen. Ademhaling is het transport van zuurstof en koolstofdioxide.
+            </div>
+            
+            <div class="try-it">
+                <h4>🔄 Wat is het product en wat is de reactant?</h4>
+                <p>Bij celademhaling is glucose een reactant. Wat wordt er met die glucose gemaakt?</p>
+                <input type="text" id="glucoseInput" placeholder="Typ hier..." style="width: 100%; max-width: 300px;">
+                <button onclick="checkGlucose()">Controleer</button>
+                <div id="glucoseFeedback" class="feedback"></div>
+            </div>
+        </section>
+
+        <section id="vergelijking" class="card">
+            <h2>5. Fotosynthese vs. celademhaling</h2>
+            <p>De twee processen vullen elkaar perfect aan in een kringloop:</p>
+            
+            <div class="example-box">
+                <strong>De grote kringloop:</strong><br>
+                1. Planten maken met fotosynthese glucose en zuurstof uit CO₂ en water.<br>
+                2. Dieren en planten zelf gebruiken die glucose en zuurstof bij celademhaling.<br>
+                3. Hierbij komen CO₂ en water vrij, die planten weer kunnen gebruiken.<br>
+                4. En zo gaat het rond...
+            </div>
+            
+            <table style="width:100%; border-collapse: collapse; margin: 1.5rem 0;">
+                <thead>
+                    <tr style="background-color: var(--primary-light);">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid var(--border);">Kenmerk</th>
+                        <th style="padding: 1rem; text-align: left; border: 1px solid var(--border);">Fotosynthese</th>
+                        <th style="padding: 1rem; text-align: left; border: 1px solid var(--border);">Celademhaling</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border);"><strong>Plaats in de cel</strong></td>
+                        <td style="padding: 1rem; border: 1px solid var(--border);">Chloroplast</td>
+                        <td style="padding: 1rem; border: 1px solid var(--border);">Mitochondrion</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border);"><strong>Energie</strong></td>
+                        <td style="padding: 1rem; border: 1px solid var(--border);">Slaat energie op (maakt glucose)</td>
+                        <td style="padding: 1rem; border: 1px solid var(--border);">Maakt energie vrij (breekt glucose af)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 1rem; border: 1px solid var(--border);"><strong>Zuurstof (O₂)</strong></td>
+                        <td style="padding: 1rem; border: 1px solid var(--border);">Wordt geproduceerd</td>
+                        <td style="padding: 1rem; border: 1px solid var(--border);">Wordt verbruikt</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="try-it">
+                <h4>🎯 Vul de ontbrekende woorden in</h4>
+                <p>Bij <input type="text" id="comp1" style="width: 150px;" placeholder="..."> wordt zuurstof geproduceerd, bij <input type="text" id="comp2" style="width: 150px;" placeholder="..."> wordt zuurstof verbruikt.</p>
+                <button onclick="checkComparison()">Controleer</button>
+                <div id="compFeedback" class="feedback"></div>
+            </div>
+        </section>
+
+        <section id="mini" class="mini-exercises">
+            <h2>6. Mini-oefeningen</h2>
+            
+            <div class="exercise">
+                <h4>Mini-oefening 1: Welk proces?</h4>
+                <p>Een plant staat in de zon. In welke cellen vindt op dat moment fotosynthese plaats?</p>
+                <input type="text" id="mini1" placeholder="Typ je antwoord...">
+                <button onclick="checkMini1()">Controleer</button>
+                <button onclick="showHint('hint1')" class="secondary">Hint</button>
+                <div id="hint1" class="hint">Denk aan de groene delen van de plant.</div>
+                <div id="mini1Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Mini-oefening 2: Formule herkennen</h4>
+                <p>Welke formule hoort bij celademhaling?</p>
+                <ol type="A">
+                    <li>6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂</li>
+                    <li>C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O</li>
+                </ol>
+                <input type="text" id="mini2" placeholder="Typ A of B">
+                <button onclick="checkMini2()">Controleer</button>
+                <div id="mini2Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Mini-oefening 3: Waar of niet waar?</h4>
+                <p>"Planten doen alleen aan fotosynthese, dieren alleen aan celademhaling."</p>
+                <input type="text" id="mini3" placeholder="waar of niet waar">
+                <button onclick="checkMini3()">Controleer</button>
+                <button onclick="showHint('hint3')" class="secondary">Hint</button>
+                <div id="hint3" class="hint">Denk aan wat planten 's nachts doen.</div>
+                <div id="mini3Feedback" class="feedback"></div>
+            </div>
+        </section>
+
+        <section id="hoofd" class="main-exercises">
+            <h2>7. Hoofdoefeningen</h2>
+            <p>Test je kennis met deze 8 opgaven. Probeer ze eerst zonder hulp!</p>
+            
+            <div class="exercise">
+                <h4>Opgave 1: Reactanten en producten</h4>
+                <p>Noem alle reactanten (beginstoffen) van de fotosynthese.</p>
+                <input type="text" id="ex1" placeholder="Typ hier..." style="width: 100%;">
+                <button onclick="checkEx1()">Controleer</button>
+                <button onclick="showAnswer('ans1')" class="secondary">Toon antwoord</button>
+                <div id="ans1" class="answer">Koolstofdioxide (CO₂), water (H₂O) en lichtenergie.</div>
+                <div id="ex1Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 2: Energie-omzetting</h4>
+                <p>Welke vorm van energie wordt bij fotosynthese omgezet in welke andere vorm?</p>
+                <input type="text" id="ex2" placeholder="Typ hier..." style="width: 100%;">
+                <button onclick="checkEx2()">Controleer</button>
+                <button onclick="showAnswer('ans2')" class="secondary">Toon antwoord</button>
+                <div id="ans2" class="answer">Lichtenergie wordt omgezet in chemische energie (opgeslagen in glucose).</div>
+                <div id="ex2Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 3: Organellen</h4>
+                <p>In welk organel vindt fotosynthese plaats? En celademhaling?</p>
+                <input type="text" id="ex3" placeholder="Typ hier..." style="width: 100%;">
+                <button onclick="checkEx3()">Controleer</button>
+                <button onclick="showAnswer('ans3')" class="secondary">Toon antwoord</button>
+                <div id="ans3" class="answer">Fotosynthese: chloroplast. Celademhaling: mitochondrion.</div>
+                <div id="ex3Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 4: Zuurstofproductie</h4>
+                <p>Hoeveel moleculen zuurstof (O₂) ontstaan er bij de vorming van 1 molecuul glucose (C₆H₁₂O₆) tijdens fotosynthese?</p>
+                <input type="number" id="ex4" placeholder="Getal" style="width: 100px;">
+                <button onclick="checkEx4()">Controleer</button>
+                <button onclick="showAnswer('ans4')" class="secondary">Toon antwoord</button>
+                <div id="ans4" class="answer">6 moleculen. Kijk naar de formule: 6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂</div>
+                <div id="ex4Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 5: Beperkende factor</h4>
+                <p>Je hebt een plant die genoeg licht en water krijgt, maar de fotosynthese blijft traag. Wat is waarschijnlijk de beperkende factor?</p>
+                <input type="text" id="ex5" placeholder="Typ hier..." style="width: 100%;">
+                <button onclick="checkEx5()">Controleer</button>
+                <button onclick="showAnswer('ans5')" class="secondary">Toon antwoord</button>
+                <div id="ans5" class="answer">Waarschijnlijk de koolstofdioxideconcentratie (CO₂) in de lucht of de temperatuur.</div>
+                <div id="ex5Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 6: Eigen woorden</h4>
+                <p>Leg in je eigen woorden uit waarom fotosynthese en celademhaling elkaars tegenovergestelde zijn.</p>
+                <textarea id="ex6" placeholder="Typ je uitleg hier..." style="width: 100%; height: 100px; padding: 0.7rem; border-radius: 8px; border: 1px solid var(--border);"></textarea>
+                <button onclick="checkEx6()">Controleer (op inhoud)</button>
+                <button onclick="showAnswer('ans6')" class="secondary">Toon voorbeeldantwoord</button>
+                <div id="ans6" class="answer">Bij fotosynthese worden CO₂ en H₂O omgezet in glucose en O₂, bij celademhaling gebeurt precies het omgekeerde: glucose en O₂ worden omgezet in CO₂ en H₂O.</div>
+                <div id="ex6Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 7: Vergelijking</h4>
+                <p>Wat is het belangrijkste verschil tussen fotosynthese en celademhaling wat betreft energie?</p>
+                <input type="text" id="ex7" placeholder="Typ hier..." style="width: 100%;">
+                <button onclick="checkEx7()">Controleer</button>
+                <button onclick="showAnswer('ans7')" class="secondary">Toon antwoord</button>
+                <div id="ans7" class="answer">Fotosynthese slaat energie op (in glucose), celademhaling maakt energie vrij (uit glucose).</div>
+                <div id="ex7Feedback" class="feedback"></div>
+            </div>
+            
+            <div class="exercise">
+                <h4>Opgave 8: Toepassing</h4>
+                <p>Waarom zou een plant in een volle, afgesloten kas extra CO₂ krijgen toegediend?</p>
+                <input type="text" id="ex8" placeholder="Typ hier..." style="width: 100%;">
+                <button onclick="checkEx8()">Controleer</button>
+                <button onclick="showAnswer('ans8')" class="secondary">Toon antwoord</button>
+                <div id="ans8" class="answer">Om de fotosynthese te versnellen. CO₂ is vaak de beperkende factor in een kas met veel licht en water.</div>
+                <div id="ex8Feedback" class="feedback"></div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        Gemaakt door Ralph Wagter met <a href="https://claude.ai">Claude Code</a>.
+        Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+        <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+    </footer>
+
+    <script>
+        // Functies voor de interactieve elementen
+
+        // Formule invuloefening
+        function checkFormula() {
+            const inp1 = document.getElementById('form1').value.trim();
+            const inp2 = document.getElementById('form2').value.trim();
+            const inp3 = document.getElementById('form3').value.trim();
+            const inp4 = document.getElementById('form4').value.trim();
+            
+            const fb = document.getElementById('formFeedback');
+            
+            if (inp1 === '1' && inp2 === '2' && inp3 === '3' && inp4 === '4') {
+                fb.textContent = 'Goed! De formule is: 6 CO₂ + 6 H₂O + licht → C₆H₁₂O₆ + 6 O₂';
+                fb.className = 'feedback correct';
+                document.getElementById('form1').className = 'correct';
+                document.getElementById('form2').className = 'correct';
+                document.getElementById('form3').className = 'correct';
+                document.getElementById('form4').className = 'correct';
+            } else {
+                fb.textContent = 'Niet helemaal goed. Probeer het nog eens. Tip: koolstofdioxide = 1, water = 2, glucose = 3, zuurstof = 4.';
+                fb.className = 'feedback incorrect';
+                document.getElementById('form1').className = 'incorrect';
+                document.getElementById('form2').className = 'incorrect';
+                document.getElementById('form3').className = 'incorrect';
+                document.getElementById('form4').className = 'incorrect';
+            }
+        }
+
+        // Stap-voor-stap onthulling
+        function revealStep(stepNum) {
+            // Verberg alle stappen
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById('step' + i).classList.remove('active');
+            }
+            // Toon de gevraagde stap
+            document.getElementById('step' + stepNum).classList.add('active');
+        }
+
+        // Light slider
+        function updateLight() {
+            const slider = document.getElementById('lightSlider');
+            const value = slider.value;
+            const output = document.getElementById('lightOutput');
+            const rateOutput = document.getElementById('rateOutput');
+            const rateBar = document.getElementById('rateBar');
+            const comment = document.getElementById('lightComment');
+            
+            output.textContent = value + '%';
+            
+            // De fotosynthesesnelheid stijgt lineair tot 70%, daarna minder
+            let rate;
+            if (value <= 70) {
+                rate = value;
+            } else {
+                rate = 70 + (value - 70) * 0.3;
+                if (rate > 100) rate = 100;
+            }
+            
+            rate = Math.round(rate);
+            rateOutput.textContent = rate + '%';
+            rateBar.style.width = rate + '%';
+            
+            if (value < 20) {
+                comment.textContent = 'Heel weinig licht: fotosynthese gaat erg langzaam.';
+            } else if (value <= 70) {
+                comment.textContent = 'Bij deze lichtintensiteit stijgt de fotosynthese lineair: meer licht = sneller.';
+            } else if (value <= 90) {
+                comment.textContent = 'Nu is licht niet meer de beperkende factor. Andere factoren (zoals CO₂) bepalen de snelheid.';
+            } else {
+                comment.textContent = 'Zelfs met maximaal licht kan de fotosynthese niet sneller: andere factoren zijn nu beperkend.';
+            }
+        }
+
+        // Beperkende factor
+        function checkFactor() {
+            const input = document.getElementById('factorInput').value.toLowerCase();
+            const fb = document.getElementById('factorFeedback');
+            
+            if (input.includes('co2') || input.includes('koolstof') || input.includes('temperatuur') || input.includes('water') || input.includes('voedings')) {
+                fb.textContent = 'Goed nagedacht! Dat zou inderdaad kunnen.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Denk aan andere factoren dan licht. Bijvoorbeeld CO₂, temperatuur, water of mineralen.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function showFactorAnswer() {
+            document.getElementById('factorAnswer').classList.add('visible');
+        }
+
+        // Glucose vraag
+        function checkGlucose() {
+            const input = document.getElementById('glucoseInput').value.toLowerCase();
+            const fb = document.getElementById('glucoseFeedback');
+            
+            if (input.includes('co2') && input.includes('water') || input.includes('energie') || input.includes('atp')) {
+                fb.textContent = 'Juist! Glucose wordt afgebroken tot CO₂, water en energie (ATP).';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Niet helemaal. Bij celademhaling wordt glucose afgebroken tot koolstofdioxide, water en energie.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        // Vergelijking invullen
+        function checkComparison() {
+            const inp1 = document.getElementById('comp1').value.toLowerCase();
+            const inp2 = document.getElementById('comp2').value.toLowerCase();
+            const fb = document.getElementById('compFeedback');
+            
+            if ((inp1.includes('foto') || inp1.includes('photos')) && 
+                (inp2.includes('celadem') || inp2.includes('ademhaling') || inp2.includes('respir'))) {
+                fb.textContent = 'Perfect! Fotosynthese produceert zuurstof, celademhaling verbruikt het.';
+                fb.className = 'feedback correct';
+                document.getElementById('comp1').className = 'correct';
+                document.getElementById('comp2').className = 'correct';
+            } else {
+                fb.textContent = 'Probeer opnieuw. Denk aan: welk proces maakt zuurstof en welk proces gebruikt zuurstof?';
+                fb.className = 'feedback incorrect';
+                document.getElementById('comp1').className = 'incorrect';
+                document.getElementById('comp2').className = 'incorrect';
+            }
+        }
+
+        // Mini-oefeningen
+        function checkMini1() {
+            const input = document.getElementById('mini1').value.toLowerCase();
+            const fb = document.getElementById('mini1Feedback');
+            
+            if (input.includes('bladgroen') || input.includes('chloroplast') || input.includes('groene')) {
+                fb.textContent = 'Goed! In de chloroplasten van vooral de groene cellen.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Niet helemaal. Fotosynthese vindt plaats in de bladgroenkorrels (chloroplasten) van plantencellen.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkMini2() {
+            const input = document.getElementById('mini2').value.toUpperCase();
+            const fb = document.getElementById('mini2Feedback');
+            
+            if (input === 'B') {
+                fb.textContent = 'Correct! Celademhaling breekt glucose af.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Fout. Optie A is fotosynthese, optie B is celademhaling.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkMini3() {
+            const input = document.getElementById('mini3').value.toLowerCase();
+            const fb = document.getElementById('mini3Feedback');
+            
+            if (input === 'niet waar' || input === 'onwaar' || input === 'false') {
+                fb.textContent = 'Juist! Planten doen ook aan celademhaling, vooral \'s nachts.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Helaas, dit is niet waar. Planten doen zowel aan fotosynthese als celademhaling.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        // Hint tonen
+        function showHint(id) {
+            document.getElementById(id).classList.add('visible');
+        }
+
+        // Hoofdoefeningen
+        function checkEx1() {
+            const input = document.getElementById('ex1').value.toLowerCase();
+            const fb = document.getElementById('ex1Feedback');
+            
+            if (input.includes('co2') && input.includes('water') && input.includes('licht')) {
+                fb.textContent = 'Perfect! Koolstofdioxide, water en lichtenergie.';
+                fb.className = 'feedback correct';
+            } else if (input.includes('co2') && input.includes('water')) {
+                fb.textContent = 'Bijna! Vergeet niet de lichtenergie.';
+                fb.className = 'feedback incorrect';
+            } else {
+                fb.textContent = 'Niet helemaal goed. De reactanten zijn: koolstofdioxide (CO₂), water (H₂O) en lichtenergie.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx2() {
+            const input = document.getElementById('ex2').value.toLowerCase();
+            const fb = document.getElementById('ex2Feedback');
+            
+            if ((input.includes('licht') || input.includes('zon')) && 
+                (input.includes('chem') || input.includes('glucose') || input.includes('voedsel'))) {
+                fb.textContent = 'Goed! Lichtenergie → chemische energie (in glucose).';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Probeer het nog eens. Bij fotosynthese wordt lichtenergie omgezet in chemische energie.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx3() {
+            const input = document.getElementById('ex3').value.toLowerCase();
+            const fb = document.getElementById('ex3Feedback');
+            
+            if ((input.includes('chloroplast') || input.includes('bladgroen')) && 
+                (input.includes('mitochondrion') || input.includes('mitochondriën'))) {
+                fb.textContent = 'Helemaal correct! Fotosynthese in chloroplast, celademhaling in mitochondrion.';
+                fb.className = 'feedback correct';
+            } else if (input.includes('chloroplast') || input.includes('bladgroen')) {
+                fb.textContent = 'Deel juist, maar vergeet niet waar celademhaling plaatsvindt.';
+                fb.className = 'feedback incorrect';
+            } else {
+                fb.textContent = 'Niet helemaal. Fotosynthese: chloroplast. Celademhaling: mitochondrion.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx4() {
+            const input = document.getElementById('ex4').value;
+            const fb = document.getElementById('ex4Feedback');
+            
+            if (input === '6') {
+                fb.textContent = 'Correct! Uit de formule blijkt: 6 O₂ bij 1 glucose.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Nee. Kijk naar de formule: 6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂. Dus 6 zuurstofmoleculen.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx5() {
+            const input = document.getElementById('ex5').value.toLowerCase();
+            const fb = document.getElementById('ex5Feedback');
+            
+            if (input.includes('co2') || input.includes('koolstof') || input.includes('temperatuur')) {
+                fb.textContent = 'Goed! Waarschijnlijk CO₂ of temperatuur.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Denk aan factoren anders dan licht en water: CO₂-concentratie of temperatuur zijn vaak beperkend.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx6() {
+            const input = document.getElementById('ex6').value.toLowerCase();
+            const fb = document.getElementById('ex6Feedback');
+            
+            if ((input.includes('tegenovergesteld') || input.includes('omgekeerd')) && 
+                (input.includes('formule') || input.includes('reactie'))) {
+                fb.textContent = 'Mooi! Je hebt het door: de formules zijn elkaars spiegelbeeld.';
+                fb.className = 'feedback correct';
+            } else if (input.includes('co2') && input.includes('glucose') && input.includes('zuurstof')) {
+                fb.textContent = 'Goed! Je noemt de belangrijkste stoffen die omgekeerd zijn.';
+                fb.className = 'feedback correct';
+            } else if (input.length < 10) {
+                fb.textContent = 'Probeer iets uitgebreider te antwoorden. Leg uit wat er bij elk proces gebeurt.';
+                fb.className = 'feedback incorrect';
+            } else {
+                fb.textContent = 'Je antwoord bevat mogelijk de juiste ideeën. Kijk bij "Toon voorbeeldantwoord" voor een volledig antwoord.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx7() {
+            const input = document.getElementById('ex7').value.toLowerCase();
+            const fb = document.getElementById('ex7Feedback');
+            
+            if ((input.includes('opslaan') || input.includes('vastleggen')) && 
+                (input.includes('vrijmaken') || input.includes('vrijgeven'))) {
+                fb.textContent = 'Precies! Fotosynthese slaat energie op, celademhaling maakt het vrij.';
+                fb.className = 'feedback correct';
+            } else if (input.includes('energie') && input.length > 15) {
+                fb.textContent = 'In de buurt! Het belangrijkste verschil is dat het ene energie opslaat, het andere energie vrijmaakt.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Denk aan wat er met energie gebeurt: wordt het opgeslagen of vrijgegeven?';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        function checkEx8() {
+            const input = document.getElementById('ex8').value.toLowerCase();
+            const fb = document.getElementById('ex8Feedback');
+            
+            if (input.includes('foto') && (input.includes('sneller') || input.includes('versnellen') || input.includes('bevorderen'))) {
+                fb.textContent = 'Goed! Extra CO₂ kan de fotosynthese versnellen.';
+                fb.className = 'feedback correct';
+            } else if (input.includes('co2') && input.includes('beperkend')) {
+                fb.textContent = 'Helemaal juist! CO₂ is vaak de beperkende factor in een kas.';
+                fb.className = 'feedback correct';
+            } else if (input.includes('plant') && input.includes('groei')) {
+                fb.textContent = 'Dat klopt, voor groei is meer fotosynthese nodig. Extra CO₂ helpt daarbij.';
+                fb.className = 'feedback correct';
+            } else {
+                fb.textContent = 'Niet helemaal. Denk aan welke factor in een kas met veel licht nog beperkend kan zijn voor fotosynthese.';
+                fb.className = 'feedback incorrect';
+            }
+        }
+
+        // Antwoord tonen voor hoofdoefeningen
+        function showAnswer(id) {
+            document.getElementById(id).classList.add('visible');
+        }
+
+        // Enter-toets ondersteuning
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input[type="text"], input[type="number"], textarea');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault();
+                        // Zoek de dichtstbijzijnde controleerknop
+                        const parent = this.closest('.exercise') || this.closest('.try-it');
+                        if (parent) {
+                            const button = parent.querySelector('button');
+                            if (button) button.click();
+                        }
+                    }
+                });
+            });
+            
+            // Initialiseer de slider
+            updateLight();
+            
+            // Toon de eerste stap
+            revealStep(1);
+        });
+    </script>
+</body>
+</html>

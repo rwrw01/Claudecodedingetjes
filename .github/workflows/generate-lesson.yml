@@ -189,11 +189,11 @@ jobs:
               gh issue comment "$ISSUE_NUM" --body "$COMMENT_BODY"
 
               # Foto's opruimen uit issue body (privacy/opslag)
-              python3 -c "
+              python3 << 'PYEOF'
           import re, json
           issue = json.load(open('/tmp/issue.json'))
           body = issue['body']
-          # Verwijder alle GitHub-gehoste afbeelding-URLs
+          # Verwijder alle GitHub-gehoste afbeelding-URLs (markdown syntax)
           cleaned = re.sub(
               r'!\[[^\]]*\]\(https://(?:user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|github\.user-content\.com|github\.com/user-attachments|github\.com)[^\)]+\)',
               '_[foto verwijderd na verwerking]_',
@@ -201,15 +201,14 @@ jobs:
           )
           # Verwijder ook kale image URLs (zonder markdown syntax)
           cleaned = re.sub(
-              r'https://(?:user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|github\.user-content\.com|github\.com/user-attachments/assets)/[^\s\)\"'\'']+',
+              r"https://(?:user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|github\.user-content\.com|github\.com/user-attachments/assets)/[^\s\)\"']+",
               '_[foto verwijderd na verwerking]_',
               cleaned
           )
           with open('/tmp/cleaned_body.txt', 'w') as f:
               f.write(cleaned)
-          "
-              CLEANED_BODY=$(cat /tmp/cleaned_body.txt)
-              gh issue edit "$ISSUE_NUM" --body "$CLEANED_BODY"
+          PYEOF
+              gh issue edit "$ISSUE_NUM" --body-file /tmp/cleaned_body.txt
               echo "  Foto-URLs verwijderd uit issue #${ISSUE_NUM}"
 
               # Label als verwerkt en sluit

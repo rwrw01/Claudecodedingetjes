@@ -130,10 +130,24 @@ jobs:
                   break
           ")
 
-              # Commit en push (met pull --rebase als remote vooruit is)
+              # Commit en push (met merge strategie als rebase faalt)
               git add -A
               git commit -m "Nieuwe les: ${ISSUE_TITLE} (issue #${ISSUE_NUM}, ${AI_PROVIDER})"
-              git pull --rebase origin main || true
+              if ! git pull --rebase origin main; then
+                echo "  Rebase conflict — abort en gebruik merge strategie"
+                git rebase --abort
+                git pull --no-rebase -X theirs origin main
+                # Regenereer index-pagina's na merge (kunnen stale zijn)
+                python3 -c "
+          import importlib.util, sys
+          spec = importlib.util.spec_from_file_location('lesson', '.github/scripts/generate-lesson.py')
+          mod = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(mod)
+          mod.generate_index_pages('${ISSUE_AUTHOR}')
+          "
+                git add -A
+                git diff --cached --quiet || git commit -m "Regenereer index-pagina's na merge"
+              fi
               git push
 
               # GitHub Pages URL
@@ -173,6 +187,30 @@ jobs:
               fi
 
               gh issue comment "$ISSUE_NUM" --body "$COMMENT_BODY"
+
+              # Foto's opruimen uit issue body (privacy/opslag)
+              python3 -c "
+          import re, json
+          issue = json.load(open('/tmp/issue.json'))
+          body = issue['body']
+          # Verwijder alle GitHub-gehoste afbeelding-URLs
+          cleaned = re.sub(
+              r'!\[[^\]]*\]\(https://(?:user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|github\.user-content\.com|github\.com/user-attachments|github\.com)[^\)]+\)',
+              '_[foto verwijderd na verwerking]_',
+              body
+          )
+          # Verwijder ook kale image URLs (zonder markdown syntax)
+          cleaned = re.sub(
+              r'https://(?:user-images\.githubusercontent\.com|private-user-images\.githubusercontent\.com|github\.user-content\.com|github\.com/user-attachments/assets)/[^\s\)\"'\'']+',
+              '_[foto verwijderd na verwerking]_',
+              cleaned
+          )
+          with open('/tmp/cleaned_body.txt', 'w') as f:
+              f.write(cleaned)
+          "
+              CLEANED_BODY=$(cat /tmp/cleaned_body.txt)
+              gh issue edit "$ISSUE_NUM" --body "$CLEANED_BODY"
+              echo "  Foto-URLs verwijderd uit issue #${ISSUE_NUM}"
 
               # Label als verwerkt en sluit
               gh label create "verwerkt" --color "0e8a16" --description "Les is gegenereerd" 2>/dev/null || true

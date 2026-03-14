@@ -1,6 +1,6 @@
 name: "\U0001F4DA Nieuwe les aanvragen"
 description: Upload een of meerdere foto's en laat automatisch een interactieve les genereren
-title: "[Les] "
+title: "[Les] {{ titel }} — {{ vak }} {{ niveau }}"
 labels: []
 body:
   - type: markdown

@@ -1,0 +1,19 @@
+{
+  "issue_number": 25,
+  "issue_author": "rwrw01",
+  "display_name": "Ralph",
+  "titel": "Vrijmaken van energie",
+  "vak": "Biologie",
+  "niveau": "HAVO 4",
+  "fotos_count": 6,
+  "generated_path": "rwrw01/biologie/havo-4/vrijmaken-van-energie/index.html",
+  "ai_provider": "claude",
+  "ai_model": "claude-sonnet-4-6",
+  "usage": {
+    "input_tokens": 11486,
+    "output_tokens": 16000,
+    "total_tokens": 27486,
+    "cache_read_tokens": 0,
+    "estimated_cost_usd": 0.2745
+  }
+}

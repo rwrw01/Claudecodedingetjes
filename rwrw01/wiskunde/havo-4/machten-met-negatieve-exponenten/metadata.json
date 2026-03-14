@@ -11,8 +11,8 @@
   "ai_model": "claude-sonnet-4-6",
   "usage": {
     "input_tokens": 11493,
-    "output_tokens": 15999,
-    "total_tokens": 27492,
+    "output_tokens": 16000,
+    "total_tokens": 27493,
     "cache_read_tokens": 0,
     "estimated_cost_usd": 0.2745
   }

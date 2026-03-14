@@ -24,24 +24,25 @@
             font-family: 'Segoe UI', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         header {
             background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
             color: white;
-            padding: 3rem 1.5rem 2.5rem;
+            padding: 3rem 1rem 2rem;
             text-align: center;
         }
 
-        header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        header h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
         header p { font-size: 1.1rem; opacity: 0.85; }
 
         .breadcrumb {
             background: white;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
             border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            color: var(--muted);
         }
 
         .breadcrumb a { color: var(--primary); text-decoration: none; }
@@ -50,10 +51,9 @@
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 1.5rem 1rem;
+            padding: 2rem 1rem;
         }
 
-        /* Inhoudsopgave */
         .toc {
             background: var(--card);
             border: 1px solid var(--border);
@@ -62,66 +62,57 @@
             margin-bottom: 2rem;
         }
 
-        .toc h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--primary); }
+        .toc h2 { color: var(--primary); margin-bottom: 1rem; font-size: 1.1rem; }
         .toc ol { padding-left: 1.5rem; }
-        .toc li { margin: 0.3rem 0; }
-        .toc a { color: var(--primary); text-decoration: none; font-size: 0.95rem; }
+        .toc li { margin-bottom: 0.4rem; }
+        .toc a { color: var(--primary); text-decoration: none; }
         .toc a:hover { text-decoration: underline; }
 
-        /* Cards */
         .card {
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            padding: 1.75rem;
+            padding: 1.8rem;
             margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
 
         .card h2 {
-            font-size: 1.4rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            margin-bottom: 1.2rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--primary-light);
         }
 
-        .card h3 {
-            font-size: 1.1rem;
-            color: var(--text);
-            margin: 1.25rem 0 0.5rem;
-        }
+        .card h3 { color: var(--text); font-size: 1.1rem; margin: 1.2rem 0 0.6rem; }
 
-        /* Formule, tip, warning, example boxes */
         .formula {
             background: var(--primary-light);
             border-left: 4px solid var(--primary);
             border-radius: 0 8px 8px 0;
-            padding: 1rem 1.25rem;
+            padding: 1rem 1.2rem;
             margin: 1rem 0;
             font-size: 1.05rem;
         }
 
-        .formula .math-display {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--primary);
-        }
+        .formula .math { font-size: 1.2rem; font-weight: bold; color: var(--primary); }
 
         .tip-box {
             background: #fefce8;
             border-left: 4px solid #eab308;
             border-radius: 0 8px 8px 0;
-            padding: 1rem 1.25rem;
+            padding: 1rem 1.2rem;
             margin: 1rem 0;
         }
 
-        .tip-box strong { color: #a16207; }
+        .tip-box strong { color: #854d0e; }
 
         .warning-box {
             background: #fff1f2;
             border-left: 4px solid #e11d48;
             border-radius: 0 8px 8px 0;
-            padding: 1rem 1.25rem;
+            padding: 1rem 1.2rem;
             margin: 1rem 0;
         }
 
@@ -131,309 +122,158 @@
             background: #f0fdf4;
             border-left: 4px solid #16a34a;
             border-radius: 0 8px 8px 0;
-            padding: 1rem 1.25rem;
+            padding: 1rem 1.2rem;
             margin: 1rem 0;
         }
 
         .example-box strong { color: #15803d; }
 
-        /* Math styling */
-        .math {
-            font-family: 'Georgia', 'Times New Roman', serif;
-            font-style: italic;
-        }
-
-        .fraction {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            vertical-align: middle;
-            margin: 0 2px;
-        }
-
-        .fraction .num { border-bottom: 1.5px solid currentColor; padding-bottom: 1px; }
-        .fraction .den { padding-top: 1px; }
-        .fraction .num, .fraction .den { font-size: 0.9em; line-height: 1.2; text-align: center; min-width: 12px; }
-
-        sup { font-size: 0.7em; vertical-align: super; }
-        sub { font-size: 0.7em; vertical-align: sub; }
-
-        /* Try-it sections */
         .try-it {
             background: #f0f9ff;
-            border: 2px dashed #93c5fd;
+            border: 2px dashed var(--primary);
             border-radius: var(--radius);
             padding: 1.5rem;
-            margin: 1.25rem 0;
+            margin: 1.5rem 0;
         }
 
-        .try-it h4 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
+        .try-it h3 { color: var(--primary); margin-bottom: 1rem; }
 
-        .step-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
+        .step-reveal { margin: 1rem 0; }
+        .step { display: none; background: #f8fafc; border-radius: 8px; padding: 0.8rem 1rem; margin-top: 0.5rem; border: 1px solid var(--border); }
+        .step.visible { display: block; }
 
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .step-label {
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .step-text { flex: 1; min-width: 140px; font-size: 0.95rem; }
-
-        /* Inputs */
-        input[type="text"], input[type="number"] {
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            padding: 0.4rem 0.75rem;
-            font-size: 1rem;
-            width: 120px;
-            transition: border-color 0.2s;
-            font-family: 'Georgia', serif;
-        }
-
-        input[type="text"]:focus, input[type="number"]:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        input.correct { border-color: var(--success); background: #f0fdf4; }
-        input.incorrect { border-color: var(--accent); background: #fff1f2; }
-
-        /* Buttons */
-        .btn {
+        .reveal-btn {
             background: var(--primary);
             color: white;
             border: none;
             border-radius: 8px;
-            padding: 0.5rem 1.25rem;
-            font-size: 0.95rem;
+            padding: 0.5rem 1.2rem;
             cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn:hover { background: #1d4ed8; transform: translateY(-1px); }
-        .btn:active { transform: translateY(0); }
-
-        .btn-secondary {
-            background: #e2e8f0;
-            color: var(--text);
-        }
-
-        .btn-secondary:hover { background: #cbd5e1; }
-
-        .btn-hint {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fcd34d;
-        }
-
-        .btn-hint:hover { background: #fde68a; }
-
-        .btn-reveal {
-            background: #f0fdf4;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-
-        .btn-reveal:hover { background: #dcfce7; }
-
-        .btn-show-answer {
-            background: #fff7ed;
-            color: #9a3412;
-            border: 1px solid #fdba74;
-        }
-
-        .btn-show-answer:hover { background: #ffedd5; }
-
-        /* Feedback */
-        .feedback {
-            margin-top: 0.5rem;
-            padding: 0.6rem 1rem;
-            border-radius: 8px;
             font-size: 0.9rem;
-            display: none;
+            transition: background 0.2s;
+            margin: 0.3rem;
         }
 
-        .feedback.show { display: block; }
-        .feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
-        .feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
-        .feedback.info { background: #f0f9ff; color: #0369a1; border: 1px solid #7dd3fc; }
+        .reveal-btn:hover { background: #1d4ed8; }
+        .reveal-btn.secondary { background: var(--muted); }
+        .reveal-btn.secondary:hover { background: #475569; }
+        .reveal-btn.success-btn { background: var(--success); }
+        .reveal-btn.success-btn:hover { background: #15803d; }
 
-        /* Detail steps (bij fout antwoord) */
-        .detail-steps {
-            background: #fffbeb;
-            border: 1px solid #fcd34d;
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            margin-top: 0.75rem;
-            display: none;
-        }
-
-        .detail-steps.show { display: block; }
-        .detail-steps h5 { color: #92400e; margin-bottom: 0.5rem; font-size: 0.95rem; }
-        .detail-steps ol { padding-left: 1.25rem; }
-        .detail-steps li { margin: 0.3rem 0; font-size: 0.9rem; }
-
-        /* Mini exercises */
-        .mini-exercises {
-            background: #fafafa;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            margin-top: 1.25rem;
-        }
-
-        .mini-exercises h4 {
-            color: var(--text);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .exercise-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1rem;
-        }
-
-        .exercise-item {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-        }
-
-        .exercise-item .question {
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-            color: var(--text);
-        }
-
-        .exercise-item .input-row {
+        .input-row {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
+            margin: 0.6rem 0;
             flex-wrap: wrap;
         }
 
-        /* Reveal button sections */
-        .reveal-section {
-            margin: 1rem 0;
-        }
+        .input-row label { font-size: 0.95rem; min-width: 180px; }
 
-        .reveal-content {
-            display: none;
-            margin-top: 0.75rem;
-        }
-
-        .reveal-content.show { display: block; }
-
-        /* Stap-voor-stap */
-        .steps-container {
-            border: 1px solid var(--border);
+        input[type="text"] {
+            border: 2px solid var(--border);
             border-radius: 8px;
-            overflow: hidden;
-            margin: 1rem 0;
+            padding: 0.4rem 0.8rem;
+            font-size: 1rem;
+            width: 140px;
+            transition: border-color 0.2s;
+            font-family: inherit;
         }
 
-        .step-row {
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid var(--border);
-            gap: 1rem;
-        }
+        input[type="text"]:focus { outline: none; border-color: var(--primary); }
+        input[type="text"].correct { border-color: var(--success); background: #f0fdf4; }
+        input[type="text"].wrong { border-color: var(--accent); background: #fff1f2; }
 
-        .step-row:last-child { border-bottom: none; }
-
-        .step-row.hidden { background: #f8fafc; }
-
-        .step-num {
-            background: var(--primary-light);
-            color: var(--primary);
-            font-weight: 700;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            flex-shrink: 0;
-        }
-
-        .step-content { flex: 1; }
-        .step-result { color: var(--success); font-weight: 600; }
-
-        /* Score */
-        .score-display {
-            background: var(--primary-light);
+        .check-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
             border-radius: 8px;
-            padding: 0.5rem 1rem;
-            font-weight: 600;
-            color: var(--primary);
+            padding: 0.45rem 1rem;
+            cursor: pointer;
             font-size: 0.9rem;
-            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .check-btn:hover { background: #1d4ed8; }
+
+        .feedback {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+        }
+
+        .feedback.ok { color: var(--success); background: #f0fdf4; border: 1px solid #bbf7d0; }
+        .feedback.err { color: var(--accent); background: #fff1f2; border: 1px solid #fecdd3; }
+
+        .hint-box {
+            display: none;
+            background: #fefce8;
+            border: 1px solid #fde68a;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+            color: #713f12;
+        }
+
+        .solution-box {
+            display: none;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 8px;
+            padding: 0.9rem 1.2rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .solution-box strong { color: var(--success); }
+
+        .mini-exercises { margin: 1.5rem 0; }
+        .mini-exercises h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.05rem; }
+
+        .exercise-item {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.2rem;
             margin-bottom: 1rem;
         }
 
-        /* Rekenregels tabel */
-        .rules-table {
+        .exercise-item .question { font-size: 1rem; margin-bottom: 0.8rem; }
+
+        .rule-table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
             font-size: 0.95rem;
         }
 
-        .rules-table th {
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 0.75rem 1rem;
+        .rule-table th {
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1rem;
             text-align: left;
-            border: 1px solid #bfdbfe;
         }
 
-        .rules-table td {
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            vertical-align: top;
+        .rule-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .rules-table tr:nth-child(even) td { background: #f8fafc; }
+        .rule-table tr:nth-child(even) td { background: #f8fafc; }
+        .rule-table .math-cell { font-weight: bold; color: var(--primary); font-size: 1.05rem; }
 
-        /* Slider */
         .slider-demo {
-            background: white;
-            border: 1px solid var(--border);
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
             border-radius: var(--radius);
-            padding: 1.25rem;
+            padding: 1.5rem;
             margin: 1rem 0;
         }
 
-        .slider-demo label { font-weight: 600; display: block; margin-bottom: 0.5rem; }
+        .slider-demo label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
 
         input[type="range"] {
             width: 100%;
@@ -442,38 +282,66 @@
         }
 
         .slider-output {
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: var(--primary);
-            font-weight: 600;
-            margin-top: 0.25rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            border: 1px solid var(--border);
         }
 
-        /* Responsive */
-        @media (max-width: 600px) {
-            header h1 { font-size: 1.6rem; }
-            .exercise-grid { grid-template-columns: 1fr; }
-            .step { flex-direction: column; align-items: flex-start; }
+        sup { font-size: 0.75em; vertical-align: super; }
+        sub { font-size: 0.75em; vertical-align: sub; }
+
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 2px;
         }
 
-        /* Highlight */
-        .highlight-red { color: var(--accent); font-weight: 700; }
-        .highlight-blue { color: var(--primary); font-weight: 700; }
-        .highlight-green { color: var(--success); font-weight: 700; }
+        .frac .num { border-bottom: 1.5px solid currentColor; padding: 0 2px; font-size: 0.85em; line-height: 1.2; }
+        .frac .den { padding: 0 2px; font-size: 0.85em; line-height: 1.2; }
 
-        /* Progress bar */
-        .progress-container {
-            background: var(--border);
-            border-radius: 99px;
-            height: 8px;
-            margin: 0.5rem 0 1rem;
-            overflow: hidden;
+        .big-formula {
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 1rem;
+            background: var(--primary-light);
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: bold;
+            color: var(--primary);
         }
 
         .progress-bar {
-            background: var(--primary);
-            height: 100%;
-            border-radius: 99px;
+            background: var(--border);
+            border-radius: 10px;
+            height: 10px;
+            margin: 0.5rem 0;
+        }
+
+        .progress-fill {
+            background: var(--success);
+            height: 10px;
+            border-radius: 10px;
             transition: width 0.4s;
+        }
+
+        .score-display {
+            text-align: right;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .input-row { flex-direction: column; align-items: flex-start; }
+            input[type="text"] { width: 100%; }
         }
     </style>
 </head>
@@ -485,7 +353,7 @@
 </header>
 
 <nav class="breadcrumb">
-    <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> › Wiskunde › Machten met negatieve en gebroken exponenten
+    <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; Wiskunde &rsaquo; Machten met negatieve en gebroken exponenten
 </nav>
 
 <div class="container">
@@ -494,539 +362,528 @@
     <div class="toc">
         <h2>📋 Inhoudsopgave</h2>
         <ol>
-            <li><a href="#rekenregels">Herhaling: rekenregels voor machten</a></li>
-            <li><a href="#nul-exponent">De nulde macht: <em>a</em>⁰ = 1</a></li>
-            <li><a href="#negatieve-expo">Theorie A: Negatieve exponenten</a></li>
-            <li><a href="#zonder-negatief">Schrijven zonder negatieve exponenten</a></li>
-            <li><a href="#gebroken-expo">Theorie B: Gebroken exponenten</a></li>
-            <li><a href="#oefeningen">Hoofdoefeningen</a></li>
+            <li><a href="#rekenregels">Rekenregels voor machten (herhaling)</a></li>
+            <li><a href="#nulde-macht">De nulde macht: a⁰ = 1</a></li>
+            <li><a href="#negatieve-exp">Theorie A: Negatieve exponenten</a></li>
+            <li><a href="#oefenen-negatief">Oefenen: negatieve exponenten</a></li>
+            <li><a href="#gebroken-exp">Theorie B: Gebroken exponenten</a></li>
+            <li><a href="#oefenen-gebroken">Oefenen: gebroken exponenten</a></li>
+            <li><a href="#combinaties">Combinaties: negatief + gebroken</a></li>
+            <li><a href="#hoofdoefeningen">Hoofdoefeningen</a></li>
         </ol>
     </div>
 
-    <!-- ============================================================ -->
-    <!-- SECTIE 1: REKENREGELS -->
-    <!-- ============================================================ -->
-    <section id="rekenregels">
-        <div class="card">
-            <h2>1. Herhaling: rekenregels voor machten</h2>
-            <p>Voordat we negatieve en gebroken exponenten behandelen, herhalen we de basisregels. Deze regels gelden voor alle machten.</p>
+    <!-- Sectie 1: Rekenregels herhaling -->
+    <div class="card" id="rekenregels">
+        <h2>1. Rekenregels voor machten (herhaling)</h2>
+        <p>Voordat we negatieve en gebroken exponenten behandelen, herhalen we de basisregels.</p>
 
-            <table class="rules-table">
+        <table class="rule-table">
+            <thead>
                 <tr>
                     <th>Regel</th>
                     <th>Formule</th>
                     <th>Voorbeeld</th>
                 </tr>
+            </thead>
+            <tbody>
                 <tr>
-                    <td>Product van machten (zelfde grondtal)</td>
-                    <td><em>a<sup>p</sup> · a<sup>q</sup> = a<sup>p+q</sup></em></td>
-                    <td><em>x<sup>3</sup> · x<sup>4</sup> = x<sup>7</sup></em></td>
+                    <td>Vermenigvuldigen (zelfde grondtal)</td>
+                    <td class="math-cell">a<sup>p</sup> · a<sup>q</sup> = a<sup>p+q</sup></td>
+                    <td>y<sup>3</sup> · y<sup>5</sup> = y<sup>8</sup></td>
                 </tr>
                 <tr>
-                    <td>Quotiënt van machten (zelfde grondtal)</td>
-                    <td>
-                        <span class="fraction"><span class="num"><em>a<sup>p</sup></em></span><span class="den"><em>a<sup>q</sup></em></span></span>
-                        <em> = a<sup>p−q</sup></em>
-                    </td>
-                    <td>
-                        <span class="fraction"><span class="num"><em>x<sup>7</sup></em></span><span class="den"><em>x<sup>3</sup></em></span></span>
-                        <em> = x<sup>4</sup></em>
-                    </td>
+                    <td>Delen (zelfde grondtal)</td>
+                    <td class="math-cell"><span class="frac"><span class="num">a<sup>p</sup></span><span class="den">a<sup>q</sup></span></span> = a<sup>p−q</sup></td>
+                    <td><span class="frac"><span class="num">z<sup>7</sup></span><span class="den">z<sup>3</sup></span></span> = z<sup>4</sup></td>
                 </tr>
                 <tr>
                     <td>Macht van een macht</td>
-                    <td><em>(a<sup>p</sup>)<sup>q</sup> = a<sup>p·q</sup></em></td>
-                    <td><em>(x<sup>2</sup>)<sup>5</sup> = x<sup>10</sup></em></td>
+                    <td class="math-cell">(a<sup>p</sup>)<sup>q</sup> = a<sup>p·q</sup></td>
+                    <td>(x<sup>2</sup>)<sup>4</sup> = x<sup>8</sup></td>
                 </tr>
                 <tr>
                     <td>Macht van een product</td>
-                    <td><em>(ab)<sup>p</sup> = a<sup>p</sup>b<sup>p</sup></em></td>
-                    <td><em>(3x)<sup>2</sup> = 9x<sup>2</sup></em></td>
+                    <td class="math-cell">(ab)<sup>p</sup> = a<sup>p</sup>b<sup>p</sup></td>
+                    <td>(3x)<sup>3</sup> = 27x<sup>3</sup></td>
                 </tr>
-            </table>
+            </tbody>
+        </table>
 
-            <div class="example-box">
-                <strong>🟢 Voorbeeld – herleid de uitdrukkingen:</strong><br><br>
-                <em>(2y<sup>2</sup>)<sup>3</sup> = 2<sup>3</sup> · y<sup>6</sup> = 8y<sup>6</sup></em><br><br>
-                <em>(−2x<sup>3</sup>)<sup>2</sup> · (x<sup>2</sup>)<sup>3</sup> = 4x<sup>6</sup> · x<sup>6</sup> = 4x<sup>12</sup></em><br><br>
-                <span class="fraction"><span class="num"><em>15x<sup>8</sup></em></span><span class="den"><em>3x<sup>5</sup></em></span></span>
-                <em> = 5x<sup>3</sup></em>
-            </div>
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> Deze regels gelden voor <em>elk</em> getal als exponent — ook voor negatieve en gebroken exponenten!
+        </div>
 
-            <!-- Interactieve stap-voor-stap: herleid (3y²)³ -->
-            <div class="try-it">
-                <h4>🔢 Probeer zelf: herleid <em>(3y<sup>2</sup>)<sup>3</sup></em></h4>
-                <div class="step-group">
-                    <div class="step">
-                        <span class="step-label">1</span>
-                        <span class="step-text">Pas <em>(ab)<sup>p</sup> = a<sup>p</sup>b<sup>p</sup></em> toe. Wat wordt de coëfficiënt? (3³ = ?)</span>
-                        <input type="text" id="s1-coeff" placeholder="bijv. 27" oninput="checkStepSimple('s1-coeff','27','s1-fb')">
-                        <span id="s1-fb"></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-label">2</span>
-                        <span class="step-text">Wat is de exponent van y? (<em>(y²)³ → y<sup>?</sup></em>)</span>
-                        <input type="text" id="s1-exp" placeholder="bijv. 6" oninput="checkStepSimple('s1-exp','6','s1-exp-fb')">
-                        <span id="s1-exp-fb"></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-label">3</span>
-                        <span class="step-text">Volledig antwoord (bijv. 27y^6 → schrijf als <em>27y6</em>):</span>
-                        <input type="text" id="s1-final" placeholder="bijv. 27y6" oninput="checkStepSimple('s1-final','27y6','s1-final-fb')">
-                        <span id="s1-final-fb"></span>
-                    </div>
+        <!-- Slider demo -->
+        <div class="slider-demo">
+            <label>🎛️ Verken a<sup>p</sup> · a<sup>q</sup> = a<sup>p+q</sup> met a = 2</label>
+            <div style="display:flex; gap:2rem; flex-wrap:wrap;">
+                <div style="flex:1; min-width:150px;">
+                    <label style="font-weight:normal;">p = <span id="slider-p-val">2</span></label>
+                    <input type="range" min="-3" max="5" value="2" id="slider-p" oninput="updateSliderDemo()">
+                </div>
+                <div style="flex:1; min-width:150px;">
+                    <label style="font-weight:normal;">q = <span id="slider-q-val">3</span></label>
+                    <input type="range" min="-3" max="5" value="3" id="slider-q" oninput="updateSliderDemo()">
                 </div>
             </div>
+            <div class="slider-output" id="slider-output">
+                2² · 2³ = 4 · 8 = 32 = 2⁵ ✓
+            </div>
+        </div>
 
-            <!-- Mini oefeningen rekenregels -->
-            <div class="mini-exercises">
-                <h4>🏋️ Mini-oefeningen: rekenregels</h4>
-                <div class="exercise-grid">
+        <div class="mini-exercises">
+            <h3>🔸 Snelle herhaling</h3>
 
-                    <div class="exercise-item">
-                        <div class="question">Herleid: <em>m<sup>4</sup> · m<sup>5</sup></em></div>
-                        <div class="input-row">
-                            <em>m</em><input type="text" id="rr1" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('rr1','9','rr1-fb','rr1-steps')">
-                            <button class="btn" onclick="checkExercise('rr1','9','rr1-fb','rr1-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="rr1-fb"></div>
-                        <div class="detail-steps" id="rr1-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Zelfde grondtal <em>m</em> → exponenten optellen</li>
-                                <li><em>m<sup>4</sup> · m<sup>5</sup> = m<sup>4+5</sup> = m<sup>9</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
+            <div class="exercise-item">
+                <div class="question">Bereken: x<sup>4</sup> · x<sup>6</sup> = x<sup>?</sup></div>
+                <div class="input-row">
+                    <label>Exponent:</label>
+                    <input type="text" id="rep1" placeholder="?" onkeydown="if(event.key==='Enter') checkRep1()">
+                    <button class="check-btn" onclick="checkRep1()">Controleer</button>
+                    <span class="feedback" id="rep1-fb"></span>
+                </div>
+                <div class="hint-box" id="rep1-hint">Tel de exponenten op: 4 + 6 = ?</div>
+                <button class="reveal-btn secondary" onclick="toggleHint('rep1-hint')">Hint</button>
+                <div class="solution-box" id="rep1-sol"><strong>Uitwerking:</strong> x<sup>4</sup> · x<sup>6</sup> = x<sup>4+6</sup> = x<sup>10</sup></div>
+            </div>
 
-                    <div class="exercise-item">
-                        <div class="question">Herleid: <span class="fraction"><span class="num"><em>n<sup>8</sup></em></span><span class="den"><em>n<sup>3</sup></em></span></span></div>
-                        <div class="input-row">
-                            <em>n</em><input type="text" id="rr2" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('rr2','5','rr2-fb','rr2-steps')">
-                            <button class="btn" onclick="checkExercise('rr2','5','rr2-fb','rr2-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="rr2-fb"></div>
-                        <div class="detail-steps" id="rr2-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Quotiënt met zelfde grondtal → exponenten aftrekken</li>
-                                <li><em>n<sup>8−3</sup> = n<sup>5</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
+            <div class="exercise-item">
+                <div class="question">Vereenvoudig: <span class="frac"><span class="num">a<sup>8</sup></span><span class="den">a<sup>3</sup></span></span> = a<sup>?</sup></div>
+                <div class="input-row">
+                    <label>Exponent:</label>
+                    <input type="text" id="rep2" placeholder="?" onkeydown="if(event.key==='Enter') checkRep2()">
+                    <button class="check-btn" onclick="checkRep2()">Controleer</button>
+                    <span class="feedback" id="rep2-fb"></span>
+                </div>
+                <div class="hint-box" id="rep2-hint">Trek de exponenten van elkaar af: 8 − 3 = ?</div>
+                <button class="reveal-btn secondary" onclick="toggleHint('rep2-hint')">Hint</button>
+                <div class="solution-box" id="rep2-sol"><strong>Uitwerking:</strong> a<sup>8</sup> / a<sup>3</sup> = a<sup>8−3</sup> = a<sup>5</sup></div>
+            </div>
 
-                    <div class="exercise-item">
-                        <div class="question">Herleid: <em>(p<sup>3</sup>)<sup>4</sup></em></div>
-                        <div class="input-row">
-                            <em>p</em><input type="text" id="rr3" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('rr3','12','rr3-fb','rr3-steps')">
-                            <button class="btn" onclick="checkExercise('rr3','12','rr3-fb','rr3-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="rr3-fb"></div>
-                        <div class="detail-steps" id="rr3-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Macht van een macht → exponenten vermenigvuldigen</li>
-                                <li><em>(p<sup>3</sup>)<sup>4</sup> = p<sup>3·4</sup> = p<sup>12</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
+            <div class="exercise-item">
+                <div class="question">Vereenvoudig: (y<sup>3</sup>)<sup>4</sup> = y<sup>?</sup></div>
+                <div class="input-row">
+                    <label>Exponent:</label>
+                    <input type="text" id="rep3" placeholder="?" onkeydown="if(event.key==='Enter') checkRep3()">
+                    <button class="check-btn" onclick="checkRep3()">Controleer</button>
+                    <span class="feedback" id="rep3-fb"></span>
+                </div>
+                <div class="hint-box" id="rep3-hint">Vermenigvuldig de exponenten: 3 × 4 = ?</div>
+                <button class="reveal-btn secondary" onclick="toggleHint('rep3-hint')">Hint</button>
+                <div class="solution-box" id="rep3-sol"><strong>Uitwerking:</strong> (y<sup>3</sup>)<sup>4</sup> = y<sup>3×4</sup> = y<sup>12</sup></div>
+            </div>
+        </div>
+    </div>
 
-                    <div class="exercise-item">
-                        <div class="question">Herleid: <em>(2x<sup>3</sup>)<sup>2</sup></em></div>
-                        <div class="input-row">
-                            <input type="text" id="rr4" placeholder="bijv. 4x6" onkeydown="if(event.key==='Enter') checkExercise('rr4','4x6','rr4-fb','rr4-steps')">
-                            <button class="btn" onclick="checkExercise('rr4','4x6','rr4-fb','rr4-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="rr4-fb"></div>
-                        <div class="detail-steps" id="rr4-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Pas <em>(ab)<sup>p</sup></em> toe op beide factoren</li>
-                                <li><em>2<sup>2</sup> = 4</em></li>
-                                <li><em>(x<sup>3</sup>)<sup>2</sup> = x<sup>6</sup></em></li>
-                                <li>Antwoord: <em>4x<sup>6</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
+    <!-- Sectie 2: Nulde macht -->
+    <div class="card" id="nulde-macht">
+        <h2>2. De nulde macht: a⁰ = 1</h2>
 
+        <p>Stel: a ≠ 0. Wat is a<sup>0</sup>?</p>
+
+        <div class="try-it">
+            <h3>🧠 Redeneer zelf</h3>
+            <p>Gebruik de deelregel: <span class="frac"><span class="num">a<sup>p</sup></span><span class="den">a<sup>q</sup></span></span> = a<sup>p−q</sup></p>
+
+            <div class="step-reveal">
+                <p>Stap 1: vul <strong>p = q = 5</strong> in:</p>
+                <button class="reveal-btn" onclick="showStep('stap-nul-1')">Toon stap 1</button>
+                <div class="step" id="stap-nul-1">
+                    <span class="frac"><span class="num">a<sup>5</sup></span><span class="den">a<sup>5</sup></span></span> = a<sup>5−5</sup> = a<sup>0</sup>
+                </div>
+
+                <p style="margin-top:0.8rem;">Stap 2: maar <span class="frac"><span class="num">a<sup>5</sup></span><span class="den">a<sup>5</sup></span></span> is hetzelfde als...</p>
+                <button class="reveal-btn" onclick="showStep('stap-nul-2')">Toon stap 2</button>
+                <div class="step" id="stap-nul-2">
+                    <span class="frac"><span class="num">a<sup>5</sup></span><span class="den">a<sup>5</sup></span></span> = 1 &nbsp; (want teller = noemer)
+                </div>
+
+                <p style="margin-top:0.8rem;">Conclusie:</p>
+                <button class="reveal-btn success-btn" onclick="showStep('stap-nul-3')">Toon conclusie</button>
+                <div class="step" id="stap-nul-3">
+                    Dus a<sup>0</sup> = 1 voor alle a ≠ 0. ✓
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ============================================================ -->
-    <!-- SECTIE 2: NULDE MACHT -->
-    <!-- ============================================================ -->
-    <section id="nul-exponent">
-        <div class="card">
-            <h2>2. De nulde macht: <em>a</em>⁰ = 1</h2>
+        <div class="big-formula">
+            a<sup>0</sup> = 1 &nbsp; (voor a ≠ 0)
+        </div>
 
-            <p>Hoe weten we dat <em>a</em>⁰ = 1? We leiden dit af uit de deelregel.</p>
+        <div class="warning-box">
+            <strong>⚠️ Let op:</strong> 0<sup>0</sup> is ongedefinieerd! De regel geldt alleen als a ≠ 0.
+        </div>
 
-            <div class="steps-container">
-                <div class="step-row">
-                    <div class="step-num">1</div>
-                    <div class="step-content">We weten: <span class="fraction"><span class="num"><em>a<sup>p</sup></em></span><span class="den"><em>a<sup>q</sup></em></span></span> <em>= a<sup>p−q</sup></em></div>
+        <div class="mini-exercises">
+            <h3>🔸 Oefeningen: nulde macht</h3>
+
+            <div class="exercise-item">
+                <div class="question">Wat is (−7)<sup>0</sup>?</div>
+                <div class="input-row">
+                    <input type="text" id="nul1" placeholder="?" onkeydown="if(event.key==='Enter') checkSimple('nul1','1','nul1-fb','nul1-sol','(−7)⁰ = 1, want elk getal (≠ 0) tot de macht 0 is 1.')">
+                    <button class="check-btn" onclick="checkSimple('nul1','1','nul1-fb','nul1-sol','(−7)⁰ = 1, want elk getal (≠ 0) tot de macht 0 is 1.')">Controleer</button>
+                    <span class="feedback" id="nul1-fb"></span>
                 </div>
-                <div class="step-row">
-                    <div class="step-num">2</div>
-                    <div class="step-content">Kies <em>p = q</em>: <span class="fraction"><span class="num"><em>a<sup>p</sup></em></span><span class="den"><em>a<sup>p</sup></em></span></span> <em>= a<sup>p−p</sup> = a<sup>0</sup></em></div>
+                <div class="solution-box" id="nul1-sol"></div>
+            </div>
+
+            <div class="exercise-item">
+                <div class="question">Wat is 5 · x<sup>0</sup> (met x ≠ 0)?</div>
+                <div class="input-row">
+                    <input type="text" id="nul2" placeholder="?" onkeydown="if(event.key==='Enter') checkSimple('nul2','5','nul2-fb','nul2-sol','5 · x⁰ = 5 · 1 = 5')">
+                    <button class="check-btn" onclick="checkSimple('nul2','5','nul2-fb','nul2-sol','5 · x⁰ = 5 · 1 = 5')">Controleer</button>
+                    <span class="feedback" id="nul2-fb"></span>
                 </div>
-                <div class="step-row">
-                    <div class="step-num">3</div>
-                    <div class="step-content">Maar ook: <span class="fraction"><span class="num"><em>a<sup>p</sup></em></span><span class="den"><em>a<sup>p</sup></em></span></span> <em>= 1</em> (teller = noemer)</div>
+                <div class="solution-box" id="nul2-sol"></div>
+            </div>
+
+            <div class="exercise-item">
+                <div class="question">Vul in: <span class="frac"><span class="num">m<sup>4</sup></span><span class="den">m<sup>4</sup></span></span> = m<sup>?</sup> = ?</div>
+                <div class="input-row">
+                    <label>Exponent (m<sup>?</sup>):</label>
+                    <input type="text" id="nul3a" placeholder="exponent" style="width:80px;" onkeydown="if(event.key==='Enter') checkSimple('nul3a','0','nul3a-fb','nul3a-sol','m⁴/m⁴ = m⁴⁻⁴ = m⁰')">
+                    <button class="check-btn" onclick="checkSimple('nul3a','0','nul3a-fb','nul3a-sol','m⁴/m⁴ = m⁴⁻⁴ = m⁰')">✓</button>
+                    <span class="feedback" id="nul3a-fb"></span>
+                    <label style="margin-left:1rem;">Waarde:</label>
+                    <input type="text" id="nul3b" placeholder="waarde" style="width:80px;" onkeydown="if(event.key==='Enter') checkSimple('nul3b','1','nul3b-fb','nul3b-sol','m⁰ = 1')">
+                    <button class="check-btn" onclick="checkSimple('nul3b','1','nul3b-fb','nul3b-sol','m⁰ = 1')">✓</button>
+                    <span class="feedback" id="nul3b-fb"></span>
                 </div>
-                <div class="step-row">
-                    <div class="step-num">4</div>
-                    <div class="step-content"><strong class="highlight-blue">Dus: <em>a<sup>0</sup> = 1</em> voor <em>a ≠ 0</em></strong></div>
-                </div>
+                <div class="solution-box" id="nul3a-sol"></div>
+                <div class="solution-box" id="nul3b-sol"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sectie 3: Negatieve exponenten -->
+    <div class="card" id="negatieve-exp">
+        <h2>3. Theorie A: Negatieve exponenten</h2>
+
+        <p>Nu gaan we verder: wat betekent een <strong>negatieve exponent</strong>?</p>
+
+        <div class="try-it">
+            <h3>🧠 Afleiding stap voor stap</h3>
+            <p>We weten dat a<sup>0</sup> = 1 en <span class="frac"><span class="num">a<sup>p</sup></span><span class="den">a<sup>q</sup></span></span> = a<sup>p−q</sup></p>
+
+            <button class="reveal-btn" onclick="showStep('neg-stap1')">Stap 1: gebruik de deelregel</button>
+            <div class="step" id="neg-stap1">
+                <span class="frac"><span class="num">a<sup>0</sup></span><span class="den">a<sup>n</sup></span></span> = a<sup>0−n</sup> = a<sup>−n</sup>
             </div>
 
-            <div class="formula">
-                <div class="math-display">Voor <em>a ≠ 0</em> geldt: <em>a<sup>0</sup> = 1</em></div>
+            <button class="reveal-btn" onclick="showStep('neg-stap2')" style="margin-top:0.5rem;">Stap 2: vervang a⁰ door 1</button>
+            <div class="step" id="neg-stap2">
+                <span class="frac"><span class="num">1</span><span class="den">a<sup>n</sup></span></span> = a<sup>−n</sup>
             </div>
 
-            <div class="tip-box">
-                <strong>💡 Tip:</strong> Elke uitdrukking tot de macht 0 is gelijk aan 1, zolang het grondtal niet 0 is. Bijvoorbeeld: <em>(5x)<sup>0</sup> = 1</em> en <em>(x² + 3)<sup>0</sup> = 1</em>.
+            <button class="reveal-btn success-btn" onclick="showStep('neg-stap3')" style="margin-top:0.5rem;">Conclusie</button>
+            <div class="step" id="neg-stap3">
+                <strong>a<sup>−n</sup> = <span class="frac"><span class="num">1</span><span class="den">a<sup>n</sup></span></span></strong><br>
+                Een negatieve exponent betekent: "zet het getal in de noemer!"
             </div>
+        </div>
 
-            <div class="warning-box">
-                <strong>⚠️ Let op:</strong> <em>0<sup>0</sup></em> is <strong>niet gedefinieerd</strong>! Zorg dat het grondtal altijd ≠ 0 is.
-            </div>
+        <div class="big-formula">
+            a<sup>−q</sup> = <span class="frac"><span class="num">1</span><span class="den">a<sup>q</sup></span></span> &nbsp; (voor a ≠ 0)
+        </div>
 
-            <!-- Slider voor nulde macht -->
-            <div class="slider-demo">
-                <label>Verken: <em>3<sup>n</sup></em> voor verschillende waarden van <em>n</em></label>
-                <input type="range" min="-4" max="4" value="0" step="1" id="slider-exp" oninput="updateExpSlider()">
-                <div class="slider-output" id="slider-output">3⁰ = 1</div>
-                <p style="font-size:0.85rem; color:var(--muted); margin-top:0.5rem;">Zie hoe de waarde verandert naarmate de exponent kleiner of groter wordt!</p>
-            </div>
+        <div class="example-box">
+            <strong>📝 Voorbeelden:</strong>
+            <ul style="margin-top:0.5rem; padding-left:1.2rem;">
+                <li>x<sup>−3</sup> = <span class="frac"><span class="num">1</span><span class="den">x<sup>3</sup></span></span></li>
+                <li>4x<sup>−2</sup> = 4 · <span class="frac"><span class="num">1</span><span class="den">x<sup>2</sup></span></span> = <span class="frac"><span class="num">4</span><span class="den">x<sup>2</sup></span></span></li>
+                <li><span class="frac"><span class="num">1</span><span class="den">y<sup>5</sup></span></span> = y<sup>−5</sup></li>
+                <li><span class="frac"><span class="num">6</span><span class="den">x</span></span> = 6x<sup>−1</sup></li>
+            </ul>
+        </div>
 
-            <!-- Mini oefeningen nulde macht -->
-            <div class="mini-exercises">
-                <h4>🏋️ Mini-oefeningen: nulde macht</h4>
-                <div class="exercise-grid">
+        <div class="warning-box">
+            <strong>⚠️ Veelgemaakte fout:</strong> 4x<sup>−2</sup> ≠ (4x)<sup>−2</sup><br>
+            • 4x<sup>−2</sup> = <span class="frac"><span class="num">4</span><span class="den">x<sup>2</sup></span></span> (alleen x wordt in de noemer gezet)<br>
+            • (4x)<sup>−2</sup> = <span class="frac"><span class="num">1</span><span class="den">(4x)<sup>2</sup></span></span> = <span class="frac"><span class="num">1</span><span class="den">16x<sup>2</sup></span></span> (heel de haakjesterm gaat in de noemer)
+        </div>
 
-                    <div class="exercise-item">
-                        <div class="question">Bereken: <em>(7x)<sup>0</sup></em></div>
-                        <div class="input-row">
-                            <input type="text" id="nm1" placeholder="antwoord" onkeydown="if(event.key==='Enter') checkExercise('nm1','1','nm1-fb','nm1-steps')">
-                            <button class="btn" onclick="checkExercise('nm1','1','nm1-fb','nm1-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="nm1-fb"></div>
-                        <div class="detail-steps" id="nm1-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Elke uitdrukking (≠0) tot de macht 0 is 1</li>
-                                <li><em>(7x)<sup>0</sup> = 1</em></li>
-                            </ol>
-                        </div>
-                    </div>
+        <h3>Schrijven zonder negatieve exponenten</h3>
+        <p>Je kunt een uitdrukking met negatieve exponenten omschrijven zodat er alleen positieve exponenten overblijven.</p>
 
-                    <div class="exercise-item">
-                        <div class="question">Vereenvoudig: <span class="fraction"><span class="num"><em>k<sup>5</sup></em></span><span class="den"><em>k<sup>5</sup></em></span></span></div>
-                        <div class="input-row">
-                            <input type="text" id="nm2" placeholder="antwoord" onkeydown="if(event.key==='Enter') checkExercise('nm2','1','nm2-fb','nm2-steps')">
-                            <button class="btn" onclick="checkExercise('nm2','1','nm2-fb','nm2-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="nm2-fb"></div>
-                        <div class="detail-steps" id="nm2-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li><span class="fraction"><span class="num"><em>k<sup>5</sup></em></span><span class="den"><em>k<sup>5</sup></em></span></span> <em>= k<sup>5−5</sup> = k<sup>0</sup> = 1</em></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="exercise-item">
-                        <div class="question">Klopt het dat <em>5 · (2y³)<sup>0</sup> = 5</em>? Licht toe.</div>
-                        <div class="input-row">
-                            <button class="btn btn-reveal" onclick="toggleReveal('nm3-ans')">Toon antwoord</button>
-                        </div>
-                        <div class="reveal-content" id="nm3-ans">
-                            <div class="feedback info show">Ja! <em>(2y³)<sup>0</sup> = 1</em>, dus <em>5 · 1 = 5</em>. Correct!</div>
-                        </div>
-                    </div>
-
+        <div class="example-box">
+            <strong>📝 Voorbeeld: schrijf 3x<sup>−4</sup>y<sup>2</sup> zonder negatieve exponenten</strong>
+            <div class="step-reveal">
+                <button class="reveal-btn" onclick="showStep('ex-neg1')" style="margin-top:0.5rem;">Toon uitwerking</button>
+                <div class="step" id="ex-neg1">
+                    3x<sup>−4</sup>y<sup>2</sup> = 3 · <span class="frac"><span class="num">1</span><span class="den">x<sup>4</sup></span></span> · y<sup>2</sup> = <span class="frac"><span class="num">3y<sup>2</sup></span><span class="den">x<sup>4</sup></span></span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ============================================================ -->
-    <!-- SECTIE 3: NEGATIEVE EXPONENTEN -->
-    <!-- ============================================================ -->
-    <section id="negatieve-expo">
-        <div class="card">
-            <h2>3. Theorie A: Negatieve exponenten</h2>
-
-            <p>Nu we weten dat <em>a<sup>0</sup> = 1</em>, kunnen we negatieve exponenten afleiden.</p>
-
-            <div class="steps-container">
-                <div class="step-row">
-                    <div class="step-num">1</div>
-                    <div class="step-content">We weten: <em>a<sup>0</sup> = 1</em> en <span class="fraction"><span class="num"><em>a<sup>p</sup></em></span><span class="den"><em>a<sup>q</sup></em></span></span> <em>= a<sup>p−q</sup></em></div>
-                </div>
-                <div class="step-row">
-                    <div class="step-num">2</div>
-                    <div class="step-content">Kies <em>p = 0</em>: <span class="fraction"><span class="num"><em>a<sup>0</sup></em></span><span class="den"><em>a<sup>q</sup></em></span></span> <em>= a<sup>0−q</sup> = a<sup>−q</sup></em></div>
-                </div>
-                <div class="step-row">
-                    <div class="step-num">3</div>
-                    <div class="step-content">Maar ook: <span class="fraction"><span class="num"><em>a<sup>0</sup></em></span><span class="den"><em>a<sup>q</sup></em></span></span> <em>=</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>a<sup>q</sup></em></span></span></div>
-                </div>
-                <div class="step-row">
-                    <div class="step-num">4</div>
-                    <div class="step-content"><strong class="highlight-blue">Conclusie: <em>a<sup>−q</sup> =</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>a<sup>q</sup></em></span></span></strong></div>
-                </div>
-            </div>
-
-            <div class="formula">
-                <div class="math-display">
-                    Voor <em>a ≠ 0</em> geldt: <em>a<sup>0</sup> = 1</em> &emsp; en &emsp;
-                    <em>a<sup>−q</sup> =</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>a<sup>q</sup></em></span></span>
-                </div>
-            </div>
-
-            <h3>Voorbeelden met <em>x</em></h3>
-            <p>
-                &bull; <em>x<sup>−3</sup> =</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>3</sup></em></span></span>
-                &emsp;
-                &bull; <em>4x<sup>−2</sup> = 4 ·</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>2</sup></em></span></span> <em>=</em> <span class="fraction"><span class="num"><em>4</em></span><span class="den"><em>x<sup>2</sup></em></span></span>
-                &emsp;
-                &bull; <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>3</sup></em></span></span> <em>= x<sup>−3</sup></em>
-            </p>
-
-            <div class="example-box">
-                <strong>🟢 Voorbeeld – schrijf als macht van <em>x</em>:</strong><br><br>
-                <strong>a)</strong> <em>x<sup>3</sup> ·</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>7</sup></em></span></span> <em>= x<sup>3</sup> · x<sup>−7</sup> = x<sup>3+(−7)</sup> = x<sup>−4</sup></em><br><br>
-                <strong>b)</strong> <span class="fraction"><span class="num"><span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>3</sup></em></span></span></span><span class="den"><em>x</em></span></span> <em>=</em> <span class="fraction"><span class="num"><em>x<sup>−3</sup></em></span><span class="den"><em>x</em></span></span> <em>= x<sup>−3−1</sup> = x<sup>−4</sup></em><br><br>
-                <strong>c)</strong> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>−4</sup></em></span></span> <em>·</em> <em>(x<sup>2</sup>)<sup>3</sup></em> <em>= x<sup>4</sup> · x<sup>6</sup> = x<sup>10</sup></em>
-            </div>
-
-            <!-- Interactief: stap-voor-stap x² · (1/x⁵) -->
-            <div class="try-it">
-                <h4>🔢 Probeer zelf: schrijf als macht van <em>x</em> — bereken <em>x<sup>4</sup> ·</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>6</sup></em></span></span></h4>
-                <div class="step-group">
-                    <div class="step">
-                        <span class="step-label">1</span>
-                        <span class="step-text">Schrijf <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>6</sup></em></span></span> als een macht: <em>x<sup>?</sup></em></span>
-                        <input type="text" id="ne1-s1" placeholder="exp" style="width:80px" oninput="checkStepSimple('ne1-s1','-6','ne1-s1-fb')">
-                        <span id="ne1-s1-fb"></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-label">2</span>
-                        <span class="step-text">Nu heb je <em>x<sup>4</sup> · x<sup>−6</sup></em>. Tel de exponenten op: <em>4 + (−6) = ?</em></span>
-                        <input type="text" id="ne1-s2" placeholder="som" style="width:80px" oninput="checkStepSimple('ne1-s2','-2','ne1-s2-fb')">
-                        <span id="ne1-s2-fb"></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-label">3</span>
-                        <span class="step-text">Schrijf het eindantwoord als macht van <em>x</em>:</span>
-                        <input type="text" id="ne1-s3" placeholder="bijv. x^-2" oninput="checkStepSimple('ne1-s3','x-2','ne1-s3-fb')">
-                        <span id="ne1-s3-fb"></span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mini oefeningen negatieve exponenten -->
-            <div class="mini-exercises">
-                <h4>🏋️ Mini-oefeningen: schrijf als macht van <em>x</em></h4>
-                <div class="exercise-grid">
-
-                    <div class="exercise-item">
-                        <div class="question">
-                            <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>4</sup></em></span></span>
-                        </div>
-                        <div class="input-row">
-                            <em>x</em><input type="text" id="ne2" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('ne2','-4','ne2-fb','ne2-steps')">
-                            <button class="btn" onclick="checkExercise('ne2','-4','ne2-fb','ne2-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="ne2-fb"></div>
-                        <div class="detail-steps" id="ne2-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li><span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>4</sup></em></span></span> <em>= x<sup>−4</sup></em></li>
-                                <li>Negatieve exponent = "omgekeerde"</li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="exercise-item">
-                        <div class="question"><em>x<sup>5</sup> · x<sup>−9</sup></em></div>
-                        <div class="input-row">
-                            <em>x</em><input type="text" id="ne3" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('ne3','-4','ne3-fb','ne3-steps')">
-                            <button class="btn" onclick="checkExercise('ne3','-4','ne3-fb','ne3-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="ne3-fb"></div>
-                        <div class="detail-steps" id="ne3-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Zelfde grondtal → exponenten optellen</li>
-                                <li><em>5 + (−9) = −4</em></li>
-                                <li><em>x<sup>−4</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="exercise-item">
-                        <div class="question">
-                            <span class="fraction"><span class="num"><em>x<sup>3</sup></em></span><span class="den"><em>x<sup>7</sup></em></span></span>
-                        </div>
-                        <div class="input-row">
-                            <em>x</em><input type="text" id="ne4" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('ne4','-4','ne4-fb','ne4-steps')">
-                            <button class="btn" onclick="checkExercise('ne4','-4','ne4-fb','ne4-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="ne4-fb"></div>
-                        <div class="detail-steps" id="ne4-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Quotiënt → exponenten aftrekken</li>
-                                <li><em>3 − 7 = −4</em></li>
-                                <li><em>x<sup>−4</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="exercise-item">
-                        <div class="question"><em>(x<sup>−3</sup>)<sup>2</sup></em></div>
-                        <div class="input-row">
-                            <em>x</em><input type="text" id="ne5" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('ne5','-6','ne5-fb','ne5-steps')">
-                            <button class="btn" onclick="checkExercise('ne5','-6','ne5-fb','ne5-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="ne5-fb"></div>
-                        <div class="detail-steps" id="ne5-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li>Macht van een macht → exponenten vermenigvuldigen</li>
-                                <li><em>(x<sup>−3</sup>)<sup>2</sup> = x<sup>−3·2</sup> = x<sup>−6</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="exercise-item">
-                        <div class="question">
-                            <span class="fraction"><span class="num"><em>x<sup>8</sup></em></span><span class="den"><em>x<sup>0</sup></em></span></span>
-                        </div>
-                        <div class="input-row">
-                            <em>x</em><input type="text" id="ne6" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('ne6','8','ne6-fb','ne6-steps')">
-                            <button class="btn" onclick="checkExercise('ne6','8','ne6-fb','ne6-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="ne6-fb"></div>
-                        <div class="detail-steps" id="ne6-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li><em>x<sup>0</sup> = 1</em></li>
-                                <li><span class="fraction"><span class="num"><em>x<sup>8</sup></em></span><span class="den"><em>1</em></span></span> <em>= x<sup>8</sup></em></li>
-                                <li>Of: <em>8 − 0 = 8</em></li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <div class="exercise-item">
-                        <div class="question">
-                            <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>−5</sup></em></span></span>
-                        </div>
-                        <div class="input-row">
-                            <em>x</em><input type="text" id="ne7" placeholder="exp" style="width:70px" onkeydown="if(event.key==='Enter') checkExercise('ne7','5','ne7-fb','ne7-steps')">
-                            <button class="btn" onclick="checkExercise('ne7','5','ne7-fb','ne7-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="ne7-fb"></div>
-                        <div class="detail-steps" id="ne7-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li><span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>−5</sup></em></span></span> <em>= 1 · x<sup>5</sup> = x<sup>5</sup></em></li>
-                                <li>Of: <em>x<sup>−(−5)</sup> = x<sup>5</sup></em></li>
-                            </ol>
-                        </div>
-                    </div>
-
+        <div class="example-box">
+            <strong>📝 Voorbeeld: schrijf (2x)<sup>−3</sup>y<sup>4</sup> zonder negatieve exponenten</strong>
+            <div class="step-reveal">
+                <button class="reveal-btn" onclick="showStep('ex-neg2')" style="margin-top:0.5rem;">Toon uitwerking</button>
+                <div class="step" id="ex-neg2">
+                    (2x)<sup>−3</sup>y<sup>4</sup> = <span class="frac"><span class="num">y<sup>4</sup></span><span class="den">(2x)<sup>3</sup></span></span> = <span class="frac"><span class="num">y<sup>4</sup></span><span class="den">8x<sup>3</sup></span></span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- ============================================================ -->
-    <!-- SECTIE 4: SCHRIJVEN ZONDER NEGATIEVE EXPONENTEN -->
-    <!-- ============================================================ -->
-    <section id="zonder-negatief">
-        <div class="card">
-            <h2>4. Schrijven zonder negatieve exponenten</h2>
+        <div class="example-box">
+            <strong>📝 Voorbeeld: schrijf <span class="frac"><span class="num">2</span><span class="den">3</span></span>x<sup>−1</sup> zonder negatieve exponenten</strong>
+            <div class="step-reveal">
+                <button class="reveal-btn" onclick="showStep('ex-neg3')" style="margin-top:0.5rem;">Toon uitwerking</button>
+                <div class="step" id="ex-neg3">
+                    <span class="frac"><span class="num">2</span><span class="den">3</span></span>x<sup>−1</sup> = <span class="frac"><span class="num">2</span><span class="den">3</span></span> · <span class="frac"><span class="num">1</span><span class="den">x</span></span> = <span class="frac"><span class="num">2</span><span class="den">3x</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <p>Een uitdrukking met negatieve exponenten kun je herschrijven zodat er alleen positieve exponenten in voorkomen. Dit doe je door de negatieve machten naar de noemer te verplaatsen (of omgekeerd).</p>
+    <!-- Sectie 4: Oefeningen negatieve exponenten -->
+    <div class="card" id="oefenen-negatief">
+        <h2>4. Oefeningen: negatieve exponenten</h2>
 
-            <div class="formula">
-                <div class="math-display">
-                    <em>6x<sup>−4</sup> =</em> <span class="fraction"><span class="num"><em>6</em></span><span class="den"><em>x<sup>4</sup></em></span></span>
-                    &emsp;en&emsp;
-                    <em>3x<sup>−2</sup>y<sup>3</sup> =</em> <span class="fraction"><span class="num"><em>3y<sup>3</sup></em></span><span class="den"><em>x<sup>2</sup></em></span></span>
+        <div class="try-it">
+            <h3>🎯 Schrijf als macht (met negatieve exponent)</h3>
+            <p>Schrijf elk van de volgende breuken als macht van x.</p>
+
+            <div class="exercise-item" style="background:#f8fafc;">
+                <div class="question"><strong>a)</strong> <span class="frac"><span class="num">1</span><span class="den">x<sup>4</sup></span></span> = x<sup>?</sup></div>
+                <div class="input-row">
+                    <label>Exponent:</label>
+                    <input type="text" id="neg-a" placeholder="?" onkeydown="if(event.key==='Enter') checkNeg('neg-a','-4','neg-a-fb','neg-a-sol','1/x⁴ = x⁻⁴ (definitie negatieve exponent: 1/aⁿ = a⁻ⁿ)')">
+                    <button class="check-btn" onclick="checkNeg('neg-a','-4','neg-a-fb','neg-a-sol','1/x⁴ = x⁻⁴ (definitie negatieve exponent: 1/aⁿ = a⁻ⁿ)')">Controleer</button>
+                    <span class="feedback" id="neg-a-fb"></span>
+                </div>
+                <div class="solution-box" id="neg-a-sol"></div>
+            </div>
+
+            <div class="exercise-item" style="background:#f8fafc;">
+                <div class="question"><strong>b)</strong> x<sup>5</sup> · <span class="frac"><span class="num">1</span><span class="den">x<sup>9</sup></span></span> = x<sup>?</sup></div>
+                <p style="font-size:0.9rem; color:var(--muted);">Tip: schrijf eerst 1/x⁹ als x⁻⁹</p>
+                <div class="input-row">
+                    <label>Tussenexponent (1/x⁹):</label>
+                    <input type="text" id="neg-b1" placeholder="?" style="width:80px;" onkeydown="if(event.key==='Enter') checkSimple('neg-b1','-9','neg-b1-fb','neg-b1-sol','1/x⁹ = x⁻⁹')">
+                    <button class="check-btn" onclick="checkSimple('neg-b1','-9','neg-b1-fb','neg-b1-sol','1/x⁹ = x⁻⁹')">✓</button>
+                    <span class="feedback" id="neg-b1-fb"></span>
+                </div>
+                <div class="solution-box" id="neg-b1-sol"></div>
+                <div class="input-row" style="margin-top:0.5rem;">
+                    <label>Eindantwoord x<sup>?</sup>:</label>
+                    <input type="text" id="neg-b2" placeholder="?" style="width:80px;" onkeydown="if(event.key==='Enter') checkNeg('neg-b2','-4','neg-b2-fb','neg-b2-sol','x⁵ · x⁻⁹ = x⁵⁺⁽⁻⁹⁾ = x⁵⁻⁹ = x⁻⁴')">
+                    <button class="check-btn" onclick="checkNeg('neg-b2','-4','neg-b2-fb','neg-b2-sol','x⁵ · x⁻⁹ = x⁵⁺⁽⁻⁹⁾ = x⁵⁻⁹ = x⁻⁴')">Controleer</button>
+                    <span class="feedback" id="neg-b2-fb"></span>
+                </div>
+                <div class="solution-box" id="neg-b2-sol"></div>
+            </div>
+
+            <div class="exercise-item" style="background:#f8fafc;">
+                <div class="question"><strong>c)</strong> <span class="frac"><span class="num">x<sup>3</sup></span><span class="den"><span class="frac"><span class="num">1</span><span class="den">x<sup>5</sup></span></span></span></span> = x<sup>?</sup></div>
+                <p style="font-size:0.9rem; color:var(--muted);">Tip: delen door een breuk = vermenigvuldigen met de omgekeerde breuk</p>
+                <div class="input-row">
+                    <label>Exponent:</label>
+                    <input type="text" id="neg-c" placeholder="?" onkeydown="if(event.key==='Enter') checkNeg('neg-c','8','neg-c-fb','neg-c-sol','x³ / (1/x⁵) = x³ · x⁵ = x⁸')">
+                    <button class="check-btn" onclick="checkNeg('neg-c','8','neg-c-fb','neg-c-sol','x³ / (1/x⁵) = x³ · x⁵ = x⁸')">Controleer</button>
+                    <span class="feedback" id="neg-c-fb"></span>
+                </div>
+                <div class="solution-box" id="neg-c-sol"></div>
+            </div>
+        </div>
+
+        <div class="mini-exercises">
+            <h3>🔸 Schrijf zonder negatieve exponenten</h3>
+            <p>Herschrijf elke uitdrukking zodat er alleen positieve exponenten overblijven.</p>
+
+            <div class="exercise-item">
+                <div class="question"><strong>1.</strong> 5x<sup>−3</sup></div>
+                <p style="font-size:0.9rem; color:var(--muted);">Verwacht antwoord: schrijf als breuk</p>
+                <div class="input-row">
+                    <label>Teller:</label>
+                    <input type="text" id="wne1t" placeholder="?" style="width:60px;" onkeydown="if(event.key==='Enter') checkSimple('wne1t','5','wne1t-fb','wne1t-sol','De teller is 5 (de coëfficiënt)')">
+                    <button class="check-btn" onclick="checkSimple('wne1t','5','wne1t-fb','wne1t-sol','De teller is 5')">✓</button>
+                    <span class="feedback" id="wne1t-fb"></span>
+                    <label> / noemer (als macht x<sup>?</sup>):</label>
+                    <input type="text" id="wne1n" placeholder="?" style="width:60px;" onkeydown="if(event.key==='Enter') checkSimple('wne1n','3','wne1n-fb','wne1n-sol','De noemer is x³ (exponent wordt positief: −(−3)=3)')">
+                    <button class="check-btn" onclick="checkSimple('wne1n','3','wne1n-fb','wne1n-sol','De noemer is x³')">✓</button>
+                    <span class="feedback" id="wne1n-fb"></span>
+                </div>
+                <div class="solution-box" id="wne1t-sol"></div>
+                <div class="solution-box" id="wne1n-sol">
+                    <strong>Volledig:</strong> 5x⁻³ = <span class="frac"><span class="num">5</span><span class="den">x<sup>3</sup></span></span>
                 </div>
             </div>
 
-            <div class="tip-box">
-                <strong>💡 Truc:</strong> Heeft een variabele een negatieve exponent? Zet hem dan in de noemer met een positieve exponent. Coëfficiënten (getallen) verplaats je <em>niet</em>.
-            </div>
-
-            <div class="example-box">
-                <strong>🟢 Voorbeeld – schrijf zonder negatieve exponenten:</strong><br><br>
-
-                <strong>a)</strong> <em>3x<sup>−4</sup>y<sup>2</sup> =</em> <span class="fraction"><span class="num"><em>3y<sup>2</sup></em></span><span class="den"><em>x<sup>4</sup></em></span></span><br><br>
-
-                <strong>b)</strong> <em>(4x)<sup>−2</sup>y<sup>3</sup> =</em> <span class="fraction"><span class="num"><em>y<sup>3</sup></em></span><span class="den"><em>(4x)<sup>2</sup></em></span></span> <em>=</em> <span class="fraction"><span class="num"><em>y<sup>3</sup></em></span><span class="den"><em>16x<sup>2</sup></em></span></span><br><br>
-
-                <strong>c)</strong> <span class="fraction"><span class="num"><em>2</em></span><span class="den"><em>5</em></span></span><em>x<sup>−1</sup> =</em> <span class="fraction"><span class="num"><em>2</em></span><span class="den"><em>5x</em></span></span><br><br>
-
-                <strong>d)</strong> <em>(<span class="fraction"><span class="num"><em>2</em></span><span class="den"><em>3</em></span></span>x)<sup>−1</sup> = (<span class="fraction"><span class="num"><em>2</em></span><span class="den"><em>3</em></span></span>)<sup>−1</sup> · x<sup>−1</sup> =</em> <span class="fraction"><span class="num"><em>3</em></span><span class="den"><em>2</em></span></span> <em>·</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x</em></span></span> <em>=</em> <span class="fraction"><span class="num"><em>3</em></span><span class="den"><em>2x</em></span></span>
-            </div>
-
-            <div class="warning-box">
-                <strong>⚠️ Veelgemaakte fout:</strong> Bij <em>(4x)<sup>−2</sup></em> geldt: de hele uitdrukking <em>4x</em> staat in de noemer, dus je krijgt <em>(4x)<sup>2</sup> = 16x<sup>2</sup></em> in de noemer. <strong>Niet</strong> <em>4x<sup>2</sup></em>!
-            </div>
-
-            <!-- Stap-voor-stap: 5x⁻³y² zonder negatieve exponenten -->
-            <div class="try-it">
-                <h4>🔢 Probeer zelf: schrijf <em>5x<sup>−3</sup>y<sup>4</sup></em> zonder negatieve exponenten</h4>
-                <div class="step-group">
-                    <div class="step">
-                        <span class="step-label">1</span>
-                        <span class="step-text">Welk deel heeft een negatieve exponent? (schrijf x of y)</span>
-                        <input type="text" id="sn1-s1" placeholder="x of y" style="width:80px" oninput="checkStepSimple('sn1-s1','x','sn1-s1-fb')">
-                        <span id="sn1-s1-fb"></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-label">2</span>
-                        <span class="step-text">Wat staat er in de noemer? (positieve exponent van x)</span>
-                        <em>x</em><input type="text" id="sn1-s2" placeholder="exp" style="width:70px" oninput="checkStepSimple('sn1-s2','3','sn1-s2-fb')">
-                        <span id="sn1-s2-fb"></span>
-                    </div>
-                    <div class="step">
-                        <span class="step-label">3</span>
-                        <span class="step-text">Volledig antwoord als breuk: teller (zonder de noemer):</span>
-                        <input type="text" id="sn1-s3" placeholder="teller" oninput="checkStepSimple('sn1-s3','5y4','sn1-s3-fb')">
-                        <span id="sn1-s3-fb"></span>
-                    </div>
+            <div class="exercise-item">
+                <div class="question"><strong>2.</strong> (3x)<sup>−2</sup> · y<sup>4</sup></div>
+                <div class="input-row">
+                    <label>Antwoord (als breuk, gebruik ^):</label>
+                    <input type="text" id="wne2" placeholder="bijv. y^4/(9x^2)" onkeydown="if(event.key==='Enter') checkFreeText('wne2','wne2-fb','wne2-sol')">
+                    <button class="check-btn" onclick="checkFreeText('wne2','wne2-fb','wne2-sol')">Toon antwoord</button>
+                    <span class="feedback" id="wne2-fb"></span>
                 </div>
-                <div style="margin-top:0.75rem; font-size:0.9rem; color:var(--muted)">Antwoord: <span class="fraction"><span class="num"><em>5y<sup>4</sup></em></span><span class="den"><em>x<sup>3</sup></em></span></span></div>
+                <div class="solution-box" id="wne2-sol">
+                    <strong>Uitwerking:</strong><br>
+                    (3x)<sup>−2</sup> · y<sup>4</sup> = <span class="frac"><span class="num">1</span><span class="den">(3x)<sup>2</sup></span></span> · y<sup>4</sup> = <span class="frac"><span class="num">y<sup>4</sup></span><span class="den">9x<sup>2</sup></span></span><br>
+                    Let op: de hele haakjesterm (3x) gaat in de noemer!
+                </div>
             </div>
 
-            <!-- Mini oefeningen zonder negatieve exponenten -->
-            <div class="mini-exercises">
-                <h4>🏋️ Mini-oefeningen: schrijf zonder negatieve exponenten</h4>
-                <p style="font-size:0.85rem; color:var(--muted); margin-bottom:0.75rem;">Schrijf je antwoord als breuk, bijv. <em>2y3/x4</em> voor <span class="fraction"><span class="num"><em>2y<sup>3</sup></em></span><span class="den"><em>x<sup>4</sup></em></span></span></p>
-                <div class="exercise-grid">
+            <div class="exercise-item">
+                <div class="question"><strong>3.</strong> 7x<sup>−2</sup>y<sup>3</sup></div>
+                <div class="input-row">
+                    <label>Antwoord:</label>
+                    <input type="text" id="wne3" placeholder="?" onkeydown="if(event.key==='Enter') checkFreeText('wne3','wne3-fb','wne3-sol')">
+                    <button class="check-btn" onclick="checkFreeText('wne3','wne3-fb','wne3-sol')">Toon antwoord</button>
+                    <span class="feedback" id="wne3-fb"></span>
+                </div>
+                <div class="solution-box" id="wne3-sol">
+                    <strong>Uitwerking:</strong><br>
+                    7x<sup>−2</sup>y<sup>3</sup> = 7 · <span class="frac"><span class="num">1</span><span class="den">x<sup>2</sup></span></span> · y<sup>3</sup> = <span class="frac"><span class="num">7y<sup>3</sup></span><span class="den">x<sup>2</sup></span></span><br>
+                    Alleen x<sup>−2</sup> gaat naar de noemer; y<sup>3</sup> heeft al een positieve exponent!
+                </div>
+            </div>
 
-                    <div class="exercise-item">
-                        <div class="question"><em>7x<sup>−2</sup></em></div>
-                        <div class="input-row">
-                            <input type="text" id="sn2" placeholder="bijv. 7/x2" onkeydown="if(event.key==='Enter') checkExercise('sn2','7/x2','sn2-fb','sn2-steps')">
-                            <button class="btn" onclick="checkExercise('sn2','7/x2','sn2-fb','sn2-steps')">✓</button>
-                        </div>
-                        <div class="feedback" id="sn2-fb"></div>
-                        <div class="detail-steps" id="sn2-steps">
-                            <h5>📝 Uitwerking:</h5>
-                            <ol>
-                                <li><em>x<sup>−2</sup> =</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>2</sup></em></span></span></li>
-                                <li><em>7x<sup>−2</sup> = 7 ·</em> <span class="fraction"><span class="num"><em>1</em></span><span class="den"><em>x<sup>2</sup></em></span></span> <em>=</em> <span class="fraction"><span class="num"><em>7</em></span><span class="den"><em>x<sup>2</sup></em></span></span></li>
-                            </ol>
-                        </div>
-                    </div>
+            <div class="exercise-item">
+                <div class="question"><strong>4.</strong> <span class="frac"><span class="num">5</span><span class="den">4</span></span>x<sup>−1</sup>y<sup>2</sup></div>
+                <div class="input-row">
+                    <label>Antwoord:</label>
+                    <input type="text" id="wne4" placeholder="?" onkeydown="if(event.key==='Enter') checkFreeText('wne4','wne4-fb','wne4-sol')">
+                    <button class="check-btn" onclick="checkFreeText('wne4','wne4-fb','wne4-sol')">Toon antwoord</button>
+                    <span class="feedback" id="wne4-fb"></span>
+                </div>
+                <div class="solution-box" id="wne4-sol">
+                    <strong>Uitwerking:</strong><br>
+                    <span class="frac"><span class="num">5</span><span class="den">4</span></span>x<sup>−1</sup>y<sup>2</sup> = <span class="frac"><span class="num">5</span><span class="den">4</span></span> · <span class="frac"><span class="num">1</span><span class="den">x</span></span> · y<sup>2</sup> = <span class="frac"><span class="num">5y<sup>2</sup></span><span class="den">4x</span></span>
+                </div>
+            </div>
+
+            <div class="exercise-item">
+                <div class="question"><strong>5.</strong> −4 · (2x)<sup>−2</sup></div>
+                <div class="input-row">
+                    <label>Antwoord:</label>
+                    <input type="text" id="wne5" placeholder="?" onkeydown="if(event.key==='Enter') checkFreeText('wne5','wne5-fb','wne5-sol')">
+                    <button class="check-btn" onclick="checkFreeText('wne5','wne5-fb','wne5-sol')">Toon antwoord</button>
+                    <span class="feedback" id="wne5-fb"></span>
+                </div>
+                <div class="solution-box" id="wne5-sol">
+                    <strong>Uitwerking:</strong><br>
+                    −4 · (2x)<sup>−2</sup> = −4 · <span class="frac"><span class="num">1</span><span class="den">(2x)<sup>2</sup></span></span> = <span class="frac"><span class="num">−4</span><span class="den">4x<sup>2</sup></span></span> = <span class="frac"><span class="num">−1</span><span class="den">x<sup>2</sup></span></span><br>
+                    Vereenvoudig: −4/4 = −1
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sectie 5: Gebroken exponenten -->
+    <div class="card" id="gebroken-exp">
+        <h2>5. Theorie B: Gebroken exponenten</h2>
+
+        <p>Nu bekijken we wat een <strong>gebroken exponent</strong> betekent, zoals x<sup>1/2</sup> of x<sup>3/4</sup>.</p>
+
+        <div class="try-it">
+            <h3>🧠 Afleiding van x<sup>1/2</sup></h3>
+            <p>We gebruiken de regel (a<sup>p</sup>)<sup>q</sup> = a<sup>pq</sup>.</p>
+
+            <button class="reveal-btn" onclick="showStep('geb-stap1')">Stap 1: bereken (x<sup>½</sup>)²</button>
+            <div class="step" id="geb-stap1">
+                (x<sup>½</sup>)<sup>2</sup> = x<sup>½ · 2</sup> = x<sup>1</sup> = x
+            </div>
+
+            <button class="reveal-btn" onclick="showStep('geb-stap2')" style="margin-top:0.5rem;">Stap 2: welk getal kwadraat geeft x?</button>
+            <div class="step" id="geb-stap2">
+                Als (x<sup>½</sup>)² = x, dan is x<sup>½</sup> de wortel van x.<br>
+                Want: (√x)² = x
+            </div>
+
+            <button class="reveal-btn success-btn" onclick="showStep('geb-stap3')" style="margin-top:0.5rem;">Conclusie</button>
+            <div class="step" id="geb-stap3">
+                x<sup>½</sup> = √x &nbsp; ✓
+            </div>
+        </div>
+
+        <div class="big-formula">
+            a<sup><span class="frac" style="font-size:0.7em;vertical-align:middle;"><span class="num">1</span><span class="den">q</span></span></sup> = <sup>q</sup>√a &nbsp;&nbsp; en &nbsp;&nbsp; a<sup><span class="frac" style="font-size:0.7em;vertical-align:middle;"><span class="num">p</span><span class="den">q</span></span></sup> = <sup>q</sup>√(a<sup>p</sup>)
+        </div>
+
+        <div class="example-box">
+            <strong>📝 Voorbeelden:</strong>
+            <ul style="margin-top:0.5rem; padding-left:1.2rem; line-height:2.2;">
+                <li>x<sup>1/3</sup> = ³√x</li>
+                <li>x<sup>2/3</sup> = ³√(x²)</li>
+                <li>x<sup>3/4</sup> = ⁴√(x³)</li>
+                <li>x<sup>−1/2</sup> = <span class="frac"><span class="num">1</span><span class="den">x<sup>1/2</sup></span></span> = <span class="frac"><span class="num">1</span><span class="den">√x</span></span></li>
+            </ul>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> Een gebroken exponent <span class="frac"><span class="num">p</span><span class="den">q</span></span> kun je lezen als:<br>
+            • q = de <strong>index</strong> van de wortel (q-de-machtswortel)<br>
+            • p = de <strong>macht</strong> van het grondtal onder de wortel
+        </div>
+
+        <h3>Schrijven als macht van x</h3>
+
+        <div class="example-box">
+            <strong>📝 Voorbeeld: schrijf x · ⁴√(x³) als macht van x</strong>
+            <div class="step-reveal">
+                <button class="reveal-btn" onclick="showStep('ex-geb1')" style="margin-top:0.5rem;">Toon uitwerking</button>
+                <div class="step" id="ex-geb1">
+                    Stap 1: ⁴√(x³) = x<sup>3/4</sup><br>
+                    Stap 2: x · x<sup>3/4</sup> = x<sup>1</sup> · x<sup>3/4</sup> = x<sup>1 + 3/4</sup> = x<sup>7/4</sup>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>📝 Voorbeeld: schrijf <span class="frac"><span class="num">x<sup>3</sup></span><span class="den">⁵√x</span></span> als macht van x</strong>
+            <div class="step-reveal">
+                <button class="reveal-btn" onclick="showStep('ex-geb2')" style="margin-top:0.5rem;">Toon uitwerking</button>
+                <div class="step" id="ex-geb2">
+                    Stap 1: ⁵√x = x<sup>1/5</sup><br>
+                    Stap 2: <span class="frac"><span class="num">x<sup>3</sup></span><span class="den">x<sup>1/5</sup></span></span> = x<sup>3 − 1/5</sup> = x<sup>15/5 − 1/5</sup> = x<sup>14/5</sup>
+                </div>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <strong>📝 Voorbeeld: schrijf <span class="frac"><span class="num">⁴√x</span><span class="den">⁶√x</span></span> als macht van x</strong>
+            <div class="step-reveal">
+                <button class="reveal-btn" onclick="showStep('ex-geb3')" style="margin-top:0.5rem;">Toon uitwerking</button>
+                <div class="step" id="ex-geb3">
+                    Stap 1: ⁴√x = x<sup>1/4</sup> en ⁶√x = x<sup>1/6</sup><br>
+                    Stap 2: <span class="frac"><span class="num">x<sup>1/4</sup></span><span class="den">x<sup>1/6</sup></span></span> = x<sup>1/4 − 1/6</sup><br>
+                    Stap 3: gelijknamig maken: x<sup>3/12 − 2/12</sup> = x<sup>1/12</sup>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sectie 6: Oefeningen gebroken exponenten -->
+    <div class="card" id="oefenen-gebroken">
+        <h2>6. Oefeningen: gebroken exponenten</h2>
+
+        <div class="try-it">
+            <h3>🎯 Schrijf als macht van x (stap voor stap)</h3>
+
+            <div class="exercise-item" style="background:#f8fafc;">
+                <div class="question"><strong>a)</strong> √x = x<sup>?</sup></div>
+                <div class="input-row">
+                    <label>Exponent (als breuk: schrijf 1/2):</label>
+                    <input type="text" id="geb-a" placeholder="?" onkeydown="if(event.key==='Enter') checkFrac('geb-a',1,2,'geb-a-fb','geb-a-sol','√x = x^(1/2). De vierkantswortel is een macht 1/2.')">
+                    <button class="check-btn" onclick="checkFrac('geb-a',1,2,'geb-a-fb','geb-a-sol','√x = x^(1/2). De vierkantswortel is een macht 1/2.')">Controleer</button>
+                    <span class="feedback" id="geb-a-fb"></span>
+                </div>
+                <div class="solution-box" id="geb-a-sol"></div>
+            </div>
+
+            <div class="exercise-item" style="background:#f8fafc;">
+                <div class="question"><strong>b)</strong> x² · √x = x<sup>?</sup></div>
+                <div class="input-row">
+                    <label>Stap 1 - √x als macht:</label>
+                    <input type="text" id="geb-b1" placeholder="x^?" style="width:80px;" onkeydown="if(event.key==='Enter') checkFrac('geb-b1',1,2,'geb-b1-fb','geb-b1-sol','√x = x^(1/2)')">
+                    <button class="check-btn" onclick="checkFrac('geb-b1',1,2,'geb-b1-fb','geb-b1-sol','√x = x^(1/2)')">✓</button>
+                    <span class="feedback" id="geb-b1-fb"></span>
+                </div>
+                <div class="solution-box" id="geb-b1-sol"></div>
+                <div class="input-row" style="margin-top:0.5rem;">
+                    <label>Stap 2 - exponent optellen (2 + 1/2):</label>
+                    <input type="text" id="geb-b2" placeholder="?" style="width:80px;" onkeydown="if(event.key==='Enter') checkFrac('geb-b2',5,2,'geb-b2-fb','geb-b2-sol','2 + 1/2 = 4/2 + 1/2 = 5/2. Dus x² · x^(1/2) = x^(5/2).')">
+                    <button class="check-btn" onclick="checkFrac('geb-b2',5,2,'geb-b2-fb','geb-b2-sol','2 + 1/2 = 4/2 + 1/2 = 5/2. Dus x² · x^(1/2) = x^(5/2).')">

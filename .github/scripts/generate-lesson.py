@@ -902,6 +902,16 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     niveau_slug = slugify(niveau) if niveau else 'algemeen'
     titel_slug = slugify(titel)
     lesson_dir = Path(issue_author) / vak_slug / niveau_slug / titel_slug
+
+    # Check voor bestaande les op hetzelfde pad (duplicate upload)
+    base_dir = lesson_dir
+    version = 1
+    while (Path.cwd() / lesson_dir / 'metadata.json').exists():
+        version += 1
+        lesson_dir = Path(str(base_dir) + f'-v{version}')
+    if version > 1:
+        print(f"  Les bestaat al, gebruik versie: {lesson_dir}")
+
     output_path = lesson_dir / 'index.html'
 
     # Maak de map aan en schrijf het bestand

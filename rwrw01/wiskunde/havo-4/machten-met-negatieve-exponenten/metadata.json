@@ -1,0 +1,19 @@
+{
+  "issue_number": 33,
+  "issue_author": "rwrw01",
+  "display_name": "Ralph",
+  "titel": "MAchten met negatieve exponenten",
+  "vak": "Wiskunde",
+  "niveau": "HAVO 4",
+  "fotos_count": 6,
+  "generated_path": "rwrw01/wiskunde/havo-4/machten-met-negatieve-exponenten/index.html",
+  "ai_provider": "claude",
+  "ai_model": "claude-sonnet-4-6",
+  "usage": {
+    "input_tokens": 11493,
+    "output_tokens": 16000,
+    "total_tokens": 27493,
+    "cache_read_tokens": 0,
+    "estimated_cost_usd": 0.2745
+  }
+}

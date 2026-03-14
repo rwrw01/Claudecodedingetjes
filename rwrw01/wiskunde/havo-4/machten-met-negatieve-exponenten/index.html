@@ -1,0 +1,1135 @@
+```html
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machten met negatieve en gebroken exponenten — Wiskunde HAVO 4</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --primary-dark: #1e3a5f;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --warning: #d97706;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            font-size: 1.05rem;
+            opacity: 0.85;
+        }
+
+        .breadcrumb {
+            background: white;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem 3rem;
+        }
+
+        /* Table of contents */
+        .toc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h2 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .toc ol {
+            padding-left: 1.2rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.35rem;
+        }
+
+        .toc a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover { text-decoration: underline; }
+
+        /* Cards */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.6rem;
+            color: var(--text);
+        }
+
+        .card p { margin-bottom: 0.75rem; }
+
+        /* Formula box */
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            font-size: 1.05rem;
+        }
+
+        .formula .math {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* Tip / warning / example boxes */
+        .tip-box {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            border-radius: 0 8px 8px 0;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .tip-box strong { color: #92400e; }
+
+        .warning-box {
+            background: #fff1f2;
+            border-left: 4px solid var(--accent);
+            border-radius: 0 8px 8px 0;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .warning-box strong { color: #be123c; }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            border-radius: 0 8px 8px 0;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        .example-box strong { color: #14532d; }
+
+        /* Math rendering */
+        .math { font-style: italic; }
+        sup { font-size: 0.7em; vertical-align: super; }
+        sub { font-size: 0.7em; vertical-align: sub; }
+
+        .frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 2px;
+            font-size: 0.9em;
+        }
+
+        .frac .num {
+            border-bottom: 1px solid currentColor;
+            padding: 0 2px 1px;
+            line-height: 1.2;
+        }
+
+        .frac .den {
+            padding: 1px 2px 0;
+            line-height: 1.2;
+        }
+
+        /* Interactive try-it */
+        .try-it {
+            background: #f0f9ff;
+            border: 2px dashed #7dd3fc;
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+
+        .try-it h4 {
+            color: #0369a1;
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .try-it h4::before { content: "✏️"; }
+
+        .step-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .step-row label {
+            font-size: 0.9rem;
+            color: var(--muted);
+            min-width: 200px;
+        }
+
+        .step-row input {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.35rem 0.6rem;
+            font-size: 0.95rem;
+            width: 110px;
+            font-family: inherit;
+        }
+
+        .step-row input:focus {
+            outline: 2px solid var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { background: #1d4ed8; }
+
+        .btn-secondary {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .btn-secondary:hover { background: #cbd5e1; }
+
+        .btn-hint {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+
+        .btn-hint:hover { background: #fde68a; }
+
+        .btn-show {
+            background: #f0fdf4;
+            color: #166534;
+            border: 1px solid #86efac;
+            font-size: 0.85rem;
+            padding: 0.35rem 0.8rem;
+        }
+
+        .btn-show:hover { background: #dcfce7; }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 0.6rem;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            color: #166534;
+            display: block;
+        }
+
+        .feedback.wrong {
+            background: #fff1f2;
+            border: 1px solid #fda4af;
+            color: #be123c;
+            display: block;
+        }
+
+        /* Step reveal */
+        .step-reveal {
+            margin: 0.75rem 0;
+        }
+
+        .step-hidden {
+            display: none;
+        }
+
+        .step-content {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.4rem;
+            font-size: 0.95rem;
+        }
+
+        /* Mini exercises */
+        .mini-exercises {
+            background: #fafafa;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1.25rem 0;
+        }
+
+        .mini-exercises h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .exercise-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .exercise-item .question {
+            font-size: 0.95rem;
+            min-width: 200px;
+        }
+
+        .exercise-item input {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.35rem 0.7rem;
+            font-size: 0.95rem;
+            width: 130px;
+            font-family: inherit;
+        }
+
+        .exercise-item input:focus {
+            outline: 2px solid var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Main exercises */
+        .exercises-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .exercises-section h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .main-exercise {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.1rem 1.25rem;
+            margin-bottom: 1rem;
+            background: #fafafa;
+        }
+
+        .main-exercise .ex-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .main-exercise .ex-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            text-align: center;
+            line-height: 28px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .main-exercise .ex-question {
+            flex: 1;
+            font-size: 1rem;
+        }
+
+        .ex-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .ex-input-row input {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.75rem;
+            font-size: 0.95rem;
+            width: 160px;
+            font-family: inherit;
+        }
+
+        .ex-input-row input:focus {
+            outline: 2px solid var(--primary);
+            border-color: var(--primary);
+        }
+
+        .hint-box {
+            background: #fef9c3;
+            border: 1px solid #fde047;
+            border-radius: 8px;
+            padding: 0.6rem 0.9rem;
+            font-size: 0.88rem;
+            color: #713f12;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .detail-steps {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.6rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .detail-steps ol {
+            padding-left: 1.2rem;
+        }
+
+        .detail-steps li { margin-bottom: 0.4rem; }
+
+        /* Slider demo */
+        .slider-demo {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+
+        .slider-demo h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .slider-container input[type=range] {
+            width: 180px;
+            accent-color: var(--primary);
+        }
+
+        .slider-result {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 200px;
+        }
+
+        /* Progress bar */
+        .progress-bar {
+            background: var(--border);
+            border-radius: 99px;
+            height: 8px;
+            margin: 0.5rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: var(--success);
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.4s;
+            width: 0%;
+        }
+
+        .score-display {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-align: right;
+        }
+
+        /* Section anchor */
+        .section-anchor { padding-top: 1rem; }
+
+        /* Open vraag */
+        .open-vraag textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin: 0.5rem 0;
+        }
+
+        .open-vraag textarea:focus {
+            outline: 2px solid var(--primary);
+            border-color: var(--primary);
+        }
+
+        .antwoord-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.75rem 0;
+            font-size: 0.92rem;
+        }
+
+        th {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.6rem 0.8rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.55rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #f8fafc; }
+
+        @media (max-width: 600px) {
+            .step-row, .exercise-item, .ex-input-row { flex-direction: column; align-items: flex-start; }
+            .step-row label { min-width: unset; }
+            .slider-container { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Machten met negatieve en gebroken exponenten</h1>
+    <p>Wiskunde HAVO 4 · Paragraaf 5.3</p>
+</header>
+
+<nav class="breadcrumb">
+    <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; Wiskunde &rsaquo; Machten met negatieve en gebroken exponenten
+</nav>
+
+<div class="container">
+
+    <!-- Inhoudsopgave -->
+    <div class="toc">
+        <h2>Inhoudsopgave</h2>
+        <ol>
+            <li><a href="#rekenregels">Rekenregels voor machten (herhaling)</a></li>
+            <li><a href="#negatief">Theorie A: Negatieve exponenten</a></li>
+            <li><a href="#oefenen-negatief">Oefeningen: Negatieve exponenten</a></li>
+            <li><a href="#gebroken">Theorie B: Gebroken exponenten</a></li>
+            <li><a href="#oefenen-gebroken">Oefeningen: Gebroken exponenten</a></li>
+            <li><a href="#combinatie">Combinatie: Negatief én gebroken</a></li>
+            <li><a href="#hoofdoefeningen">Hoofdoefeningen</a></li>
+        </ol>
+    </div>
+
+    <!-- SECTIE 1: Rekenregels -->
+    <div class="card section-anchor" id="rekenregels">
+        <h2>1. Rekenregels voor machten (herhaling)</h2>
+        <p>Voordat we beginnen met negatieve en gebroken exponenten, herhalen we de vier basisregels voor machten.</p>
+
+        <table>
+            <tr>
+                <th>Regel</th>
+                <th>Notatie</th>
+                <th>Uitleg</th>
+            </tr>
+            <tr>
+                <td><strong>Vermenigvuldigen</strong></td>
+                <td><em>a<sup>p</sup> · a<sup>q</sup> = a<sup>p+q</sup></em></td>
+                <td>Zelfde grondtal → exponenten optellen</td>
+            </tr>
+            <tr>
+                <td><strong>Delen</strong></td>
+                <td><em>a<sup>p</sup> / a<sup>q</sup> = a<sup>p−q</sup></em></td>
+                <td>Zelfde grondtal → exponenten aftrekken</td>
+            </tr>
+            <tr>
+                <td><strong>Macht van een macht</strong></td>
+                <td><em>(a<sup>p</sup>)<sup>q</sup> = a<sup>p·q</sup></em></td>
+                <td>Exponenten vermenigvuldigen</td>
+            </tr>
+            <tr>
+                <td><strong>Macht van een product</strong></td>
+                <td><em>(ab)<sup>p</sup> = a<sup>p</sup>b<sup>p</sup></em></td>
+                <td>Macht over elk factor verdelen</td>
+            </tr>
+        </table>
+
+        <div class="example-box">
+            <strong>Voorbeelden:</strong><br>
+            <em>y<sup>3</sup> · y<sup>5</sup> = y<sup>8</sup></em> &nbsp;|&nbsp;
+            <em>z<sup>7</sup> / z<sup>3</sup> = z<sup>4</sup></em> &nbsp;|&nbsp;
+            <em>(b<sup>4</sup>)<sup>3</sup> = b<sup>12</sup></em> &nbsp;|&nbsp;
+            <em>(2y)<sup>3</sup> = 8y<sup>3</sup></em>
+        </div>
+
+        <!-- Slider: vermenigvuldigen van machten -->
+        <div class="slider-demo">
+            <h4>🔢 Verken: vermenigvuldigen van machten van 2</h4>
+            <p style="font-size:0.9rem; color:var(--muted); margin-bottom:0.75rem;">
+                Sleep de schuifregelaar om te zien hoe 2<sup>p</sup> · 2<sup>q</sup> werkt.
+            </p>
+            <div class="slider-container">
+                <div>
+                    <label style="font-size:0.85rem;">p = <strong id="sliderP">1</strong></label><br>
+                    <input type="range" min="0" max="5" value="1" oninput="updateSlider()" id="sl_p">
+                </div>
+                <div>
+                    <label style="font-size:0.85rem;">q = <strong id="sliderQ">2</strong></label><br>
+                    <input type="range" min="0" max="5" value="2" oninput="updateSlider()" id="sl_q">
+                </div>
+                <div class="slider-result" id="sliderResult">
+                    2<sup>1</sup> · 2<sup>2</sup> = 2<sup>3</sup> = 8
+                </div>
+            </div>
+        </div>
+
+        <div class="try-it">
+            <h4>Probeer zelf: rekenregels toepassen</h4>
+            <div class="step-group">
+                <div class="step-row">
+                    <label>m<sup>4</sup> · m<sup>6</sup> = m<sup>?</sup></label>
+                    <input type="text" id="rr1" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('rr1','10','m⁴·m⁶ = m^(4+6) = m^10')">
+                    <button class="btn btn-primary" onclick="checkSimple('rr1','10','m⁴·m⁶ = m^(4+6) = m^10')">Controleer</button>
+                </div>
+                <div id="fb_rr1" class="feedback"></div>
+                <div class="step-row" style="margin-top:0.5rem;">
+                    <label>n<sup>8</sup> / n<sup>3</sup> = n<sup>?</sup></label>
+                    <input type="text" id="rr2" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('rr2','5','n⁸÷n³ = n^(8−3) = n^5')">
+                    <button class="btn btn-primary" onclick="checkSimple('rr2','5','n⁸÷n³ = n^(8−3) = n^5')">Controleer</button>
+                </div>
+                <div id="fb_rr2" class="feedback"></div>
+                <div class="step-row" style="margin-top:0.5rem;">
+                    <label>(k<sup>3</sup>)<sup>4</sup> = k<sup>?</sup></label>
+                    <input type="text" id="rr3" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('rr3','12','(k³)⁴ = k^(3×4) = k^12')">
+                    <button class="btn btn-primary" onclick="checkSimple('rr3','12','(k³)⁴ = k^(3×4) = k^12')">Controleer</button>
+                </div>
+                <div id="fb_rr3" class="feedback"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTIE 2: Negatieve exponenten -->
+    <div class="card section-anchor" id="negatief">
+        <h2>2. Theorie A: Negatieve exponenten</h2>
+
+        <h3>Hoe ontstaat een negatieve exponent?</h3>
+        <p>We passen de deelregel toe: <em>a<sup>p</sup> / a<sup>q</sup> = a<sup>p−q</sup></em>. Wat als <em>p &lt; q</em>?</p>
+
+        <div class="step-reveal">
+            <button class="btn btn-secondary" onclick="toggleStep('stap_neg1')">▶ Stap 1: bereken a³/a³ op twee manieren</button>
+            <div id="stap_neg1" class="step-content step-hidden">
+                <strong>Manier 1 (vereenvoudigen):</strong> <em>a³ / a³ = 1</em> (want teller = noemer)<br>
+                <strong>Manier 2 (deelregel):</strong> <em>a³ / a³ = a<sup>3−3</sup> = a<sup>0</sup></em><br>
+                <span style="color:var(--success);">➜ Dus: <strong>a<sup>0</sup> = 1</strong> (voor a ≠ 0)</span>
+            </div>
+        </div>
+
+        <div class="step-reveal" style="margin-top:0.5rem;">
+            <button class="btn btn-secondary" onclick="toggleStep('stap_neg2')">▶ Stap 2: bereken a²/a⁵ op twee manieren</button>
+            <div id="stap_neg2" class="step-content step-hidden">
+                <strong>Manier 1 (inkorten):</strong>
+                <span class="frac"><span class="num">a²</span><span class="den">a⁵</span></span>
+                =
+                <span class="frac"><span class="num">1</span><span class="den">a³</span></span>
+                <br>
+                <strong>Manier 2 (deelregel):</strong> <em>a² / a⁵ = a<sup>2−5</sup> = a<sup>−3</sup></em><br>
+                <span style="color:var(--success);">➜ Dus: <strong>a<sup>−3</sup> = 1/a³</strong></span>
+            </div>
+        </div>
+
+        <div class="formula" style="margin-top:1rem;">
+            <div class="math">Voor a ≠ 0:</div>
+            <div class="math" style="margin-top:0.4rem;">
+                a<sup>0</sup> = 1 &nbsp;&nbsp;&nbsp; en &nbsp;&nbsp;&nbsp;
+                a<sup>−q</sup> =
+                <span class="frac"><span class="num">1</span><span class="den">a<sup>q</sup></span></span>
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> Een negatieve exponent betekent: "zet het onder de streep". Dus
+            <em>x<sup>−4</sup> = 1/x<sup>4</sup></em>. De exponent zelf wordt positief als je de breuk schrijft.
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Veelgemaakte fout:</strong> <em>−x<sup>4</sup></em> is NIET hetzelfde als <em>x<sup>−4</sup></em>!
+            Het minteken bij de exponent geeft een breuk; een minteken vóór de macht geeft een negatieve waarde.
+        </div>
+
+        <h3>Voorbeelden: schrijven met negatieve exponent</h3>
+        <table>
+            <tr>
+                <th>Breuknotatie</th>
+                <th>Machtennotatie</th>
+            </tr>
+            <tr><td>1/y³</td><td>y<sup>−3</sup></td></tr>
+            <tr><td>4/x²</td><td>4x<sup>−2</sup></td></tr>
+            <tr><td>1/x</td><td>x<sup>−1</sup></td></tr>
+            <tr><td>6/x<sup>5</sup></td><td>6x<sup>−5</sup></td></tr>
+        </table>
+
+        <h3>Voorbeelden: schrijven zonder negatieve exponent</h3>
+
+        <div class="example-box">
+            <strong>Schrijf zonder negatieve exponenten:</strong><br><br>
+            <strong>a)</strong> 3y<sup>−4</sup>z<sup>2</sup>
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('ex_neg_a')">Toon uitwerking</button>
+                <div id="ex_neg_a" class="step-content step-hidden">
+                    3y<sup>−4</sup>z<sup>2</sup> =
+                    <span class="frac"><span class="num">3z<sup>2</sup></span><span class="den">y<sup>4</sup></span></span>
+                    &nbsp; (de y met negatieve exponent gaat naar de noemer)
+                </div>
+            </div>
+            <br>
+            <strong>b)</strong> (3y)<sup>−4</sup>z<sup>2</sup>
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('ex_neg_b')">Toon uitwerking</button>
+                <div id="ex_neg_b" class="step-content step-hidden">
+                    (3y)<sup>−4</sup>z<sup>2</sup> =
+                    <span class="frac"><span class="num">z<sup>2</sup></span><span class="den">(3y)<sup>4</sup></span></span>
+                    =
+                    <span class="frac"><span class="num">z<sup>2</sup></span><span class="den">81y<sup>4</sup></span></span>
+                    &nbsp; (let op: de haakjes horen bij de macht!)
+                </div>
+            </div>
+            <br>
+            <strong>c)</strong>
+            <span class="frac"><span class="num">2</span><span class="den">5</span></span>
+            x<sup>−1</sup>
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('ex_neg_c')">Toon uitwerking</button>
+                <div id="ex_neg_c" class="step-content step-hidden">
+                    <span class="frac"><span class="num">2</span><span class="den">5</span></span>
+                    x<sup>−1</sup> =
+                    <span class="frac"><span class="num">2</span><span class="den">5</span></span>
+                    ·
+                    <span class="frac"><span class="num">1</span><span class="den">x</span></span>
+                    =
+                    <span class="frac"><span class="num">2</span><span class="den">5x</span></span>
+                </div>
+            </div>
+            <br>
+            <strong>d)</strong>
+            (<span class="frac" style="display:inline-flex;"><span class="num">2</span><span class="den">3</span></span>x)<sup>−1</sup>
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('ex_neg_d')">Toon uitwerking</button>
+                <div id="ex_neg_d" class="step-content step-hidden">
+                    (²⁄₃x)<sup>−1</sup> = (²⁄₃)<sup>−1</sup> · x<sup>−1</sup> = ³⁄₂ ·
+                    <span class="frac"><span class="num">1</span><span class="den">x</span></span>
+                    =
+                    <span class="frac"><span class="num">3</span><span class="den">2x</span></span>
+                    &nbsp; (de breuk omdraaien geeft de inverse)
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactief: negatief exponent verkennen -->
+        <div class="slider-demo">
+            <h4>🔢 Verken: negatieve exponenten van 3</h4>
+            <p style="font-size:0.9rem;color:var(--muted);margin-bottom:0.75rem;">
+                Versleep de schuifregelaar. Let op wat er gebeurt als de exponent negatief wordt.
+            </p>
+            <div class="slider-container">
+                <div>
+                    <label style="font-size:0.85rem;">exponent n = <strong id="negSliderVal">2</strong></label><br>
+                    <input type="range" min="-4" max="4" value="2" oninput="updateNegSlider()" id="neg_sl">
+                </div>
+                <div class="slider-result" id="negSliderResult">
+                    3<sup>2</sup> = 9
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTIE 3: Oefeningen negatieve exponenten -->
+    <div class="card section-anchor" id="oefenen-negatief">
+        <h2>3. Oefeningen: Negatieve exponenten</h2>
+
+        <div class="try-it">
+            <h4>Schrijf als macht (met negatieve exponent)</h4>
+            <div class="step-group">
+                <div class="step-row">
+                    <label>1/w⁵ = w<sup>?</sup></label>
+                    <input type="text" id="neg_o1" placeholder="bv. −5" onkeydown="if(event.key==='Enter')checkSimple('neg_o1','-5','1/w⁵ = w^(−5) want a^(−q) = 1/a^q')">
+                    <button class="btn btn-primary" onclick="checkSimple('neg_o1','-5','1/w⁵ = w^(−5) want a^(−q) = 1/a^q')">Check</button>
+                </div>
+                <div id="fb_neg_o1" class="feedback"></div>
+
+                <div class="step-row">
+                    <label>1/t = t<sup>?</sup></label>
+                    <input type="text" id="neg_o2" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('neg_o2','-1','1/t = t^(−1)')">
+                    <button class="btn btn-primary" onclick="checkSimple('neg_o2','-1','1/t = t^(−1)')">Check</button>
+                </div>
+                <div id="fb_neg_o2" class="feedback"></div>
+
+                <div class="step-row">
+                    <label>7/x³ = 7 · x<sup>?</sup></label>
+                    <input type="text" id="neg_o3" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('neg_o3','-3','7/x³ = 7·x^(−3)')">
+                    <button class="btn btn-primary" onclick="checkSimple('neg_o3','-3','7/x³ = 7·x^(−3)')">Check</button>
+                </div>
+                <div id="fb_neg_o3" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="mini-exercises">
+            <h4>🎯 Mini-oefeningen: Schrijf zonder negatieve exponenten</h4>
+            <p style="font-size:0.88rem;color:var(--muted);margin-bottom:0.75rem;">
+                Schrijf je antwoord als breuk (bv. <code>3/x^4</code>) of gebruik de vereenvoudigde vorm.
+                Typ decimalen met komma.
+            </p>
+
+            <div class="exercise-item">
+                <span class="question"><strong>1.</strong> 5v<sup>−2</sup> = ?</span>
+                <input type="text" id="mni1" placeholder="antwoord" onkeydown="if(event.key==='Enter')checkFreeform('mni1',['5/v^2','5/v2'],'5v^(−2) = 5 · (1/v²) = 5/v²')">
+                <button class="btn btn-primary" onclick="checkFreeform('mni1',['5/v^2','5/v2'],'5v^(−2) = 5 · (1/v²) = 5/v²')">Check</button>
+                <div id="fb_mni1" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>2.</strong> p<sup>−6</sup> = ?</span>
+                <input type="text" id="mni2" placeholder="antwoord" onkeydown="if(event.key==='Enter')checkFreeform('mni2',['1/p^6','1/p6'],'p^(−6) = 1/p^6')">
+                <button class="btn btn-primary" onclick="checkFreeform('mni2',['1/p^6','1/p6'],'p^(−6) = 1/p^6')">Check</button>
+                <div id="fb_mni2" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>3.</strong> (4z)<sup>−2</sup> = ?</span>
+                <input type="text" id="mni3" placeholder="antwoord" onkeydown="if(event.key==='Enter')checkFreeform('mni3',['1/(16z^2)','1/16z^2','1/(4z)^2'],'(4z)^(−2) = 1/(4z)² = 1/(16z²)')">
+                <button class="btn btn-primary" onclick="checkFreeform('mni3',['1/(16z^2)','1/16z^2','1/(4z)^2'],'(4z)^(−2) = 1/(4z)² = 1/(16z²)')">Check</button>
+                <div id="fb_mni3" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>4.</strong> 2x<sup>−3</sup>y<sup>4</sup> = ?</span>
+                <input type="text" id="mni4" placeholder="antwoord" onkeydown="if(event.key==='Enter')checkFreeform('mni4',['2y^4/x^3','2y4/x3'],'2x^(−3)y^4 = 2y^4/x^3')">
+                <button class="btn btn-primary" onclick="checkFreeform('mni4',['2y^4/x^3','2y4/x3'],'2x^(−3)y^4 = 2y^4/x^3')">Check</button>
+                <div id="fb_mni4" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>5.</strong> (½z)<sup>−1</sup> = ?</span>
+                <input type="text" id="mni5" placeholder="antwoord" onkeydown="if(event.key==='Enter')checkFreeform('mni5',['2/z','2z^-1'],'(½z)^(−1) = (½)^(−1) · z^(−1) = 2 · 1/z = 2/z')">
+                <button class="btn btn-primary" onclick="checkFreeform('mni5',['2/z','2z^-1'],'(½z)^(−1) = (½)^(−1) · z^(−1) = 2 · 1/z = 2/z')">Check</button>
+                <div id="fb_mni5" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>6.</strong> 4·(5x)<sup>−2</sup> = ?</span>
+                <input type="text" id="mni6" placeholder="antwoord" onkeydown="if(event.key==='Enter')checkFreeform('mni6',['4/(25x^2)','4/25x^2'],'4·(5x)^(−2) = 4/(5x)² = 4/(25x²)')">
+                <button class="btn btn-primary" onclick="checkFreeform('mni6',['4/(25x^2)','4/25x^2'],'4·(5x)^(−2) = 4/(5x)² = 4/(25x²)')">Check</button>
+                <div id="fb_mni6" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+        </div>
+
+        <!-- Open vraag -->
+        <div class="card open-vraag" style="border:1px dashed #94a3b8; background:#fafafa;">
+            <h3>💬 Begrijpvraag</h3>
+            <p>Leg in eigen woorden uit: waarom is het handig om met negatieve exponenten te werken in plaats van altijd breuken te schrijven?</p>
+            <textarea id="open1" placeholder="Schrijf hier je antwoord..."></textarea>
+            <button class="btn btn-show" onclick="document.getElementById('antw_open1').style.display='block'">Toon voorbeeldantwoord</button>
+            <div id="antw_open1" class="antwoord-box">
+                <strong>Voorbeeldantwoord:</strong> Negatieve exponenten zijn compacter en makkelijker te gebruiken bij het toepassen van rekenregels. Zo kun je bij vermenigvuldigen gewoon de exponenten optellen, ook als ze negatief zijn. Met breuken zou je steeds anders moeten rekenen.
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTIE 4: Gebroken exponenten -->
+    <div class="card section-anchor" id="gebroken">
+        <h2>4. Theorie B: Gebroken exponenten</h2>
+
+        <p>We gebruiken de regel <em>(a<sup>p</sup>)<sup>q</sup> = a<sup>p·q</sup></em> om de betekenis van <em>x<sup>1/n</sup></em> te ontdekken.</p>
+
+        <div class="step-reveal">
+            <button class="btn btn-secondary" onclick="toggleStep('stap_geb1')">▶ Stap 1: Wat is x<sup>1/2</sup>?</button>
+            <div id="stap_geb1" class="step-content step-hidden">
+                Stel p = ½ en q = 2. Dan geldt:<br>
+                <em>(x<sup>1/2</sup>)<sup>2</sup> = x<sup>(1/2)·2</sup> = x<sup>1</sup> = x</em><br>
+                Maar ook: <em>(√x)<sup>2</sup> = x</em><br>
+                <span style="color:var(--success);">➜ Dus <strong>x<sup>1/2</sup> = √x</strong></span>
+            </div>
+        </div>
+
+        <div class="step-reveal" style="margin-top:0.5rem;">
+            <button class="btn btn-secondary" onclick="toggleStep('stap_geb2')">▶ Stap 2: Wat is x<sup>1/3</sup>?</button>
+            <div id="stap_geb2" class="step-content step-hidden">
+                Stel p = ⅓ en q = 3. Dan geldt:<br>
+                <em>(x<sup>1/3</sup>)<sup>3</sup> = x<sup>1</sup> = x</em><br>
+                Maar ook: <em>(∛x)<sup>3</sup> = x</em><br>
+                <span style="color:var(--success);">➜ Dus <strong>x<sup>1/3</sup> = ∛x</strong></span>
+            </div>
+        </div>
+
+        <div class="step-reveal" style="margin-top:0.5rem;">
+            <button class="btn btn-secondary" onclick="toggleStep('stap_geb3')">▶ Stap 3: Wat is x<sup>p/q</sup>?</button>
+            <div id="stap_geb3" class="step-content step-hidden">
+                <em>x<sup>p/q</sup> = (x<sup>p</sup>)<sup>1/q</sup> = <sup>q</sup>√(x<sup>p</sup>)</em><br>
+                Of ook: <em>x<sup>p/q</sup> = (x<sup>1/q</sup>)<sup>p</sup> = (<sup>q</sup>√x)<sup>p</sup></em>
+            </div>
+        </div>
+
+        <div class="formula">
+            <div class="math">
+                a<sup>1/q</sup> = <sup>q</sup>√a &nbsp;&nbsp; en &nbsp;&nbsp;
+                a<sup>p/q</sup> = <sup>q</sup>√(a<sup>p</sup>)
+            </div>
+        </div>
+
+        <div class="tip-box">
+            <strong>💡 Tip:</strong> De noemer van de exponentbreuk geeft de <em>graad van de wortel</em>.
+            Dus bij x<sup>2/5</sup>: je neemt de 5e-machtswortel van x², geschreven als ⁵√(x²).
+        </div>
+
+        <h3>Voorbeelden: machten als wortel schrijven</h3>
+        <table>
+            <tr>
+                <th>Machtnotatie</th>
+                <th>Wortelnotatie</th>
+            </tr>
+            <tr><td>n<sup>1/4</sup></td><td>⁴√n</td></tr>
+            <tr><td>y<sup>3/4</sup></td><td>⁴√(y³)</td></tr>
+            <tr><td>x<sup>2/5</sup></td><td>⁵√(x²)</td></tr>
+            <tr><td>z<sup>−1/3</sup></td><td>1/∛z</td></tr>
+        </table>
+
+        <h3>Voorbeeld: Schrijf als macht van x</h3>
+        <div class="example-box">
+            <strong>a)</strong> x · ∛(x²)
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('geb_ex_a')">Toon uitwerking</button>
+                <div id="geb_ex_a" class="step-content step-hidden">
+                    x · ∛(x²) = x<sup>1</sup> · x<sup>2/3</sup> = x<sup>1 + 2/3</sup> = x<sup>5/3</sup>
+                </div>
+            </div>
+            <br>
+            <strong>b)</strong>
+            <span class="frac"><span class="num">x³</span><span class="den">⁴√x</span></span>
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('geb_ex_b')">Toon uitwerking</button>
+                <div id="geb_ex_b" class="step-content step-hidden">
+                    <span class="frac"><span class="num">x³</span><span class="den">⁴√x</span></span>
+                    =
+                    <span class="frac"><span class="num">x³</span><span class="den">x<sup>1/4</sup></span></span>
+                    = x<sup>3 − 1/4</sup> = x<sup>11/4</sup>
+                </div>
+            </div>
+            <br>
+            <strong>c)</strong>
+            <span class="frac"><span class="num">⁵√x</span><span class="den">∛x</span></span>
+            <div class="step-reveal" style="margin-top:0.3rem;">
+                <button class="btn btn-show" onclick="toggleStep('geb_ex_c')">Toon uitwerking</button>
+                <div id="geb_ex_c" class="step-content step-hidden">
+                    <span class="frac"><span class="num">⁵√x</span><span class="den">∛x</span></span>
+                    =
+                    <span class="frac"><span class="num">x<sup>1/5</sup></span><span class="den">x<sup>1/3</sup></span></span>
+                    = x<sup>1/5 − 1/3</sup> = x<sup>3/15 − 5/15</sup> = x<sup>−2/15</sup>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider: gebroken exponenten verkennen -->
+        <div class="slider-demo">
+            <h4>🔢 Verken: gebroken exponenten van 8</h4>
+            <p style="font-size:0.9rem;color:var(--muted);margin-bottom:0.75rem;">
+                8<sup>1/3</sup> = ∛8 = 2. Verken andere breuken als exponent.
+            </p>
+            <div class="slider-container">
+                <div>
+                    <label style="font-size:0.85rem;">teller p = <strong id="gebP">1</strong></label><br>
+                    <input type="range" min="1" max="6" value="1" oninput="updateGebSlider()" id="geb_p">
+                </div>
+                <div>
+                    <label style="font-size:0.85rem;">noemer q = <strong id="gebQ">3</strong></label><br>
+                    <input type="range" min="2" max="6" value="3" oninput="updateGebSlider()" id="geb_q">
+                </div>
+                <div class="slider-result" id="gebResult">8<sup>1/3</sup> ≈ 2</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTIE 5: Oefeningen gebroken exponenten -->
+    <div class="card section-anchor" id="oefenen-gebroken">
+        <h2>5. Oefeningen: Gebroken exponenten</h2>
+
+        <div class="try-it">
+            <h4>Stap-voor-stap: schrijf als macht van x</h4>
+            <p style="font-size:0.9rem;margin-bottom:0.75rem;color:var(--muted);">
+                Opgave: Schrijf <em>x² · ⁴√(x³)</em> als macht van x.
+            </p>
+
+            <div class="step-group">
+                <div class="step-row">
+                    <label>Stap 1: ⁴√(x³) als macht van x = x<sup>?</sup></label>
+                    <input type="text" id="geb_s1" placeholder="bv. 3/4" onkeydown="if(event.key==='Enter')checkSimple('geb_s1','3/4','⁴√(x³) = x^(3/4), want de noemer (4) is de graad van de wortel')">
+                    <button class="btn btn-primary" onclick="checkSimple('geb_s1','3/4','⁴√(x³) = x^(3/4), want de noemer (4) is de graad van de wortel')">Check</button>
+                </div>
+                <div id="fb_geb_s1" class="feedback"></div>
+
+                <div class="step-row">
+                    <label>Stap 2: Exponenten optellen: 2 + 3/4 = ?</label>
+                    <input type="text" id="geb_s2" placeholder="bv. 11/4" onkeydown="if(event.key==='Enter')checkSimple('geb_s2','11/4','2 + 3/4 = 8/4 + 3/4 = 11/4')">
+                    <button class="btn btn-primary" onclick="checkSimple('geb_s2','11/4','2 + 3/4 = 8/4 + 3/4 = 11/4')">Check</button>
+                </div>
+                <div id="fb_geb_s2" class="feedback"></div>
+
+                <div class="step-row">
+                    <label>Antwoord: x² · ⁴√(x³) = x<sup>?</sup></label>
+                    <input type="text" id="geb_s3" placeholder="bv. 11/4" onkeydown="if(event.key==='Enter')checkSimple('geb_s3','11/4','x² · x^(3/4) = x^(2 + 3/4) = x^(11/4)')">
+                    <button class="btn btn-primary" onclick="checkSimple('geb_s3','11/4','x² · x^(3/4) = x^(2 + 3/4) = x^(11/4)')">Check</button>
+                </div>
+                <div id="fb_geb_s3" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="mini-exercises">
+            <h4>🎯 Mini-oefeningen: Schrijf als macht van x</h4>
+            <p style="font-size:0.88rem;color:var(--muted);margin-bottom:0.75rem;">
+                Noteer de exponent als breuk (bv. <code>5/3</code>) of als geheel getal.
+            </p>
+
+            <div class="exercise-item">
+                <span class="question"><strong>1.</strong> √x = x<sup>?</sup></span>
+                <input type="text" id="gm1" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('gm1','1/2','√x = x^(1/2)')">
+                <button class="btn btn-primary" onclick="checkSimple('gm1','1/2','√x = x^(1/2)')">Check</button>
+                <div id="fb_gm1" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>2.</strong> ⁵√(x³) = x<sup>?</sup></span>
+                <input type="text" id="gm2" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('gm2','3/5','⁵√(x³) = x^(3/5)')">
+                <button class="btn btn-primary" onclick="checkSimple('gm2','3/5','⁵√(x³) = x^(3/5)')">Check</button>
+                <div id="fb_gm2" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>3.</strong> x · √x = x<sup>?</sup></span>
+                <input type="text" id="gm3" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('gm3','3/2','x · √x = x^1 · x^(1/2) = x^(3/2)')">
+                <button class="btn btn-primary" onclick="checkSimple('gm3','3/2','x · √x = x^1 · x^(1/2) = x^(3/2)')">Check</button>
+                <div id="fb_gm3" class="feedback" style="width:100%;margin-top:0.3rem;"></div>
+            </div>
+
+            <div class="exercise-item">
+                <span class="question"><strong>4.</strong>
+                    <span class="frac" style="display:inline-flex;vertical-align:middle;">
+                        <span class="num">x⁴</span>
+                        <span class="den">∛x</span>
+                    </span>
+                    = x<sup>?</sup>
+                </span>
+                <input type="text" id="gm4" placeholder="exponent" onkeydown="if(event.key==='Enter')checkSimple('gm4','11/3','x⁴/∛x = x^4 / x^(1/3) = x^(4 − 1/3) = x^(12/3 − 1/3) = x^(11/3)')">
+                <button class="btn btn-primary" onclick="checkSimple('gm4','11/3','x⁴/∛x = x^4 / x^(1/3) = x^(4 − 1/3) = x^(12/3 − 1/3) = x^(11/3)')">Check</button>
+                <div id="fb_gm4" class="feedback

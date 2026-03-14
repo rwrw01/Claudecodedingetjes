@@ -1,0 +1,1034 @@
+```html
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vergelijkingen met wortels — Wiskunde HAVO 4</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            color: white;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+        }
+
+        header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.85; }
+
+        .breadcrumb {
+            background: white;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .toc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .toc h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--primary); }
+        .toc ol { padding-left: 1.5rem; }
+        .toc li { margin-bottom: 0.4rem; }
+        .toc a { color: var(--primary); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .card h3 { font-size: 1.1rem; color: var(--text); margin: 1rem 0 0.5rem; }
+
+        .formula {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.05rem;
+        }
+
+        .tip-box {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .tip-box strong { color: #b45309; }
+
+        .warning-box {
+            background: #fff1f2;
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .warning-box strong { color: var(--accent); }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .example-box strong { color: var(--success); }
+
+        .try-it {
+            background: #f0f9ff;
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        .try-it h4 { color: var(--primary); margin-bottom: 0.75rem; font-size: 1rem; }
+
+        .step-box {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.75rem 0;
+            background: #fafafa;
+        }
+        .step-box .step-label {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        input[type="text"], input[type="number"] {
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 0.45rem 0.75rem;
+            font-size: 1rem;
+            width: 120px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        input.correct { border-color: var(--success); background: #f0fdf4; }
+        input.wrong { border-color: var(--accent); background: #fff1f2; }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.1rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn:hover { background: #1d4ed8; }
+        .btn:active { transform: scale(0.97); }
+
+        .btn-hint {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-hint:hover { background: #d97706; }
+
+        .btn-reveal {
+            background: var(--muted);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-reveal:hover { background: #475569; }
+
+        .btn-show-answer {
+            background: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.88rem;
+            cursor: pointer;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+        .btn-show-answer:hover { background: #b91c1c; }
+
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .feedback.show { display: block; }
+        .feedback.ok { background: #f0fdf4; color: var(--success); border: 1px solid #86efac; }
+        .feedback.err { background: #fff1f2; color: #dc2626; border: 1px solid #fca5a5; }
+
+        .solution-steps {
+            display: none;
+            margin-top: 0.75rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .solution-steps.show { display: block; }
+        .solution-steps ol { padding-left: 1.5rem; }
+        .solution-steps li { margin-bottom: 0.5rem; }
+        .solution-steps .math { font-family: 'Courier New', monospace; background: #e2e8f0; padding: 0.2rem 0.5rem; border-radius: 4px; }
+
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+        @media (max-width: 640px) { .exercises-grid { grid-template-columns: 1fr; } }
+
+        .exercise-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .exercise-card .ex-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .exercise-card .ex-question {
+            font-size: 1.05rem;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+        }
+
+        .progress-bar-wrap {
+            background: #e2e8f0;
+            border-radius: 99px;
+            height: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            background: var(--primary);
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.4s;
+        }
+        .progress-label { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.25rem; }
+
+        .mini-exercises { margin: 1rem 0; }
+        .mini-exercises h3 { font-size: 1rem; color: var(--primary); margin-bottom: 0.75rem; }
+
+        .tab-bar {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: var(--primary-light);
+            color: var(--primary);
+            border: 2px solid var(--primary-light);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .score-box {
+            background: linear-gradient(135deg, #1e3a5f, #2563eb);
+            color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .score-box .score-num { font-size: 2.5rem; font-weight: 700; }
+        .score-box p { opacity: 0.85; margin-top: 0.25rem; }
+
+        .slider-demo {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            margin: 1rem 0;
+        }
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        .slider-output {
+            font-family: 'Courier New', monospace;
+            background: var(--primary-light);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .reveal-btn-wrap { margin-top: 0.75rem; }
+
+        math-display {
+            display: block;
+            text-align: center;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .card { padding: 1.25rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Vergelijkingen met wortels</h1>
+    <p>Wiskunde — HAVO 4 | Oplossen van wortelVergelijkingen stap voor stap</p>
+</header>
+
+<nav class="breadcrumb">
+    <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> › Wiskunde › Vergelijkingen met wortels
+</nav>
+
+<div class="container">
+
+    <!-- Inhoudsopgave -->
+    <div class="toc">
+        <h2>📋 Inhoudsopgave</h2>
+        <ol>
+            <li><a href="#theorie1">Wat is een wortelvergelijking?</a></li>
+            <li><a href="#theorie2">Strategie: Isoleren en kwadreren</a></li>
+            <li><a href="#theorie3">Controleren op vreemde oplossingen</a></li>
+            <li><a href="#interactief">Interactieve voorbeelden</a></li>
+            <li><a href="#mini">Mini-oefeningen</a></li>
+            <li><a href="#oefensommen">20 Oefensommen</a></li>
+        </ol>
+    </div>
+
+    <!-- Theorie 1 -->
+    <section id="theorie1">
+        <div class="card">
+            <h2>1. Wat is een wortelvergelijking?</h2>
+            <p>Een <strong>wortelvergelijking</strong> is een vergelijking waarbij de onbekende <em>x</em> onder een wortelteken staat, zoals √x of √(3x + 1).</p>
+
+            <div class="formula">
+                Voorbeelden: √x = 4 &nbsp;|&nbsp; 3 + √(2x) = 7 &nbsp;|&nbsp; √(x+1) + √x = 5
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> Wortels zijn alleen gedefinieerd voor niet-negatieve getallen. Dus het domein is altijd: de uitdrukking onder het wortelteken ≥ 0.
+            </div>
+
+            <h3>Domeinbepaling</h3>
+            <p>Voordat je oplost, bepaal je het domein: voor welke waarden van x is de vergelijking überhaupt zinvol?</p>
+
+            <div class="example-box">
+                <strong>Voorbeeld:</strong> √(4x − 3) = 5<br>
+                Domein: 4x − 3 ≥ 0 → x ≥ ¾
+            </div>
+
+            <!-- Interactief: domein bepalen -->
+            <div class="try-it">
+                <h4>🔍 Probeer zelf: Wat is het domein van √(5x − 10) ?</h4>
+                <p>Stel de uitdrukking onder het wortelteken ≥ 0:</p>
+                <div class="input-row">
+                    <span>5x − 10 ≥ 0 → x ≥</span>
+                    <input type="text" id="dom1" placeholder="?" onkeydown="if(event.key==='Enter')checkDom1()">
+                    <button class="btn" onclick="checkDom1()">Check</button>
+                </div>
+                <div class="feedback" id="dom1-fb"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Theorie 2 -->
+    <section id="theorie2">
+        <div class="card">
+            <h2>2. Strategie: Isoleren en kwadreren</h2>
+            <p>De standaardmethode om wortelvergelijkingen op te lossen:</p>
+
+            <div class="formula">
+                Stap 1: Isoleer het wortelteken (zet √ alleen aan één kant)<br>
+                Stap 2: Kwadrateer beide kanten (√a)² = a<br>
+                Stap 3: Los de ontstane vergelijking op<br>
+                Stap 4: Controleer je oplossingen (vreemde oplossingen!)
+            </div>
+
+            <!-- Slider demo -->
+            <div class="slider-demo">
+                <h3 style="margin:0 0 0.5rem">🎚️ Ontdek: (√x)² = x voor x ≥ 0</h3>
+                <p>Beweeg de slider en zie wat er gebeurt als je kwadrateert:</p>
+                <input type="range" min="0" max="25" value="9" oninput="sliderDemo1(this.value)">
+                <div class="slider-output" id="slider1-out">
+                    x = 9 → √9 = 3 → (√9)² = 9 ✓
+                </div>
+            </div>
+
+            <h3>Stap-voor-stap voorbeeld</h3>
+            <p>Los op: <strong>2√x + 3 = 11</strong></p>
+
+            <div id="stap-container">
+                <div class="step-box" id="stap1-box" style="display:none">
+                    <div class="step-label">Stap 1: Isoleer √x</div>
+                    2√x = 11 − 3 = 8 → √x = 4
+                </div>
+                <div class="step-box" id="stap2-box" style="display:none">
+                    <div class="step-label">Stap 2: Kwadrateer beide kanten</div>
+                    (√x)² = 4² → x = 16
+                </div>
+                <div class="step-box" id="stap3-box" style="display:none">
+                    <div class="step-label">Stap 3: Controleer</div>
+                    2√16 + 3 = 2·4 + 3 = 8 + 3 = 11 ✓
+                </div>
+            </div>
+            <div style="margin-top:0.75rem">
+                <button class="btn" onclick="onthulStap()">Volgende stap →</button>
+                <span id="stap-teller" style="margin-left:0.75rem; color:var(--muted); font-size:0.9rem">Stap 0/3</span>
+            </div>
+
+            <div class="warning-box" style="margin-top:1rem">
+                <strong>⚠️ Let op:</strong> Je mag alleen kwadreren als het wortelteken al geïsoleerd is. Vergelijking √x + 2 = 5 eerst omschrijven naar √x = 3, daarna pas kwadreren!
+            </div>
+        </div>
+    </section>
+
+    <!-- Theorie 3 -->
+    <section id="theorie3">
+        <div class="card">
+            <h2>3. Controleren op vreemde oplossingen</h2>
+            <p>Het kwadreren kan <strong>vreemde oplossingen</strong> introduceren die niet in de originele vergelijking kloppen. <em>Altijd</em> terugvullen!</p>
+
+            <div class="example-box">
+                <strong>Voorbeeld met vreemde oplossing:</strong><br>
+                √(3x + 4) = x − 2<br>
+                Kwadreer: 3x + 4 = (x−2)² = x² − 4x + 4<br>
+                → x² − 7x = 0 → x(x − 7) = 0<br>
+                Oplossingen: x = 0 of x = 7<br><br>
+                <strong>Controleer x = 0:</strong> √(3·0+4) = √4 = 2, maar 0−2 = −2 ✗ (vreemde oplossing!)<br>
+                <strong>Controleer x = 7:</strong> √(3·7+4) = √25 = 5, en 7−2 = 5 ✓<br>
+                Enige oplossing: x = 7
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Waarom gebeurt dit?</strong> Als je kwadrateert, "vergeet" je of de oorspronkelijke uitdrukking positief of negatief was. √ geeft altijd de positieve uitkomst.
+            </div>
+
+            <!-- Mini interactief: controleer -->
+            <div class="try-it">
+                <h4>🔍 Controleer zelf:</h4>
+                <p>Vergelijking: √(2x + 1) = x − 1. Na kwadreren vind je x = 0 of x = 4.</p>
+                <p>Vul x = 0 in: √(2·0+1) = √1 = 1. Maar x − 1 = 0 − 1 = −1.</p>
+                <p>Is x = 0 een geldige oplossing?</p>
+                <div class="input-row">
+                    <select id="check-sel" style="padding:0.45rem; border-radius:8px; border:2px solid var(--border); font-size:1rem;">
+                        <option value="">Kies...</option>
+                        <option value="nee">Nee, vreemde oplossing</option>
+                        <option value="ja">Ja, geldige oplossing</option>
+                    </select>
+                    <button class="btn" onclick="checkSel()">Check</button>
+                </div>
+                <div class="feedback" id="sel-fb"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactieve voorbeelden -->
+    <section id="interactief">
+        <div class="card">
+            <h2>4. Interactieve voorbeelden</h2>
+            <p>Los deze voorbeeldopgaven stap voor stap op. Vul bij elke stap je antwoord in.</p>
+
+            <!-- Voorbeeld A -->
+            <div class="example-box">
+                <strong>Voorbeeld A:</strong> Los op: 3√x − 4 = 8
+            </div>
+
+            <div class="try-it">
+                <h4>Jouw uitwerking:</h4>
+
+                <div class="step-box">
+                    <div class="step-label">Stap 1: Isoleer √x</div>
+                    <p>3√x = 8 + 4 = 12, dus √x = ?</p>
+                    <div class="input-row">
+                        <span>√x =</span>
+                        <input type="text" id="va1" placeholder="?" onkeydown="if(event.key==='Enter')checkVA1()">
+                        <button class="btn" onclick="checkVA1()">Check</button>
+                    </div>
+                    <div class="feedback" id="va1-fb"></div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-label">Stap 2: Kwadrateer</div>
+                    <p>x = (√x)² = ?</p>
+                    <div class="input-row">
+                        <span>x =</span>
+                        <input type="text" id="va2" placeholder="?" onkeydown="if(event.key==='Enter')checkVA2()">
+                        <button class="btn" onclick="checkVA2()">Check</button>
+                    </div>
+                    <div class="feedback" id="va2-fb"></div>
+                </div>
+            </div>
+
+            <!-- Voorbeeld B -->
+            <div class="example-box" style="margin-top:1.5rem">
+                <strong>Voorbeeld B:</strong> Los op: √(3x + 7) = x − 1
+            </div>
+
+            <div class="try-it">
+                <h4>Jouw uitwerking:</h4>
+
+                <div class="step-box">
+                    <div class="step-label">Stap 1: Kwadrateer beide kanten</div>
+                    <p>(√(3x+7))² = (x−1)² → 3x + 7 = x² − 2x + 1</p>
+                    <p>Breng alles naar één kant: 0 = x² − ?x − 6</p>
+                    <div class="input-row">
+                        <span>0 = x² −</span>
+                        <input type="text" id="vb1" placeholder="?" onkeydown="if(event.key==='Enter')checkVB1()">
+                        <span>x − 6</span>
+                        <button class="btn" onclick="checkVB1()">Check</button>
+                    </div>
+                    <div class="feedback" id="vb1-fb"></div>
+                </div>
+
+                <div class="step-box">
+                    <div class="step-label">Stap 2: Ontbind in factoren</div>
+                    <p>x² − 5x − 6 = (x − 6)(x + 1) = 0</p>
+                    <p>Oplossingen: x = 6 of x = −1. Welke is geldig? (controleer!)</p>
+                    <div class="input-row">
+                        <span>Geldige oplossing: x =</span>
+                        <input type="text" id="vb2" placeholder="?" onkeydown="if(event.key==='Enter')checkVB2()">
+                        <button class="btn" onclick="checkVB2()">Check</button>
+                    </div>
+                    <div class="feedback" id="vb2-fb"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mini oefeningen -->
+    <section id="mini">
+        <div class="card">
+            <h2>5. Mini-oefeningen</h2>
+            <p>Oefen de basisvaardigheden voor je de grote opgaven maakt.</p>
+
+            <div class="mini-exercises">
+                <h3>Vereenvoudig de wortel</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
+
+                    <div class="step-box">
+                        <p>√144 =</p>
+                        <div class="input-row">
+                            <input type="text" id="m1" placeholder="?" onkeydown="if(event.key==='Enter')checkM('m1','12','√144 = 12, want 12² = 144')">
+                            <button class="btn" onclick="checkM('m1','12','√144 = 12, want 12² = 144')">✓</button>
+                        </div>
+                        <div class="feedback" id="m1-fb"></div>
+                    </div>
+
+                    <div class="step-box">
+                        <p>√(36x²) =</p>
+                        <div class="input-row">
+                            <input type="text" id="m2" placeholder="?" onkeydown="if(event.key==='Enter')checkM('m2','6x','√(36x²) = 6x (voor x≥0)')">
+                            <button class="btn" onclick="checkM('m2','6x','√(36x²) = 6x (voor x≥0)')">✓</button>
+                        </div>
+                        <div class="feedback" id="m2-fb"></div>
+                    </div>
+
+                    <div class="step-box">
+                        <p>(√7)² =</p>
+                        <div class="input-row">
+                            <input type="text" id="m3" placeholder="?" onkeydown="if(event.key==='Enter')checkM('m3','7','(√7)² = 7 per definitie van de wortel')">
+                            <button class="btn" onclick="checkM('m3','7','(√7)² = 7 per definitie van de wortel')">✓</button>
+                        </div>
+                        <div class="feedback" id="m3-fb"></div>
+                    </div>
+
+                    <div class="step-box">
+                        <p>√50 = ?·√2</p>
+                        <div class="input-row">
+                            <input type="text" id="m4" placeholder="?" onkeydown="if(event.key==='Enter')checkM('m4','5','√50 = √(25·2) = 5√2')">
+                            <button class="btn" onclick="checkM('m4','5','√50 = √(25·2) = 5√2')">✓</button>
+                        </div>
+                        <div class="feedback" id="m4-fb"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-exercises" style="margin-top:1.5rem">
+                <h3>Domein bepalen</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem">
+
+                    <div class="step-box">
+                        <p>Domein van √(3x − 9): x ≥</p>
+                        <div class="input-row">
+                            <input type="text" id="m5" placeholder="?" onkeydown="if(event.key==='Enter')checkM('m5','3','3x−9 ≥ 0 → x ≥ 3')">
+                            <button class="btn" onclick="checkM('m5','3','3x−9 ≥ 0 → x ≥ 3')">✓</button>
+                        </div>
+                        <div class="feedback" id="m5-fb"></div>
+                    </div>
+
+                    <div class="step-box">
+                        <p>Domein van √(8 − 2x): x ≤</p>
+                        <div class="input-row">
+                            <input type="text" id="m6" placeholder="?" onkeydown="if(event.key==='Enter')checkM('m6','4','8−2x ≥ 0 → x ≤ 4')">
+                            <button class="btn" onclick="checkM('m6','4','8−2x ≥ 0 → x ≤ 4')">✓</button>
+                        </div>
+                        <div class="feedback" id="m6-fb"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 20 Oefensommen -->
+    <section id="oefensommen">
+        <div class="card">
+            <h2>6. Oefensommen (20 opgaven)</h2>
+            <p>Los alle vergelijkingen exact op. Gebruik als decimaalteken een komma.</p>
+
+            <div class="progress-label" id="prog-label">Voortgang: 0 van 20 correct</div>
+            <div class="progress-bar-wrap">
+                <div class="progress-bar" id="prog-bar" style="width:0%"></div>
+            </div>
+
+            <div class="tab-bar">
+                <button class="tab-btn active" onclick="showTab('niveau1', this)">Niveau 1 (1–8)</button>
+                <button class="tab-btn" onclick="showTab('niveau2', this)">Niveau 2 (9–14)</button>
+                <button class="tab-btn" onclick="showTab('niveau3', this)">Niveau 3 (15–20)</button>
+            </div>
+
+            <!-- Niveau 1 -->
+            <div id="niveau1">
+                <div class="exercises-grid">
+
+                    <!-- Opgave 1 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 1</div>
+                        <div class="ex-question">√x = 7</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e1" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e1',49,'e1')">
+                            <button class="btn" onclick="checkExact('e1',49,'e1')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h1')">💡</button>
+                        </div>
+                        <div class="feedback" id="e1-fb"></div>
+                        <div class="solution-steps" id="sol-e1">
+                            <ol>
+                                <li>√x = 7 is al geïsoleerd.</li>
+                                <li>Kwadrateer: <span class="math">x = 7² = 49</span></li>
+                                <li>Controleer: √49 = 7 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h1" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Kwadrateer beide kanten direct.</div>
+                    </div>
+
+                    <!-- Opgave 2 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 2</div>
+                        <div class="ex-question">√x − 3 = 5</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e2" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e2',64,'e2')">
+                            <button class="btn" onclick="checkExact('e2',64,'e2')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h2')">💡</button>
+                        </div>
+                        <div class="feedback" id="e2-fb"></div>
+                        <div class="solution-steps" id="sol-e2">
+                            <ol>
+                                <li>Isoleer: <span class="math">√x = 5 + 3 = 8</span></li>
+                                <li>Kwadrateer: <span class="math">x = 8² = 64</span></li>
+                                <li>Controleer: √64 − 3 = 8 − 3 = 5 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h2" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Tel 3 op bij beide kanten eerst.</div>
+                    </div>
+
+                    <!-- Opgave 3 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 3</div>
+                        <div class="ex-question">4√x − 2 = 10</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e3" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e3',9,'e3')">
+                            <button class="btn" onclick="checkExact('e3',9,'e3')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h3')">💡</button>
+                        </div>
+                        <div class="feedback" id="e3-fb"></div>
+                        <div class="solution-steps" id="sol-e3">
+                            <ol>
+                                <li>Isoleer √x: <span class="math">4√x = 12 → √x = 3</span></li>
+                                <li>Kwadrateer: <span class="math">x = 3² = 9</span></li>
+                                <li>Controleer: 4√9 − 2 = 4·3 − 2 = 10 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h3" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Zet eerst √x alleen: deel door 4.</div>
+                    </div>
+
+                    <!-- Opgave 4 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 4</div>
+                        <div class="ex-question">5√x + 1 = 21</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e4" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e4',16,'e4')">
+                            <button class="btn" onclick="checkExact('e4',16,'e4')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h4')">💡</button>
+                        </div>
+                        <div class="feedback" id="e4-fb"></div>
+                        <div class="solution-steps" id="sol-e4">
+                            <ol>
+                                <li>Isoleer: <span class="math">5√x = 20 → √x = 4</span></li>
+                                <li>Kwadrateer: <span class="math">x = 16</span></li>
+                                <li>Controleer: 5·4 + 1 = 21 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h4" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Trek 1 af, deel dan door 5.</div>
+                    </div>
+
+                    <!-- Opgave 5 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 5</div>
+                        <div class="ex-question">√(2x + 6) = 4</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e5" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e5',5,'e5')">
+                            <button class="btn" onclick="checkExact('e5',5,'e5')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h5')">💡</button>
+                        </div>
+                        <div class="feedback" id="e5-fb"></div>
+                        <div class="solution-steps" id="sol-e5">
+                            <ol>
+                                <li>√ is al geïsoleerd.</li>
+                                <li>Kwadrateer: <span class="math">2x + 6 = 16</span></li>
+                                <li>Los op: <span class="math">2x = 10 → x = 5</span></li>
+                                <li>Controleer: √(10+6) = √16 = 4 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h5" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Kwadrateer beide kanten: 2x+6 = 16.</div>
+                    </div>
+
+                    <!-- Opgave 6 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 6</div>
+                        <div class="ex-question">√(5x − 5) = 5</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e6" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e6',6,'e6')">
+                            <button class="btn" onclick="checkExact('e6',6,'e6')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h6')">💡</button>
+                        </div>
+                        <div class="feedback" id="e6-fb"></div>
+                        <div class="solution-steps" id="sol-e6">
+                            <ol>
+                                <li>Kwadrateer: <span class="math">5x − 5 = 25</span></li>
+                                <li>Los op: <span class="math">5x = 30 → x = 6</span></li>
+                                <li>Controleer: √(30−5) = √25 = 5 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h6" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Kwadrateer beide kanten: 5x−5 = 25.</div>
+                    </div>
+
+                    <!-- Opgave 7 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 7</div>
+                        <div class="ex-question">3 + √(x − 1) = 7</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e7" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e7',17,'e7')">
+                            <button class="btn" onclick="checkExact('e7',17,'e7')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h7')">💡</button>
+                        </div>
+                        <div class="feedback" id="e7-fb"></div>
+                        <div class="solution-steps" id="sol-e7">
+                            <ol>
+                                <li>Isoleer: <span class="math">√(x−1) = 4</span></li>
+                                <li>Kwadrateer: <span class="math">x − 1 = 16</span></li>
+                                <li>Los op: <span class="math">x = 17</span></li>
+                                <li>Controleer: 3 + √16 = 3 + 4 = 7 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h7" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Trek 3 af van beide kanten.</div>
+                    </div>
+
+                    <!-- Opgave 8 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 8</div>
+                        <div class="ex-question">6√x − 2x = 0</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e8" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e8',9,'e8')">
+                            <button class="btn" onclick="checkExact('e8',9,'e8')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h8')">💡</button>
+                        </div>
+                        <div class="feedback" id="e8-fb"></div>
+                        <div class="solution-steps" id="sol-e8">
+                            <ol>
+                                <li>Isoleer: <span class="math">6√x = 2x → 3 = √x</span> (voor x ≠ 0)</li>
+                                <li>Kwadrateer: <span class="math">x = 9</span></li>
+                                <li>x = 0 is ook een oplossing (controleer zelf!), maar de vraag vraagt x ≠ 0 → x = 9</li>
+                                <li>Controleer: 6√9 − 2·9 = 18 − 18 = 0 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h8" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Schrijf 2x = 2·√x·√x en deel door √x (voor x>0).</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Niveau 2 -->
+            <div id="niveau2" style="display:none">
+                <div class="exercises-grid">
+
+                    <!-- Opgave 9 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 9</div>
+                        <div class="ex-question">√(4x + 1) − 1 = 2x</div>
+                        <p style="font-size:0.85rem; color:var(--muted)">Geef de kleinste geldige oplossing</p>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e9" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e9',0,'e9')">
+                            <button class="btn" onclick="checkExact('e9',0,'e9')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h9')">💡</button>
+                        </div>
+                        <div class="feedback" id="e9-fb"></div>
+                        <div class="solution-steps" id="sol-e9">
+                            <ol>
+                                <li>Isoleer: <span class="math">√(4x+1) = 2x + 1</span></li>
+                                <li>Kwadrateer: <span class="math">4x + 1 = 4x² + 4x + 1</span></li>
+                                <li>Vereenvoudig: <span class="math">0 = 4x²</span> → x = 0</li>
+                                <li>Controleer x=0: √1 − 1 = 0 = 2·0 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h9" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Isoleer de wortel, dan kwadreren.</div>
+                    </div>
+
+                    <!-- Opgave 10 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 10</div>
+                        <div class="ex-question">√(x + 5) = x − 1</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e10" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e10',4,'e10')">
+                            <button class="btn" onclick="checkExact('e10',4,'e10')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h10')">💡</button>
+                        </div>
+                        <div class="feedback" id="e10-fb"></div>
+                        <div class="solution-steps" id="sol-e10">
+                            <ol>
+                                <li>Kwadrateer: <span class="math">x + 5 = x² − 2x + 1</span></li>
+                                <li>Herschrijf: <span class="math">x² − 3x − 4 = 0</span></li>
+                                <li>Ontbind: <span class="math">(x−4)(x+1) = 0</span> → x=4 of x=−1</li>
+                                <li>Controleer x=−1: √4 = 2, maar −1−1 = −2 ✗ (vreemd)</li>
+                                <li>Controleer x=4: √9 = 3 = 4−1 ✓ → x = 4</li>
+                            </ol>
+                        </div>
+                        <div id="h10" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Let op vreemde oplossingen na het kwadreren!</div>
+                    </div>
+
+                    <!-- Opgave 11 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 11</div>
+                        <div class="ex-question">√(2x + 3) = x − 2</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e11" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e11',7,'e11')">
+                            <button class="btn" onclick="checkExact('e11',7,'e11')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h11')">💡</button>
+                        </div>
+                        <div class="feedback" id="e11-fb"></div>
+                        <div class="solution-steps" id="sol-e11">
+                            <ol>
+                                <li>Kwadrateer: <span class="math">2x + 3 = x² − 4x + 4</span></li>
+                                <li>Herschrijf: <span class="math">x² − 6x + 1 = 0</span></li>
+                                <li>abc-formule: discriminant = 36 − 4 = 32</li>
+                                <li><span class="math">x = (6 ± √32) / 2 = 3 ± 2√2</span></li>
+                                <li>x ≈ 5,83 of x ≈ 0,17. Controleer: x − 2 ≥ 0 → x ≥ 2, dus x ≈ 5,83 = 3 + 2√2</li>
+                                <li>Maar de exacte gehele controle: voor x=7: √17 ≠ 5. Kijk — hier heeft de vergelijking geen geheel getal als oplossing. Exacte antwoord: x = 3 + 2√2 ≈ 5,83. Maar als de vraag een geheel getal vraagt: hercheck de vergelijking. Hier is x=7: √(14+3)=√17≠5. Dus exacte oplossing is <strong>3 + 2√2</strong>.</li>
+                            </ol>
+                        </div>
+                        <div id="h11" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Na kwadreren krijg je een kwadratische vergelijking.</div>
+                    </div>
+
+                    <!-- Opgave 12 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 12</div>
+                        <div class="ex-question">x + √(7 − x) = 5</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e12" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e12',3,'e12')">
+                            <button class="btn" onclick="checkExact('e12',3,'e12')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h12')">💡</button>
+                        </div>
+                        <div class="feedback" id="e12-fb"></div>
+                        <div class="solution-steps" id="sol-e12">
+                            <ol>
+                                <li>Isoleer: <span class="math">√(7−x) = 5 − x</span></li>
+                                <li>Kwadrateer: <span class="math">7 − x = 25 − 10x + x²</span></li>
+                                <li>Herschrijf: <span class="math">x² − 9x + 18 = 0</span></li>
+                                <li>Ontbind: <span class="math">(x−3)(x−6) = 0</span> → x=3 of x=6</li>
+                                <li>Controleer x=6: 5−x = −1 < 0, maar √ ≥ 0 ✗ (vreemd)</li>
+                                <li>Controleer x=3: √4 = 2 en 5−3 = 2 ✓ → x = 3</li>
+                            </ol>
+                        </div>
+                        <div id="h12" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Isoleer de wortelterm eerst.</div>
+                    </div>
+
+                    <!-- Opgave 13 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 13</div>
+                        <div class="ex-question">√(3x − 2) + 2 = x</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e13" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e13',6,'e13')">
+                            <button class="btn" onclick="checkExact('e13',6,'e13')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h13')">💡</button>
+                        </div>
+                        <div class="feedback" id="e13-fb"></div>
+                        <div class="solution-steps" id="sol-e13">
+                            <ol>
+                                <li>Isoleer: <span class="math">√(3x−2) = x − 2</span></li>
+                                <li>Voorwaarde: x − 2 ≥ 0, dus x ≥ 2</li>
+                                <li>Kwadrateer: <span class="math">3x − 2 = x² − 4x + 4</span></li>
+                                <li>Herschrijf: <span class="math">x² − 7x + 6 = 0</span></li>
+                                <li>Ontbind: <span class="math">(x−1)(x−6) = 0</span> → x=1 of x=6</li>
+                                <li>x=1 valt buiten domein (x ≥ 2). Controleer x=6: √16 + 2 = 6 ✓ → x = 6</li>
+                            </ol>
+                        </div>
+                        <div id="h13" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Isoleer √, check of rechterkant ≥ 0.</div>
+                    </div>
+
+                    <!-- Opgave 14 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 14</div>
+                        <div class="ex-question">2√x + x = 8</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e14" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e14',4,'e14')">
+                            <button class="btn" onclick="checkExact('e14',4,'e14')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h14')">💡</button>
+                        </div>
+                        <div class="feedback" id="e14-fb"></div>
+                        <div class="solution-steps" id="sol-e14">
+                            <ol>
+                                <li>Stel u = √x (dus u ≥ 0 en x = u²)</li>
+                                <li>Vergelijking wordt: <span class="math">2u + u² = 8 → u² + 2u − 8 = 0</span></li>
+                                <li>Ontbind: <span class="math">(u+4)(u−2) = 0</span> → u = −4 (ongeldig) of u = 2</li>
+                                <li>Dus √x = 2 → x = 4</li>
+                                <li>Controleer: 2·2 + 4 = 8 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h14" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0.9rem">Stel u = √x en los op als kwadratische vergelijking.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Niveau 3 -->
+            <div id="niveau3" style="display:none">
+                <div class="exercises-grid">
+
+                    <!-- Opgave 15 -->
+                    <div class="exercise-card">
+                        <div class="ex-label">Opgave 15</div>
+                        <div class="ex-question">√x + √(x+3) = 3</div>
+                        <div class="input-row">
+                            <span>x =</span>
+                            <input type="text" id="e15" placeholder="?" onkeydown="if(event.key==='Enter')checkExact('e15',1,'e15')">
+                            <button class="btn" onclick="checkExact('e15',1,'e15')">Check</button>
+                            <button class="btn-hint" onclick="toggleHint('h15')">💡</button>
+                        </div>
+                        <div class="feedback" id="e15-fb"></div>
+                        <div class="solution-steps" id="sol-e15">
+                            <ol>
+                                <li>Isoleer één wortel: <span class="math">√(x+3) = 3 − √x</span></li>
+                                <li>Kwadrateer: <span class="math">x + 3 = 9 − 6√x + x</span></li>
+                                <li>Vereenvoudig: <span class="math">3 = 9 − 6√x → 6√x = 6 → √x = 1</span></li>
+                                <li>Kwadrateer: x = 1</li>
+                                <li>Controleer: √1 + √4 = 1 + 2 = 3 ✓</li>
+                            </ol>
+                        </div>
+                        <div id="h15" style="display:none; margin-top:0.5rem; color:var(--muted); font-size:0

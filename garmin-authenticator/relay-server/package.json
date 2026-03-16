@@ -1,0 +1,16 @@
+{
+  "name": "garmin-auth-relay",
+  "version": "1.0.0",
+  "description": "WebSocket relay server voor Garmin Authenticator - verbindt browser extensie met telefoon",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

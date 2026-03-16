@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garmin Authenticator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 320px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1a1a2e;
+            color: #fff;
+            padding: 16px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .header .icon {
+            width: 32px;
+            height: 32px;
+            background: #0078D4;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .status-card {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .dot.green { background: #4CAF50; }
+        .dot.red { background: #f44336; }
+        .dot.yellow { background: #FFC107; }
+
+        .status-text {
+            font-size: 13px;
+            color: #a0a0b0;
+        }
+
+        .settings-card {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 14px;
+        }
+
+        .settings-card label {
+            font-size: 12px;
+            color: #a0a0b0;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .settings-card input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #2a2a4a;
+            border-radius: 6px;
+            background: #0f0f23;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .settings-card input:focus {
+            outline: none;
+            border-color: #0078D4;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 8px;
+            background: #0078D4;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #005a9e;
+        }
+
+        .last-number {
+            text-align: center;
+            padding: 12px;
+            background: #16213e;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .last-number .number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #0078D4;
+        }
+
+        .last-number .label {
+            font-size: 11px;
+            color: #a0a0b0;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #555;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="icon">🔐</div>
+        <h1>Garmin Authenticator</h1>
+    </div>
+
+    <div class="last-number" id="lastNumberCard" style="display:none">
+        <div class="label">Laatst gedetecteerd nummer</div>
+        <div class="number" id="lastNumber">--</div>
+        <div class="label" id="lastTime"></div>
+    </div>
+
+    <div class="status-card">
+        <div class="status-row">
+            <div class="dot" id="companionDot"></div>
+            <span class="status-text" id="companionStatus">Controleren...</span>
+        </div>
+        <div class="status-row">
+            <div class="dot" id="watchDot"></div>
+            <span class="status-text" id="watchStatus">Garmin horloge: onbekend</span>
+        </div>
+    </div>
+
+    <div class="settings-card">
+        <label for="hostInput">Telefoon IP-adres (lokaal netwerk)</label>
+        <input type="text" id="hostInput" placeholder="bijv. 192.168.1.42">
+
+        <label for="portInput">Poort</label>
+        <input type="number" id="portInput" placeholder="8742" value="8742">
+
+        <button class="save-btn" id="saveBtn">Opslaan & testen</button>
+    </div>
+
+    <div class="footer">
+        Gemaakt door Ralph Wagter, met Claude Code
+    </div>
+
+    <script src="scripts/popup.js"></script>
+</body>
+</html>

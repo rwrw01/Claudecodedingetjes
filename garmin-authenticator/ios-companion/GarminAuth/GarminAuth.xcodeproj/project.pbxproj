@@ -1,0 +1,84 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXGroup section */
+		ROOT_GROUP = {
+			isa = PBXGroup;
+			children = (
+				SOURCE_GROUP,
+			);
+			sourceTree = "<group>";
+		};
+		SOURCE_GROUP = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GarminAuth;
+			path = GarminAuth;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		ROOT_PROJECT = {
+			isa = PBXProject;
+			buildConfigurationList = ROOT_CONFIG_LIST;
+			compatibilityVersion = "Xcode 14.0";
+			mainGroup = ROOT_GROUP;
+			productRefGroup = ROOT_GROUP;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		DEBUG_CONFIG = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garminauth.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "GarminAuth/Info.plist";
+			};
+			name = Debug;
+		};
+		RELEASE_CONFIG = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garminauth.app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "GarminAuth/Info.plist";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ROOT_CONFIG_LIST = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEBUG_CONFIG,
+				RELEASE_CONFIG,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = ROOT_PROJECT;
+}

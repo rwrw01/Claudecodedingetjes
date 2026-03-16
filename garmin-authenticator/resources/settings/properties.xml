@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<properties>
+    <property id="num_accounts" type="number">0</property>
+    <property id="account_name_0" type="string"></property>
+    <property id="account_secret_0" type="string"></property>
+    <property id="account_name_1" type="string"></property>
+    <property id="account_secret_1" type="string"></property>
+    <property id="account_name_2" type="string"></property>
+    <property id="account_secret_2" type="string"></property>
+</properties>

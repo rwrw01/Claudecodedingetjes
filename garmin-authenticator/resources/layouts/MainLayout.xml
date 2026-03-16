@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout id="MainLayout">
+    <label id="AccountLabel" x="center" y="30%" font="Graphics.FONT_SMALL"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_LT_GRAY" />
+    <label id="CodeLabel" x="center" y="center" font="Graphics.FONT_NUMBER_HOT"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_WHITE" />
+    <label id="TimerLabel" x="center" y="70%" font="Graphics.FONT_SMALL"
+           justification="Graphics.TEXT_JUSTIFY_CENTER" color="Graphics.COLOR_YELLOW" />
+</layout>

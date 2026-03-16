@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<strings>
+    <string id="AppName">Authenticator</string>
+    <string id="NoAccounts">Geen accounts</string>
+    <string id="AddViaPhone">Voeg toe via Garmin Connect</string>
+</strings>

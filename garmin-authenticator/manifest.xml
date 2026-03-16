@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<iq:manifest xmlns:iq="http://www.garmin.com/xml/connectiq" version="4">
+    <iq:application id="a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+                    type="watch-app"
+                    name="@Strings.AppName"
+                    entry="AuthenticatorApp"
+                    launcherIcon="@Drawables.LauncherIcon"
+                    minSdkVersion="3.2.0">
+
+        <iq:products>
+            <iq:product id="fenix7" />
+            <iq:product id="fenix7s" />
+            <iq:product id="fenix7x" />
+            <iq:product id="fr265" />
+            <iq:product id="fr965" />
+            <iq:product id="venu2" />
+            <iq:product id="venu2s" />
+            <iq:product id="venu3" />
+            <iq:product id="venu3s" />
+            <iq:product id="epix2" />
+            <iq:product id="vivoactive5" />
+        </iq:products>
+
+        <iq:permissions>
+            <iq:uses-permission id="Application.Storage" />
+        </iq:permissions>
+
+        <iq:languages>
+            <iq:language>eng</iq:language>
+            <iq:language>dut</iq:language>
+        </iq:languages>
+
+        <iq:barrels />
+    </iq:application>
+</iq:manifest>

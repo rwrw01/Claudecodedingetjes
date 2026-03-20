@@ -30,7 +30,6 @@ PROVIDERS = {
         "name": "DeepSeek",
         "api_url": "https://api.deepseek.com/chat/completions",
         "model": "deepseek-reasoner",
-        "max_tokens": 16000,
         "env_key": "DEEPSEEK_API_KEY",
     },
     "claude": {
@@ -329,7 +328,6 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
 
     payload = {
         "model": config["model"],
-        "max_tokens": config["max_tokens"],
         "messages": [
             {
                 "role": "user",
@@ -337,6 +335,8 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
             },
         ],
     }
+    if "max_tokens" in config:
+        payload["max_tokens"] = config["max_tokens"]
 
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(

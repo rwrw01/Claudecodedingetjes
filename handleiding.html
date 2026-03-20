@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handleiding — Interactieve les aanmaken</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none !important; }
+            .page-break { page-break-before: always; }
+        }
+        :root { --primary: #2563eb; --bg: #f8fafc; --text: #1e293b; --muted: #64748b; --border: #e2e8f0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: var(--text); line-height: 1.7; background: var(--bg); }
+        .container { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem; }
+        h1 { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.5rem; }
+        h2 { font-size: 1.3rem; color: var(--text); margin: 2rem 0 0.75rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--primary); }
+        h3 { font-size: 1.05rem; margin: 1.25rem 0 0.5rem; }
+        p, li { font-size: 0.95rem; margin-bottom: 0.5rem; }
+        ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+        ol > li { margin-bottom: 0.75rem; }
+        a { color: var(--primary); }
+
+        .step-box {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .step-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        .step-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            vertical-align: middle;
+        }
+        .step-body { margin-top: 0.75rem; }
+        .tip {
+            background: #eff6ff;
+            border-left: 4px solid var(--primary);
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.9rem;
+        }
+        .warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 0.75rem 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.75rem 0;
+            font-size: 0.9rem;
+        }
+        .print-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            margin: 1rem 0;
+        }
+        .print-btn:hover { opacity: 0.9; }
+        .subtitle { color: var(--muted); font-size: 1rem; margin-bottom: 1.5rem; }
+        .links-table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+        .links-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+        .links-table td:first-child { font-weight: 600; white-space: nowrap; width: 40%; }
+        footer { text-align: center; padding: 2rem 1rem; color: var(--muted); font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <button class="print-btn no-print" onclick="window.print()">Opslaan als PDF / Printen</button>
+
+    <h1>Handleiding: een interactieve les aanmaken</h1>
+    <p class="subtitle">Stap voor stap, ook als je nog geen GitHub-account hebt</p>
+
+    <p>Met deze site kun je foto's van je lesboek uploaden en daar wordt automatisch een interactieve les van gemaakt. Hieronder staat precies hoe dat werkt.</p>
+
+    <!-- ====== EENMALIG ====== -->
+    <h2>Eenmalig: account aanmaken</h2>
+
+    <div class="step-box">
+        <span class="step-number">1</span>
+        <span class="step-title">Maak een GitHub-account aan</span>
+        <div class="step-body">
+            <ol type="a">
+                <li>Ga naar <a href="https://github.com/signup">github.com/signup</a></li>
+                <li>Vul je e-mailadres in en kies een wachtwoord.</li>
+                <li>Kies een gebruikersnaam. <strong>Onthoud deze goed!</strong></li>
+                <li>Doorloop de verificatie (e-mail bevestigen).</li>
+            </ol>
+            <div class="tip">
+                Je gebruikersnaam is wat je nodig hebt in de volgende stap. Bijvoorbeeld: <em>janneke123</em>
+            </div>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <span class="step-number">2</span>
+        <span class="step-title">Stuur Ralph een berichtje</span>
+        <div class="step-body">
+            <p>Stuur Ralph een WhatsApp- of SMS-bericht met je <strong>GitHub-gebruikersnaam</strong>. Ralph voegt je dan toe aan het project, zodat je lessen kunt aanvragen.</p>
+            <div class="warning">
+                Dit hoeft maar 1 keer. Wacht tot je van Ralph een bevestiging krijgt voordat je verdergaat.
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== ELKE LES ====== -->
+    <h2>Een nieuwe les aanmaken</h2>
+
+    <div class="step-box">
+        <span class="step-number">3</span>
+        <span class="step-title">Maak foto's van de lesstof</span>
+        <div class="step-body">
+            <p>Maak met je telefoon duidelijke foto's van de pagina's uit het lesboek die je wilt laten omzetten.</p>
+            <ul>
+                <li>Zorg voor goede belichting (geen schaduwen).</li>
+                <li>Zorg dat alle tekst scherp en leesbaar is.</li>
+                <li>Meerdere foto's mag: bijv. pagina 1 en pagina 2.</li>
+            </ul>
+            <div class="tip">
+                Hoe beter de foto, hoe beter de les. Schuin of donker = slechter resultaat.
+            </div>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <span class="step-number">4</span>
+        <span class="step-title">Open het aanvraagformulier</span>
+        <div class="step-body">
+            <p>Ga naar het formulier via deze link:</p>
+            <p style="text-align:center; margin: 1rem 0;">
+                <a href="https://github.com/rwrw01/Claudecodedingetjes/issues/new?template=nieuwe-les.yml" style="font-size:1.05rem; font-weight:600;">
+                    Nieuwe les aanvragen
+                </a>
+            </p>
+            <p>Je moet ingelogd zijn op GitHub om dit formulier te openen.</p>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <span class="step-number">5</span>
+        <span class="step-title">Vul het formulier in</span>
+        <div class="step-body">
+            <ol type="a">
+                <li><strong>Je naam</strong> — Hoe je genoemd wilt worden op de site (bijv. "Janneke").</li>
+                <li><strong>Titel van de les</strong> — Een korte beschrijving (bijv. "Breuken vereenvoudigen").</li>
+                <li><strong>Vak</strong> — Kies het vak uit de lijst (bijv. Wiskunde, Scheikunde).</li>
+                <li><strong>Niveau</strong> — Kies je niveau (bijv. HAVO 4).</li>
+                <li><strong>Foto's</strong> — Sleep je foto's in het fotoveld, of klik op het veld en kies de foto's uit je bestanden.</li>
+                <li><strong>Extra instructies</strong> (optioneel) — Bijv. "Alleen opgave 1 t/m 5" of "Maak het makkelijker".</li>
+            </ol>
+            <div class="tip">
+                Op je telefoon kun je foto's vanuit je galerij in het veld slepen, of tikken op het veld om foto's te kiezen.
+            </div>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <span class="step-number">6</span>
+        <span class="step-title">Klik op "Submit new issue"</span>
+        <div class="step-body">
+            <p>Klik onderaan op de groene knop <strong>"Submit new issue"</strong>. Dat is alles!</p>
+        </div>
+    </div>
+
+    <div class="step-box">
+        <span class="step-number">7</span>
+        <span class="step-title">Wacht 2 minuten</span>
+        <div class="step-body">
+            <p>De les wordt nu automatisch gemaakt door AI. Dit duurt meestal <strong>1 tot 2 minuten</strong>.</p>
+            <p>Je krijgt vanzelf een reactie op je issue als de les klaar is, met een link naar de les.</p>
+            <div class="tip">
+                Je kunt de pagina gewoon open laten staan. Er verschijnt een reactie zodra de les klaar is.
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== RESULTAAT ====== -->
+    <h2>Je les bekijken</h2>
+    <p>Als de les klaar is, vind je hem op de website:</p>
+    <p style="text-align:center; margin: 1rem 0;">
+        <a href="https://rwrw01.github.io/Claudecodedingetjes/" style="font-size:1.05rem; font-weight:600;">
+            rwrw01.github.io/Claudecodedingetjes
+        </a>
+    </p>
+    <p>Klik op je naam, dan op het vak, en je ziet al je lessen.</p>
+
+    <!-- ====== LINKS ====== -->
+    <h2>Handige links</h2>
+    <table class="links-table">
+        <tr>
+            <td>Website met alle lessen</td>
+            <td><a href="https://rwrw01.github.io/Claudecodedingetjes/">rwrw01.github.io/Claudecodedingetjes</a></td>
+        </tr>
+        <tr>
+            <td>Nieuwe les aanvragen</td>
+            <td><a href="https://github.com/rwrw01/Claudecodedingetjes/issues/new?template=nieuwe-les.yml">Formulier openen</a></td>
+        </tr>
+        <tr>
+            <td>GitHub-account aanmaken</td>
+            <td><a href="https://github.com/signup">github.com/signup</a></td>
+        </tr>
+        <tr>
+            <td>GitHub-project</td>
+            <td><a href="https://github.com/rwrw01/Claudecodedingetjes">github.com/rwrw01/Claudecodedingetjes</a></td>
+        </tr>
+    </table>
+
+    <!-- ====== FAQ ====== -->
+    <h2>Veelgestelde vragen</h2>
+
+    <h3>Ik kan het formulier niet openen?</h3>
+    <p>Controleer of je ingelogd bent op GitHub. Heeft Ralph je al toegevoegd? Zo niet, stuur hem eerst een berichtje met je gebruikersnaam.</p>
+
+    <h3>De les ziet er raar uit of mist stof?</h3>
+    <p>Maak dan een nieuw issue aan met betere foto's. Zorg dat de tekst scherp en goed leesbaar is.</p>
+
+    <h3>Kan ik meerdere lessen aanvragen?</h3>
+    <p>Ja, zo veel als je wilt. Maak voor elke les een apart issue aan.</p>
+
+    <h3>Kost dit geld?</h3>
+    <p>Nee, dit is gratis te gebruiken.</p>
+</div>
+
+<footer>
+    <p>Handleiding — Interactieve lesstof</p>
+    <p style="margin-top:0.5rem;">
+        Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code" style="color:var(--primary);">Claude Code</a>.
+        Vrij hergebruik onder <a href="https://eupl.eu/" style="color:var(--primary);">EUPL-1.2</a>.
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:var(--primary);">GitHub</a>
+    </p>
+</footer>
+
+</body>
+</html>

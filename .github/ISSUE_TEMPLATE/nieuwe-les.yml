@@ -1,6 +1,6 @@
 name: "\U0001F4DA Nieuwe les aanvragen"
 description: Upload een of meerdere foto's en laat automatisch een interactieve les genereren
-title: "[Les]"
+title: "[Les] wordt automatisch ingevuld"
 labels: []
 body:
   - type: markdown
@@ -8,6 +8,8 @@ body:
       value: |
         ## Nieuwe les aanvragen
         Upload een of meerdere foto's (bijv. van een lesboekpagina, werkblad, of aantekeningen) en er wordt automatisch een interactieve les van gemaakt.
+
+        > **Tip:** De titel hierboven wordt automatisch bijgewerkt na het indienen. Je hoeft die niet aan te passen.
 
   - type: input
     id: naam

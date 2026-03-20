@@ -107,6 +107,25 @@ jobs:
             # Schrijf issue body naar apart bestand
             python3 -c "import json; f=open('/tmp/issue_body.txt','w'); f.write(json.load(open('/tmp/issue.json'))['body']); f.close()"
 
+            # Hernoem issue-titel op basis van formuliervelden
+            PARSED_TITLE=$(python3 -c "
+          import re
+          body = open('/tmp/issue_body.txt').read()
+          def field(label):
+              m = re.search(r'###\s+' + re.escape(label) + r'\s*\n+(.+)', body)
+              return m.group(1).strip() if m else ''
+          titel = field('Titel van de les')
+          vak = field('Vak')
+          niveau = field('Niveau')
+          if titel:
+              print(f'[Les] {titel} — {vak} {niveau}'.strip())
+          ")
+            if [ -n "$PARSED_TITLE" ]; then
+              gh issue edit "$ISSUE_NUM" --title "$PARSED_TITLE"
+              ISSUE_TITLE="$PARSED_TITLE"
+              echo "  Titel bijgewerkt: $PARSED_TITLE"
+            fi
+
             # Reactie: bezig
             gh issue comment "$ISSUE_NUM" \
               --body "⏳ **Bezig met genereren...** De les wordt nu automatisch gemaakt met **${AI_PROVIDER}**. Dit duurt 1-3 minuten."

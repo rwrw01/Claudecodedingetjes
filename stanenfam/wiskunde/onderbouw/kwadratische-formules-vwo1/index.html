@@ -264,7 +264,7 @@
         <p>Maak alle opgaven. Je krijgt directe feedback. Gebruik een komma of punt als decimaalteken.</p>
 
         <div class="score-display">
-            Score: <span id="scoreDisplay">0</span> / <span id="totalDisplay">5</span> goed
+            Score: <span id="scoreDisplay">0</span> / <span id="totalDisplay">10</span> goed
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         </div>
 
@@ -345,6 +345,89 @@
             <div class="hint-box" id="h5h">−5 × 4 = −20, dan −20 + 20 = ?</div>
             <div class="feedback" id="h5f"></div>
         </div>
+        <!-- Opgave 6 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 6.</strong> Bereken y = 2x² + 3 voor x = −4</p>
+            <div class="step-row">
+                <label>(−4)² =</label>
+                <input type="text" id="h6a" placeholder="?">
+                <button onclick="check('h6a','16','h6fa')">Check</button>
+            </div>
+            <div class="feedback" id="h6fa"></div>
+            <div class="step-row" style="margin-top:.5rem">
+                <label>y = 2 × 16 + 3 =</label>
+                <input type="text" id="h6" placeholder="?">
+                <button onclick="checkMain('h6','35','h6f',6)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h6h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h6h">(−4)² = 16, dan 2 × 16 = 32, dan 32 + 3 = ?</div>
+            <div class="feedback" id="h6f"></div>
+        </div>
+
+        <!-- Opgave 7 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 7.</strong> Bereken y = (x − 3)² voor x = 7</p>
+            <div class="step-row">
+                <label>Tussenstap: 7 − 3 =</label>
+                <input type="text" id="h7a" placeholder="?">
+                <button onclick="check('h7a','4','h7fa')">Check</button>
+            </div>
+            <div class="feedback" id="h7fa"></div>
+            <div class="step-row" style="margin-top:.5rem">
+                <label>y = 4² =</label>
+                <input type="text" id="h7" placeholder="?">
+                <button onclick="checkMain('h7','16','h7f',7)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h7h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h7h">Eerst haakjes: 7 − 3 = 4. Dan 4² = ?</div>
+            <div class="feedback" id="h7f"></div>
+        </div>
+
+        <!-- Opgave 8 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 8.</strong> Bereken y = −2x² + 5x voor x = 3</p>
+            <div class="step-row">
+                <label>−2 × 3² + 5 × 3 =</label>
+                <input type="text" id="h8" placeholder="?">
+                <button onclick="checkMain('h8','-3','h8f',8)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h8h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h8h">−2 × 9 = −18, dan 5 × 3 = 15, dan −18 + 15 = ?</div>
+            <div class="feedback" id="h8f"></div>
+        </div>
+
+        <!-- Opgave 9 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 9.</strong> De oppervlakte van een vierkant is A = z². Bereken A voor z = 12 cm.</p>
+            <div class="step-row">
+                <label>A = 12² =</label>
+                <input type="text" id="h9" placeholder="?">
+                <span style="margin-left:.5rem">cm²</span>
+                <button onclick="checkMain('h9','144','h9f',9)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h9h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h9h">12 × 12 = ?</div>
+            <div class="feedback" id="h9f"></div>
+        </div>
+
+        <!-- Opgave 10 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 10.</strong> Bereken y = (x + 2)² − 7 voor x = −5</p>
+            <div class="step-row">
+                <label>Tussenstap: −5 + 2 =</label>
+                <input type="text" id="h10a" placeholder="?">
+                <button onclick="check('h10a','-3','h10fa')">Check</button>
+            </div>
+            <div class="feedback" id="h10fa"></div>
+            <div class="step-row" style="margin-top:.5rem">
+                <label>y = (−3)² − 7 =</label>
+                <input type="text" id="h10" placeholder="?">
+                <button onclick="checkMain('h10','2','h10f',10)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h10h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h10h">(−3)² = 9, dan 9 − 7 = ?</div>
+            <div class="feedback" id="h10f"></div>
+        </div>
     </div>
 
 </div>
@@ -368,7 +451,7 @@ function check(id,expected,fbId){
 }
 
 // Main exercise check with score tracking
-var score={},total=5;
+var score={},total=10;
 function checkMain(id,expected,fbId,nr){
     var val=parse(id),exp=parseFloat(expected),fb=document.getElementById(fbId);
     if(isNaN(val)){fb.className='feedback wrong';fb.innerHTML='Vul een getal in.';return}

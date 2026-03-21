@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwadratische Formules — Wiskunde VWO 1</title>
+    <style>
+        :root{--primary:#2563eb;--primary-light:#dbeafe;--accent:#e11d48;--success:#16a34a;--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--radius:12px}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+        header{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:#fff;padding:2.5rem 1rem;text-align:center}
+        header h1{font-size:2rem;margin-bottom:.5rem} header p{opacity:.85;font-size:1.1rem}
+        .breadcrumb{background:#fff;padding:.75rem 1.5rem;font-size:.9rem;border-bottom:1px solid var(--border)}
+        .breadcrumb a{color:var(--primary);text-decoration:none} .breadcrumb a:hover{text-decoration:underline}
+        .container{max-width:900px;margin:0 auto;padding:2rem 1rem}
+        .card{background:var(--card);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.07);border:1px solid var(--border)}
+        .card h2{font-size:1.4rem;color:var(--primary);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:2px solid var(--primary-light)}
+        .formula{background:var(--primary-light);border-left:4px solid var(--primary);padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1rem 0;font-size:1.05rem}
+        .formula strong{color:var(--primary)} .formula-big{font-size:1.3rem;font-weight:bold;color:var(--primary);display:block;margin:.5rem 0}
+        .tip-box{background:#fefce8;border-left:4px solid #ca8a04;padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1rem 0}
+        .warning-box{background:#fef2f2;border-left:4px solid #dc2626;padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1rem 0}
+        .example-box{background:#f0fdf4;border-left:4px solid #16a34a;padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1rem 0}
+        .toc{background:var(--card);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;border:1px solid var(--border)}
+        .toc h2{color:var(--primary);margin-bottom:.75rem;font-size:1.2rem} .toc ol{padding-left:1.5rem} .toc li{margin:.4rem 0}
+        .toc a{color:var(--primary);text-decoration:none} .toc a:hover{text-decoration:underline}
+        .try-it{background:#f0f4ff;border:2px solid var(--primary-light);border-radius:var(--radius);padding:1.25rem;margin:1rem 0}
+        .try-it h4{color:var(--primary);margin-bottom:.75rem}
+        .step-row{display:flex;align-items:center;gap:.5rem;margin:.5rem 0;flex-wrap:wrap}
+        .step-row label{font-size:.95rem;min-width:180px}
+        input[type="text"],input[type="number"]{border:2px solid var(--border);border-radius:6px;padding:.4rem .75rem;font-size:1rem;width:80px;transition:border-color .2s}
+        input:focus{outline:none;border-color:var(--primary)}
+        button{background:var(--primary);color:#fff;border:none;border-radius:8px;padding:.5rem 1.1rem;font-size:.95rem;cursor:pointer;transition:background .2s,transform .1s}
+        button:hover{background:#1d4ed8;transform:translateY(-1px)} button:active{transform:translateY(0)}
+        .btn-hint{background:#ca8a04} .btn-hint:hover{background:#a16207}
+        .btn-show{background:#16a34a} .btn-show:hover{background:#15803d}
+        .feedback{margin-top:.5rem;padding:.6rem 1rem;border-radius:8px;font-size:.95rem;display:none}
+        .feedback.correct{background:#dcfce7;color:#166534;border:1px solid #86efac;display:block}
+        .feedback.wrong{background:#fef2f2;color:#991b1b;border:1px solid #fca5a5;display:block}
+        .hint-box{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:.75rem 1rem;margin-top:.5rem;font-size:.95rem;display:none}
+        .reveal-box{background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:.75rem 1rem;margin-top:.5rem;font-size:.95rem;display:none}
+        .slider-demo{background:#f0f4ff;border:2px solid var(--primary-light);border-radius:var(--radius);padding:1.25rem;margin:1rem 0}
+        .slider-demo h4{color:var(--primary);margin-bottom:.75rem}
+        input[type="range"]{width:100%;accent-color:var(--primary);margin:.5rem 0}
+        .slider-value{font-size:1.5rem;font-weight:bold;color:var(--primary);text-align:center;padding:.5rem}
+        .exercise-item{background:#fff;border:1px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin:.75rem 0}
+        .exercise-item p{margin-bottom:.6rem}
+        .score-display{background:var(--primary-light);border-radius:var(--radius);padding:1rem;text-align:center;font-size:1.2rem;font-weight:bold;color:var(--primary);margin-top:1rem}
+        .progress-bar{width:100%;height:12px;background:var(--border);border-radius:6px;overflow:hidden;margin-top:.5rem}
+        .progress-fill{height:100%;background:var(--primary);border-radius:6px;transition:width .4s ease;width:0%}
+        .highlight{color:var(--primary);font-weight:bold}
+        .open-question{background:#f8f0ff;border:2px solid #c084fc;border-radius:var(--radius);padding:1.25rem;margin:1rem 0}
+        .open-question h4{color:#7c3aed;margin-bottom:.75rem}
+        textarea{width:100%;border:2px solid var(--border);border-radius:8px;padding:.6rem;font-size:.95rem;font-family:inherit;resize:vertical;min-height:80px}
+        textarea:focus{outline:none;border-color:#a855f7}
+        @media(max-width:600px){header h1{font-size:1.5rem}}
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Kwadratische Formules</h1>
+    <p>Wiskunde · VWO 1 · Focus op rekenen met breuken</p>
+</header>
+
+<nav class="breadcrumb">
+    <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo;
+    <a href="../../">Wiskunde</a> &rsaquo;
+    Kwadratische Formules VWO 1
+</nav>
+
+<div class="container">
+
+    <div class="toc">
+        <h2>Inhoudsopgave</h2>
+        <ol>
+            <li><a href="#wat-is">Wat is een kwadratische formule?</a></li>
+            <li><a href="#invullen">Waarden invullen</a></li>
+            <li><a href="#negatief">Negatieve getallen en kwadraten</a></li>
+            <li><a href="#oefeningen">Hoofdoefeningen</a></li>
+        </ol>
+    </div>
+
+    <!-- SECTIE 1 -->
+    <div class="card" id="wat-is">
+        <h2>1. Wat is een kwadratische formule?</h2>
+        <p>Een <strong>kwadratische formule</strong> bevat een variabele die <strong>gekwadrateerd</strong> wordt (tot de macht 2). Je herkent dit aan de <span class="highlight">²</span>.</p>
+
+        <div class="formula">
+            <strong>Voorbeelden:</strong>
+            <span class="formula-big">y = 3x²</span>
+            <span class="formula-big">y = x² + 5</span>
+            <span class="formula-big">y = 2x² − 4x + 1</span>
+        </div>
+
+        <div class="tip-box">
+            x² betekent x × x. Dus als x = 4, dan is x² = 4 × 4 = 16.
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> Bij y = 5x², bereken y voor x = 3:<br>
+            Stap 1: Vul in → y = 5 · <strong>3²</strong><br>
+            Stap 2: Kwadraat eerst → 3² = 9<br>
+            Stap 3: Vermenigvuldig → y = 5 · 9 = <strong>45</strong>
+        </div>
+
+        <div class="warning-box">
+            <strong>Veelgemaakte fout:</strong> Bij y = 5 · 3² doe je EERST de macht:<br>
+            ❌ 5 · 3 = 15, dan 15² = 225<br>
+            ✅ 3² = 9, dan 5 · 9 = 45
+        </div>
+
+        <div class="slider-demo">
+            <h4>Interactief: verken y = 4x²</h4>
+            <p>Sleep de slider om x te veranderen en kijk wat er met y gebeurt.</p>
+            <label>x = <span id="sliderXVal">3</span></label>
+            <input type="range" min="-5" max="5" value="3" id="sliderX">
+            <div class="slider-value" id="sliderResult">y = 4 · 3² = 4 · 9 = 36</div>
+        </div>
+
+        <div class="try-it">
+            <h4>Probeer het zelf: bereken y = 2x² voor x = 5</h4>
+            <div class="step-row">
+                <label>Stap 1: 5² =</label>
+                <input type="text" id="s1_1" placeholder="?">
+                <button onclick="check('s1_1','25','s1_f1')">Check</button>
+            </div>
+            <div class="feedback" id="s1_f1"></div>
+            <div class="step-row" style="margin-top:.6rem">
+                <label>Stap 2: 2 × 25 =</label>
+                <input type="text" id="s1_2" placeholder="?">
+                <button onclick="check('s1_2','50','s1_f2')">Check</button>
+            </div>
+            <div class="feedback" id="s1_f2"></div>
+        </div>
+    </div>
+
+    <!-- SECTIE 2 -->
+    <div class="card" id="invullen">
+        <h2>2. Waarden invullen in een formule</h2>
+        <p>Als je een waarde invult in een formule, vervang je de letter door het getal. Dit heet <strong>substitueren</strong>.</p>
+
+        <div class="formula">
+            <strong>Werkwijze:</strong><br>
+            1. Schrijf de formule op<br>
+            2. Vervang de letter door het getal<br>
+            3. Bereken de macht(en) eerst<br>
+            4. Bereken de rest
+        </div>
+
+        <div class="example-box">
+            <strong>Voorbeeld:</strong> y = x² − 3x + 2 voor x = 4<br>
+            y = (4)² − 3·(4) + 2 = 16 − 12 + 2 = <strong>6</strong>
+        </div>
+
+        <div class="try-it">
+            <h4>Bereken y = x² − 2x + 4 voor x = 5</h4>
+            <div class="step-row">
+                <label>Stap 1: (5)² =</label>
+                <input type="text" id="s2_1" placeholder="?">
+                <button onclick="check('s2_1','25','s2_f1')">Check</button>
+            </div>
+            <div class="feedback" id="s2_f1"></div>
+            <div class="step-row" style="margin-top:.6rem">
+                <label>Stap 2: 2 × 5 =</label>
+                <input type="text" id="s2_2" placeholder="?">
+                <button onclick="check('s2_2','10','s2_f2')">Check</button>
+            </div>
+            <div class="feedback" id="s2_f2"></div>
+            <div class="step-row" style="margin-top:.6rem">
+                <label>Stap 3: 25 − 10 + 4 =</label>
+                <input type="text" id="s2_3" placeholder="?">
+                <button onclick="check('s2_3','19','s2_f3')">Check</button>
+            </div>
+            <div class="feedback" id="s2_f3"></div>
+        </div>
+
+        <div class="exercise-item">
+            <p><strong>a.</strong> Bereken y = x² + 5 voor x = 7</p>
+            <div class="step-row">
+                <label>7² + 5 =</label>
+                <input type="text" id="m2_1" placeholder="?">
+                <button onclick="check('m2_1','54','m2_f1')">Check</button>
+                <button class="btn-hint" onclick="toggleHint('m2_h1')">Hint</button>
+            </div>
+            <div class="hint-box" id="m2_h1">7² = 49, dan 49 + 5 = ?</div>
+            <div class="feedback" id="m2_f1"></div>
+        </div>
+
+        <div class="exercise-item">
+            <p><strong>b.</strong> Bereken y = 2x² − 3 voor x = 6</p>
+            <div class="step-row">
+                <label>2 × 6² − 3 =</label>
+                <input type="text" id="m2_2" placeholder="?">
+                <button onclick="check('m2_2','69','m2_f2')">Check</button>
+                <button class="btn-hint" onclick="toggleHint('m2_h2')">Hint</button>
+            </div>
+            <div class="hint-box" id="m2_h2">6² = 36, dan 2×36 = 72, dan 72 − 3 = ?</div>
+            <div class="feedback" id="m2_f2"></div>
+        </div>
+    </div>
+
+    <!-- SECTIE 3 -->
+    <div class="card" id="negatief">
+        <h2>3. Negatieve getallen en kwadraten</h2>
+        <p>Bij kwadratische formules werk je vaak met <strong>negatieve waarden</strong> van x. Hier gaat het regelmatig fout!</p>
+
+        <div class="formula">
+            <strong>Vuistregel:</strong> Een negatief getal in het kwadraat is altijd positief.<br>
+            (−5)² = (−5) × (−5) = <strong>25</strong>
+        </div>
+
+        <div class="warning-box">
+            <strong>Let op: −x² ≠ (−x)²</strong><br>
+            Bij y = −x² voor x = −3: y = −(−3)² = −9<br>
+            Bij y = (−x)² voor x = −3: y = (3)² = 9
+        </div>
+
+        <div class="slider-demo">
+            <h4>Interactief: verken y = −x² + 10</h4>
+            <p>Sleep de slider en zie hoe y verandert, ook voor negatieve x.</p>
+            <label>x = <span id="sliderX2Val">0</span></label>
+            <input type="range" min="-5" max="5" value="0" id="sliderX2">
+            <div class="slider-value" id="sliderResult2">y = −(0)² + 10 = 10</div>
+        </div>
+
+        <div class="try-it">
+            <h4>Bereken y = −3x² + 7 voor x = −2</h4>
+            <div class="step-row">
+                <label>Stap 1: (−2)² =</label>
+                <input type="text" id="s3_1" placeholder="?">
+                <button onclick="check('s3_1','4','s3_f1')">Check</button>
+                <button class="btn-hint" onclick="toggleHint('s3_h1')">Hint</button>
+            </div>
+            <div class="hint-box" id="s3_h1">(−2) × (−2) = ? (min × min = plus!)</div>
+            <div class="feedback" id="s3_f1"></div>
+            <div class="step-row" style="margin-top:.6rem">
+                <label>Stap 2: −3 × 4 =</label>
+                <input type="text" id="s3_2" placeholder="?">
+                <button onclick="check('s3_2','-12','s3_f2')">Check</button>
+            </div>
+            <div class="feedback" id="s3_f2"></div>
+            <div class="step-row" style="margin-top:.6rem">
+                <label>Stap 3: −12 + 7 =</label>
+                <input type="text" id="s3_3" placeholder="?">
+                <button onclick="check('s3_3','-5','s3_f3')">Check</button>
+            </div>
+            <div class="feedback" id="s3_f3"></div>
+        </div>
+
+        <div class="open-question">
+            <h4>Denkuitdaging</h4>
+            <p>Leg in eigen woorden uit: <em>waarom geeft een negatief getal in het kwadraat altijd een positieve uitkomst?</em></p>
+            <textarea placeholder="Schrijf hier jouw uitleg..."></textarea><br>
+            <button class="btn-show" onclick="toggleReveal('open1_ans')">Toon voorbeeldantwoord</button>
+            <div class="reveal-box" id="open1_ans">
+                Een negatief getal kwadraat betekent dat je het getal met zichzelf vermenigvuldigt. Twee negatieve getallen vermenigvuldigen geeft altijd een positief getal (min × min = plus).
+            </div>
+        </div>
+    </div>
+
+    <!-- HOOFDOEFENINGEN -->
+    <div class="card" id="oefeningen">
+        <h2>4. Hoofdoefeningen</h2>
+        <p>Maak alle opgaven. Je krijgt directe feedback. Gebruik een komma of punt als decimaalteken.</p>
+
+        <div class="score-display">
+            Score: <span id="scoreDisplay">0</span> / <span id="totalDisplay">5</span> goed
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <!-- Opgave 1 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 1.</strong> Bereken y = 4x² voor x = 3</p>
+            <div class="step-row">
+                <label>Tussenstap: 3² =</label>
+                <input type="text" id="h1a" placeholder="?">
+                <button onclick="check('h1a','9','h1fa')">Check</button>
+            </div>
+            <div class="feedback" id="h1fa"></div>
+            <div class="step-row" style="margin-top:.5rem">
+                <label>y = 4 × 9 =</label>
+                <input type="text" id="h1" placeholder="?">
+                <button onclick="checkMain('h1','36','h1f',1)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h1h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h1h">Eerst 3² = 9, dan 4 × 9 = ?</div>
+            <div class="feedback" id="h1f"></div>
+        </div>
+
+        <!-- Opgave 2 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 2.</strong> Bereken y = x² − 6 voor x = 8</p>
+            <div class="step-row">
+                <label>Tussenstap: 8² =</label>
+                <input type="text" id="h2a" placeholder="?">
+                <button onclick="check('h2a','64','h2fa')">Check</button>
+            </div>
+            <div class="feedback" id="h2fa"></div>
+            <div class="step-row" style="margin-top:.5rem">
+                <label>y = 64 − 6 =</label>
+                <input type="text" id="h2" placeholder="?">
+                <button onclick="checkMain('h2','58','h2f',2)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h2h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h2h">8² = 64, dan 64 − 6 = ?</div>
+            <div class="feedback" id="h2f"></div>
+        </div>
+
+        <!-- Opgave 3 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 3.</strong> Bereken y = 3x² + 2x voor x = 4</p>
+            <div class="step-row">
+                <label>3 × 4² + 2 × 4 =</label>
+                <input type="text" id="h3" placeholder="?">
+                <button onclick="checkMain('h3','56','h3f',3)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h3h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h3h">3 × 16 + 8 = 48 + 8 = ?</div>
+            <div class="feedback" id="h3f"></div>
+        </div>
+
+        <!-- Opgave 4 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 4.</strong> Bereken y = −x² + 10 voor x = −3</p>
+            <div class="step-row">
+                <label>y = −(−3)² + 10 =</label>
+                <input type="text" id="h4" placeholder="?">
+                <button onclick="checkMain('h4','1','h4f',4)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h4h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h4h">(−3)² = 9 (positief!). Dan −9 + 10 = ?</div>
+            <div class="feedback" id="h4f"></div>
+        </div>
+
+        <!-- Opgave 5 -->
+        <div class="exercise-item">
+            <p><strong>Opgave 5.</strong> Een bal wordt omhoog gegooid. De hoogte is h = −5t² + 20. Bereken h na t = 2 seconden.</p>
+            <div class="step-row">
+                <label>h = −5 × 2² + 20 =</label>
+                <input type="text" id="h5" placeholder="?">
+                <span style="margin-left:.5rem">meter</span>
+                <button onclick="checkMain('h5','0','h5f',5)">Check</button>
+                <button class="btn-hint" onclick="toggleHint('h5h')">Hint</button>
+            </div>
+            <div class="hint-box" id="h5h">−5 × 4 = −20, dan −20 + 20 = ?</div>
+            <div class="feedback" id="h5f"></div>
+        </div>
+    </div>
+
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;color:#64748b;font-size:.85rem;border-top:1px solid #e2e8f0;margin-top:2rem;">
+    Gemaakt door Ralph Wagter met <a href="https://claude.ai" style="color:#2563eb;">Claude Code</a>.
+    Vrij hergebruik onder <a href="https://eupl.eu/" style="color:#2563eb;">EUPL-1.2</a>.
+    <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#2563eb;">GitHub</a>
+</footer>
+
+<script>
+// Parse input: accept comma and dot as decimal separator
+function parse(id){return parseFloat(document.getElementById(id).value.replace(',','.'))}
+
+// Generic check answer
+function check(id,expected,fbId){
+    var val=parse(id),exp=parseFloat(expected),fb=document.getElementById(fbId);
+    if(isNaN(val)){fb.className='feedback wrong';fb.innerHTML='Vul een getal in.';return}
+    if(Math.abs(val-exp)<0.01){fb.className='feedback correct';fb.innerHTML='Goed!'}
+    else{fb.className='feedback wrong';fb.innerHTML='Helaas, het juiste antwoord is <strong>'+expected+'</strong>. Probeer de volgende!'}
+}
+
+// Main exercise check with score tracking
+var score={},total=5;
+function checkMain(id,expected,fbId,nr){
+    var val=parse(id),exp=parseFloat(expected),fb=document.getElementById(fbId);
+    if(isNaN(val)){fb.className='feedback wrong';fb.innerHTML='Vul een getal in.';return}
+    if(Math.abs(val-exp)<0.01){
+        fb.className='feedback correct';fb.innerHTML='Goed!';
+        if(!score[nr]){score[nr]=true;updateScore()}
+    }else{
+        fb.className='feedback wrong';
+        fb.innerHTML='Helaas, het juiste antwoord is <strong>'+expected+'</strong>.';
+    }
+}
+function updateScore(){
+    var s=Object.keys(score).length;
+    document.getElementById('scoreDisplay').textContent=s;
+    document.getElementById('progressFill').style.width=(s/total*100)+'%';
+}
+
+// Hint toggle
+function toggleHint(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block'}
+
+// Reveal toggle
+function toggleReveal(id){var el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block'}
+
+// Slider 1: y = 4x²
+var s1=document.getElementById('sliderX');
+s1.addEventListener('input',function(){
+    var x=parseInt(s1.value),xsq=x*x,y=4*xsq;
+    document.getElementById('sliderXVal').textContent=x;
+    document.getElementById('sliderResult').textContent='y = 4 · '+(x<0?'('+x+')':x)+'² = 4 · '+xsq+' = '+y;
+});
+
+// Slider 2: y = -x² + 10
+var s2=document.getElementById('sliderX2');
+s2.addEventListener('input',function(){
+    var x=parseInt(s2.value),xsq=x*x,y=-xsq+10;
+    document.getElementById('sliderX2Val').textContent=x;
+    document.getElementById('sliderResult2').textContent='y = −('+x+')² + 10 = −'+xsq+' + 10 = '+y;
+});
+
+// Enter key support on all text inputs
+document.querySelectorAll('input[type="text"]').forEach(function(inp){
+    inp.addEventListener('keydown',function(e){
+        if(e.key==='Enter'){var btn=inp.parentElement.querySelector('button');if(btn)btn.click()}
+    });
+});
+</script>
+</body>
+</html>

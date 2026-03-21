@@ -117,3 +117,109 @@
 **Concrete vaardigheid:** Je benoemt twee kritieke systemen, beschrijft de maximale uitvalduur, en weet wie je belt bij ransomware buiten kantooruren.
 
 **Praktijkvoorbeeld:** Een callcenter valt uit door ransomware. Na deze module heeft de afdeling een gelamineerde noodkaart met vijf stappen en drie telefoonnummers — ook als het intranet plat ligt.
+
+---
+
+## 3.13 Opdrachtgeverschap ICT
+
+**Wat het is:** De meeste mislukte overheids-ICT-projecten falen niet door slechte techniek, maar door opdrachtgevers die niet weten welke vragen ze moeten stellen. Opdrachtgeverschap is de vaardigheid om een ICT-project te sturen zonder zelf technicus te zijn — door de juiste vragen te stellen, rode vlaggen te herkennen en verantwoordelijkheid te nemen voor het resultaat.
+
+**Concrete vaardigheid:** Je stelt vijf kritische vragen vóór het eerste projectbesluit, je herkent wanneer een adviseur of leverancier stuurt in plaats van adviseert, en je weet het verschil tussen een IT-voorstel beoordelen en een IT-voorstel goedkeuren omdat het er professioneel uitziet.
+
+**Praktijkvoorbeeld:** Een gemeentesecretaris krijgt een voorstel voor een nieuw zaaksysteem van €420.000 plus €210.000 implementatiekosten. De leverancier presenteert overtuigend. Na deze module stelt ze vier vragen die de presentatie niet beantwoordde: "Wat is de exit-strategie als dit niet werkt?", "Hoeveel vergelijkbare implementaties zijn op tijd en binnen budget opgeleverd?", "Wie is intern verantwoordelijk voor de requirements — en heeft die persoon daar tijd voor?", "Wat is plan B als we na zes maanden merken dat het niet past?" De leverancier kan twee van de vier vragen niet beantwoorden. Ze besluit eerst een onafhankelijke second opinion te vragen.
+
+**De vijf opdrachtgeversvragen** — te stellen vóór elk ICT-projectbesluit:
+
+1. **Welk probleem lossen we op?** Niet "welk systeem kopen we?" maar "welk concreet werkproces verbetert, en hoe meten we dat?" Als niemand het probleem in twee zinnen kan uitleggen, is het project niet rijp.
+
+2. **Wie is de interne opdrachtgever — en heeft die mandaat én tijd?** Een opdrachtgever die er "ook nog even bij doet" is de grootste voorspeller van projectfalen. De BIT-rapporten tonen dit bij oBRP, PGB én KEI.
+
+3. **Wat zijn de drie belangrijkste risico's — en wie beheert ze?** Niet het risicoregister van de leverancier, maar de risico's die de organisatie zelf loopt. Als het antwoord is "de leverancier beheert alle risico's", is dat op zichzelf een risico.
+
+4. **Wat kost stoppen na zes maanden?** Als het antwoord is "dan zijn we alles kwijt", is er geen aanpassingsvermogen ingebouwd — precies wat het AcICT als structureel probleem benoemt.
+
+5. **Hoe weten we of het werkt?** Niet na oplevering, maar tussentijds. Welke meetbare resultaten verwachten we na drie maanden, zes maanden, een jaar?
+
+**Herkenbare anti-patronen:**
+- *"De leverancier heeft een bewezen oplossing"* — bewezen bij wie? In welke context? Met welke aanpassingen?
+- *"We hebben geen keuze, de deadline is wettelijk"* — PGB werd ook zo gepresenteerd; de deadline bleek wel degelijk verschuifbaar, maar pas nadat het te laat was
+- *"Het technische deel begrijp ik niet, maar de adviseur zegt dat het goed zit"* — dit was de situatie bij oBRP gedurende dertien jaar
+
+**Doelgroepen:** Bestuurders (primair), managers (secundair)
+
+---
+
+## 3.14 Ketendenken en ketenregie
+
+**Wat het is:** Veel overheidssystemen werken niet op zichzelf maar in een keten: meerdere organisaties wisselen gegevens uit om samen een dienst te leveren. Als niemand de hele keten overziet, werkt geen enkel onderdeel goed — ook niet het eigen systeem.
+
+**Concrete vaardigheid:** Je tekent een eenvoudige ketenschets voor een proces waarin jouw organisatie samenwerkt met andere partijen. Je benoemt per schakel: welke data wordt uitgewisseld, in welk formaat, op welk moment, en wie is verantwoordelijk als het misgaat.
+
+**Praktijkvoorbeeld:** Een beleidsmedewerker bij een gemeente werkt aan de implementatie van een nieuw systeem voor jeugdhulp. Het systeem moet gegevens ontvangen van huisartsen, scholen en het wijkteam, en verwijzingen doorzetten naar zorgaanbieders. Na deze module tekent ze de keten op een whiteboard: zes partijen, vier datastromen, twee handmatige overdrachtspunten. Bij het tekenen ontdekt ze dat niemand heeft afgesproken in welk formaat de huisarts verwijsgegevens aanlevert — en dat de zorgaanbieder een ander cliëntnummer gebruikt dan de gemeente. Twee problemen die in de software pas na livegang zichtbaar zouden zijn geworden.
+
+**De ketentekening in vier stappen:**
+
+1. **Teken alle partijen** — niet alleen de directe partners, maar ook de partijen "achter" hen. Bij PGB waren dat: budgethouder → gemeente → SVB → zorgverlener → bank. Vijf schakels, elk met eigen systemen en beperkingen.
+
+2. **Teken de datastromen** — welke gegevens gaan van A naar B? In welk formaat? Op welk moment? Is dat een automatische koppeling of stuurt iemand een Excel per e-mail? Bij PGB bleken gemeenten gegevens aan te leveren in formaten die het SVB-systeem niet kon verwerken.
+
+3. **Markeer de breekpunten** — waar kan het misgaan? Typische breekpunten: handmatige invoer, formaatverschillen, verschillende definities van hetzelfde begrip (een "cliënt" bij de gemeente is niet hetzelfde als een "verzekerde" bij het zorgkantoor).
+
+4. **Stel drie vragen per ketenpartner:**
+   - Wat lever je aan, en kun je dat waarmaken op het afgesproken moment?
+   - Wat heb je van ons nodig, en in welk formaat?
+   - Wat is jouw terugvaloptie als het systeem uitvalt?
+
+**Herkenbare anti-patronen:**
+- *"Wij leveren ons deel op tijd, de rest is niet onze verantwoordelijkheid"* — bij PGB dacht elke partij dit; het resultaat was dat niemand verantwoordelijk was voor het geheel
+- *"De technische koppeling werkt, dus de keten werkt"* — een koppeling die data transporteert maar geen foutmeldingen teruggeeft is een tikkende tijdbom
+- *"We stemmen dat later wel af"* — bij DSO werd afstemming tussen tientallen partijen steeds uitgesteld; na zeven jaar zijn er nog dagelijks storingen
+
+**Doelgroepen:** Beleidsmakers (primair), managers (primair), bestuurders (secundair)
+
+---
+
+## 3.15 Digitaal uitvoerbaar beleid
+
+**Wat het is:** Beleid dat een digitale component heeft — en dat is tegenwoordig bijna al het beleid — moet worden getoetst op digitale uitvoerbaarheid vóórdat het wordt vastgesteld. Wetgeving die data-uitwisseling vereist die technisch onmogelijk is, of processen veronderstelt die niet geautomatiseerd kunnen worden, leidt tot het soort rampen dat de BIT-rapporten documenteren.
+
+**Concrete vaardigheid:** Je voert een uitvoeringstoets uit op een beleidsvoorstel met een digitale component. Je stelt vier concrete vragen, je herkent wanneer een voorstel onuitvoerbaar is, en je kunt uitleggen waarom "de IT-afdeling lost dat wel op" geen acceptabel antwoord is.
+
+**Praktijkvoorbeeld:** Een beleidsadviseur schrijft een voorstel voor vroegsignalering van schuldenproblematiek. Het plan vereist dat woningcorporaties, energieleveranciers en zorgverzekeraars maandelijks betalingsachterstanden doorgeven aan de gemeente. Na deze module stelt ze vier vragen vóór het voorstel naar het college gaat:
+- *Welke data is nodig en is die beschikbaar?* — De energieleverancier blijkt geen maandelijkse maar alleen kwartaalgegevens te kunnen leveren. De zorgverzekeraar mag betalingsachterstanden niet delen zonder expliciete wettelijke grondslag.
+- *Welke systemen moeten worden aangepast?* — Het gemeentelijke schuldhulpverleningssysteem heeft geen importfunctie voor externe data. Aanpassing kost acht maanden en €90.000.
+- *Welke ketenpartners zijn betrokken en zijn zij gereed?* — Van de vier ketenpartners heeft er één nog geen systeem dat de gevraagde data kan exporteren.
+- *Wat zijn de gevolgen als het systeem niet op tijd klaar is?* — Zonder werkend systeem moeten medewerkers de gegevens handmatig verwerken; bij 3.000 huishoudens is dat onhaalbaar.
+
+Het voorstel wordt aangepast: fase 1 start met alleen woningcorporaties (die wél kunnen leveren), de andere bronnen volgen in fase 2 en 3.
+
+**De vier uitvoeringstoetsvragen:**
+
+1. **Welke data is nodig en is die beschikbaar?**
+   Niet alleen: bestaat de data? Maar ook: mag je die data gebruiken (AVG-grondslag)? In welk formaat wordt die geleverd? Hoe actueel is die? Bij PGB bleek de benodigde data wél te bestaan maar niet in het juiste formaat en niet op het juiste moment.
+
+2. **Welke systemen moeten worden aangepast en wat kost dat?**
+   Niet alleen de directe kosten, maar ook de doorlooptijd. Een systeemaanpassing die achttien maanden duurt past niet bij beleid dat over zes maanden moet ingaan. Bij de Omgevingswet werd de invoerdatum vier keer uitgesteld omdat de systemen niet klaar waren.
+
+3. **Welke ketenpartners zijn betrokken en zijn zij gereed?**
+   Dit is de link met ketendenken (§3.14). Beleid dat samenwerking tussen organisaties veronderstelt, werkt alleen als alle partijen technisch en organisatorisch klaar zijn. "Ze hebben toegezegd mee te doen" is niet hetzelfde als "hun systemen kunnen het aan."
+
+4. **Wat zijn de gevolgen als het systeem niet op tijd klaar is?**
+   Heeft het beleid een terugvaloptie? Of is het alles-of-niets? Bij PGB was er geen terugvalscenario; het oude systeem was al afgebouwd toen het nieuwe niet bleek te werken.
+
+**De toeslagenaffaire als spiegel**
+
+De toeslagenaffaire illustreert een dieper probleem: beleid dat werd geautomatiseerd zonder na te denken over de gevolgen van automatisering. Het systeem deed exact wat het was opgedragen — maar wat het was opgedragen, was inhumaan. Digitaal uitvoerbaar beleid gaat daarom niet alleen over de vraag "kan het systeem dit?" maar ook over "wat doet het systeem met mensen als het dit doet?"
+
+Drie reflectievragen bij elk geautomatiseerd besluit:
+- Wat is het gevolg voor een burger als het systeem een fout maakt?
+- Kan een medewerker het systeembesluit overrulen als dat nodig is?
+- Is er een signaal als het systeem systematisch dezelfde groep benadeelt?
+
+**Herkenbare anti-patronen:**
+- *"De IT-afdeling lost dat wel op"* — beleid dat uitvoering als detail beschouwt in plaats van als randvoorwaarde
+- *"We beginnen alvast, de systemen volgen later"* — PGB-patroon: beleid in werking, systeem niet klaar
+- *"Het is wettelijk verplicht, dus het moet kunnen"* — wettelijke verplichting maakt technische onmogelijkheid niet ongedaan
+- *"We hebben een pilot gedaan"* — een pilot met vijftig gevallen zegt weinig over schaalbaarheid naar vijftigduizend
+
+**Doelgroepen:** Beleidsmakers (primair), bestuurders (primair)

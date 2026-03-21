@@ -72,6 +72,9 @@ Het AcICT formuleert het kernprobleem: de overheid vliegt ICT-projecten te groot
 | AI & prompt engineering | M | M | M | H |
 | Digitale dienstverlening | H | H | M | H |
 | Datagedreven werken | M | H | H | M |
+| **Opdrachtgeverschap ICT** | **H** | **M** | **M** | **L** |
+| **Ketendenken & ketenregie** | **M** | **H** | **H** | **L** |
+| **Digitaal uitvoerbaar beleid** | **H** | **L** | **H** | **L** |
 
 ### 6.2 Top 5 quick wins
 
@@ -103,9 +106,10 @@ Het AcICT formuleert het kernprobleem: de overheid vliegt ICT-projecten te groot
 
 **Kernmodules:**
 1. **Digitaal Fundament** (iedereen, 1 dag) — basisbegrippen, BIT-lessen, eigen organisatie in kaart
-2. **Opdrachtgeverschap** (leidinggevenden, 1 dag) — requirements, contractlezen, go/no-go
-3. **Ketendenken** (beleidsmakers/projectleiders, halve dag) — ketentekening, stakeholders, uitvoerbaarheidstoets
+2. **Opdrachtgeverschap** (leidinggevenden, 1 dag) — de vijf opdrachtgeversvragen, rode vlaggen herkennen, go/no-go (onderbouwd door §3.13)
+3. **Ketendenken** (beleidsmakers/projectleiders, halve dag) — ketentekening in vier stappen, breekpunten identificeren, ketenpartners bevragen (onderbouwd door §3.14)
 4. **Digitale Weerbaarheid** (iedereen, halve dag) — informatiebeveiliging, AVG in de praktijk, incidentrespons
+5. **Digitaal Uitvoerbaar Beleid** (beleidsmakers/bestuurders, halve dag) — uitvoeringstoets in vier vragen, terugvalscenario's, toeslagenaffaire-reflectie (onderbouwd door §3.15)
 
 **Verdiepingsmodules (keuze):**
 - Inkoop en aanbesteding ICT

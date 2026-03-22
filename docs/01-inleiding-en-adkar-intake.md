@@ -54,15 +54,133 @@ Digitaal vakmanschap is geen IT-training. Het is een onderdeel van professioneel
 
 ---
 
-## 2. ADKAR-intake per deelnemer
+## 2. Veranderbereidheid meten: ADKAR × DINAMO × omgevingsscan
 
-De ADKAR-methode beschrijft vijf voorwaarden voor succesvolle gedragsverandering: Awareness (bewustzijn), Desire (motivatie), Knowledge (kennis), Ability (vaardigheid) en Reinforcement (verankering). Onderstaande vragen zijn bedoeld als gespreksleidraad — geen enquête met schalen, maar een echte conversatie van tien à vijftien minuten. De antwoorden bepalen welk deel van de leergang het meest relevant is voor deze deelnemer.
+### 2.1 Waarom drie modellen combineren
+
+De oorspronkelijke ADKAR-intake (zie §2.3) meet de individuele deelnemer: weet je het, wil je het, kun je het? Maar de BIT/AcICT-lessen laten zien dat individuele bereidheid niet genoeg is. Een gemotiveerde beleidsmedewerker die terugkomt in een organisatie waar niemand naar digitaal vakmanschap vraagt, verandert niets. Omgekeerd: een organisatie die de urgentie voelt maar medewerkers die het niet willen, verandert ook niets.
+
+We combineren daarom drie perspectieven:
+
+| Model | Meet | Kernvraag |
+|---|---|---|
+| **ADKAR** (Prosci) | De individuele deelnemer | Waar zit het barrier point — bij bewustzijn, motivatie, kennis, vaardigheid of verankering? |
+| **DINAMO** (Metselaar) | De veranderbereidheid | Wil de deelnemer veranderen, moet het van de omgeving, en kan de organisatie het aan? |
+| **Omgevingsscan** (PCT-geïnspireerd) | De organisatiecontext | Zijn sponsorship, projectcapaciteit en cultuur klaar om verandering te dragen? |
+
+**Het samenspel bepaalt de aanpak van de leergang:**
+
+| Individu wil + kan | Omgeving klaar | → Leergang is **actiegericht**: direct aan de slag met projecten en implementatie |
+|---|---|---|
+| Individu wil + kan | Omgeving niet klaar | → Leergang is **actiegericht + ambassadeurstraject**: deelnemers leren ook hun omgeving meenemen |
+| Individu wil, kan nog niet | Omgeving klaar | → Leergang is **vaardigheidsgericht**: focus op kennis en oefenen |
+| Individu wil niet / ziet het niet | Ongeacht omgeving | → Eerst **bewustwordingsgesprek**: ADKAR Awareness en Desire aanpakken vóór de leergang start |
+
+---
+
+### 2.2 De snelmeting: 15 stellingen in 5 minuten
+
+De drie modellen leveren samen een lange vragenlijst op. Dat is niet werkbaar als intake. Daarom destilleren we er een **snelmeting** uit: 15 stellingen die in vijf minuten in te vullen zijn, en die samen een betrouwbaar beeld geven van zowel de deelnemer als de omgeving.
+
+#### Ontwerpprincipes tegen social desirability bias
+
+Bij veranderbereidheid lopen meningen en feiten structureel door elkaar. Mensen zeggen dat ze openstaan voor verandering terwijl ze in de praktijk bij het oude blijven. Onderzoek (Bursztyn et al., 2024) onderscheidt drie bronnen van vertekening:
+1. **Materiële angst** — "als ik zeg dat ik het niet wil, heeft dat gevolgen voor mijn beoordeling"
+2. **Sociale wenselijkheid** — "ik wil niet de dwarsligger zijn"
+3. **Zelfbeeld** — "ik zie mezelf als iemand die openstaat voor vernieuwing"
+
+De snelmeting is daarom ontworpen met de volgende tegenwerkingen:
+
+| Bias-risico | Tegenwerking in het instrument |
+|---|---|
+| Sociaal wenselijke antwoorden | **Gedragsvragen in plaats van meningsvragen**: niet "sta je open voor verandering?" maar "wanneer heb je voor het laatst een werkwijze aangepast?" |
+| Angst voor beoordeling | **Anonimiteit + normalisering**: stellingen zijn bewust zo geformuleerd dat "nee" een respectabel antwoord is ("In mijn team is hier eigenlijk geen tijd voor" is geen schaamtevol antwoord) |
+| Zelfoverschatting | **Concrete herinneringen vragen**: niet "kun je een phishingmail herkennen?" maar "wanneer heb je er voor het laatst een gemeld?" — wie geen voorbeeld kan geven, weet het antwoord |
+| Omgevingsbias maskeren | **Vragen over anderen**: "wat doet je leidinggevende als..." peilt de omgeving via waarneming in plaats van via mening |
+
+#### De 15 stellingen
+
+**Blok A — Willen veranderen** *(DINAMO: attitude + ADKAR: Awareness/Desire)*
+
+Schaal: 1 = herken ik niet — 2 = een beetje — 3 = grotendeels — 4 = helemaal
+
+| # | Stelling | Meet |
+|---|---|---|
+| 1 | "Ik heb het afgelopen half jaar zelf een werkwijze aangepast omdat ik merkte dat het digitaal beter of veiliger kon." | Feitelijk gedrag, niet intentie. Wie geen voorbeeld kan noemen scoort eerlijk laag. |
+| 2 | "Ik kan een concreet voorbeeld noemen van een moment waarop digitale onhandigheid in mijn organisatie leidde tot problemen voor een burger of cliënt." | Awareness via concrete herinnering. Abstracter antwoorden = lager bewustzijn. |
+| 3 | "Als ik eerlijk ben, vind ik dat het meeste op digitaal gebied al goed genoeg gaat in mijn werk." | Omgekeerd gecodeerd. Hoge score = lage veranderbereidheid. Normaliseert "nee" als antwoord. |
+| 4 | "Ik weet precies wat ik over een jaar anders zou willen doen in mijn werk dankzij deze leergang." | Desire: intrinsieke motivatie. Wie dit niet weet, heeft eerst een ander gesprek nodig. |
+| 5 | "Ik merk dat ik de afgelopen maanden vaker nadenk over of ik gegevens van burgers/cliënten wel goed bescherm." | Awareness-trend: groeit het bewustzijn al, of is dit helemaal nieuw? |
+
+**Blok B — Moeten veranderen** *(DINAMO: subjectieve norm + omgevingsscan)*
+
+| # | Stelling | Meet |
+|---|---|---|
+| 6 | "Mijn direct leidinggevende heeft het afgelopen kwartaal met mij gesproken over digitale veiligheid of digitaal werken." | Feitelijk: is er gesprek? Geen mening maar een herinnering. Proxy voor sponsorship. |
+| 7 | "Als er bij ons een datalek zou zijn, weet ik precies wie ik als eerste moet bellen en wat de procedure is." | Feitelijk: ken je de procedure? Toetsbaar, niet opiniërend. |
+| 8 | "In mijn team is het normaal om elkaar aan te spreken als iemand iets onveiligs doet met gegevens." | Teamcultuur via waarneming. "Normaal" is minder beladen dan "doe je het?" |
+| 9 | "Mijn organisatie maakt op dit moment concrete middelen vrij (tijd, geld, mensen) voor digitaal vakmanschap." | Omgevingscapaciteit. Peilt of de organisatie het *echt* faciliteert of alleen *zegt* het belangrijk te vinden. |
+| 10 | "Als ik na deze leergang iets anders wil doen, verwacht ik dat mijn leidinggevende mij daarin steunt." | Verwachting over sponsorship. Lage score = reinforcement-risico. |
+
+**Blok C — Kunnen veranderen** *(DINAMO: gedragscontrole + ADKAR: Knowledge/Ability)*
+
+| # | Stelling | Meet |
+|---|---|---|
+| 11 | "Ik kan in mijn eigen woorden aan een nieuwe collega uitleggen waarom je niet zomaar burgergegevens mag opzoeken." | Kennis via toepassing: niet "weet je wat de AVG is?" maar "kun je het uitleggen?" |
+| 12 | "Ik heb het afgelopen jaar minstens één keer een verdachte e-mail gemeld bij de juiste persoon of afdeling." | Feitelijk gedrag: melden, niet alleen herkennen. Wie nooit meldt, mist de vaardigheid óf de cultuur. |
+| 13 | "Als ik een nieuw digitaal systeem moet gebruiken, lukt het me meestal om het zelf uit te zoeken of weet ik waar ik hulp kan vragen." | Digitale zelfredzaamheid: niet "ben je digitaal vaardig?" maar een concreet scenario. |
+| 14 | "Er is in mijn organisatie voldoende kennis aanwezig om digitale veranderingen succesvol door te voeren — ook zonder externe consultants." | Organisatiecapaciteit via waarneming. Lage score = signaal voor de opdrachtgever, niet voor de deelnemer. |
+| 15 | "Ik heb op dit moment genoeg ruimte in mijn werk om nieuwe dingen te leren en toe te passen." | Timing en capaciteit: de meest voorspellende factor volgens DINAMO (gewicht 12). Eerlijk "nee" is waardevoller dan wenselijk "ja". |
+
+---
+
+#### Scoring en interpretatie
+
+**Per blok** worden de scores opgeteld (bereik 4–20 per blok voor blok A met 5 stellingen, 4–20 voor blok B, 4–20 voor blok C). Stelling 3 wordt omgekeerd gecodeerd (4→1, 3→2, 2→3, 1→4).
+
+**Het resultaat is een profiel met drie scores:**
+
+```
+Voorbeeld: Deelnemer X
+  Willen: ██████████████░░░░░░  14/20
+  Moeten: ████████░░░░░░░░░░░░   8/20
+  Kunnen: ████████████░░░░░░░░  12/20
+```
+
+**Vier profieltypes en hun consequenties voor de leergang:**
+
+| Profiel | Willen | Moeten | Kunnen | Leergangaanpak |
+|---|---|---|---|---|
+| **De Trekker** | Hoog | Laag/Midden | Midden/Hoog | Deelnemer is klaar, maar de omgeving niet. Leergang moet ook **ambassadeursvaardigheden** trainen: hoe neem je je team mee? Plus: terugkoppeling naar leidinggevende dat de omgeving moet meebewegen. |
+| **De Volger** | Midden | Hoog | Midden | Motivatie komt vooral van buiten. Leergang moet **eigen urgentie** activeren via casuïstiek en persoonlijke relevantie. Risico: zonder intrinsieke motivatie zakt het weg na de training. |
+| **De Leerder** | Hoog | Hoog | Laag | Wil én moet, maar kan het nog niet. Leergang is primair **vaardigheidsgericht**: veel oefenen, simulaties, hands-on. De makkelijkste groep om mee te werken. |
+| **De Scepticus** | Laag | Laag | Ongeacht | Ziet de urgentie niet en ervaart geen druk om te veranderen. Leergang begint met **bewustwordingsgesprek** (ADKAR: Awareness) vóór de inhoud start. Zonder dat gesprek is elke training verspilde moeite. |
+
+**Het kritische inzicht: de omgevingsscore (Moeten) gaat niet over de deelnemer.**
+
+Een lage Moeten-score is geen falen van de deelnemer — het is een signaal over de organisatie. Als vijf deelnemers uit hetzelfde team allemaal laag scoren op Moeten, is het probleem niet vijf individuen maar één leidinggevende of één organisatiecultuur. Die informatie gaat terug naar de opdrachtgever, niet naar de deelnemer.
+
+---
+
+#### Afname en randvoorwaarden
+
+- **Wanneer:** minimaal twee weken vóór aanvang van de leergang
+- **Hoe:** digitaal, anoniem, maximaal vijf minuten. Geen namen gekoppeld aan individuele antwoorden in de rapportage aan de opdrachtgever
+- **Rapportage aan opdrachtgever:** geaggregeerd per team/afdeling, met profielverdeling en concrete aanbevelingen
+- **Rapportage aan trainer:** individuele profielen (geanonimiseerd als de deelnemer dat wil) om de leergang af te stemmen
+- **Herhaling:** dezelfde meting na afloop van de leergang en na zes maanden, om verandering zichtbaar te maken
+
+---
+
+### 2.3 Het verdiepende ADKAR-intakegesprek
+
+De snelmeting geeft een profiel, maar geen verhaal. Voor deelnemers bij wie de snelmeting opvallende patronen laat zien — een Scepticus-profiel, een Trekker in een niet-meebewegend team, of grote afstand tussen Willen en Kunnen — volgt een persoonlijk gesprek van tien à vijftien minuten. Dit gesprek is geen enquête maar een echte conversatie.
 
 De vragen zijn bewust in spreektaal gesteld. Ze zijn geschikt voor een gemeentesecretaris, een teammanager en een baliemedewerker — maar de gesprekken zullen heel verschillend verlopen, en dat is de bedoeling.
 
 ---
 
-### A — Awareness: Weet je waar het over gaat?
+#### A — Awareness: Weet je waar het over gaat?
 
 *Doel: toetsen of de deelnemer begrijpt dat digitale risico's en kansen relevant zijn voor zijn of haar eigen werk — niet voor "de IT-afdeling".*
 
@@ -80,7 +198,7 @@ De vragen zijn bewust in spreektaal gesteld. Ze zijn geschikt voor een gemeentes
 
 ---
 
-### D — Desire: Wil je er iets mee?
+#### D — Desire: Wil je er iets mee?
 
 *Doel: achterhalen of de deelnemer intrinsiek gemotiveerd is, of alleen aanwezig omdat het moet. Geen oordeel — maar de training werkt alleen als er iets van eigenaarschap is.*
 
@@ -98,7 +216,7 @@ De vragen zijn bewust in spreektaal gesteld. Ze zijn geschikt voor een gemeentes
 
 ---
 
-### K — Knowledge: Wat weet je al?
+#### K — Knowledge: Wat weet je al?
 
 *Doel: het bestaande kennisniveau in kaart brengen zonder te toetsen of te beschamen. Niemand hoeft hier te slagen of te zakken.*
 
@@ -116,7 +234,7 @@ De vragen zijn bewust in spreektaal gesteld. Ze zijn geschikt voor een gemeentes
 
 ---
 
-### A — Ability: Kun je het ook?
+#### A — Ability: Kun je het ook?
 
 *Doel: het verschil blootleggen tussen weten dat iets moet en het daadwerkelijk kunnen uitvoeren. Kennis en vaardigheid zijn niet hetzelfde.*
 
@@ -134,7 +252,7 @@ De vragen zijn bewust in spreektaal gesteld. Ze zijn geschikt voor een gemeentes
 
 ---
 
-### R — Reinforcement: Blijft het hangen?
+#### R — Reinforcement: Blijft het hangen?
 
 *Doel: begrijpen wat de deelnemer nodig heeft om nieuw gedrag vol te houden, en of de werkomgeving dat ondersteunt.*
 

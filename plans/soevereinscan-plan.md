@@ -32,8 +32,8 @@ Gebruiker voert SaaS URL in (bijv. "app.leverancier.nl")
          │
          ▼
 ┌─────────────────────┐
-│  4. Traceroute       │ → Netwerkpad naar elke unieke IP
-│     (per IP)         │   elke hop: IP → ASN → land
+│  4. RIPE Atlas       │ → Netwerkpad naar elke unieke IP (passief)
+│     (Europees/NL)    │   elke hop: IP → ASN → land, geen eigen packets
 └────────┬────────────┘
          │
          ▼
@@ -61,7 +61,7 @@ Gebruiker voert SaaS URL in (bijv. "app.leverancier.nl")
 | **MaxMind GeoLite2 ASN** | IP → ASN nummer + organisatienaam | Gratis (account vereist) | Lokale MMDB database, wekelijks update |
 | **MaxMind GeoLite2 Country** | IP → land + continent | Gratis (account vereist) | Lokale MMDB database |
 | **PeeringDB** | ASN → organisatie, land, type, peering info | Gratis API (rate limited) | REST API `https://www.peeringdb.com/api/net?asn=X` |
-| **Traceroute** | Netwerkpad met alle tussenliggende hops | Gratis | `traceroute`/`mtr` op server |
+| **RIPE Atlas** (Amsterdam/NL) | Traceroute via probes wereldwijd, passief (geen packets vanaf eigen IP) | Gratis, 100 metingen/dag | REST API `https://atlas.ripe.net/api/v2/` |
 | **RDAP/Whois** | Domeinregistratie, eigenaar, land | Gratis | RDAP API (IANA) |
 
 ## Jurisdictie-classificatie
@@ -89,10 +89,10 @@ Onbekend/handmatig:
 - **Python 3.12 + FastAPI** — backend (past bij pylookyloo, maxminddb, PeeringDB)
 - **Lookyloo** — self-hosted Docker container (apart van de app)
 - **maxminddb** — Python library voor GeoLite2 MMDB lookups
-- **scapy of subprocess(mtr)** — traceroute uitvoering
+- **RIPE Atlas API** — passieve traceroute (Europees, RIPE NCC Amsterdam)
 - **PostgreSQL 16** — resultaten opslaan (bestaande sovereign-stack instance)
 - **Pure HTML/CSS/JS** — frontend (consistent met bestaand project)
-- **Redis** — cache voor PeeringDB lookups (bestaande sovereign-stack instance)
+- **Redis** — cache voor PeeringDB (7 dagen) + scan deduplicatie (48 uur)
 
 ## Bestandsstructuur
 
@@ -115,7 +115,7 @@ soevereinscan/
 │   │   ├── lookyloo_client.py   # pylookyloo wrapper
 │   │   ├── geoip.py             # MaxMind GeoLite2 lookups (ASN + Country)
 │   │   ├── peeringdb.py         # PeeringDB API client
-│   │   ├── traceroute.py        # Traceroute uitvoering + parsing
+│   │   ├── ripe_atlas.py        # RIPE Atlas API (passieve traceroute)
 │   │   ├── rdap.py              # RDAP/Whois domein lookup
 │   │   ├── classifier.py        # Jurisdictie-classificatie logica
 │   │   └── reporter.py          # Rapport generatie
@@ -205,11 +205,12 @@ CREATE TABLE traceroute_results (
 - Parse capture tree: extract alle unieke domeinen + IPs
 - Classificeer first-party vs third-party resources
 
-### Stap 4: Traceroute
-- `services/traceroute.py` — `mtr --json` of `traceroute` wrapper
-- Per uniek IP: traceroute uitvoeren
-- Elke hop: IP → ASN → land via GeoLite2
-- Let op: traceroute vereist `CAP_NET_RAW` capability in Docker
+### Stap 4: RIPE Atlas traceroute (passief)
+- `services/ripe_atlas.py` — RIPE Atlas API v2 client
+- Per uniek IP: traceroute meting aanvragen via RIPE Atlas probes
+- Resultaat ophalen (async, kan 30-60s duren)
+- Elke hop: IP → ASN → land via lokale GeoLite2
+- Geen `CAP_NET_RAW` nodig — geen packets vanaf eigen server
 
 ### Stap 5: Jurisdictie-classifier
 - `services/classifier.py` — combineer alle data:
@@ -245,9 +246,7 @@ security_opt:
   - no-new-privileges:true
 cap_drop:
   - ALL
-cap_add:
-  - NET_RAW  # nodig voor traceroute
-read_only: true
+read_only: true  # geen CAP_NET_RAW nodig dankzij RIPE Atlas
 tmpfs:
   - /tmp:noexec,nosuid,nodev,size=200M
 mem_limit: 1g
@@ -257,6 +256,39 @@ pids_limit: 200
 # Gebruikt eigen docker-compose config van Lookyloo project
 # Alleen toegankelijk via intern Docker network (niet publiek)
 ```
+
+## Anti-detectie & rate limiting
+
+### Scan deduplicatie (48 uur)
+- Zelfde URL binnen 48 uur → cached resultaat teruggeven, geen nieuwe scan
+- Redis key: `scan:{sha256(url)}` met 48-uur TTL
+- Gebruiker ziet melding: "Deze URL is recent gescand, resultaat van [datum]"
+
+### Lookyloo anti-botdetectie
+- Maximaal **1 capture per minuut** (queue met delay)
+- Random **User-Agent rotation** uit pool van gangbare browsers
+- Random **viewport sizes** (desktop/tablet/mobiel)
+- **Accept-Language: nl-NL,nl;q=0.9** — lijkt op Nederlands browserverkeer
+- Geen parallelle captures — sequentieel verwerken
+- Optioneel: random delay 2-8 seconden tussen navigatieacties
+
+### PeeringDB caching (7 dagen)
+- Redis cache per ASN: `peeringdb:asn:{number}` met 7-dagen TTL
+- ASN-informatie verandert zelden, 7 dagen is conservatief
+- Reduceert API calls met ~95% bij herhaalde scans
+- Fallback: als cache miss en API down → markeer als "enrichment pending"
+
+### RIPE Atlas (passief, geen eigen IP-risico)
+- Traceroute wordt uitgevoerd door RIPE Atlas probes, niet door onze server
+- Geen ICMP/UDP packets vanaf ons IP → geen blokkeerrisico
+- 100 gratis metingen per dag (voldoende voor ~10-15 scans/dag met elk ~7 unieke IPs)
+- RIPE NCC is Europese stichting, gevestigd in Amsterdam — volledig EU-jurisdictie
+- Resultaten gecached: zelfde IP binnen 48 uur → geen nieuwe meting
+
+### MaxMind GeoLite2 (volledig lokaal)
+- Database draait lokaal in container — geen externe API calls
+- Geen detectierisico, onbeperkte lookups
+- Wekelijkse update via cron/script
 
 ## Docker-compose overzicht
 
@@ -302,6 +334,9 @@ GEOLITE2_COUNTRY_PATH=/data/GeoLite2-Country.mmdb
 # PeeringDB (optioneel, voor hogere rate limits)
 PEERINGDB_API_KEY=optional-key
 
+# RIPE Atlas (Europees, RIPE NCC Amsterdam)
+RIPE_ATLAS_API_KEY=your-key-here  # gratis account op atlas.ripe.net
+
 # Encryptie (voor PII in scans)
 ENCRYPTION_KEY=64-hex-chars
 ```
@@ -327,7 +362,7 @@ ENCRYPTION_KEY=64-hex-chars
 - `app/services/lookyloo_client.py` — Lookyloo integratie
 - `app/services/geoip.py` — MaxMind lookups
 - `app/services/peeringdb.py` — PeeringDB API
-- `app/services/traceroute.py` — traceroute uitvoering
+- `app/services/ripe_atlas.py` — RIPE Atlas passieve traceroute
 - `data/us_parent_companies.json` — handmatige provider mapping
 - `app/static/results.html` — resultaat visualisaties
 

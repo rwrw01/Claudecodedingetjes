@@ -1,0 +1,80 @@
+name: Sync leergangen naar issue template
+
+on:
+  push:
+    paths:
+      - 'leergangen.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python opzetten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installeer PyYAML
+        run: pip install pyyaml
+
+      - name: Sync leergangen naar issue template
+        run: |
+          python3 << 'PYEOF'
+          import yaml, re
+          from pathlib import Path
+
+          config = yaml.safe_load(Path('leergangen.yml').read_text())
+
+          # Bouw opties lijsten
+          opties = []
+          domeinen_opties = []
+          for domein in config['domeinen']:
+              domeinen_opties.append(domein['naam'])
+              for lg in domein['leergangen']:
+                  opties.append(f"{domein['naam']} > {lg['naam']}")
+
+          # Update volwassen-educatie.yml met markers
+          template_path = Path('.github/ISSUE_TEMPLATE/volwassen-educatie.yml')
+          content = template_path.read_text()
+
+          lines = content.split('\n')
+          new_lines = []
+          in_domein_options = False
+          in_leergang_options = False
+          for line in lines:
+              if '# DOMEIN_OPTIONS_START' in line:
+                  in_domein_options = True
+                  new_lines.append(line)
+                  for d in domeinen_opties:
+                      new_lines.append(f'        - {d}')
+                  continue
+              if '# DOMEIN_OPTIONS_END' in line:
+                  in_domein_options = False
+              if '# LEERGANG_OPTIONS_START' in line:
+                  in_leergang_options = True
+                  new_lines.append(line)
+                  for opt in opties:
+                      new_lines.append(f'        - {opt}')
+                  continue
+              if '# LEERGANG_OPTIONS_END' in line:
+                  in_leergang_options = False
+              if not in_domein_options and not in_leergang_options:
+                  new_lines.append(line)
+
+          template_path.write_text('\n'.join(new_lines))
+          print(f"Gesynchroniseerd: {len(domeinen_opties)} domeinen, {len(opties)} leergangen")
+          PYEOF
+
+      - name: Commit als gewijzigd
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .github/ISSUE_TEMPLATE/volwassen-educatie.yml
+          git diff --cached --quiet || git commit -m "sync: leergangen.yml → issue template dropdowns"
+          git push

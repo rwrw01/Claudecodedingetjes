@@ -30,8 +30,8 @@ PROVIDERS = {
     "mistral": {
         "name": "Mistral",
         "api_url": "https://api.mistral.ai/v1/chat/completions",
-        "model": "magistral-medium-2509",
-        "max_tokens": 12000,
+        "model": "mistral-large-latest",
+        "max_tokens": 16000,
         "temperature": 0.2,
         "env_key": "MISTRAL_API_KEY",
     },

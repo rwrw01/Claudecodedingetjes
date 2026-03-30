@@ -335,7 +335,7 @@ def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_co
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=300) as resp:
+        with urllib.request.urlopen(req, timeout=600) as resp:
             result = json.loads(resp.read().decode('utf-8'))
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
@@ -415,7 +415,7 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=300) as resp:
+        with urllib.request.urlopen(req, timeout=600) as resp:
             result = json.loads(resp.read().decode('utf-8'))
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'

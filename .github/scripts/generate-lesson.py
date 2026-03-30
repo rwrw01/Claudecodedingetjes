@@ -821,8 +821,10 @@ def main():
         'mbo': 'bovenbouw',
         'volwasseneneducatie': 'volwasseneneducatie',
     }
-    # Leergang-issues hebben geen niveau-veld → gebruik volwasseneneducatie als domein+leergang gezet is
-    if domein and leergang_naam and not niveau:
+    # Leergang-issues hebben geen niveau-veld → gebruik volwasseneneducatie prompt
+    _domein_check = parsed.get('domein', '').strip()
+    _leergang_check = parsed.get('leergang', '').strip()
+    if _domein_check and _leergang_check and not niveau:
         niveau_slug = 'volwasseneneducatie'
     else:
         niveau_slug = niveau_map.get(niveau.lower(), 'bovenbouw')

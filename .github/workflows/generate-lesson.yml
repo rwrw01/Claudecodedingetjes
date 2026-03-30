@@ -42,6 +42,16 @@ jobs:
         run: |
           pip install Pillow pyyaml
 
+      - name: Node.js opzetten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Playwright installeren
+        run: |
+          npm ci
+          npx playwright install chromium --with-deps
+
       - name: Bepaal te verwerken issues
         id: issues
         env:
@@ -147,6 +157,14 @@ jobs:
                   print(meta['generated_path'])
                   break
           ")
+
+              # Valideer les kwaliteit met Playwright
+              if [ -n "$LESSON_PATH" ]; then
+                LESSON_FILE_ABS="$(pwd)/$LESSON_PATH"
+                echo "  Valideer les: $LESSON_FILE_ABS"
+                LESSON_FILE="$LESSON_FILE_ABS" npx playwright test .github/scripts/validate-lesson.spec.js \
+                  --config=.github/scripts/playwright.config.js || echo "  WAARSCHUWING: Playwright validatie heeft problemen gevonden — les wordt toch opgeslagen"
+              fi
 
               # Commit en push (met merge strategie als rebase faalt)
               git add -A

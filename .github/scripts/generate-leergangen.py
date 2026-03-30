@@ -46,9 +46,9 @@ def genereer_domein_index(domein: dict, base_path: Path):
     {_style()}
 </head>
 <body>
-    <header style="background:linear-gradient(135deg,#1e293b,#334155);color:white;padding:2.5rem 1rem;text-align:center;">
-        <h1>{domein['naam']}</h1>
-        <p style="opacity:.8">Leergangen</p>
+    <header style="background:#283593;color:white;padding:2rem 1rem;text-align:center;">
+        <h1 style="font-size:1.5rem;font-weight:500">{domein['naam']}</h1>
+        <p style="opacity:.75;font-size:.9rem;margin-top:.2rem">Leergangen</p>
     </header>
     <nav class="breadcrumb">
         <a href="{HOME_URL}">Home</a> &rsaquo;
@@ -99,9 +99,9 @@ def genereer_leergang_index(domein: dict, leergang: dict, base_path: Path):
     {_style()}
 </head>
 <body>
-    <header style="background:linear-gradient(135deg,#3730a3,#6366f1);color:white;padding:2.5rem 1rem;text-align:center;">
-        <h1>{leergang['naam']}</h1>
-        <p style="opacity:.8">{leergang.get('omschrijving', '')}</p>
+    <header style="background:#3949ab;color:white;padding:2rem 1rem;text-align:center;">
+        <h1 style="font-size:1.5rem;font-weight:500">{leergang['naam']}</h1>
+        <p style="opacity:.75;font-size:.9rem;margin-top:.2rem">{leergang.get('omschrijving', '')}</p>
     </header>
     <nav class="breadcrumb">
         <a href="{HOME_URL}">Home</a> &rsaquo;
@@ -149,9 +149,9 @@ def genereer_hoofdindex(config: dict, base_path: Path):
     {_style()}
 </head>
 <body>
-    <header style="background:linear-gradient(135deg,#1e293b,#334155);color:white;padding:3rem 1rem;text-align:center;">
-        <h1>Leergangen</h1>
-        <p style="opacity:.8">Interactieve lessen voor volwasseneneducatie</p>
+    <header style="background:#1565c0;color:white;padding:2.5rem 1rem;text-align:center;">
+        <h1 style="font-size:1.75rem;font-weight:500">Leergangen</h1>
+        <p style="opacity:.75;font-size:.9rem;margin-top:.25rem">Interactieve lessen voor volwasseneneducatie</p>
     </header>
     <nav class="breadcrumb">
         <a href="{HOME_URL}">Home</a> &rsaquo; Leergangen
@@ -219,17 +219,17 @@ def genereer_search_index(config: dict, base_path: Path):
 def _style() -> str:
     return """<style>
         *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Segoe UI',system-ui,sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6}
-        .container{max-width:800px;margin:0 auto;padding:2rem 1rem}
-        .card{display:block;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem;text-decoration:none;color:#1e293b;transition:transform .15s,box-shadow .15s}
-        .card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.1)}
-        .card h3{margin-bottom:.25rem}
-        .muted{color:#64748b;font-size:.9rem}
-        .breadcrumb{max-width:800px;margin:.75rem auto;padding:0 1rem;font-size:.85rem;color:#64748b}
-        .breadcrumb a{color:#2563eb;text-decoration:none}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:#fafafa;color:#212121;line-height:1.5}
+        .container{max-width:680px;margin:0 auto;padding:2rem 1rem}
+        .card{display:block;background:#fff;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);padding:1rem 1.25rem;margin-bottom:.75rem;text-decoration:none;color:#212121;transition:box-shadow .2s}
+        .card:hover{box-shadow:0 3px 6px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.08)}
+        .card h3{font-size:1rem;font-weight:600;margin-bottom:.2rem}
+        .muted{color:#757575;font-size:.85rem}
+        .breadcrumb{max-width:680px;margin:.6rem auto;padding:0 1rem;font-size:.8rem;color:#757575}
+        .breadcrumb a{color:#1565c0;text-decoration:none}
         .search-box{margin-bottom:1.5rem}
-        .search-box input{width:100%;padding:.75rem 1rem;border:1px solid #e2e8f0;border-radius:8px;font-size:1rem;outline:none}
-        .search-box input:focus{border-color:#2563eb;box-shadow:0 0 0 3px #dbeafe}
+        .search-box input{width:100%;padding:.65rem 1rem;border:1px solid #e0e0e0;border-radius:4px;font-size:.95rem;outline:none;background:#fff}
+        .search-box input:focus{border-color:#1565c0;box-shadow:0 0 0 2px #bbdefb}
     </style>"""
 
 

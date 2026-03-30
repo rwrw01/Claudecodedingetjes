@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leergangen — Volwasseneneducatie</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:#fafafa;color:#212121;line-height:1.5}
+        .container{max-width:680px;margin:0 auto;padding:2rem 1rem}
+        .card{display:block;background:#fff;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08);padding:1rem 1.25rem;margin-bottom:.75rem;text-decoration:none;color:#212121;transition:box-shadow .2s}
+        .card:hover{box-shadow:0 3px 6px rgba(0,0,0,.12),0 2px 4px rgba(0,0,0,.08)}
+        .card h3{font-size:1rem;font-weight:600;margin-bottom:.2rem}
+        .muted{color:#757575;font-size:.85rem}
+        .breadcrumb{max-width:680px;margin:.6rem auto;padding:0 1rem;font-size:.8rem;color:#757575}
+        .breadcrumb a{color:#1565c0;text-decoration:none}
+        .search-box{margin-bottom:1.5rem}
+        .search-box input{width:100%;padding:.65rem 1rem;border:1px solid #e0e0e0;border-radius:4px;font-size:.95rem;outline:none;background:#fff}
+        .search-box input:focus{border-color:#1565c0;box-shadow:0 0 0 2px #bbdefb}
+    </style>
+</head>
+<body>
+    <header style="background:#1565c0;color:white;padding:2.5rem 1rem;text-align:center;">
+        <h1 style="font-size:1.75rem;font-weight:500">Leergangen</h1>
+        <p style="opacity:.75;font-size:.9rem;margin-top:.25rem">Interactieve lessen voor volwasseneneducatie</p>
+    </header>
+    <nav class="breadcrumb">
+        <a href="https://rwrw01.github.io/Claudecodedingetjes">Home</a> &rsaquo; Leergangen
+    </nav>
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="zoek" placeholder="Zoek door alle leergangen..." oninput="zoekGlobaal(this.value)">
+        </div>
+        <div id="resultaten" style="display:none"></div>
+        <div id="domeinen">
+        <a class="card" href="ict/">
+            <h3>ICT</h3>
+            <p class="muted">2 leergangen</p>
+        </a>
+        <a class="card" href="cyber/">
+            <h3>Cyber</h3>
+            <p class="muted">2 leergangen</p>
+        </a>
+        <a class="card" href="veranderkunde/">
+            <h3>Veranderkunde</h3>
+            <p class="muted">1 leergang</p>
+        </a></div>
+    </div>
+    <footer style="text-align:center;padding:2rem 1rem;color:#64748b;font-size:.85rem;border-top:1px solid #e2e8f0;margin-top:2rem;">
+        Gemaakt door Ralph Wagter met <a href="https://claude.ai" style="color:#2563eb;">Claude Code</a>.
+        Vrij hergebruik onder <a href="https://eupl.eu/" style="color:#2563eb;">EUPL-1.2</a>.
+        <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#2563eb;">GitHub</a>
+    </footer>
+    <script>
+    let searchIndex = null;
+    async function laadIndex() {
+        try {
+            const r = await fetch('search-index.json');
+            searchIndex = await r.json();
+        } catch(e) { searchIndex = []; }
+    }
+    laadIndex();
+    function zoekGlobaal(q) {
+        if (!q) { document.getElementById('domeinen').style.display=''; document.getElementById('resultaten').style.display='none'; return; }
+        document.getElementById('domeinen').style.display='none';
+        const res = document.getElementById('resultaten');
+        res.style.display='';
+        if (!searchIndex) { res.innerHTML='<p>Zoekindex laden...</p>'; return; }
+        const hits = searchIndex.filter(l => (l.titel+' '+l.leergang+' '+l.domein+' '+(l.omschrijving||'')).toLowerCase().includes(q.toLowerCase()));
+        res.innerHTML = hits.length
+            ? hits.map(h => `<a class="card" href="${HOME_URL}/${h.pad}"><h3>${h.titel}</h3><p class="muted">${h.domein} &rsaquo; ${h.leergang}</p></a>`).join('')
+            : '<p class="muted">Geen resultaten gevonden.</p>';
+    }
+    </script>
+</body>
+</html>

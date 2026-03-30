@@ -340,6 +340,9 @@ def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_co
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
         print(f"Mistral API fout ({e.code}): {error_body}")
         sys.exit(1)
+    except urllib.error.URLError as e:
+        print(f"Mistral netwerkfout: {e.reason}")
+        sys.exit(1)
 
     # Mistral reasoning models retourneren soms een lijst van chunks
     msg = result["choices"][0]["message"]["content"]
@@ -348,13 +351,20 @@ def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_co
     else:
         response_text = msg
 
+    if not response_text or not response_text.strip():
+        print("FOUT: Mistral API gaf lege response terug.")
+        sys.exit(1)
+
     usage = result.get("usage", {})
-    usage_dict = {
-        "input_tokens": usage.get("prompt_tokens", 0),
-        "output_tokens": usage.get("completion_tokens", 0),
-        "estimated_cost_usd": None,
+    # Bouw tijdelijk result-achtig object voor log_usage compatibiliteit
+    usage_result = {
+        "usage": {
+            "input_tokens": usage.get("prompt_tokens", 0),
+            "output_tokens": usage.get("completion_tokens", 0),
+            "cache_read_input_tokens": 0,
+        }
     }
-    return response_text, usage_dict
+    return response_text, log_usage(usage_result, "mistral", model)
 
 
 def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_context: str, model: str = "") -> tuple[str, dict]:
@@ -426,8 +436,6 @@ PRICING = {
     "claude-sonnet": {"input": 3.00, "output": 15.00},   # Sonnet 4.x
     "claude-opus": {"input": 15.00, "output": 75.00},     # Opus 4.x
     "claude-haiku": {"input": 0.80, "output": 4.00},      # Haiku
-    "deepseek-chat": {"input": 0.28, "output": 0.42},      # DeepSeek V3.2 (cache miss)
-    "deepseek-reasoner": {"input": 0.28, "output": 0.42}, # DeepSeek V3.2 reasoner
 }
 
 
@@ -442,7 +450,7 @@ def log_usage(result: dict, provider: str, model: str) -> dict:
         output_tokens = usage.get('output_tokens', 0)
         cache_read = usage.get('cache_read_input_tokens', 0)
     else:
-        # OpenAI-compatibel (DeepSeek)
+        # OpenAI-compatibel (Mistral, etc.)
         input_tokens = usage.get('prompt_tokens', 0)
         output_tokens = usage.get('completion_tokens', 0)
         reasoning_tokens = usage.get('completion_tokens_details', {}).get('reasoning_tokens', 0)

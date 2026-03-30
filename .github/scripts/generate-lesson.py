@@ -930,6 +930,20 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     # Genereer index-pagina's op elk niveau
     generate_index_pages(issue_author)
 
+    # Genereer leergang-indexpagina's als dit een leergang-les is
+    if domein and leergang_naam:
+        import subprocess
+        leergangen_gen = script_dir / 'generate-leergangen.py'
+        if leergangen_gen.exists():
+            result = subprocess.run(
+                ['python3', str(leergangen_gen)],
+                capture_output=True, text=True
+            )
+            if result.returncode != 0:
+                print(f"  WAARSCHUWING: leergang-generator fout: {result.stderr[:200]}")
+            else:
+                print(result.stdout.strip())
+
     # Output voor GitHub Actions
     github_output = os.environ.get('GITHUB_OUTPUT')
     if github_output:

@@ -31,7 +31,7 @@ PROVIDERS = {
         "name": "Mistral",
         "api_url": "https://api.mistral.ai/v1/chat/completions",
         "model": "mistral-large-latest",
-        "max_tokens": 16000,
+        "max_tokens": 20000,
         "temperature": 0.2,
         "env_key": "MISTRAL_API_KEY",
     },
@@ -511,16 +511,20 @@ def call_ai_api(provider: str, api_key: str, images: list[dict], prompt_text: st
 
 def extract_html(response: str) -> str:
     """Extraheer het HTML-bestand uit het API-antwoord."""
-    match = re.search(r'```html?\s*\n(.*?)```', response, re.DOTALL)
+    # Volledige code-fence (voorkeur)
+    match = re.search(r'```html?[^\n]*\n(.*?)```', response, re.DOTALL)
     if match:
         return match.group(1).strip()
 
-    match = re.search(r'(<!DOCTYPE html>.*</html>)', response, re.DOTALL | re.IGNORECASE)
+    # Afgekapte code-fence (geen sluitende ```) — extraheer vanaf DOCTYPE
+    match = re.search(r'```html?[^\n]*\n(<!DOCTYPE html>.*)', response, re.DOTALL | re.IGNORECASE)
     if match:
         return match.group(1).strip()
 
-    if '<html' in response.lower() and '</html>' in response.lower():
-        return response.strip()
+    # Geen fence: zoek op DOCTYPE
+    match = re.search(r'(<!DOCTYPE html>.*)', response, re.DOTALL | re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
 
     print("WAARSCHUWING: Kon geen HTML extraheren uit het antwoord.")
     return response
@@ -868,6 +872,11 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     # Extraheer HTML
     html_content = extract_html(response)
     print(f"  HTML geëxtraheerd ({len(html_content)} karakters)")
+
+    # Volledigheidscheck: afgekapte output wordt niet opgeslagen
+    if '</html>' not in html_content.lower():
+        print("FOUT: Les-HTML is afgekapt (geen </html> gevonden). Verhoog max_tokens of vereenvoudig de les.")
+        sys.exit(1)
 
     # Leergang-velden (voor volwasseneneducatie)
     domein = parsed.get('domein', '').strip()

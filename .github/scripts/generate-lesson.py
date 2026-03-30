@@ -26,18 +26,28 @@ from pathlib import Path
 
 # Provider configuratie
 PROVIDERS = {
-    "deepseek": {
-        "name": "DeepSeek",
-        "api_url": "https://api.deepseek.com/chat/completions",
-        "model": "deepseek-reasoner",
-        "env_key": "DEEPSEEK_API_KEY",
+    "mistral": {
+        "name": "Mistral",
+        "api_url": "https://api.mistral.ai/v1/chat/completions",
+        "model": "magistral-medium-2509",
+        "max_tokens": 12000,
+        "temperature": 0.2,
+        "env_key": "MISTRAL_API_KEY",
+    },
+    "pixtral": {
+        "name": "Pixtral",
+        "api_url": "https://api.mistral.ai/v1/chat/completions",
+        "model": "pixtral-large-2411",
+        "max_tokens": 12000,
+        "temperature": 0.3,
+        "env_key": "MISTRAL_API_KEY",
     },
     "claude": {
         "name": "Claude",
         "api_url": "https://api.anthropic.com/v1/messages",
-        "model": "auto",  # Wordt automatisch bepaald via /v1/models
-        "model_preference": ["claude-sonnet"],  # Voorkeur: nieuwste Sonnet
-        "max_tokens": 16000,
+        "model": "auto",
+        "model_preference": ["claude-sonnet"],
+        "max_tokens": 12000,
         "env_key": "ANTHROPIC_API_KEY",
     },
 }
@@ -52,12 +62,16 @@ def get_env(name: str, required: bool = True) -> str:
     return value
 
 
-def get_provider() -> str:
-    """Bepaal welke AI-provider te gebruiken. Standaard: claude."""
-    provider = os.environ.get("AI_PROVIDER", "claude").strip().lower()
+def get_provider(has_photos: bool = False) -> str:
+    """Bepaal provider. Standaard: mistral. Met foto's → pixtral tenzij expliciet anders."""
+    provider = os.environ.get("AI_PROVIDER", "mistral").strip().lower()
     if provider not in PROVIDERS:
-        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik claude.")
-        provider = "claude"
+        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik mistral.")
+        provider = "mistral"
+    # Auto-upgrade naar pixtral als foto's aanwezig en provider=mistral
+    if provider == "mistral" and has_photos:
+        print("  Foto's aanwezig + provider=mistral → automatisch pixtral geselecteerd")
+        provider = "pixtral"
     return provider
 
 
@@ -126,6 +140,8 @@ def parse_issue_body(body: str) -> dict:
         "niveau": "",
         "fotos": [],
         "extra": "",
+        "domein": "",
+        "leergang": "",
     }
 
     current_field = None
@@ -151,6 +167,10 @@ def parse_issue_body(body: str) -> dict:
                 current_field = 'fotos_raw'
             elif 'extra' in header or 'instructie' in header:
                 current_field = 'extra'
+            elif 'domein' in header:
+                current_field = 'domein'
+            elif 'leergang' in header:
+                current_field = 'leergang'
             else:
                 current_field = None
             current_value_lines = []
@@ -274,69 +294,33 @@ def download_image(url: str) -> tuple[bytes, str]:
     return data, media_type
 
 
-def ocr_images(images: list[dict]) -> str:
-    """Extraheer tekst uit afbeeldingen met Tesseract OCR. Retourneert alle tekst samengevoegd."""
-    import subprocess
-    import tempfile
+def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_context: str, model: str = "") -> tuple[str, dict]:
+    """Roep de Mistral API aan (OpenAI-compatibel). Ondersteunt vision via pixtral."""
+    # Kies config op basis van aanwezigheid foto's
+    config = PROVIDERS["pixtral"] if images else PROVIDERS["mistral"]
+    model = model or config["model"]
 
-    all_text = []
-    for i, img in enumerate(images):
-        img_data = base64.b64decode(img['data_b64'])
-
-        with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as f:
-            f.write(img_data)
-            tmp_path = f.name
-
-        try:
-            # Tesseract met Nederlandse + Engelse taalondersteuning
-            result = subprocess.run(
-                ['tesseract', tmp_path, 'stdout', '-l', 'nld+eng'],
-                capture_output=True, text=True, timeout=30,
-            )
-            text = result.stdout.strip()
-            if text:
-                all_text.append(f"--- Foto {i+1} ---\n{text}")
-                print(f"  OCR foto {i+1}: {len(text)} tekens geëxtraheerd")
-            else:
-                print(f"  OCR foto {i+1}: geen tekst gevonden")
-        except Exception as e:
-            print(f"  OCR foto {i+1} fout: {e}")
-        finally:
-            os.unlink(tmp_path)
-
-    return '\n\n'.join(all_text)
-
-
-def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_context: str) -> tuple[str, dict]:
-    """Roep de DeepSeek API aan (OpenAI-compatibel format). Retourneert (tekst, usage).
-
-    DeepSeek ondersteunt geen afbeeldingen. Tekst wordt via Tesseract OCR geëxtraheerd.
-    """
-    config = PROVIDERS["deepseek"]
-
+    # Bouw user message content op
     if images:
-        print(f"  Tesseract OCR op {len(images)} foto('s)...")
-        ocr_text = ocr_images(images)
-        if ocr_text:
-            user_context += f"\n\n## Tekst geëxtraheerd uit de foto's (via OCR)\n\n{ocr_text}\n"
-            print(f"  Totaal {len(ocr_text)} tekens uit OCR toegevoegd aan context.")
-        else:
-            print(f"  WAARSCHUWING: Geen tekst uit foto's geëxtraheerd.")
-
-    # deepseek-reasoner ondersteunt geen system messages — combineer in user message
-    combined_prompt = f"{prompt_text}\n\n---\n\n{user_context}"
+        content = []
+        for img in images:
+            content.append({
+                "type": "image_url",
+                "image_url": {"url": f"data:{img['media_type']};base64,{img['data_b64']}"}
+            })
+        content.append({"type": "text", "text": user_context})
+    else:
+        content = user_context
 
     payload = {
-        "model": config["model"],
+        "model": model,
+        "max_tokens": config["max_tokens"],
+        "temperature": config.get("temperature", 0.2),
         "messages": [
-            {
-                "role": "user",
-                "content": combined_prompt,
-            },
-        ],
+            {"role": "system", "content": prompt_text},
+            {"role": "user", "content": content}
+        ]
     }
-    if "max_tokens" in config:
-        payload["max_tokens"] = config["max_tokens"]
 
     data = json.dumps(payload).encode('utf-8')
     req = urllib.request.Request(
@@ -350,23 +334,27 @@ def call_deepseek_api(api_key: str, images: list[dict], prompt_text: str, user_c
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=600) as resp:
+        with urllib.request.urlopen(req, timeout=300) as resp:
             result = json.loads(resp.read().decode('utf-8'))
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
-        print(f"DeepSeek API fout ({e.code}): {error_body}")
+        print(f"Mistral API fout ({e.code}): {error_body}")
         sys.exit(1)
 
-    usage = log_usage(result, "deepseek", config["model"])
+    # Mistral reasoning models retourneren soms een lijst van chunks
+    msg = result["choices"][0]["message"]["content"]
+    if isinstance(msg, list):
+        response_text = " ".join(item["text"] for item in msg if item.get("type") == "text")
+    else:
+        response_text = msg
 
-    # OpenAI-compatibel antwoord format
-    choices = result.get('choices', [])
-    if choices:
-        return choices[0].get('message', {}).get('content', ''), usage
-
-    print("FOUT: Geen antwoord van DeepSeek API.")
-    print(f"  Response: {json.dumps(result, indent=2)[:500]}")
-    sys.exit(1)
+    usage = result.get("usage", {})
+    usage_dict = {
+        "input_tokens": usage.get("prompt_tokens", 0),
+        "output_tokens": usage.get("completion_tokens", 0),
+        "estimated_cost_usd": None,
+    }
+    return response_text, usage_dict
 
 
 def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_context: str, model: str = "") -> tuple[str, dict]:
@@ -410,6 +398,7 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
             'Content-Type': 'application/json',
             'x-api-key': api_key,
             'anthropic-version': '2023-06-01',
+            'anthropic-beta': 'output-128k-2025-02-19',
         },
         method='POST',
     )
@@ -501,9 +490,9 @@ def log_usage(result: dict, provider: str, model: str) -> dict:
 
 
 def call_ai_api(provider: str, api_key: str, images: list[dict], prompt_text: str, user_context: str, model: str = "") -> tuple[str, dict]:
-    """Roep de juiste AI API aan op basis van de provider. Retourneert (tekst, usage)."""
-    if provider == "deepseek":
-        return call_deepseek_api(api_key, images, prompt_text, user_context)
+    """Roep de juiste AI API aan. Retourneert (tekst, usage)."""
+    if provider in ("mistral", "pixtral"):
+        return call_mistral_api(api_key, images, prompt_text, user_context, model)
     elif provider == "claude":
         return call_claude_api(api_key, images, prompt_text, user_context, model)
     else:
@@ -740,20 +729,6 @@ def generate_index_pages(author: str):
 
 
 def main():
-    # Bepaal provider
-    provider = get_provider()
-    config = PROVIDERS[provider].copy()
-
-    # Voor Claude: bepaal automatisch het nieuwste model
-    if provider == "claude" and config["model"] == "auto":
-        api_key = get_env(config["env_key"])
-        config["model"] = resolve_claude_model(api_key)
-
-    print(f"AI Provider: {config['name']} ({config['model']})")
-
-    # Haal de API key op voor de gekozen provider
-    api_key = get_env(config["env_key"])
-
     # Overige environment variables
     github_token = get_env('GITHUB_TOKEN')
     repo = get_env('GITHUB_REPOSITORY')
@@ -786,63 +761,85 @@ def main():
     if not titel:
         print("FOUT: Geen titel gevonden in het issue.")
         sys.exit(1)
-    if not fotos:
-        print("FOUT: Geen foto's gevonden in het issue.")
-        print(f"  Volledige issue body:\n{issue_body}")
-        sys.exit(1)
+
+    if fotos:
+        print(f"  Foto's: {len(fotos)} gevonden")
+    else:
+        print("  Geen foto's — les wordt op basis van tekstbeschrijving gemaakt")
 
     print(f"  Titel: {titel}")
     print(f"  Vak: {vak}")
     print(f"  Niveau: {niveau}")
-    print(f"  Foto's: {len(fotos)} gevonden")
 
-    # Download foto's
-    print("Foto's downloaden...")
+    # Bepaal provider NA foto-detectie (pixtral auto-upgrade)
+    provider = get_provider(has_photos=bool(fotos))
+    config = PROVIDERS[provider].copy()
+
+    # Voor Claude: bepaal automatisch het nieuwste model
+    if provider == "claude" and config["model"] == "auto":
+        api_key = get_env(config["env_key"])
+        config["model"] = resolve_claude_model(api_key)
+
+    print(f"AI Provider: {config['name']} ({config['model']})")
+
+    # Haal de API key op voor de gekozen provider
+    api_key = get_env(config["env_key"])
+
+    # Download foto's (alleen als aanwezig)
     images = []
-    for i, url in enumerate(fotos):
-        print(f"  [{i+1}/{len(fotos)}] {url[:80]}...")
-        img_data, media_type = download_image(url)
-        images.append({
-            "data_b64": base64.b64encode(img_data).decode('utf-8'),
-            "media_type": media_type,
-        })
-    print(f"  {len(images)} foto's gedownload.")
+    if fotos:
+        print(f"Foto's downloaden ({len(fotos)} stuks)...")
+        for i, url in enumerate(fotos):
+            print(f"  [{i+1}/{len(fotos)}] {url[:80]}...")
+            img_data, media_type = download_image(url)
+            images.append({
+                "data_b64": base64.b64encode(img_data).decode('utf-8'),
+                "media_type": media_type,
+            })
+        print(f"  {len(images)} foto's gedownload.")
+    else:
+        print("  Geen foto's te downloaden — tekstgebaseerde les")
 
-    # Lees de prompt template (provider-specifiek indien beschikbaar)
+    # Lees de prompt template — provider + niveau specifiek
     script_dir = Path(__file__).parent
-    provider_prompt_path = script_dir / f'lesson-prompt-{provider}.txt'
-    base_prompt_path = script_dir / 'lesson-prompt.txt'
 
-    if provider_prompt_path.exists():
-        prompt_text = provider_prompt_path.read_text(encoding='utf-8')
-        print(f"  Prompt: {provider_prompt_path.name} (provider-specifiek)")
+    # Normaliseer niveau naar slug
+    niveau_map = {
+        'onderbouw': 'onderbouw',
+        'onderbouw (klas 1-3)': 'onderbouw',
+        'havo bovenbouw': 'bovenbouw',
+        'vwo bovenbouw': 'bovenbouw',
+        'mbo': 'bovenbouw',
+        'volwasseneneducatie': 'volwasseneneducatie',
+    }
+    niveau_slug = niveau_map.get(niveau.lower(), 'bovenbouw')
+
+    # Zoek prompt: 1) provider+niveau, 2) provider, 3) generiek
+    candidates = [
+        script_dir / f'lesson-prompt-{provider}-{niveau_slug}.txt',
+        script_dir / f'lesson-prompt-{provider}.txt',
+        script_dir / 'lesson-prompt.txt',
+    ]
+    prompt_path = next((p for p in candidates if p.exists()), candidates[-1])
+    prompt_text = prompt_path.read_text(encoding='utf-8')
+    print(f"  Prompt: {prompt_path.name}")
+
+    # Bouw gebruikerscontext op
+    has_photos = bool(images)
+    if has_photos:
+        photo_instruction = f"Analyseer de {len(images)} bijgevoegde foto('s) en maak er een complete interactieve les van."
     else:
-        prompt_text = base_prompt_path.read_text(encoding='utf-8')
-        print(f"  Prompt: {base_prompt_path.name} (standaard)")
+        photo_instruction = "Er zijn geen foto's bijgevoegd. Gebruik je eigen vakkennis en de onderstaande beschrijving als basis voor de les."
 
-    # Bouw de gebruikerscontext op
-    if provider == "deepseek":
-        # DeepSeek: tekst uit foto's wordt via Tesseract OCR toegevoegd door call_deepseek_api
-        user_context = f"""Maak een interactieve les met de volgende gegevens:
+    user_context = f"""Maak een interactieve les met de volgende gegevens:
 
 - Titel: {titel}
 - Vak: {vak}
 - Niveau: {niveau}
 - Auteur (GitHub): {issue_author}
+{f'- Weergavenaam: {friendly_name}' if friendly_name else ''}
 
-Hieronder staat tekst die via OCR uit de foto's van het lesmateriaal is gehaald.
-Gebruik deze tekst als basis voor de les. Maak EIGEN voorbeelden, kopieer niet letterlijk.
-Vul aan met je eigen kennis waar de OCR-tekst onvolledig is.
-"""
-    else:
-        user_context = f"""Maak een interactieve les met de volgende gegevens:
-
-- Titel: {titel}
-- Vak: {vak}
-- Niveau: {niveau}
-- Auteur (GitHub): {issue_author}
-
-Analyseer de bijgevoegde foto('s) en maak er een complete interactieve les van.
+{photo_instruction}
 Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
 """
     if extra:
@@ -857,11 +854,29 @@ Onthoud: maak EIGEN voorbeelden, kopieer niet letterlijk.
     html_content = extract_html(response)
     print(f"  HTML geëxtraheerd ({len(html_content)} karakters)")
 
-    # Bepaal de uitvoermap: user/vak/niveau/hoofdstuk/
-    vak_slug = slugify(vak) if vak else 'overig'
-    niveau_slug = slugify(niveau) if niveau else 'algemeen'
-    titel_slug = slugify(titel)
-    lesson_dir = Path(issue_author) / vak_slug / niveau_slug / titel_slug
+    # Leergang-velden (voor volwasseneneducatie)
+    domein = parsed.get('domein', '').strip()
+    leergang_naam = parsed.get('leergang', '').strip()
+
+    # Verwijder "Domein > " prefix als aanwezig (uit leergang-dropdown)
+    if ' > ' in leergang_naam:
+        domein_prefix, leergang_naam = leergang_naam.split(' > ', 1)
+        if not domein:
+            domein = domein_prefix.strip()
+
+    # Bepaal opslagpad
+    les_slug = re.sub(r'[^a-z0-9]+', '-', titel.lower()).strip('-')
+
+    if domein and leergang_naam:
+        domein_slug = re.sub(r'[^a-z0-9]+', '-', domein.lower()).strip('-')
+        lg_slug = re.sub(r'[^a-z0-9]+', '-', leergang_naam.lower()).strip('-')
+        output_dir = Path('leergangen') / domein_slug / lg_slug / les_slug
+    else:
+        vak_slug = re.sub(r'[^a-z0-9]+', '-', vak.lower()).strip('-')
+        niveau_dir_slug = re.sub(r'[^a-z0-9]+', '-', niveau.lower()).strip('-')
+        output_dir = Path(issue_author) / vak_slug / niveau_dir_slug / les_slug
+
+    lesson_dir = output_dir
 
     # Check voor bestaande les op hetzelfde pad (duplicate upload)
     base_dir = lesson_dir

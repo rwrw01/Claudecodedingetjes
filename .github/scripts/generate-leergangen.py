@@ -23,6 +23,13 @@ def lees_metadata(les_dir: Path) -> dict:
     return {}
 
 
+def _heeft_lessen(domein_slug: str, lg_slug: str, base_path: Path) -> bool:
+    lg_pad = base_path / domein_slug / lg_slug
+    if not lg_pad.exists():
+        return False
+    return any(d.is_dir() and (d / 'index.html').exists() for d in lg_pad.iterdir())
+
+
 def genereer_domein_index(domein: dict, base_path: Path):
     domein_slug = domein['slug']
     domein_pad = base_path / domein_slug
@@ -31,6 +38,8 @@ def genereer_domein_index(domein: dict, base_path: Path):
     kaarten = []
     for lg in domein['leergangen']:
         lg_slug = lg['slug']
+        if not _heeft_lessen(domein_slug, lg_slug, base_path):
+            continue
         kaarten.append(f"""
         <a class="card" href="{lg_slug}/">
             <h3>{lg['naam']}</h3>
@@ -69,6 +78,8 @@ def genereer_leergang_index(domein: dict, leergang: dict, base_path: Path):
     domein_slug = domein['slug']
     lg_slug = leergang['slug']
     lg_pad = base_path / domein_slug / lg_slug
+    if not _heeft_lessen(domein_slug, lg_slug, base_path):
+        return
     lg_pad.mkdir(parents=True, exist_ok=True)
 
     les_dirs = sorted(
@@ -88,7 +99,7 @@ def genereer_leergang_index(domein: dict, leergang: dict, base_path: Path):
         </a>""")
 
     if not kaarten:
-        kaarten = ['<p class="muted">Nog geen lessen in deze leergang.</p>']
+        kaarten = ['<p class="muted">Nog geen leergangen met lessen.</p>']
 
     html = f"""<!DOCTYPE html>
 <html lang="nl">
@@ -133,11 +144,13 @@ def genereer_leergang_index(domein: dict, leergang: dict, base_path: Path):
 def genereer_hoofdindex(config: dict, base_path: Path):
     domein_kaarten = []
     for domein in config['domeinen']:
-        n_leergangen = len(domein['leergangen'])
+        n = sum(1 for lg in domein['leergangen'] if _heeft_lessen(domein['slug'], lg['slug'], base_path))
+        if n == 0:
+            continue
         domein_kaarten.append(f"""
         <a class="card" href="{domein['slug']}/">
             <h3>{domein['naam']}</h3>
-            <p class="muted">{n_leergangen} leergang{'en' if n_leergangen != 1 else ''}</p>
+            <p class="muted">{n} leergang{'en' if n != 1 else ''}</p>
         </a>""")
 
     html = f"""<!DOCTYPE html>
@@ -249,9 +262,11 @@ def main():
     print("Genereer leergang-indexpagina's...")
     genereer_hoofdindex(config, base_path)
     for domein in config['domeinen']:
-        genereer_domein_index(domein, base_path)
-        for leergang in domein['leergangen']:
-            genereer_leergang_index(domein, leergang, base_path)
+        heeft_content = any(_heeft_lessen(domein['slug'], lg['slug'], base_path) for lg in domein['leergangen'])
+        if heeft_content:
+            genereer_domein_index(domein, base_path)
+            for leergang in domein['leergangen']:
+                genereer_leergang_index(domein, leergang, base_path)
     genereer_search_index(config, base_path)
     print("Klaar.")
 

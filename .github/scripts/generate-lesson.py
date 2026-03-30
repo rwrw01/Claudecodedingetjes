@@ -3,14 +3,15 @@
 Automatische lesgeneratie vanuit GitHub Issues.
 
 Dit script:
-1. Leest een GitHub Issue met foto's en metadata
-2. Stuurt de foto's naar DeepSeek of Claude API met een lesgeneratie-prompt
-3. Slaat de gegenereerde les op in de juiste map
-4. Update het issue met de resultaten
+1. Leest een GitHub Issue met beschrijving en/of foto's
+2. Stuurt de inhoud naar Mistral, Pixtral of Claude API met een lesgeneratie-prompt
+3. Slaat de gegenereerde les op in de juiste mappenstructuur
+4. Commit en pusht de les naar de repository
 
 Ondersteunde providers:
-- claude (standaard) — ondersteunt afbeeldingen, hogere kwaliteit
-- deepseek — goedkoop, gebruikt Tesseract OCR voor tekst uit foto's
+- mistral (standaard) — magistral-medium-2509, tekstgebaseerd, reasoning
+- pixtral — pixtral-large-2411, vision (automatisch bij foto's)
+- claude — claude-sonnet, vision + hoge kwaliteit (op verzoek via claude-les label)
 """
 
 import io

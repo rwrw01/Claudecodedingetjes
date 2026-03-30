@@ -1,0 +1,90 @@
+name: "📚 Middelbare school — nieuwe les"
+description: Beschrijf het onderwerp of upload foto's van lesmateriaal, en er wordt automatisch een interactieve les van gemaakt
+title: "[Les] wordt automatisch ingevuld"
+labels: ["nieuwe-les"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Nieuwe les aanvragen
+        Beschrijf het onderwerp dat je wilt behandelen, of upload foto's van lesmateriaal (bijv. een lesboekpagina of werkblad). Beide werken — een goede omschrijving is even waardevol als foto's.
+
+        > **Tip:** De titel hierboven wordt automatisch bijgewerkt na het indienen.
+
+  - type: input
+    id: naam
+    attributes:
+      label: Je naam (wordt getoond op de site)
+      description: Hoe wil je genoemd worden bij je lessen?
+      placeholder: "bijv. Ralph W."
+    validations:
+      required: false
+
+  - type: input
+    id: titel
+    attributes:
+      label: Titel van de les
+      description: Geef een korte, beschrijvende titel
+      placeholder: "bijv. Kwadratische functies"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: vak
+    attributes:
+      label: Vak
+      options:
+        - Wiskunde
+        - Scheikunde
+        - Biologie
+        - Natuurkunde
+        - Maatschappijleer
+        - Geschiedenis
+        - Aardrijkskunde
+        - Economie
+        - Nederlands
+        - Engels
+        - Anders
+    validations:
+      required: true
+
+  - type: input
+    id: vak_anders
+    attributes:
+      label: Ander vak (alleen invullen als je "Anders" koos)
+      placeholder: "bijv. Filosofie"
+
+  - type: dropdown
+    id: niveau
+    attributes:
+      label: Niveau
+      options:
+        - Onderbouw (klas 1-3)
+        - HAVO bovenbouw
+        - VWO bovenbouw
+        - MBO
+    validations:
+      required: true
+
+  - type: textarea
+    id: fotos
+    attributes:
+      label: "Foto's van lesmateriaal (optioneel)"
+      description: |
+        Sleep hier foto's naartoe of plak ze in dit veld — bijv. van een lesboekpagina, werkblad of aantekeningen.
+        Ondersteunde formaten: PNG, JPG, GIF, WEBP.
+        Geen foto's? Dat is prima — gebruik dan het omschrijvingsveld hieronder.
+      placeholder: "Sleep foto's hierheen of plak ze... (optioneel)"
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Omschrijving / extra instructies
+      description: |
+        Beschrijf het onderwerp, de doelgroep, wat je wilt oefenen of welke stof behandeld moet worden.
+        Hoe meer detail, hoe beter de les. Bij foto's: geef aan welke delen je wilt behandelen.
+      placeholder: "bijv. Behandel enkelvoudige en samengestelde kansen, boomdiagrammen en de optellingsregel"
+    validations:
+      required: false

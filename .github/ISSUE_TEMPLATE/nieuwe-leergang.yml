@@ -1,0 +1,43 @@
+name: "📂 Nieuwe leergang aanvragen"
+description: Vraag een nieuw domein of leergang aan voor de volwasseneneducatie-sectie
+title: "[Leergang aanvraag] "
+labels: ["leergang-aanvraag"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Nieuwe leergang aanvragen
+        Een leergang aanvragen is een handmatig proces. Na goedkeuring wordt de leergang toegevoegd aan `leergangen.yml` en verschijnt die in het volwassen-educatie formulier.
+
+  - type: input
+    id: naam
+    attributes:
+      label: Jouw naam
+      placeholder: "bijv. Ralph Wagter"
+    validations:
+      required: true
+
+  - type: input
+    id: domein
+    attributes:
+      label: Domein (nieuw of bestaand)
+      placeholder: "bijv. Data & Analyse"
+    validations:
+      required: true
+
+  - type: input
+    id: leergang
+    attributes:
+      label: Naam van de leergang
+      placeholder: "bijv. Python voor data-analyse"
+    validations:
+      required: true
+
+  - type: textarea
+    id: omschrijving
+    attributes:
+      label: Omschrijving
+      description: Wat behandelt deze leergang? Voor wie is het bedoeld?
+      placeholder: "bijv. Python-basis voor analisten zonder programmeerervaring: DataFrames, visualisatie, eenvoudige ML"
+    validations:
+      required: true

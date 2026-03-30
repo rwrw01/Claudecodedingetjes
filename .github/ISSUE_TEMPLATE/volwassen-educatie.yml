@@ -1,0 +1,73 @@
+name: "🎓 Volwasseneneducatie — nieuwe les"
+description: Beschrijf het onderwerp voor een leergang en er wordt automatisch een interactieve les van gemaakt
+title: "[Leergang] wordt automatisch ingevuld"
+labels: ["nieuwe-les", "volwasseneneducatie"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Nieuwe les voor een leergang aanvragen
+        Beschrijf het onderwerp dat je wilt behandelen. Foto's zijn optioneel — een goede omschrijving is voldoende.
+        De les wordt geplaatst in de leergang-structuur onder het gekozen domein.
+
+  - type: input
+    id: naam
+    attributes:
+      label: Je naam (verschijnt in de colofon van de les)
+      placeholder: "bijv. Jan de Vries"
+    validations:
+      required: true
+
+  - type: input
+    id: titel
+    attributes:
+      label: Titel van de les
+      placeholder: "bijv. Subnetting berekenen"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: domein
+    attributes:
+      label: Domein
+      description: Kies het domein. Staat jouw domein er niet bij? Vraag een nieuwe leergang aan via het aparte template.
+      options: # DOMEIN_OPTIONS_START
+        - ICT
+        - Cyber
+        - Veranderkunde
+        # DOMEIN_OPTIONS_END
+    validations:
+      required: true
+
+  - type: dropdown
+    id: leergang
+    attributes:
+      label: Leergang
+      description: Kies de leergang die bij jouw domein hoort.
+      options: # LEERGANG_OPTIONS_START
+        - ICT > ICT Basis
+        - ICT > Vibecoding
+        - Cyber > Netwerken en Protocollen
+        - Cyber > Blue Team Basics
+        - Veranderkunde > Methodes
+        # LEERGANG_OPTIONS_END
+    validations:
+      required: true
+
+  - type: textarea
+    id: fotos
+    attributes:
+      label: "Foto's of lesmateriaal (optioneel)"
+      description: Sleep hier foto's naartoe of plak ze. Zonder foto's wordt de omschrijving als basis gebruikt.
+      placeholder: "Sleep foto's hierheen of plak ze..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Omschrijving / lesinhoud
+      description: Beschrijf het onderwerp, de doelgroep en wat je wilt behandelen. Hoe meer detail, hoe beter de les.
+      placeholder: "bijv. Uitleg van subnetting: CIDR-notatie, subnet masks berekenen, /24 en /16 netwerken opdelen"
+    validations:
+      required: true

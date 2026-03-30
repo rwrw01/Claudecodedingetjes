@@ -1,0 +1,31 @@
+# Leergang-structuur voor volwasseneneducatie
+# Beheerd door Ralph Wagter
+# Na wijziging: workflow sync-leergangen.yml werkt automatisch de issue-template bij
+
+domeinen:
+  - naam: ICT
+    slug: ict
+    leergangen:
+      - naam: ICT Basis
+        slug: ict-basis
+        omschrijving: Fundamentele ICT-kennis voor beginners
+      - naam: Vibecoding
+        slug: vibecoding
+        omschrijving: Vibe-based software development met AI-tools
+
+  - naam: Cyber
+    slug: cyber
+    leergangen:
+      - naam: Netwerken en Protocollen
+        slug: netwerken-en-protocollen
+        omschrijving: TCP/IP, UDP, poorten, subnetting en firewalling
+      - naam: Blue Team Basics
+        slug: blue-team-basics
+        omschrijving: Verdediging, SIEM, log-analyse en incidentrespons
+
+  - naam: Veranderkunde
+    slug: veranderkunde
+    leergangen:
+      - naam: Methodes
+        slug: methodes
+        omschrijving: Veranderkundige methodes en modellen

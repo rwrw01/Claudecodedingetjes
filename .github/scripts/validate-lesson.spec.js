@@ -55,10 +55,16 @@ test.describe('Les validatie', () => {
   });
 
   test('8. Uitlegknop verschijnt na fout antwoord', async ({ page }) => {
-    const input = page.locator('input[type="text"], input:not([type])').first();
+    // Zoek een oefening-div met zowel een tekstveld als een Controleer-knop en een uitleg-div
+    const oefening = page.locator('.oefening, [class*="oefening"], [class*="exercise"]').filter({
+      has: page.locator('input[type="text"], input:not([type="range"]):not([type="checkbox"]):not([type="radio"])')
+    }).filter({
+      has: page.locator('button:has-text("Controleer"), button:has-text("Check"), button:has-text("Nakijken")')
+    }).first();
+    const input = oefening.locator('input[type="text"], input:not([type="range"]):not([type="checkbox"]):not([type="radio"])').first();
     await input.scrollIntoViewIfNeeded();
     await input.fill('99999');
-    const checkBtn = page.locator('button:has-text("Controleer"), button:has-text("Check"), button:has-text("Nakijken")').first();
+    const checkBtn = oefening.locator('button:has-text("Controleer"), button:has-text("Check"), button:has-text("Nakijken")').first();
     await checkBtn.click();
     await page.waitForTimeout(400);
     const uitlegZichtbaar = page.locator('[id^="uitleg-"]:visible, .uitleg-stappen:visible, button:has-text("Leg uit"):visible, button:has-text("📖"):visible');

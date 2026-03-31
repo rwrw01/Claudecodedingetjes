@@ -196,18 +196,13 @@ HTML-patroon per oefening:
 </svg>
 ```
 
-## Tokenlimiet (KRITIEK)
-Je output mag MAXIMAAL 12.000 tokens zijn (inclusief alle HTML, CSS en JavaScript).
-Dit betekent dat je compact moet werken:
-- Maximaal 3-4 theorie-secties (niet meer)
-- **Minimaal 8 oefeningen** elk met hint + uitleg (zie patroon boven) — VERPLICHT
+## Leesduur en scope
+De les moet in **maximaal 20 minuten** volledig doorloopbaar zijn voor een leerling van 12-14 jaar.
+Hanteer dit als maatstaaf voor de omvang:
+- Maximaal 3-4 theorie-secties — kies de kernconcepten, laat de rest weg
+- **Minimaal 8 oefeningen** elk met hint + uitleg — VERPLICHT
 - **Minimaal 3 sliders** voor interactieve demonstraties — VERPLICHT
-- Mini-oefeningen: maximaal 2-3 per sectie
-- CSS: gebruik korte selectors, combineer waar mogelijk
-- JavaScript: schrijf compacte functies, geen herhaling
-- Geen overbodige witregels of comments in de code
-
-Als de stof te veel is voor één les, kies dan de belangrijkste concepten en laat de rest weg. Een COMPLETE werkende les van 10.000 tokens is beter dan een afgekapte les van 13.000 tokens.
+- Als de stof te breed is voor 20 minuten: beperk de scope, maak geen afgekapte les
 
 ## Belangrijk
 - Genereer ALLEEN het volledige HTML-bestand, geen uitleg eromheen

@@ -213,11 +213,12 @@ Genereer EEN compleet HTML-bestand:
 - Zakelijke, directe toon — geen schoolse scaffolding
 - Gebruik formele termen maar leg nieuwe of domein-specifieke termen uit
 
-## Tokenlimiet
-Output maximaal 12.000 tokens. Werk compact:
-- Maximaal 4 theorie-secties
-- CSS: korte selectors, gecombineerd waar mogelijk
-- JavaScript: compacte functies zonder herhaling
+## Leesduur en scope
+De les moet in **maximaal 30 minuten** volledig doorloopbaar zijn voor een professional.
+Hanteer dit als maatstaaf voor de omvang:
+- Maximaal 4 theorie-secties — kies de meest relevante concepten, laat de rest weg
+- Minimaal 8 oefeningen, elk 1-2 minuten
+- Als de stof te breed is voor 30 minuten: beperk de scope, maak geen afgekapte les
 
 ## Belangrijk
 - Genereer ALLEEN het volledige HTML-bestand, geen uitleg eromheen

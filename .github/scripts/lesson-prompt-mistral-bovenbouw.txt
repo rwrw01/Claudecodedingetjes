@@ -218,11 +218,12 @@ Genereer EEN compleet HTML-bestand:
 - Spreek de leerling aan met "je/jij"
 - Gebruik formele termen maar leg ze uit in begrijpelijke taal
 
-## Tokenlimiet
-Output maximaal 12.000 tokens. Werk compact:
-- Maximaal 4 theorie-secties
-- CSS: korte selectors, gecombineerd waar mogelijk
-- JavaScript: compacte functies zonder herhaling
+## Leesduur en scope
+De les moet in **maximaal 25 minuten** volledig doorloopbaar zijn voor een leerling bovenbouw.
+Hanteer dit als maatstaaf voor de omvang:
+- Maximaal 4 theorie-secties — kies de kernconcepten, laat de rest weg
+- Minimaal 8 oefeningen, elk 1-2 minuten
+- Als de stof te breed is voor 25 minuten: beperk de scope, maak geen afgekapte les
 
 ## Belangrijk
 - Genereer ALLEEN het volledige HTML-bestand, geen uitleg eromheen

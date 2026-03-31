@@ -317,6 +317,7 @@ def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_co
         "model": model,
         "max_tokens": config["max_tokens"],
         "temperature": config.get("temperature", 0.2),
+        "stream": True,
         "messages": [
             {"role": "system", "content": prompt_text},
             {"role": "user", "content": content}
@@ -334,9 +335,31 @@ def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_co
         method='POST',
     )
 
+    chunks = []
+    input_tokens = output_tokens = 0
     try:
-        with urllib.request.urlopen(req, timeout=600) as resp:
-            result = json.loads(resp.read().decode('utf-8'))
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            for raw_line in resp:
+                line = raw_line.decode('utf-8').strip()
+                if not line.startswith('data: '):
+                    continue
+                payload_str = line[6:]
+                if payload_str == '[DONE]':
+                    break
+                try:
+                    evt = json.loads(payload_str)
+                except json.JSONDecodeError:
+                    continue
+                delta = evt.get('choices', [{}])[0].get('delta', {})
+                piece = delta.get('content', '')
+                if isinstance(piece, list):
+                    piece = ''.join(p.get('text', '') for p in piece if p.get('type') == 'text')
+                if piece:
+                    chunks.append(piece)
+                usage = evt.get('usage') or {}
+                if usage:
+                    input_tokens = usage.get('prompt_tokens', input_tokens)
+                    output_tokens = usage.get('completion_tokens', output_tokens)
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
         print(f"Mistral API fout ({e.code}): {error_body}")
@@ -345,23 +368,15 @@ def call_mistral_api(api_key: str, images: list[dict], prompt_text: str, user_co
         print(f"Mistral netwerkfout: {e.reason}")
         sys.exit(1)
 
-    # Mistral reasoning models retourneren soms een lijst van chunks
-    msg = result["choices"][0]["message"]["content"]
-    if isinstance(msg, list):
-        response_text = " ".join(item["text"] for item in msg if item.get("type") == "text")
-    else:
-        response_text = msg
-
-    if not response_text or not response_text.strip():
+    response_text = ''.join(chunks)
+    if not response_text.strip():
         print("FOUT: Mistral API gaf lege response terug.")
         sys.exit(1)
 
-    usage = result.get("usage", {})
-    # Bouw tijdelijk result-achtig object voor log_usage compatibiliteit
     usage_result = {
         "usage": {
-            "input_tokens": usage.get("prompt_tokens", 0),
-            "output_tokens": usage.get("completion_tokens", 0),
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
             "cache_read_input_tokens": 0,
         }
     }

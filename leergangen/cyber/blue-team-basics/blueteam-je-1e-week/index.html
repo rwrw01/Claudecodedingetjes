@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blueteam, je 1e week — Cybersecurity Basics</title>
+    <style>
+        :root {
+            --primary: #16a34a;
+            --primary-light: #dcfce7;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+
+        .gradient-header {
+            background: linear-gradient(135deg, #14532d 0%, var(--primary) 100%);
+            color: white;
+            padding: 3rem 1rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .gradient-header h1 {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem;
+            font-weight: 700;
+        }
+
+        .gradient-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .inhoudsopgave {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .inhoudsopgave h2 {
+            margin-top: 0;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+
+        .inhoudsopgave ul {
+            padding-left: 1.2rem;
+            margin-bottom: 0;
+        }
+
+        .inhoudsopgave li {
+            margin-bottom: 0.5rem;
+        }
+
+        .inhoudsopgave a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .inhoudsopgave a:hover {
+            color: var(--primary);
+        }
+
+        .card {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .card h2::before {
+            content: "🔍";
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .formula {
+            background-color: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .tip-box {
+            background-color: #dbeafe;
+            border-left: 4px solid #2563eb;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .warning-box {
+            background-color: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .example-box {
+            background-color: #fef9c3;
+            border-left: 4px solid #ca8a04;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .interactive {
+            background-color: #f3e8ff;
+            border-left: 4px solid #7c3aed;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+
+        .slider-container {
+            margin: 1.5rem 0;
+        }
+
+        .slider-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .oefening {
+            background-color: var(--card);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        .oefening h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .oefening input[type="text"] {
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 200px;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .oefening button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .oefening button:hover {
+            background-color: #14532d;
+        }
+
+        .btn-hint {
+            background-color: #2563eb;
+        }
+
+        .btn-hint:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-uitleg {
+            background-color: #7c3aed;
+            margin-top: 0.5rem;
+        }
+
+        .btn-uitleg:hover {
+            background-color: #6d28d9;
+        }
+
+        .feedback {
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            color: var(--success);
+        }
+
+        .feedback.fout {
+            color: var(--accent);
+        }
+
+        .hint-box {
+            background-color: #fef9c3;
+            padding: 0.75rem;
+            border-radius: var(--radius);
+            margin: 0.5rem 0;
+            border-left: 3px solid #ca8a04;
+        }
+
+        .uitleg-stappen {
+            background-color: #f3e8ff;
+            padding: 1rem;
+            border-radius: var(--radius);
+            margin-top: 0.5rem;
+            border-left: 3px solid #7c3aed;
+        }
+
+        .uitleg-stappen ol {
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .uitleg-stappen li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .gradient-header h1 {
+                font-size: 2rem;
+            }
+
+            .gradient-header p {
+                font-size: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="gradient-header">
+        <h1>Blueteam, je 1e week</h1>
+        <p>Basisprincipes van cybersecurity monitoring en incident response voor nieuwe blueteam-leden</p>
+    </header>
+
+    <nav class="breadcrumb">
+        <div class="container">
+            <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &gt; Blueteam, je 1e week
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="inhoudsopgave">
+            <h2>Inhoudsopgave</h2>
+            <ul>
+                <li><a href="#intro">1. Introductie: Wat is een blueteam?</a></li>
+                <li><a href="#drie-pijlers">2. De drie pijlers van blueteam-werk</a></li>
+                <li><a href="#log-analyse">3. Loganalyse: Basisvaardigheden</a></li>
+                <li><a href="#netwerk-monitoring">4. Netwerkmonitoring: Wat moet je weten?</a></li>
+                <li><a href="#incident-response">5. Incident response: Eerste stappen</a></li>
+                <li><a href="#oefeningen">6. Oefeningen</a></li>
+            </ul>
+        </div>
+
+        <section id="intro" class="card">
+            <h2>Introductie: Wat is een blueteam?</h2>
+            <p>
+                Als nieuw lid van een blueteam ben je verantwoordelijk voor de verdediging van je organisatie tegen cyberaanvallen.
+                In tegenstelling tot een redteam (dat offensieve tests uitvoert), richt een blueteam zich op detectie, preventie en respons.
+                Je werkt met tools zoals SIEM-systemen (Security Information and Event Management), firewalls, en endpoint detection.
+            </p>
+
+            <div class="interactive">
+                <h3>🔄 Rollenvergelijking</h3>
+                <p>Verschuif de slider om het verschil tussen blueteam en redteam te zien:</p>
+                <div class="slider-container">
+                    <input type="range" id="teamSlider" min="0" max="100" value="50" oninput="updateTeamRole()">
+                    <div class="slider-value" id="teamRoleValue">Balans: Blueteam & Redteam</div>
+                </div>
+                <div id="teamRoleDescription" style="margin-top: 1rem; padding: 1rem; background-color: #fef9c3; border-radius: var(--radius);">
+                    Een blueteam richt zich op verdediging, detectie en respons. Een redteam simuleert aanvallen om zwaktes te vinden.
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong> In je eerste week focus je op het leren kennen van de tools en processen die jouw organisatie gebruikt.
+                Vraag naar de documentatie van het SIEM-systeem en de incident response playbooks.
+            </div>
+        </section>
+
+        <section id="drie-pijlers" class="card">
+            <h2>De drie pijlers van blueteam-werk</h2>
+            <p>
+                Blueteam-werk rust op drie pijlers: <strong>Preventie</strong>, <strong>Detectie</strong> en <strong>Respons</strong>.
+                Deze pijlers werken samen om de beveiliging van een organisatie te waarborgen.
+            </p>
+
+            <div class="interactive">
+                <h3>📊 Pijlers in balans</h3>
+                <p>Pas de verdeling aan om te zien hoe de focus verschuift:</p>
+                <div class="slider-container">
+                    <label for="preventieSlider">Preventie (%): <span id="preventieValue">33</span></label>
+                    <input type="range" id="preventieSlider" min="0" max="100" value="33" oninput="updatePijlers()">
+                </div>
+                <div class="slider-container">
+                    <label for="detectieSlider">Detectie (%): <span id="detectieValue">33</span></label>
+                    <input type="range" id="detectieSlider" min="0" max="100" value="33" oninput="updatePijlers()">
+                </div>
+                <div class="slider-container">
+                    <label for="responsSlider">Respons (%): <span id="responsValue">34</span></label>
+                    <input type="range" id="responsSlider" min="0" max="100" value="34" oninput="updatePijlers()">
+                </div>
+                <svg id="pijlerChart" width="100%" height="200" viewBox="0 0 300 200" style="margin-top: 1rem; background-color: white; border-radius: var(--radius);">
+                    <polygon id="preventiePolygon" points="150,50 200,150 100,150" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+                    <text x="150" y="40" text-anchor="middle" font-size="12" fill="#1e3a5f">Preventie</text>
+                    <polygon id="detectiePolygon" points="150,50 250,100 200,150" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                    <text x="230" y="80" text-anchor="middle" font-size="12" fill="#14532d">Detectie</text>
+                    <polygon id="responsPolygon" points="150,50 100,150 50,100" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                    <text x="70" y="80" text-anchor="middle" font-size="12" fill="#7f1d1d">Respons</text>
+                    <circle cx="150" cy="50" r="3" fill="#64748b"/>
+                    <circle cx="200" cy="150" r="3" fill="#64748b"/>
+                    <circle cx="100" cy="150" r="3" fill="#64748b"/>
+                </svg>
+            </div>
+
+            <div class="example-box">
+                <strong>📌 Voorbeeld:</strong>
+                <p>
+                    Stel, je organisatie heeft een nieuw endpoint detection systeem geïmplementeerd (preventie).
+                    Tijdens je shift zie je een waarschuwing over een verdacht proces (detectie).
+                    Je volgt het incident response playbook om het systeem te isoleren en de malware te verwijderen (respons).
+                </p>
+            </div>
+        </section>
+
+        <section id="log-analyse" class="card">
+            <h2>Loganalyse: Basisvaardigheden</h2>
+            <p>
+                Loganalyse is een kernvaardigheid voor elk blueteam-lid. Je moet kunnen filteren, correleren en anomalieën herkennen.
+                Een typische logregel bevat een timestamp, bron, gebeurtenis en details.
+            </p>
+
+            <div class="formula">
+                <strong>Logpatroon:</strong><br>
+                <code>[TIMESTAMP] [SOURCE] [EVENT_TYPE] [DETAILS]</code>
+            </div>
+
+            <div class="interactive">
+                <h3>🔍 Logparser</h3>
+                <p>Onderstaande logregel is een voorbeeld van een mislukte inlogpoging. Vul de velden in:</p>
+                <div style="background-color: #f8fafc; padding: 1rem; border-radius: var(--radius); margin: 1rem 0; font-family: monospace;">
+                    <code>2024-05-20T14:32:18.123Z [AUTH-SRV01] FAILED_LOGIN [User: jdoe, IP: 192.168.45.78, Reason: Invalid password]</code>
+                </div>
+                <div style="margin: 1rem 0;">
+                    <label for="inp-timestamp">Timestamp:</label>
+                    <input type="text" id="inp-timestamp" placeholder="Vul hier de timestamp in">
+                    <div id="fb-timestamp" class="feedback"></div>
+                </div>
+                <div style="margin: 1rem 0;">
+                    <label for="inp-source">Bron (SOURCE):</label>
+                    <input type="text" id="inp-source" placeholder="Vul hier de bron in">
+                    <div id="fb-source" class="feedback"></div>
+                </div>
+                <div style="margin: 1rem 0;">
+                    <label for="inp-event">Gebeurtenis (EVENT_TYPE):</label>
+                    <input type="text" id="inp-event" placeholder="Vul hier het event type in">
+                    <div id="fb-event" class="feedback"></div>
+                </div>
+                <div style="margin: 1rem 0;">
+                    <label for="inp-user">Gebruikersnaam:</label>
+                    <input type="text" id="inp-user" placeholder="Vul hier de gebruikersnaam in">
+                    <div id="fb-user" class="feedback"></div>
+                </div>
+                <button onclick="checkLogFields()">Controleer alle velden</button>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Veelgemaakte fout:</strong>
+                <p>
+                    Het negeren van tijdzones in logbestanden. Een timestamp zoals <code>2024-05-20T14:32:18</code> kan in UTC of lokale tijd zijn.
+                    Controleer altijd de tijdzone-instellingen van je SIEM-systeem.
+                </p>
+            </div>
+        </section>
+
+        <section id="netwerk-monitoring" class="card">
+            <h2>Netwerkmonitoring: Wat moet je weten?</h2>
+            <p>
+                Netwerkmonitoring draait om het observeren van verkeer tussen systemen. Je moet verdachte patronen herkennen,
+                zoals ongebruikelijke poorten, grote datatransfers of communicatie met bekende malafide IP-adressen.
+            </p>
+
+            <div class="interactive">
+                <h3>🌐 Netwerkverkeer visualiseren</h3>
+                <p>Bekijk het onderstaande netwerkdiagram en beantwoord de vragen:</p>
+                <svg width="100%" height="200" viewBox="0 0 500 200" style="background-color: white; border-radius: var(--radius); margin: 1rem 0;">
+                    <rect x="20" y="80" width="80" height="40" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+                    <text x="60" y="105" text-anchor="middle" font-size="12" fill="#1e3a5f">Webserver</text>
+                    <rect x="180" y="80" width="80" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                    <text x="220" y="105" text-anchor="middle" font-size="12" fill="#14532d">Firewall</text>
+                    <rect x="340" y="80" width="80" height="40" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+                    <text x="380" y="105" text-anchor="middle" font-size="12" fill="#713f12">Database</text>
+                    <rect x="20" y="20" width="80" height="40" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                    <text x="60" y="45" text-anchor="middle" font-size="12" fill="#7f1d1d">Aanvaller</text>
+                    <line x1="100" y1="40" x2="180" y2="80" stroke="#dc2626" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arr-red)"/>
+                    <line x1="260" y1="100" x2="340" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+                    <line x1="100" y1="100" x2="180" y2="100" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/>
+                    <defs>
+                        <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+                        </marker>
+                        <marker id="arr-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                            <path d="M0,0 L0,6 L8,3 z" fill="#dc2626"/>
+                        </marker>
+                    </defs>
+                </svg>
+            </div>
+
+            <div class="oefening">
+                <p>1. Welk systeem in het diagram wordt aangevallen volgens de rode stippellijn?</p>
+                <input type="text" id="inp-1" placeholder="Vul hier het systeem in">
+                <button onclick="checkAnswer('1', 'Webserver', 'De rode stippellijn komt van de aanvaller en gaat naar de webserver.')">Controleer</button>
+                <button onclick="toonHint('1')" class="btn-hint">Hint</button>
+                <div id="hint-1" style="display:none" class="hint-box">💡 Hint: Kijk naar de richting van de rode pijl.</div>
+                <div id="fb-1" class="feedback"></div>
+                <div id="uitleg-1" style="display:none">
+                    <button onclick="toonUitleg('1')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-1" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Identificeer de rode stippellijn als de aanvalspijl.</li>
+                            <li>Volg de pijl van de bron (Aanvaller) naar het doel.</li>
+                            <li>Het doel van de pijl is het systeem met het label "Webserver".</li>
+                            <li>Conclusie: De webserver wordt aangevallen.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>2. Welke poort wordt typisch gebruikt voor HTTPS-verkeer?</p>
+                <input type="text" id="inp-2" placeholder="Vul hier het poortnummer in">
+                <button onclick="checkAnswer('2', '443', 'HTTPS gebruikt standaard poort 443.')">Controleer</button>
+                <button onclick="toonHint('2')" class="btn-hint">Hint</button>
+                <div id="hint-2" style="display:none" class="hint-box">💡 Hint: Deze poort is het beveiligde alternatief voor poort 80.</div>
+                <div id="fb-2" class="feedback"></div>
+                <div id="uitleg-2" style="display:none">
+                    <button onclick="toonUitleg('2')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-2" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>HTTP-verkeer gebruikt standaard poort 80.</li>
+                            <li>HTTPS is de beveiligde versie van HTTP, waarbij de communicatie versleuteld is.</li>
+                            <li>De standaardpoort voor HTTPS is 443.</li>
+                            <li>Conclusie: Het antwoord is 443.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Tip:</strong>
+                <p>
+                    Maak een cheatsheet met veelvoorkomende poorten en hun diensten, zoals:
+                    <code>22 (SSH), 25 (SMTP), 53 (DNS), 80 (HTTP), 443 (HTTPS), 3389 (RDP)</code>.
+                </p>
+            </div>
+        </section>
+
+        <section id="incident-response" class="card">
+            <h2>Incident response: Eerste stappen</h2>
+            <p>
+                Bij een beveiligingsincident volg je een gestructureerd proces. Het NIST-framework voor incident response bestaat uit vier fasen:
+                <strong>Preparatie</strong>, <strong>Detectie & Analyse</strong>, <strong>Inperking, Uitroeiing & Herstel</strong>, en <strong>Post-incident activiteiten</strong>.
+            </p>
+
+            <div class="interactive">
+                <h3>🔄 Incident response fasen</h3>
+                <p>Verschuif de slider om de fasen van incident response te doorlopen:</p>
+                <div class="slider-container">
+                    <input type="range" id="incidentSlider" min="0" max="3" value="0" step="1" oninput="updateIncidentPhase()">
+                    <div class="slider-value" id="incidentPhaseValue">Preparatie</div>
+                </div>
+                <div id="incidentPhaseDescription" style="margin-top: 1rem; padding: 1rem; background-color: #fef9c3; border-radius: var(--radius);">
+                    <strong>Preparatie:</strong> Zorg dat je de juiste tools, playbooks en contactpersonen kent voordat een incident plaatsvindt.
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>📌 Voorbeeld:</strong>
+                <p>
+                    Tijdens je shift krijg je een melding van je SIEM-systeem: "Meerdere mislukte inlogpogingen gevolgd door een succesvolle inlog".
+                    Dit kan duiden op een brute-force aanval. Je eerste stap is het isoleren van het getroffen systeem om verdere schade te voorkomen.
+                </p>
+            </div>
+
+            <div class="oefening">
+                <p>3. Wat is de eerste stap die je neemt bij een melding van een mogelijke brute-force aanval?</p>
+                <input type="text" id="inp-3" placeholder="Vul hier je antwoord in">
+                <button onclick="checkAnswer('3', 'Isoleren', 'De eerste stap is het getroffen systeem isoleren om verdere schade te voorkomen.')">Controleer</button>
+                <button onclick="toonHint('3')" class="btn-hint">Hint</button>
+                <div id="hint-3" style="display:none" class="hint-box">💡 Hint: Denk aan het beperken van de impact.</div>
+                <div id="fb-3" class="feedback"></div>
+                <div id="uitleg-3" style="display:none">
+                    <button onclick="toonUitleg('3')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-3" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Een brute-force aanval kan leiden tot ongeautoriseerde toegang.</li>
+                            <li>Om verdere schade te voorkomen, moet je het getroffen systeem direct isoleren.</li>
+                            <li>Isolatie kan betekenen: het systeem van het netwerk afkoppelen of de firewallregels aanpassen.</li>
+                            <li>Conclusie: De eerste stap is isoleren.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Veelgemaakte fout:</strong>
+                <p>
+                    Het overslaan van de documentatie tijdens een incident. Noteer altijd wat je doet, wanneer en waarom.
+                    Dit is cruciaal voor forensisch onderzoek en het verbeteren van processen na het incident.
+                </p>
+            </div>
+        </section>
+
+        <section id="oefeningen" class="card">
+            <h2>Oefeningen</h2>
+            <p>
+                Test je kennis met deze oefeningen. Gebruik de hints en uitleg als je vastloopt.
+            </p>
+
+            <div class="oefening">
+                <p>4. Een logregel bevat: <code>2024-05-20T15:45:33.456Z [MAIL-SRV02] SUSPICIOUS_ATTACHMENT [User: asmith, File: invoice.exe]</code>.
+                Welk type bestand wordt hier genoemd?</p>
+                <input type="text" id="inp-4" placeholder="Vul hier het bestandstype in">
+                <button onclick="checkAnswer('4', 'exe', 'Het bestand in de logregel heeft de extensie .exe.')">Controleer</button>
+                <button onclick="toonHint('4')" class="btn-hint">Hint</button>
+                <div id="hint-4" style="display:none" class="hint-box">💡 Hint: Kijk naar de extensie van het bestand.</div>
+                <div id="fb-4" class="feedback"></div>
+                <div id="uitleg-4" style="display:none">
+                    <button onclick="toonUitleg('4')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-4" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>De logregel vermeldt het bestand <code>invoice.exe</code>.</li>
+                            <li>Bestandsextensies geven het type bestand aan. Hier is dat <code>.exe</code>.</li>
+                            <li><code>.exe</code> staat voor een uitvoerbaar bestand in Windows.</li>
+                            <li>Conclusie: Het bestandstype is exe.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>5. Welk protocol wordt typisch gebruikt voor het veilig overdragen van bestanden?</p>
+                <input type="text" id="inp-5" placeholder="Vul hier het protocol in">
+                <button onclick="checkAnswer('5', 'SFTP', 'SFTP (SSH File Transfer Protocol) wordt gebruikt voor veilige bestandsoverdracht.')">Controleer</button>
+                <button onclick="toonHint('5')" class="btn-hint">Hint</button>
+                <div id="hint-5" style="display:none" class="hint-box">💡 Hint: Dit protocol is een veiliger alternatief voor FTP.</div>
+                <div id="fb-5" class="feedback"></div>
+                <div id="uitleg-5" style="display:none">
+                    <button onclick="toonUitleg('5')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-5" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>FTP (File Transfer Protocol) wordt gebruikt voor bestandsoverdracht, maar is onveilig.</li>
+                            <li>SFTP (SSH File Transfer Protocol) voegt een beveiligingslaag toe door SSH te gebruiken.</li>
+                            <li>SFTP versleutelt zowel de authenticatie als de gegevensoverdracht.</li>
+                            <li>Conclusie: Het juiste protocol is SFTP.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>6. Een IP-adres uit welk bereik is typisch privé en niet routeerbaar op het internet? (Kies uit: 8.8.8.8, 192.168.1.1, 172.32.0.1)</p>
+                <input type="text" id="inp-6" placeholder="Vul hier het IP-adres in">
+                <button onclick="checkAnswer('6', '192.168.1.1', '192.168.1.1 valt binnen het privé-bereik 192.168.0.0/16.')">Controleer</button>
+                <button onclick="toonHint('6')" class="btn-hint">Hint</button>
+                <div id="hint-6" style="display:none" class="hint-box">💡 Hint: Privé-IP-adressen vallen binnen specifieke bereiken, zoals 10.0.0.0/8, 172.16.0.0/12 en 192.168.0.0/16.</div>
+                <div id="fb-6" class="feedback"></div>
+                <div id="uitleg-6" style="display:none">
+                    <button onclick="toonUitleg('6')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-6" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>8.8.8.8 is een publiek DNS-adres van Google en is routeerbaar op het internet.</li>
+                            <li>172.32.0.1 valt buiten het privé-bereik 172.16.0.0/12 (172.16.0.0 - 172.31.255.255).</li>
+                            <li>192.168.1.1 valt binnen het privé-bereik 192.168.0.0/16 (192.168.0.0 - 192.168.255.255).</li>
+                            <li>Conclusie: Het juiste antwoord is 192.168.1.1.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>7. Wat is de standaardpoort voor DNS-verkeer?</p>
+                <input type="text" id="inp-7" placeholder="Vul hier het poortnummer in">
+                <button onclick="checkAnswer('7', '53', 'DNS-verkeer gebruikt standaard poort 53.')">Controleer</button>
+                <button onclick="toonHint('7')" class="btn-hint">Hint</button>
+                <div id="hint-7" style="display:none" class="hint-box">💡 Hint: Deze poort wordt gebruikt voor het vertalen van domeinnamen naar IP-adressen.</div>
+                <div id="fb-7" class="feedback"></div>
+                <div id="uitleg-7" style="display:none">
+                    <button onclick="toonUitleg('7')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-7" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>DNS (Domain Name System) vertaalt domeinnamen (zoals example.com) naar IP-adressen.</li>
+                            <li>DNS-verkeer gebruikt standaard UDP-poort 53 voor queries.</li>
+                            <li>TCP-poort 53 wordt gebruikt voor zone transfers en grote antwoorden.</li>
+                            <li>Conclusie: De standaardpoort is 53.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>8. Welke tool wordt vaak gebruikt voor het analyseren van netwerkverkeer?</p>
+                <input type="text" id="inp-8" placeholder="Vul hier de toolnaam in">
+                <button onclick="checkAnswer('8', 'Wireshark', 'Wireshark is een populaire tool voor het analyseren van netwerkverkeer.')">Controleer</button>
+                <button onclick="toonHint('8')" class="btn-hint">Hint</button>
+                <div id="hint-8" style="display:none" class="hint-box">💡 Hint: Deze tool heeft een gebruiksvriendelijke GUI en ondersteunt veel protocollen.</div>
+                <div id="fb-8" class="feedback"></div>
+                <div id="uitleg-8" style="display:none">
+                    <button onclick="toonUitleg('8')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-8" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Wireshark is een open-source tool voor netwerkanalyse.</li>
+                            <li>Het kan live verkeer vastleggen en opgeslagen bestanden analyseren.</li>
+                            <li>Wireshark ondersteunt honderden protocollen en heeft een krachtige filterfunctionaliteit.</li>
+                            <li>Conclusie: De tool is Wireshark.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>9. Een gebruiker meldt dat zijn computer traag is en dat er onbekende processen draaien. Welke tool gebruik je om de actieve processen te bekijken?</p>
+                <input type="text" id="inp-9" placeholder="Vul hier de toolnaam in">
+                <button onclick="checkAnswer('9', 'Taakbeheer', 'In Windows gebruik je Taakbeheer om actieve processen te bekijken.')">Controleer</button>
+                <button onclick="toonHint('9')" class="btn-hint">Hint</button>
+                <div id="hint-9" style="display:none" class="hint-box">💡 Hint: In Windows kun je deze tool openen met Ctrl+Shift+Esc.</div>
+                <div id="fb-9" class="feedback"></div>
+                <div id="uitleg-9" style="display:none">
+                    <button onclick="toonUitleg('9')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-9" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Onbekende processen kunnen duiden op malware of ongeautoriseerde software.</li>
+                            <li>In Windows is Taakbeheer de standaardtool om actieve processen te bekijken.</li>
+                            <li>Taakbeheer toont een lijst van alle processen, inclusief CPU- en geheugengebruik.</li>
+                            <li>Conclusie: De tool is Taakbeheer.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>10. Welk type aanval probeert een aanvaller uit te voeren als hij meerdere keren verschillende wachtwoorden probeert op één account?</p>
+                <input type="text" id="inp-10" placeholder="Vul hier het type aanval in">
+                <button onclick="checkAnswer('10', 'Brute-force', 'Bij een brute-force aanval probeert een aanvaller meerdere wachtwoorden op één account.')">Controleer</button>
+                <button onclick="toonHint('10')" class="btn-hint">Hint</button>
+                <div id="hint-10" style="display:none" class="hint-box">💡 Hint: Deze aanval probeert alle mogelijke combinaties uit.</div>
+                <div id="fb-10" class="feedback"></div>
+                <div id="uitleg-10" style="display:none">
+                    <button onclick="toonUitleg('10')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-10" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Een aanvaller probeert meerdere wachtwoorden op één account.</li>
+                            <li>Dit wordt een brute-force aanval genoemd, omdat de aanvaller "kracht" gebruikt om alle mogelijkheden uit te proberen.</li>
+                            <li>Brute-force aanvallen kunnen worden voorkomen met account lockouts of multi-factor authenticatie.</li>
+                            <li>Conclusie: Het type aanval is brute-force.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>11. Wat is de eerste stap in het NIST incident response framework?</p>
+                <input type="text" id="inp-11" placeholder="Vul hier de stap in">
+                <button onclick="checkAnswer('11', 'Preparatie', 'De eerste stap in het NIST-framework is Preparatie.')">Controleer</button>
+                <button onclick="toonHint('11')" class="btn-hint">Hint</button>
+                <div id="hint-11" style="display:none" class="hint-box">💡 Hint: Deze stap gaat over voorbereiding voordat een incident plaatsvindt.</div>
+                <div id="fb-11" class="feedback"></div>
+                <div id="uitleg-11" style="display:none">
+                    <button onclick="toonUitleg('11')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-11" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Het NIST-framework bestaat uit vier fasen: Preparatie, Detectie & Analyse, Inperking/Uitroeiing/Herstel, en Post-incident activiteiten.</li>
+                            <li>Preparatie is de eerste stap en omvat het opzetten van tools, processen en training.</li>
+                            <li>Zonder goede voorbereiding is het moeilijk om effectief te reageren op incidenten.</li>
+                            <li>Conclusie: De eerste stap is Preparatie.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oefening">
+                <p>12. Welk type malware versleutelt bestanden en eist losgeld?</p>
+                <input type="text" id="inp-12" placeholder="Vul hier het type malware in">
+                <button onclick="checkAnswer('12', 'Ransomware', 'Ransomware versleutelt bestanden en eist losgeld voor de decryptiesleutel.')">Controleer</button>
+                <button onclick="toonHint('12')" class="btn-hint">Hint</button>
+                <div id="hint-12" style="display:none" class="hint-box">💡 Hint: De naam van deze malware is afgeleid van het Engelse woord voor "losgeld".</div>
+                <div id="fb-12" class="feedback"></div>
+                <div id="uitleg-12" style="display:none">
+                    <button onclick="toonUitleg('12')" class="btn-uitleg">📖 Leg uit: hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-12" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap uitleg:</strong>
+                        <ol>
+                            <li>Ransomware is een type malware dat bestanden op een systeem versleutelt.</li>
+                            <li>De aanvaller eist vervolgens losgeld (ransom) voor de decryptiesleutel.</li>
+                            <li>Ransomware-aanvallen kunnen grote impact hebben op organisaties, vooral als back-ups ontbreken.</li>
+                            <li>Conclusie: Het type malware is ransomware.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        Gemaakt door Ralph W met <a href="https://claude.ai">Claude Code</a>.
+        Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+        <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+    </footer>
+
+    <script>
+        // Slider voor teamrollen
+        function updateTeamRole() {
+            const slider = document.getElementById('teamSlider');
+            const value = document.getElementById('teamRoleValue');
+            const description = document.getElementById('teamRoleDescription');
+
+            if (slider.value < 30) {
+                value.textContent = "Redteam focus";
+                description.innerHTML = "Een redteam simuleert cyberaanvallen om zwaktes in de verdediging van een organisatie te vinden. Ze gebruiken technieken zoals phishing, penetratietests en social engineering.";
+            } else if (slider.value > 70) {
+                value.textContent = "Blueteam focus";
+                description.innerHTML = "Een blueteam richt zich op de verdediging van een organisatie. Ze monitoren systemen, analyseren logs, detecteren bedreigingen en reageren op incidenten.";
+            } else {
+                value.textContent = "Balans: Blueteam & Redteam";
+                description.innerHTML = "Een blueteam richt zich op verdediging, detectie en respons. Een redteam simuleert aanvallen om zwaktes te vinden. Beide teams werken samen om de beveiliging te verbeteren.";
+            }
+        }
+
+        // Slider voor pijlers
+        function updatePijlers() {
+            const preventieSlider = document.getElementById('preventieSlider');
+            const detectieSlider = document.getElementById('detectieSlider');
+            const responsSlider = document.getElementById('responsSlider');
+
+            const preventieValue = parseInt(preventieSlider.value);
+            const detectieValue = parseInt(detectieSlider.value);
+            const responsValue = 100 - preventieValue - detectieValue;
+
+            document.getElementById('preventieValue').textContent = preventieValue;
+            document.getElementById('detectieValue').textContent = detectieValue;
+            document.getElementById('responsValue').textContent = responsValue;
+
+            // Update de radar chart
+            const centerX = 150;
+            const centerY = 50;
+            const radius = 80;
+
+            const preventieAngle = (preventieValue / 100) * 2 * Math.PI;
+            const detectieAngle = (detectieValue / 100) * 2 * Math.PI;
+            const responsAngle = (responsValue / 100) * 2 * Math.PI;
+
+            const preventieX = centerX + radius * Math.sin(preventieAngle);
+            const preventieY = centerY - radius * Math.cos(preventieAngle);
+
+            const detectieX = centerX + radius * Math.sin(preventieAngle + detectieAngle);
+            const detectieY = centerY - radius * Math.cos(preventieAngle + detectieAngle);
+
+            const responsX = centerX + radius * Math.sin(preventieAngle + detectieAngle + responsAngle);
+            const responsY = centerY - radius * Math.cos(preventieAngle + detectieAngle + responsAngle);
+
+            const preventiePolygon = document.getElementById('preventiePolygon');
+            preventiePolygon.setAttribute('points', `${centerX},${centerY} ${preventieX},${preventieY} ${detectieX},${detectieY}`);
+
+            const detectiePolygon = document.getElementById('detectiePolygon');
+            detectiePolygon.setAttribute('points', `${centerX},${centerY} ${detectieX},${detectieY} ${responsX},${responsY}`);
+
+            const responsPolygon = document.getElementById('responsPolygon');
+            responsPolygon.setAttribute('points', `${centerX},${centerY} ${responsX},${responsY} ${preventieX},${preventieY}`);
+        }
+
+        // Slider voor incident response
+        function updateIncidentPhase() {
+            const slider = document.getElementById('incidentSlider');
+            const value = document.getElementById('incidentPhaseValue');
+            const description = document.getElementById('incidentPhaseDescription');
+
+            const phases = [
+                {
+                    name: "Preparatie",
+                    description: "Zorg dat je de juiste tools, playbooks en contactpersonen kent voordat een incident plaatsvindt. Dit omvat ook training en het opzetten van monitoring."
+                },
+                {
+                    name: "Detectie & Analyse",
+                    description: "Identificeer en analyseer het incident. Verzamel bewijs, bepaal de scope en impact, en documenteer je bevindingen."
+                },
+                {
+                    name: "Inperking, Uitroeiing & Herstel",
+                    description: "Beperk de impact van het incident, verwijder de oorzaak (bijv. malware) en herstel de systemen naar een veilige staat."
+                },
+                {
+                    name: "Post-incident activiteiten",
+                    description: "Evalueer het incident en de respons. Identificeer verbeterpunten voor processen, tools en training. Documenteer lessen geleerd."
+                }
+            ];
+
+            const phase = phases[slider.value];
+            value.textContent = phase.name;
+            description.innerHTML = `<strong>${phase.name}:</strong> ${phase.description}`;
+        }
+
+        // Controleer logvelden
+        function checkLogFields() {
+            const timestamp = document.getElementById('inp-timestamp').value.trim();
+            const source = document.getElementById('inp-source').value.trim();
+            const event = document.getElementById('inp-event').value.trim();
+            const user = document.getElementById('inp-user').value.trim();
+
+            const fbTimestamp = document.getElementById('fb-timestamp');
+            const fbSource = document.getElementById('fb-source');
+            const fbEvent = document.getElementById('fb-event');
+            const fbUser = document.getElementById('fb-user');
+
+            let allCorrect = true;
+
+            if (timestamp === "2024-05-20T14:32:18.123Z") {
+                fbTimestamp.innerHTML = '✓ Correct!';
+                fbTimestamp.className = 'feedback correct';
+            } else {
+                fbTimestamp.innerHTML = '✗ Niet juist. Probeer opnieuw.';
+                fbTimestamp.className = 'feedback fout';
+                allCorrect = false;
+            }
+
+            if (source === "AUTH-SRV01") {
+                fbSource.innerHTML = '✓ Correct!';
+                fbSource.className = 'feedback correct';
+            } else {
+                fbSource.innerHTML = '✗ Niet juist. Probeer opnieuw.';
+                fbSource.className = 'feedback fout';
+                allCorrect = false;
+            }
+
+            if (event === "FAILED_LOGIN") {
+                fbEvent.innerHTML = '✓ Correct!';
+                fbEvent.className = 'feedback correct';
+            } else {
+                fbEvent.innerHTML = '✗ Niet juist. Probeer opnieuw.';
+                fbEvent.className = 'feedback fout';
+                allCorrect = false;
+            }
+
+            if (user === "jdoe") {
+                fbUser.innerHTML = '✓ Correct!';
+                fbUser.className = 'feedback correct';
+            } else {
+                fbUser.innerHTML = '✗ Niet juist. Probeer opnieuw.';
+                fbUser.className = 'feedback fout';
+                allCorrect = false;
+            }
+
+            if (allCorrect) {
+                alert("Alle velden zijn correct ingevuld!");
+            }
+        }
+
+        // Algemene functie voor oefeningen
+        function checkAnswer(id, expected, uitleg) {
+            const input = document.getElementById('inp-' + id);
+            const fb = document.getElementById('fb-' + id);
+            const uitlegDiv = document.getElementById('uitleg-' + id);
+            const val = input.value.trim().toLowerCase();
+            const correct = val === String(expected).toLowerCase();
+
+            if (correct) {
+                fb.innerHTML = '✓ Correct!';
+                fb.className = 'feedback correct';
+                uitlegDiv.style.display = 'none';
+            } else {
+                fb.innerHTML = '✗ Niet juist. Probeer opnieuw of bekijk de uitleg.';
+                fb.className = 'feedback fout';
+                uitlegDiv.style.display = 'block';
+            }
+        }
+
+        function toonUitleg(id) {
+            document.getElementById('uitleg-stappen-' + id).style.display = 'block';
+        }
+
+        function toonHint(id) {
+            document.getElementById('hint-' + id).style.display = 'block';
+        }
+
+        // Initialiseren
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTeamRole();
+            updatePijlers();
+            updateIncidentPhase();
+        });
+    </script>
+</body>
+</html>

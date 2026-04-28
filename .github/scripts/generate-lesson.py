@@ -414,6 +414,7 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
             }
         ],
         "system": prompt_text,
+        "stream": True,
     }
 
     data = json.dumps(payload).encode('utf-8')
@@ -429,19 +430,42 @@ def call_claude_api(api_key: str, images: list[dict], prompt_text: str, user_con
         method='POST',
     )
 
+    chunks = []
+    usage_in = 0
+    usage_out = 0
     try:
-        with urllib.request.urlopen(req, timeout=600) as resp:
-            result = json.loads(resp.read().decode('utf-8'))
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            for raw_line in resp:
+                line = raw_line.decode('utf-8').strip()
+                if not line.startswith('data: '):
+                    continue
+                payload_str = line[6:]
+                try:
+                    evt = json.loads(payload_str)
+                except json.JSONDecodeError:
+                    continue
+                etype = evt.get('type', '')
+                if etype == 'content_block_delta':
+                    delta = evt.get('delta', {})
+                    if delta.get('type') == 'text_delta':
+                        chunks.append(delta.get('text', ''))
+                elif etype == 'message_start':
+                    msg_usage = evt.get('message', {}).get('usage', {})
+                    usage_in = msg_usage.get('input_tokens', 0)
+                elif etype == 'message_delta':
+                    msg_usage = evt.get('usage', {})
+                    usage_out = msg_usage.get('output_tokens', usage_out)
+                elif etype == 'message_stop':
+                    break
     except urllib.error.HTTPError as e:
         error_body = e.read().decode('utf-8') if e.fp else 'Geen details'
         print(f"Claude API fout ({e.code}): {error_body}")
         sys.exit(1)
 
-    usage = log_usage(result, "claude", model)
-
-    for block in result.get('content', []):
-        if block.get('type') == 'text':
-            return block['text'], usage
+    response_text = ''.join(chunks)
+    fake_result = {"usage": {"input_tokens": usage_in, "output_tokens": usage_out}}
+    usage = log_usage(fake_result, "claude", model)
+    return response_text, usage
 
     print("FOUT: Geen tekstantwoord van Claude API.")
     sys.exit(1)

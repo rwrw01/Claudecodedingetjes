@@ -48,7 +48,7 @@ PROVIDERS = {
         "api_url": "https://api.anthropic.com/v1/messages",
         "model": "auto",
         "model_preference": ["claude-sonnet"],
-        "max_tokens": 12000,
+        "max_tokens": 32000,
         "env_key": "ANTHROPIC_API_KEY",
     },
 }

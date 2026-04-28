@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekenen aan reacties — Scheikunde HAVO</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-light: #d1fae5;
+            --accent: #e11d48;
+            --success: #16a34a;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white;
+            padding: 3rem 1.5rem 2rem;
+            text-align: center;
+        }
+
+        header h1 { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        header p { font-size: 1.05rem; opacity: 0.9; }
+
+        .breadcrumb {
+            background: #fff;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.85rem;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breadcrumb a { color: var(--primary); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 2rem 1rem 3rem;
+        }
+
+        .toc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.4rem 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h2 { font-size: 1rem; color: var(--muted); margin-bottom: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        .toc ol { padding-left: 1.4rem; }
+        .toc li { margin-bottom: 0.3rem; }
+        .toc a { color: var(--primary); text-decoration: none; font-weight: 500; }
+        .toc a:hover { text-decoration: underline; }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            padding: 1.8rem;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .card h3 { font-size: 1.1rem; margin: 1.2rem 0 0.5rem; color: var(--text); }
+
+        .formula {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+        }
+
+        .tip-box {
+            background: #fefce8;
+            border-left: 4px solid #ca8a04;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: #fff1f2;
+            border-left: 4px solid #e11d48;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .try-it {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 1px solid #86efac;
+            border-radius: var(--radius);
+            padding: 1.4rem;
+            margin: 1.2rem 0;
+        }
+
+        .try-it h4 { color: #065f46; margin-bottom: 0.8rem; font-size: 1rem; }
+
+        .slider-demo {
+            background: var(--primary-light);
+            border-radius: var(--radius);
+            padding: 1.4rem;
+            margin: 1.2rem 0;
+        }
+
+        .slider-demo label { font-weight: 600; color: #065f46; }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 0.5rem 0;
+            accent-color: var(--primary);
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 0.45rem 0.8rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            width: 130px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            padding: 0.45rem 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.15s;
+        }
+
+        .btn-check { background: var(--primary); color: white; }
+        .btn-check:hover { background: #047857; }
+        .btn-hint { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; margin-left: 0.4rem; }
+        .btn-hint:hover { background: #fde68a; }
+        .btn-uitleg { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
+        .btn-uitleg:hover { background: #bfdbfe; }
+        .btn-reveal { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; margin-top: 0.4rem; }
+        .btn-reveal:hover { background: #e5e7eb; }
+
+        .feedback {
+            margin-top: 0.5rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        .feedback.correct { background: #dcfce7; color: #15803d; }
+        .feedback.fout { background: #fee2e2; color: #dc2626; }
+
+        .hint-box {
+            background: #fef9c3;
+            border: 1px solid #fde047;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            font-size: 0.92rem;
+        }
+
+        .uitleg-stappen {
+            background: #eff6ff;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 0.6rem;
+            font-size: 0.92rem;
+        }
+
+        .uitleg-stappen ol { padding-left: 1.3rem; }
+        .uitleg-stappen li { margin-bottom: 0.4rem; }
+
+        .oefening {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: #fff;
+        }
+
+        .oefening p { margin-bottom: 0.6rem; }
+
+        .stap-reveal-container { margin: 1rem 0; }
+        .stap-item {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.5rem;
+            display: none;
+        }
+        .stap-item.zichtbaar { display: block; }
+        .stap-item strong { color: var(--primary); }
+
+        .ratio-visual {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            align-items: center;
+        }
+
+        .mol-blokje {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 54px;
+            height: 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            padding: 0 0.5rem;
+            text-align: center;
+        }
+
+        .colon-sep { font-size: 1.2rem; font-weight: 700; color: var(--muted); }
+
+        .stappenplan {
+            counter-reset: stap;
+            list-style: none;
+            padding: 0;
+        }
+
+        .stappenplan li {
+            counter-increment: stap;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 0.8rem;
+            padding-top: 0.1rem;
+        }
+
+        .stappenplan li::before {
+            content: "Stap " counter(stap);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            white-space: nowrap;
+        }
+
+        .overmaat-vis {
+            display: flex;
+            gap: 0.4rem;
+            margin: 0.8rem 0;
+            flex-wrap: wrap;
+            align-items: flex-end;
+        }
+
+        .stofbalk {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .balk-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+
+        .mini-exercises { margin-top: 1rem; }
+        .mini-exercises h3 { color: var(--primary); margin-bottom: 0.8rem; }
+
+        .section-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        sub, sup { font-size: 0.75em; }
+
+        .inline-formula {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            padding: 0.15rem 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            display: inline-block;
+            margin: 0.2rem 0;
+        }
+
+        .stap-grid {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.4rem 1rem;
+            align-items: start;
+            margin: 0.8rem 0;
+        }
+
+        .stap-nr {
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.5rem; }
+            .container { padding: 1rem 0.7rem; }
+            .card { padding: 1.1rem; }
+            input[type="text"] { width: 110px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>⚗️ Rekenen aan reacties</h1>
+    <p>Scheikunde · HAVO bovenbouw · Molverhouding & stoichiometrie</p>
+</header>
+
+<nav class="breadcrumb">
+    <a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> › Scheikunde › Rekenen aan reacties
+</nav>
+
+<div class="container">
+
+    <!-- Inhoudsopgave -->
+    <div class="toc">
+        <h2>Inhoudsopgave</h2>
+        <ol>
+            <li><a href="#sec1">Wat is een molverhouding?</a></li>
+            <li><a href="#sec2">Het 5-stappenplan</a></li>
+            <li><a href="#sec3">Rekenen met massa en mol</a></li>
+            <li><a href="#sec4">Overmaat en ondermaat</a></li>
+            <li><a href="#sec5">Oefenopgaven</a></li>
+        </ol>
+    </div>
+
+    <!-- SECTIE 1: Molverhouding -->
+    <section id="sec1">
+        <div class="card">
+            <h2><span class="section-badge">1</span> Wat is een molverhouding?</h2>
+
+            <p>Bekijk de reactievergelijking voor de verbranding van methaan (CH<sub>4</sub>):</p>
+
+            <div class="formula">
+                CH<sub>4</sub> + 2 O<sub>2</sub> → CO<sub>2</sub> + 2 H<sub>2</sub>O
+            </div>
+
+            <p>De coëfficiënten (de getallen vóór de formules) geven twee dingen tegelijk aan:</p>
+            <ul style="padding-left:1.4rem; margin: 0.7rem 0;">
+                <li>Op <strong>microniveau</strong>: de verhouding van <em>deeltjes</em> (1 molecuul CH<sub>4</sub> reageert met 2 O<sub>2</sub>-moleculen)</li>
+                <li>Op <strong>macroniveau</strong>: de verhouding van <em>mollen</em> (1 mol CH<sub>4</sub> reageert met 2 mol O<sub>2</sub>)</li>
+            </ul>
+
+            <p>De <strong>molverhouding</strong> lees je rechtstreeks af uit de coëfficiënten:</p>
+
+            <div class="formula">
+                CH<sub>4</sub> : O<sub>2</sub> : CO<sub>2</sub> : H<sub>2</sub>O = <strong>1 : 2 : 1 : 2</strong>
+            </div>
+
+            <!-- SVG visualisatie van molverhouding -->
+            <h3>Visualisatie van de verhouding 1 : 2 : 1 : 2</h3>
+            <p style="color:var(--muted); font-size:0.9rem;">Elk blokje stelt 1 mol voor. De verhouding van blokjes klopt met de coëfficiënten:</p>
+
+            <svg width="520" height="130" viewBox="0 0 520 130" style="max-width:100%; display:block; margin:1rem auto;">
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                  <path d="M0,0 L0,6 L8,3 z" fill="#64748b"/>
+                </marker>
+              </defs>
+
+              <!-- CH4: 1 blokje -->
+              <rect x="10" y="45" width="60" height="36" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+              <text x="40" y="68" text-anchor="middle" font-size="12" fill="#1e3a5f" font-weight="bold">CH₄</text>
+              <text x="40" y="105" text-anchor="middle" font-size="11" fill="#64748b">1 mol</text>
+
+              <text x="85" y="67" text-anchor="middle" font-size="18" fill="#059669" font-weight="bold">+</text>
+
+              <!-- O2: 2 blokjes -->
+              <rect x="100" y="45" width="60" height="36" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+              <text x="130" y="68" text-anchor="middle" font-size="12" fill="#14532d" font-weight="bold">O₂</text>
+              <rect x="166" y="45" width="60" height="36" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+              <text x="196" y="68" text-anchor="middle" font-size="12" fill="#14532d" font-weight="bold">O₂</text>
+              <text x="148" y="105" text-anchor="middle" font-size="11" fill="#64748b">2 mol</text>
+
+              <line x1="235" y1="63" x2="265" y2="63" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+              <text x="250" y="55" text-anchor="middle" font-size="10" fill="#64748b">reactie</text>
+
+              <!-- CO2: 1 blokje -->
+              <rect x="270" y="45" width="60" height="36" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+              <text x="300" y="68" text-anchor="middle" font-size="12" fill="#713f12" font-weight="bold">CO₂</text>
+              <text x="300" y="105" text-anchor="middle" font-size="11" fill="#64748b">1 mol</text>
+
+              <text x="345" y="67" text-anchor="middle" font-size="18" fill="#059669" font-weight="bold">+</text>
+
+              <!-- H2O: 2 blokjes -->
+              <rect x="360" y="45" width="60" height="36" rx="6" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+              <text x="390" y="68" text-anchor="middle" font-size="12" fill="#831843" font-weight="bold">H₂O</text>
+              <rect x="426" y="45" width="60" height="36" rx="6" fill="#fce7f3" stroke="#db2777" stroke-width="2"/>
+              <text x="456" y="68" text-anchor="middle" font-size="12" fill="#831843" font-weight="bold">H₂O</text>
+              <text x="423" y="105" text-anchor="middle" font-size="11" fill="#64748b">2 mol</text>
+
+              <!-- Verhouding label -->
+              <text x="260" y="128" text-anchor="middle" font-size="11" fill="#059669" font-weight="bold">Molverhouding 1 : 2 : 1 : 2</text>
+            </svg>
+
+            <div class="tip-box">
+                💡 <strong>Tip:</strong> De molverhouding schrijf je altijd in de <em>volgorde</em> van de stoffen in de reactievergelijking: eerst de beginstoffen, dan de producten.
+            </div>
+
+            <!-- Slider: varieer de hoeveelheid mol CH4 -->
+            <div class="slider-demo">
+                <label>🔢 Interactief: pas de hoeveelheid CH<sub>4</sub> aan en zie hoeveel mol O<sub>2</sub> nodig is</label>
+                <br>
+                <input type="range" id="sliderCH4" min="0.5" max="5" step="0.5" value="1" oninput="updateCH4Slider()">
+                <div id="CH4SliderOutput" style="margin-top:0.5rem; font-size:0.95rem; color:#065f46;"></div>
+            </div>
+
+            <!-- Mini-oefening 1 -->
+            <div class="try-it">
+                <h4>🧪 Probeer het zelf — molverhouding aflezen</h4>
+                <p>Gegeven: <span class="inline-formula">4 NH<sub>3</sub> + 3 O<sub>2</sub> → 2 N<sub>2</sub> + 6 H<sub>2</sub>O</span></p>
+                <p>Wat is de molverhouding NH<sub>3</sub> : N<sub>2</sub>?</p>
+                <p style="color:var(--muted); font-size:0.88rem;">Vul in als "a:b", bijv. 2:1</p>
+                <input type="text" id="inp-v1" placeholder="bijv. 4:2">
+                <button class="btn-check" onclick="checkRatio('v1', '4:2', '2:1')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('v1')">Hint</button>
+                <div id="hint-v1" style="display:none" class="hint-box">💡 Kijk naar de coëfficiënten vóór NH₃ en N₂ in de vergelijking.</div>
+                <div id="fb-v1" class="feedback"></div>
+                <div id="uitleg-v1" style="display:none">
+                    <button onclick="toonUitleg('v1')" class="btn-uitleg">📖 Hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-v1" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap:</strong>
+                        <ol>
+                            <li>Zoek de coëfficiënt van NH₃: dat is <strong>4</strong></li>
+                            <li>Zoek de coëfficiënt van N₂: dat is <strong>2</strong></li>
+                            <li>Molverhouding NH₃ : N₂ = 4 : 2 (je kunt dit ook vereenvoudigen tot 2:1, maar 4:2 is ook goed)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="try-it">
+                <h4>🧪 Aflezen molverhouding — complete verhouding</h4>
+                <p>Gegeven: <span class="inline-formula">2 SO<sub>2</sub> + O<sub>2</sub> → 2 SO<sub>3</sub></span></p>
+                <p>Hoeveel mol SO<sub>3</sub> ontstaat er als 4 mol SO<sub>2</sub> volledig reageert?</p>
+                <input type="text" id="inp-v2" placeholder="... mol">
+                <button class="btn-check" onclick="checkExact('v2', 4, 'mol SO₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('v2')">Hint</button>
+                <div id="hint-v2" style="display:none" class="hint-box">💡 De molverhouding SO₂ : SO₃ = 2 : 2. Gebruik dit om de hoeveelheid SO₃ te berekenen.</div>
+                <div id="fb-v2" class="feedback"></div>
+                <div id="uitleg-v2" style="display:none">
+                    <button onclick="toonUitleg('v2')" class="btn-uitleg">📖 Hoe kom ik tot het antwoord?</button>
+                    <div id="uitleg-stappen-v2" style="display:none" class="uitleg-stappen">
+                        <strong>Stap-voor-stap:</strong>
+                        <ol>
+                            <li>Molverhouding SO₂ : SO₃ = 2 : 2 = 1 : 1</li>
+                            <li>Er reageert 4 mol SO₂</li>
+                            <li>Dus ontstaat er ook 4 mol SO₃</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTIE 2: Het 5-stappenplan -->
+    <section id="sec2">
+        <div class="card">
+            <h2><span class="section-badge">2</span> Het 5-stappenplan</h2>
+
+            <p>Voor alle berekeningen met reacties gebruik je hetzelfde stappenplan. Leer dit stappenplan goed, want je past het altijd toe — ook bij complexere opgaven.</p>
+
+            <ul class="stappenplan" style="margin: 1rem 0;">
+                <li><strong>Stel de kloppende reactievergelijking op.</strong></li>
+                <li><strong>Reken de gegeven massa (of volume) om naar mol.</strong> Gebruik: n = m / M</li>
+                <li><strong>Leid de molverhouding af</strong> uit de coëfficiënten van de reactievergelijking.</li>
+                <li><strong>Bereken met de molverhouding</strong> hoeveel mol van de gevraagde stof er reageert of ontstaat.</li>
+                <li><strong>Reken het aantal mol om</strong> naar de gevraagde eenheid (gram, liter, kg).</li>
+            </ul>
+
+            <div class="tip-box">
+                💡 <strong>Ezelsbruggetje:</strong> Vergelijking → Mol → Verhouding → Mol → Eenheid. Schrijf de stappen altijd op!
+            </div>
+
+            <!-- Stap-voor-stap voorbeeld -->
+            <div class="example-box">
+                <strong>📋 Uitgewerkt voorbeeld — stap voor stap onthuld</strong>
+                <p style="margin-top:0.5rem;"><em>Bereken hoeveel gram koper(II)sulfide (CuS) ontstaat bij de reactie van 5,0 g koper met zwavel.</em></p>
+                <p style="color:var(--muted); font-size:0.88rem;">Reactievergelijking: Cu + S → CuS &nbsp;|&nbsp; M(Cu) = 63,5 g/mol &nbsp;|&nbsp; M(CuS) = 95,6 g/mol</p>
+                <div class="stap-reveal-container" id="stapreveal">
+                    <div class="stap-item zichtbaar">
+                        <strong>Stap 1 — Reactievergelijking:</strong><br>
+                        Cu (s) + S (s) → CuS (s) &nbsp; ✓ (coëfficiënten zijn allemaal 1)
+                    </div>
+                    <div class="stap-item" id="stap2">
+                        <strong>Stap 2 — Massa → mol:</strong><br>
+                        n(Cu) = 5,0 / 63,5 = <strong>0,0787 mol Cu</strong>
+                    </div>
+                    <div class="stap-item" id="stap3">
+                        <strong>Stap 3 — Molverhouding:</strong><br>
+                        Cu : CuS = <strong>1 : 1</strong>
+                    </div>
+                    <div class="stap-item" id="stap4">
+                        <strong>Stap 4 — Bereken mol CuS:</strong><br>
+                        n(CuS) = 0,0787 × (1/1) = <strong>0,0787 mol CuS</strong>
+                    </div>
+                    <div class="stap-item" id="stap5">
+                        <strong>Stap 5 — Mol → gram:</strong><br>
+                        m(CuS) = 0,0787 × 95,6 = <strong>7,5 g</strong><br>
+                        ✅ Uit 5,0 g koper kan maximaal <strong>7,5 g koper(II)sulfide</strong> ontstaan.
+                    </div>
+                </div>
+                <button class="btn-check" onclick="volgendStap()" id="btnStap" style="margin-top:0.5rem;">▶ Toon volgende stap</button>
+            </div>
+
+            <!-- Slider: molaire massa -->
+            <div class="slider-demo">
+                <label>⚖️ Slider: verander de massa koper en zie het resultaat</label>
+                <p style="font-size:0.88rem; color:#065f46; margin-top:0.3rem;">Cu + S → CuS &nbsp;|&nbsp; M(Cu) = 63,5 g/mol &nbsp;|&nbsp; M(CuS) = 95,6 g/mol</p>
+                <input type="range" id="sliderCu" min="1" max="20" step="0.5" value="5" oninput="updateCuSlider()">
+                <div id="CuSliderOutput" style="margin-top:0.5rem; font-size:0.95rem; color:#065f46;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTIE 3: Rekenen met massa -->
+    <section id="sec3">
+        <div class="card">
+            <h2><span class="section-badge">3</span> Rekenen met massa en mol</h2>
+
+            <p>In de meeste opgaven moet je van massa naar mol omrekenen (of andersom). Je gebruikt daarvoor de molaire massa <em>M</em>:</p>
+
+            <div class="formula">
+                n = m / M &nbsp;&nbsp; (mol = gram ÷ g mol⁻¹)
+                <br>
+                m = n × M &nbsp;&nbsp; (gram = mol × g mol⁻¹)
+            </div>
+
+            <div class="warning-box">
+                ⚠️ <strong>Let op eenheden!</strong> Als de massa in kg is gegeven, zet hem dan eerst om naar gram (×1000). Als het volume in dm³ is, gebruik je de dichtheid of het molaire volume (22,4 L/mol bij 273 K en p₀).
+            </div>
+
+            <!-- Interactief voorbeeld met tussentijdse invulvelden -->
+            <div class="example-box">
+                <strong>📋 Voorbeeld — Bereken hoeveel gram water ontstaat bij de reactie van 8,0 g zuurstof met waterstof.</strong>
+                <p style="margin-top:0.4rem; color:var(--muted); font-size:0.88rem;">2 H₂ + O₂ → 2 H₂O &nbsp;|&nbsp; M(O₂) = 32,0 g/mol &nbsp;|&nbsp; M(H₂O) = 18,0 g/mol</p>
+            </div>
+
+            <p><strong>Los deze berekening stap voor stap op:</strong></p>
+
+            <div class="oefening" style="border-color:#86efac;">
+                <p><strong>Stap 2:</strong> Bereken het aantal mol O<sub>2</sub> in 8,0 g.</p>
+                <p style="font-size:0.88rem; color:var(--muted);">Gebruik n = m / M, met M(O₂) = 32,0 g/mol</p>
+                <input type="text" id="inp-s2" placeholder="... mol">
+                <button class="btn-check" onclick="checkStapA()">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('s2')">Hint</button>
+                <div id="hint-s2" style="display:none" class="hint-box">💡 n = 8,0 / 32,0 = ?</div>
+                <div id="fb-s2" class="feedback"></div>
+            </div>
+
+            <div class="oefening" style="border-color:#86efac;">
+                <p><strong>Stap 3 & 4:</strong> De molverhouding O<sub>2</sub> : H<sub>2</sub>O = 1 : 2. Bereken het aantal mol H<sub>2</sub>O dat ontstaat.</p>
+                <p style="font-size:0.88rem; color:var(--muted);">Voer je antwoord van stap 2 in én gebruik de molverhouding</p>
+                <input type="text" id="inp-s3" placeholder="... mol">
+                <button class="btn-check" onclick="checkStapB()">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('s3')">Hint</button>
+                <div id="hint-s3" style="display:none" class="hint-box">💡 n(H₂O) = n(O₂) × (2/1) = 0,25 × 2 = ?</div>
+                <div id="fb-s3" class="feedback"></div>
+            </div>
+
+            <div class="oefening" style="border-color:#86efac;">
+                <p><strong>Stap 5:</strong> Bereken de massa van het H<sub>2</sub>O in gram. M(H<sub>2</sub>O) = 18,0 g/mol</p>
+                <input type="text" id="inp-s4" placeholder="... gram">
+                <button class="btn-check" onclick="checkStapC()">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('s4')">Hint</button>
+                <div id="hint-s4" style="display:none" class="hint-box">💡 m = n × M = 0,50 × 18,0 = ?</div>
+                <div id="fb-s4" class="feedback"></div>
+                <div id="uitleg-s4" style="display:none">
+                    <button onclick="toonUitleg('s4')" class="btn-uitleg">📖 Toon volledige uitleg</button>
+                    <div id="uitleg-stappen-s4" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>n(O₂) = 8,0 / 32,0 = <strong>0,25 mol</strong></li>
+                            <li>Molverhouding O₂ : H₂O = 1 : 2, dus n(H₂O) = 0,25 × 2 = <strong>0,50 mol</strong></li>
+                            <li>m(H₂O) = 0,50 × 18,0 = <strong>9,0 gram</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slider: verander de massa O2 -->
+            <div class="slider-demo">
+                <label>⚗️ Slider: verander de massa O₂ en zie hoeveel H₂O ontstaat (2 H₂ + O₂ → 2 H₂O)</label>
+                <input type="range" id="sliderO2" min="4" max="64" step="4" value="8" oninput="updateO2Slider()">
+                <div id="O2SliderOutput" style="margin-top:0.5rem; font-size:0.95rem; color:#065f46;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTIE 4: Overmaat en ondermaat -->
+    <section id="sec4">
+        <div class="card">
+            <h2><span class="section-badge">4</span> Overmaat en ondermaat</h2>
+
+            <p>Soms zijn twee beginstoffen niet in de juiste molverhouding aanwezig. Dan reageert één stof volledig op (<strong>de ondermaat</strong>), terwijl de andere stof overblijft (<strong>de overmaat</strong>).</p>
+
+            <div class="formula">
+                Ondermaat = de stof die volledig opgebruikt wordt (beperkende stof)<br>
+                Overmaat = de stof die 'te veel' aanwezig is en gedeeltelijk overblijft
+            </div>
+
+            <div class="tip-box">
+                💡 <strong>Rekenregel:</strong> Bereken altijd met de <em>ondermaat</em>! De ondermaat bepaalt hoeveel product er maximaal kan ontstaan.
+            </div>
+
+            <h3>Hoe bepaal je de ondermaat?</h3>
+            <p>Vergelijk de verhouding van de gegeven hoeveelheden met de vereiste molverhouding:</p>
+
+            <div class="example-box">
+                <strong>Voorbeeld:</strong> Er reageert 4,0 mol CO met 3,0 mol O<sub>2</sub>.
+                <br>Reactievergelijking: <span class="inline-formula">2 CO + O₂ → 2 CO₂</span>
+                <br><br>
+                <strong>Vereiste verhouding:</strong> CO : O₂ = 2 : 1
+                <br>Om 4,0 mol CO te gebruiken heb je nodig: 4,0 / 2 = <strong>2,0 mol O₂</strong>
+                <br>Er is 3,0 mol O₂ aanwezig — dat is <strong>meer</strong> dan 2,0 mol.
+                <br>→ <strong>CO is de ondermaat</strong>, O₂ is de overmaat.
+                <br>→ Je rekent met 4,0 mol CO.
+                <br>→ Er blijft 3,0 − 2,0 = <strong>1,0 mol O₂ over</strong>.
+            </div>
+
+            <!-- Slider overmaat -->
+            <div class="slider-demo">
+                <label>⚖️ Slider: verander de hoeveelheid O₂ en zie of CO of O₂ in overmaat is (2 CO + O₂ → 2 CO₂, vast: 4,0 mol CO)</label>
+                <input type="range" id="sliderOvermaat" min="0.5" max="5" step="0.5" value="3" oninput="updateOvermaatSlider()">
+                <div id="OvermaatOutput" style="margin-top:0.5rem; font-size:0.95rem; color:#065f46;"></div>
+            </div>
+
+            <!-- SVG: overmaat visualisatie -->
+            <svg width="480" height="140" viewBox="0 0 480 140" style="max-width:100%; display:block; margin:1rem auto;" id="overmaat-svg">
+              <text x="240" y="20" text-anchor="middle" font-size="13" fill="#1e293b" font-weight="bold">Overmaat-visualisatie: 2 CO + O₂ → 2 CO₂</text>
+
+              <!-- CO: 4 blokjes -->
+              <text x="60" y="45" text-anchor="middle" font-size="11" fill="#2563eb" font-weight="bold">CO (4 mol)</text>
+              <rect x="10" y="50" width="42" height="32" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+              <text x="31" y="71" text-anchor="middle" font-size="10" fill="#1e3a5f">CO</text>
+              <rect x="58" y="50" width="42" height="32" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+              <text x="79" y="71" text-anchor="middle" font-size="10" fill="#1e3a5f">CO</text>
+              <rect x="106" y="50" width="42" height="32" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+              <text x="127" y="71" text-anchor="middle" font-size="10" fill="#1e3a5f">CO</text>
+              <rect x="154" y="50" width="42" height="32" rx="5" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+              <text x="175" y="71" text-anchor="middle" font-size="10" fill="#1e3a5f">CO</text>
+
+              <text x="215" y="70" text-anchor="middle" font-size="18" fill="#64748b">+</text>
+
+              <!-- O2: 3 blokjes, 1 in overmaat -->
+              <text x="300" y="45" text-anchor="middle" font-size="11" fill="#059669" font-weight="bold">O₂ (3 mol — 1 over)</text>
+              <rect x="235" y="50" width="42" height="32" rx="5" fill="#dcfce7" stroke="#059669" stroke-width="2"/>
+              <text x="256" y="71" text-anchor="middle" font-size="10" fill="#14532d">O₂</text>
+              <rect x="283" y="50" width="42" height="32" rx="5" fill="#dcfce7" stroke="#059669" stroke-width="2"/>
+              <text x="304" y="71" text-anchor="middle" font-size="10" fill="#14532d">O₂</text>
+              <!-- overmaat blokje -->
+              <rect x="331" y="50" width="42" height="32" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2"/>
+              <text x="352" y="71" text-anchor="middle" font-size="10" fill="#dc2626">O₂ over</text>
+
+              <line x1="385" y1="66" x2="405" y2="66" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+              <!-- Product: 4 CO2 blokjes gesymboliseerd -->
+              <text x="440" y="45" text-anchor="middle" font-size="11" fill="#ca8a04" font-weight="bold">4 mol CO₂</text>
+              <rect x="415" y="50" width="50" height="32" rx="5" fill="#fef9c3" stroke="#ca8a04" stroke-width="2"/>
+              <text x="440" y="71" text-anchor="middle" font-size="10" fill="#713f12">4×CO₂</text>
+
+              <text x="240" y="125" text-anchor="middle" font-size="11" fill="#dc2626">← Rode stippellijn = overmaat (reageert niet mee)</text>
+            </svg>
+
+            <div class="warning-box">
+                ⚠️ <strong>Veelgemaakte fout:</strong> Studenten rekenen soms per ongeluk met de overmaat. Controleer altijd welke stof in ondermaat is!
+            </div>
+
+            <!-- Mini-oefening overmaat -->
+            <div class="mini-exercises">
+                <h3>🧪 Mini-oefening: overmaat bepalen</h3>
+                <div class="oefening">
+                    <p>Bij de reactie <span class="inline-formula">N₂ + 3 H₂ → 2 NH₃</span> zijn 2,0 mol N<sub>2</sub> en 4,5 mol H<sub>2</sub> aanwezig. Hoeveel mol H<sub>2</sub> is er theoretisch nodig om alle N<sub>2</sub> te laten reageren?</p>
+                    <input type="text" id="inp-ov1" placeholder="... mol H₂">
+                    <button class="btn-check" onclick="checkExact('ov1', 6, 'mol H₂')">Controleer</button>
+                    <button class="btn-hint" onclick="toonHint('ov1')">Hint</button>
+                    <div id="hint-ov1" style="display:none" class="hint-box">💡 Molverhouding N₂ : H₂ = 1 : 3. Voor 2,0 mol N₂ heb je nodig: 2,0 × 3 = ? mol H₂</div>
+                    <div id="fb-ov1" class="feedback"></div>
+                    <div id="uitleg-ov1" style="display:none">
+                        <button onclick="toonUitleg('ov1')" class="btn-uitleg">📖 Uitleg</button>
+                        <div id="uitleg-stappen-ov1" style="display:none" class="uitleg-stappen">
+                            <ol>
+                                <li>Molverhouding N₂ : H₂ = 1 : 3</li>
+                                <li>Voor 2,0 mol N₂ is nodig: 2,0 × 3 = <strong>6,0 mol H₂</strong></li>
+                                <li>Er is maar 4,5 mol H₂ — dus H₂ is de ondermaat!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="oefening">
+                    <p>Welke stof is in overmaat: N<sub>2</sub> of H<sub>2</sub>? (typ "N2" of "H2")</p>
+                    <input type="text" id="inp-ov2" placeholder="N2 of H2">
+                    <button class="btn-check" onclick="checkText('ov2', 'n2', 'N₂ is in overmaat')">Controleer</button>
+                    <button class="btn-hint" onclick="toonHint('ov2')">Hint</button>
+                    <div id="hint-ov2" style="display:none" class="hint-box">💡 De overmaat is de stof die NIET volledig opreageert. Je hebt meer H₂ nodig dan er is, dus H₂ is de ondermaat. De andere stof is dan...?</div>
+                    <div id="fb-ov2" class="feedback"></div>
+                    <div id="uitleg-ov2" style="display:none">
+                        <button onclick="toonUitleg('ov2')" class="btn-uitleg">📖 Uitleg</button>
+                        <div id="uitleg-stappen-ov2" style="display:none" class="uitleg-stappen">
+                            <ol>
+                                <li>H₂ is de ondermaat: er is maar 4,5 mol, maar 6,0 mol nodig</li>
+                                <li>H₂ reageert volledig op</li>
+                                <li>N₂ is de overmaat: er is niet genoeg H₂ om alle N₂ te laten reageren</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTIE 5: Oefenopgaven -->
+    <section id="sec5">
+        <div class="card">
+            <h2><span class="section-badge">5</span> Oefenopgaven</h2>
+            <p style="color:var(--muted);">Los de opgaven op met het 5-stappenplan. Gebruik de hint- en uitlegknopjes als je vastzit.</p>
+
+            <!-- Opgave 1 -->
+            <div class="oefening">
+                <p><strong>Opgave 1</strong> — Bereken het aantal mol</p>
+                <p>De reactievergelijking voor de oxidatie van zwaveldioxde is:</p>
+                <div class="formula" style="margin:0.5rem 0;">2 SO₂ + O₂ → 2 SO₃</div>
+                <p>Als 3,6 mol SO₂ volledig reageert, hoeveel mol SO₃ ontstaat er dan?</p>
+                <p><strong>Stap 3:</strong> Wat is de molverhouding SO₂ : SO₃?</p>
+                <input type="text" id="inp-o1a" placeholder="a:b">
+                <button class="btn-check" onclick="checkRatio('o1a', '2:2', '1:1')">Controleer verhouding</button>
+                <div id="fb-o1a" class="feedback"></div>
+                <br><br>
+                <p><strong>Stap 4:</strong> Bereken het aantal mol SO₃.</p>
+                <input type="text" id="inp-o1b" placeholder="... mol">
+                <button class="btn-check" onclick="checkExact('o1b', 3.6, 'mol SO₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o1b')">Hint</button>
+                <div id="hint-o1b" style="display:none" class="hint-box">💡 Verhouding 1:1, dus n(SO₃) = n(SO₂) = 3,6 mol</div>
+                <div id="fb-o1b" class="feedback"></div>
+                <div id="uitleg-o1b" style="display:none">
+                    <button onclick="toonUitleg('o1b')" class="btn-uitleg">📖 Uitleg</button>
+                    <div id="uitleg-stappen-o1b" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>Reactievergelijking: 2 SO₂ + O₂ → 2 SO₃</li>
+                            <li>Molverhouding SO₂ : SO₃ = 2 : 2 = 1 : 1</li>
+                            <li>n(SO₃) = 3,6 × (2/2) = <strong>3,6 mol</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 2 -->
+            <div class="oefening">
+                <p><strong>Opgave 2</strong> — Massa berekenen</p>
+                <p>Bereken hoeveel gram ijzer(III)oxide (Fe<sub>2</sub>O<sub>3</sub>) nodig is om 11,2 g ijzer (Fe) te maken.</p>
+                <div class="formula" style="margin:0.5rem 0;">Fe₂O₃ + 3 CO → 2 Fe + 3 CO₂</div>
+                <p style="color:var(--muted); font-size:0.88rem;">M(Fe) = 55,8 g/mol &nbsp;|&nbsp; M(Fe₂O₃) = 159,7 g/mol</p>
+
+                <p><strong>Stap 2:</strong> Bereken mol Fe uit 11,2 g.</p>
+                <input type="text" id="inp-o2a" placeholder="... mol Fe">
+                <button class="btn-check" onclick="checkExact('o2a', 0.2, 'mol Fe')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o2a')">Hint</button>
+                <div id="hint-o2a" style="display:none" class="hint-box">💡 n = m / M = 11,2 / 55,8</div>
+                <div id="fb-o2a" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 4:</strong> Bereken mol Fe<sub>2</sub>O<sub>3</sub> nodig. (Fe₂O₃ : Fe = 1 : 2)</p>
+                <input type="text" id="inp-o2b" placeholder="... mol Fe₂O₃">
+                <button class="btn-check" onclick="checkExact('o2b', 0.1, 'mol Fe₂O₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o2b')">Hint</button>
+                <div id="hint-o2b" style="display:none" class="hint-box">💡 Verhouding Fe₂O₃ : Fe = 1 : 2, dus n(Fe₂O₃) = n(Fe) / 2</div>
+                <div id="fb-o2b" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 5:</strong> Bereken de massa Fe<sub>2</sub>O<sub>3</sub> in gram.</p>
+                <input type="text" id="inp-o2c" placeholder="... gram">
+                <button class="btn-check" onclick="checkExact('o2c', 15.97, 'gram Fe₂O₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o2c')">Hint</button>
+                <div id="hint-o2c" style="display:none" class="hint-box">💡 m = n × M = 0,10 × 159,7</div>
+                <div id="fb-o2c" class="feedback"></div>
+                <div id="uitleg-o2c" style="display:none">
+                    <button onclick="toonUitleg('o2c')" class="btn-uitleg">📖 Volledige uitleg</button>
+                    <div id="uitleg-stappen-o2c" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>n(Fe) = 11,2 / 55,8 = <strong>0,2006 mol</strong></li>
+                            <li>Molverhouding Fe₂O₃ : Fe = 1 : 2 → n(Fe₂O₃) = 0,2006 / 2 = <strong>0,1003 mol</strong></li>
+                            <li>m(Fe₂O₃) = 0,1003 × 159,7 = <strong>≈ 16,0 gram</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 3 -->
+            <div class="oefening">
+                <p><strong>Opgave 3</strong> — Overmaat berekenen</p>
+                <p>Bij het maken van magnesiumoxide reageert magnesium met zuurstof:</p>
+                <div class="formula" style="margin:0.5rem 0;">2 Mg + O₂ → 2 MgO</div>
+                <p>Er zijn 3,0 mol Mg en 2,0 mol O<sub>2</sub> aanwezig.</p>
+
+                <p><strong>a)</strong> Hoeveel mol O₂ is minimaal nodig om 3,0 mol Mg te laten reageren?</p>
+                <input type="text" id="inp-o3a" placeholder="... mol O₂">
+                <button class="btn-check" onclick="checkExact('o3a', 1.5, 'mol O₂')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o3a')">Hint</button>
+                <div id="hint-o3a" style="display:none" class="hint-box">💡 Verhouding Mg : O₂ = 2 : 1. Voor 3,0 mol Mg heb je 3,0 / 2 = ? mol O₂ nodig.</div>
+                <div id="fb-o3a" class="feedback"></div>
+                <br><br>
+
+                <p><strong>b)</strong> Welke stof is in overmaat en hoeveel mol blijft er over? Typ je antwoord als stofnaam + hoeveelheid (bijv. "O2 0.5")</p>
+                <input type="text" id="inp-o3b" placeholder="bijv. O2 0.5">
+                <button class="btn-check" onclick="checkText('o3b', 'o2 0.5', 'O₂ — 0,5 mol over')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o3b')">Hint</button>
+                <div id="hint-o3b" style="display:none" class="hint-box">💡 Er is 2,0 mol O₂ aanwezig maar slechts 1,5 mol nodig. Het verschil is de overmaat.</div>
+                <div id="fb-o3b" class="feedback"></div>
+                <br><br>
+
+                <p><strong>c)</strong> Hoeveel gram MgO kan er maximaal ontstaan? M(MgO) = 40,3 g/mol</p>
+                <input type="text" id="inp-o3c" placeholder="... gram">
+                <button class="btn-check" onclick="checkExact('o3c', 120.9, 'gram MgO')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o3c')">Hint</button>
+                <div id="hint-o3c" style="display:none" class="hint-box">💡 Mg is de ondermaat (3,0 mol). Verhouding Mg : MgO = 2 : 2 = 1 : 1. m = n × M</div>
+                <div id="fb-o3c" class="feedback"></div>
+                <div id="uitleg-o3c" style="display:none">
+                    <button onclick="toonUitleg('o3c')" class="btn-uitleg">📖 Volledige uitleg</button>
+                    <div id="uitleg-stappen-o3c" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>Verhouding Mg : O₂ = 2 : 1 → voor 3,0 mol Mg nodig: 1,5 mol O₂</li>
+                            <li>Er is 2,0 mol O₂ → O₂ is de overmaat (2,0 − 1,5 = 0,5 mol over)</li>
+                            <li>Mg is de ondermaat → rekenen met 3,0 mol Mg</li>
+                            <li>Verhouding Mg : MgO = 2 : 2 = 1 : 1 → n(MgO) = 3,0 mol</li>
+                            <li>m(MgO) = 3,0 × 40,3 = <strong>120,9 gram</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 4 -->
+            <div class="oefening">
+                <p><strong>Opgave 4</strong> — Combinatievraag: massa naar mol naar massa</p>
+                <p>Kaliumchloraat ontleedt bij verhitting:</p>
+                <div class="formula" style="margin:0.5rem 0;">2 KClO₃ → 2 KCl + 3 O₂</div>
+                <p style="color:var(--muted); font-size:0.88rem;">M(KClO₃) = 122,6 g/mol &nbsp;|&nbsp; M(O₂) = 32,0 g/mol</p>
+                <p>Bereken hoeveel gram O<sub>2</sub> ontstaat bij de ontleding van 6,13 g KClO<sub>3</sub>.</p>
+
+                <p><strong>Stap 2:</strong> n(KClO₃) = ?</p>
+                <input type="text" id="inp-o4a" placeholder="... mol">
+                <button class="btn-check" onclick="checkExact('o4a', 0.05, 'mol KClO₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o4a')">Hint</button>
+                <div id="hint-o4a" style="display:none" class="hint-box">💡 n = 6,13 / 122,6</div>
+                <div id="fb-o4a" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 4:</strong> n(O₂) = ? (verhouding KClO₃ : O₂ = 2 : 3)</p>
+                <input type="text" id="inp-o4b" placeholder="... mol">
+                <button class="btn-check" onclick="checkExact('o4b', 0.075, 'mol O₂')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o4b')">Hint</button>
+                <div id="hint-o4b" style="display:none" class="hint-box">💡 n(O₂) = n(KClO₃) × (3/2) = 0,050 × 1,5</div>
+                <div id="fb-o4b" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 5:</strong> m(O₂) = ? gram</p>
+                <input type="text" id="inp-o4c" placeholder="... gram">
+                <button class="btn-check" onclick="checkExact('o4c', 2.4, 'gram O₂')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o4c')">Hint</button>
+                <div id="hint-o4c" style="display:none" class="hint-box">💡 m = 0,075 × 32,0</div>
+                <div id="fb-o4c" class="feedback"></div>
+                <div id="uitleg-o4c" style="display:none">
+                    <button onclick="toonUitleg('o4c')" class="btn-uitleg">📖 Volledige uitleg</button>
+                    <div id="uitleg-stappen-o4c" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>n(KClO₃) = 6,13 / 122,6 = <strong>0,0500 mol</strong></li>
+                            <li>Verhouding KClO₃ : O₂ = 2 : 3 → n(O₂) = 0,0500 × (3/2) = <strong>0,0750 mol</strong></li>
+                            <li>m(O₂) = 0,0750 × 32,0 = <strong>2,40 gram</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 5 -->
+            <div class="oefening">
+                <p><strong>Opgave 5</strong> — Fosforzuur uit difosforbipentoxide</p>
+                <div class="formula" style="margin:0.5rem 0;">P₄O₁₀ + 6 H₂O → 4 H₃PO₄</div>
+                <p style="color:var(--muted); font-size:0.88rem;">M(P₄O₁₀) = 284,0 g/mol &nbsp;|&nbsp; M(H₃PO₄) = 98,0 g/mol</p>
+                <p>Bereken hoeveel gram fosforzuur (H<sub>3</sub>PO<sub>4</sub>) maximaal ontstaat uit 28,4 g P<sub>4</sub>O<sub>10</sub>.</p>
+
+                <p><strong>Stap 2:</strong> n(P₄O₁₀)</p>
+                <input type="text" id="inp-o5a" placeholder="... mol">
+                <button class="btn-check" onclick="checkExact('o5a', 0.1, 'mol P₄O₁₀')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o5a')">Hint</button>
+                <div id="hint-o5a" style="display:none" class="hint-box">💡 n = 28,4 / 284,0</div>
+                <div id="fb-o5a" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 4:</strong> n(H₃PO₄) (verhouding P₄O₁₀ : H₃PO₄ = 1 : 4)</p>
+                <input type="text" id="inp-o5b" placeholder="... mol">
+                <button class="btn-check" onclick="checkExact('o5b', 0.4, 'mol H₃PO₄')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o5b')">Hint</button>
+                <div id="hint-o5b" style="display:none" class="hint-box">💡 n(H₃PO₄) = 0,10 × 4</div>
+                <div id="fb-o5b" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 5:</strong> m(H₃PO₄) in gram</p>
+                <input type="text" id="inp-o5c" placeholder="... gram">
+                <button class="btn-check" onclick="checkExact('o5c', 39.2, 'gram H₃PO₄')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o5c')">Hint</button>
+                <div id="hint-o5c" style="display:none" class="hint-box">💡 m = 0,40 × 98,0</div>
+                <div id="fb-o5c" class="feedback"></div>
+                <div id="uitleg-o5c" style="display:none">
+                    <button onclick="toonUitleg('o5c')" class="btn-uitleg">📖 Volledige uitleg</button>
+                    <div id="uitleg-stappen-o5c" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>n(P₄O₁₀) = 28,4 / 284,0 = <strong>0,100 mol</strong></li>
+                            <li>Verhouding P₄O₁₀ : H₃PO₄ = 1 : 4 → n(H₃PO₄) = 0,100 × 4 = <strong>0,400 mol</strong></li>
+                            <li>m(H₃PO₄) = 0,400 × 98,0 = <strong>39,2 gram</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 6 -->
+            <div class="oefening">
+                <p><strong>Opgave 6</strong> — Aluminiumoxide</p>
+                <div class="formula" style="margin:0.5rem 0;">4 Al + 3 O₂ → 2 Al₂O₃</div>
+                <p style="color:var(--muted); font-size:0.88rem;">M(Al) = 27,0 g/mol &nbsp;|&nbsp; M(Al₂O₃) = 102,0 g/mol</p>
+                <p>Er zijn 5,4 g aluminium en 4,8 g O<sub>2</sub> beschikbaar. Bereken welke stof de ondermaat is én hoeveel gram Al<sub>2</sub>O<sub>3</sub> maximaal kan ontstaan.</p>
+
+                <p><strong>Stap 2:</strong> n(Al) = ?</p>
+                <input type="text" id="inp-o6a" placeholder="... mol Al">
+                <button class="btn-check" onclick="checkExact('o6a', 0.2, 'mol Al')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o6a')">Hint</button>
+                <div id="hint-o6a" style="display:none" class="hint-box">💡 n(Al) = 5,4 / 27,0</div>
+                <div id="fb-o6a" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 2b:</strong> n(O₂) = ?</p>
+                <input type="text" id="inp-o6b" placeholder="... mol O₂">
+                <button class="btn-check" onclick="checkExact('o6b', 0.15, 'mol O₂')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o6b')">Hint</button>
+                <div id="hint-o6b" style="display:none" class="hint-box">💡 n(O₂) = 4,8 / 32,0</div>
+                <div id="fb-o6b" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Ondermaat bepalen:</strong> Voor 0,20 mol Al is nodig: 0,20 × (3/4) = 0,15 mol O₂. Er is precies 0,15 mol O₂. Welke stof is de <em>beperkende stof</em>? (typ "Al" of "O2" of "beide")</p>
+                <input type="text" id="inp-o6c" placeholder="Al of O2 of beide">
+                <button class="btn-check" onclick="checkText('o6c', 'beide', 'Beide stoffen zijn precies in de juiste verhouding!')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o6c')">Hint</button>
+                <div id="hint-o6c" style="display:none" class="hint-box">💡 Bereken hoeveel O₂ nodig is voor 0,20 mol Al. Verhouding Al:O₂ = 4:3, dus nodig: 0,20 × 3/4 = ?</div>
+                <div id="fb-o6c" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 5:</strong> m(Al₂O₃) maximaal = ? gram (n(Al₂O₃) = 0,20 × (2/4) = 0,10 mol)</p>
+                <input type="text" id="inp-o6d" placeholder="... gram">
+                <button class="btn-check" onclick="checkExact('o6d', 10.2, 'gram Al₂O₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o6d')">Hint</button>
+                <div id="hint-o6d" style="display:none" class="hint-box">💡 n(Al₂O₃) = 0,10 mol. m = 0,10 × 102,0</div>
+                <div id="fb-o6d" class="feedback"></div>
+                <div id="uitleg-o6d" style="display:none">
+                    <button onclick="toonUitleg('o6d')" class="btn-uitleg">📖 Volledige uitleg</button>
+                    <div id="uitleg-stappen-o6d" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>n(Al) = 5,4 / 27,0 = <strong>0,20 mol</strong></li>
+                            <li>n(O₂) = 4,8 / 32,0 = <strong>0,15 mol</strong></li>
+                            <li>Verhouding Al : O₂ = 4 : 3 → voor 0,20 mol Al nodig: 0,15 mol O₂</li>
+                            <li>Er is precies 0,15 mol O₂ → beide stoffen zijn in de <strong>juiste verhouding</strong></li>
+                            <li>n(Al₂O₃) = 0,20 × (2/4) = <strong>0,10 mol</strong></li>
+                            <li>m(Al₂O₃) = 0,10 × 102,0 = <strong>10,2 gram</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opgave 7: open vraag -->
+            <div class="oefening">
+                <p><strong>Opgave 7</strong> — Open vraag: leg uit in eigen woorden</p>
+                <p>Leg in 2–3 zinnen uit: <em>Waarom reken je bij overmaat altijd met de ondermaat, en niet met de overmaat?</em></p>
+                <textarea id="inp-o7" rows="3" style="width:100%; padding:0.5rem; border:2px solid var(--border); border-radius:8px; font-size:0.9rem; resize:vertical;" placeholder="Schrijf hier jouw uitleg..."></textarea>
+                <br>
+                <button class="btn-reveal" onclick="document.getElementById('antw-o7').style.display='block'">📖 Toon voorbeeldantwoord</button>
+                <div id="antw-o7" style="display:none" class="uitleg-stappen">
+                    <strong>Voorbeeldantwoord:</strong>
+                    <p>De ondermaat is de stof die volledig opreageert. Zodra de ondermaat op is, stopt de reactie — ook al is er nog van de andere stof over. De hoeveelheid product die kan ontstaan wordt dus beperkt door de ondermaat. Reken je met de overmaat, dan zou je meer product uitrekenen dan er werkelijk kan ontstaan, wat onjuist is.</p>
+                </div>
+            </div>
+
+            <!-- Opgave 8 -->
+            <div class="oefening">
+                <p><strong>Opgave 8</strong> — Haber-Bosch process (ammoniak)</p>
+                <div class="formula" style="margin:0.5rem 0;">N₂ + 3 H₂ → 2 NH₃</div>
+                <p style="color:var(--muted); font-size:0.88rem;">M(N₂) = 28,0 g/mol &nbsp;|&nbsp; M(NH₃) = 17,0 g/mol</p>
+                <p>Bereken hoeveel kilogram NH₃ maximaal kan ontstaan uit 560 kg N<sub>2</sub> (bij voldoende H<sub>2</sub>).</p>
+
+                <p><strong>Stap 2:</strong> n(N₂) in mol (zet 560 kg eerst om naar gram)</p>
+                <input type="text" id="inp-o8a" placeholder="... mol N₂">
+                <button class="btn-check" onclick="checkExact('o8a', 20000, 'mol N₂')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o8a')">Hint</button>
+                <div id="hint-o8a" style="display:none" class="hint-box">💡 560 kg = 560.000 g. n = 560.000 / 28,0 = ?</div>
+                <div id="fb-o8a" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 4:</strong> n(NH₃) — verhouding N₂ : NH₃ = 1 : 2</p>
+                <input type="text" id="inp-o8b" placeholder="... mol NH₃">
+                <button class="btn-check" onclick="checkExact('o8b', 40000, 'mol NH₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o8b')">Hint</button>
+                <div id="hint-o8b" style="display:none" class="hint-box">💡 n(NH₃) = 20.000 × 2</div>
+                <div id="fb-o8b" class="feedback"></div>
+                <br><br>
+
+                <p><strong>Stap 5:</strong> massa NH₃ in kilogram</p>
+                <input type="text" id="inp-o8c" placeholder="... kg">
+                <button class="btn-check" onclick="checkExact('o8c', 680, 'kg NH₃')">Controleer</button>
+                <button class="btn-hint" onclick="toonHint('o8c')">Hint</button>
+                <div id="hint-o8c" style="display:none" class="hint-box">💡 m = 40.000 mol × 17,0 g/mol = ? gram → omrekenen naar kg (/1000)</div>
+                <div id="fb-o8c" class="feedback"></div>
+                <div id="uitleg-o8c" style="display:none">
+                    <button onclick="toonUitleg('o8c')" class="btn-uitleg">📖 Volledige uitleg</button>
+                    <div id="uitleg-stappen-o8c" style="display:none" class="uitleg-stappen">
+                        <ol>
+                            <li>m(N₂) = 560 kg = 560.000 g</li>
+                            <li>n(N₂) = 560.000 / 28,0 = <strong>20.000 mol</strong></li>
+                            <li>Verhouding N₂ : NH₃ = 1 : 2 → n(NH₃) = 20.000 × 2 = <strong>40.000 mol</strong></li>
+                            <li>m(NH₃) = 40.000 × 17,0 = 680.000 g = <strong>680 kg</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+<footer style="text-align:center; padding:2rem 1rem; color:#64748b; font-size:0.85rem; border-top:1px solid #e2e8f0; margin-top:2rem;">
+    Gemaakt door Ralph Wagter met <a href="https://claude.ai" style="color:#059669;">Claude Code</a>.
+    Vrij hergebruik onder <a href="https://eupl.eu/" style="color:#059669;">EUPL-1.2</a>.
+    <a href="https://github.com/rwrw01/Claudecodedingetjes" style="color:#059669;">GitHub</a>
+</footer>
+
+<script>
+    // =========================================================
+    // UTILITY FUNCTIONS
+    // =========================================================
+
+    function toonHint(id) {
+        const el = document.getElementById('hint-' + id);
+        if (el) el.style.display = 'block';
+    }
+
+    function toonUitleg(id) {
+        const el = document.getElementById('uitleg-stappen-' + id);
+        if (el) el.style.display = 'block';
+    }
+
+    // Controleer exact numeriek antwoord
+    function checkExact(id, expected, eenheid) {
+        const input = document.getElementById('inp-' + id);
+        const fb = document.getElementById('fb-' + id);
+        const uitlegDiv = document.getElementById('uitleg-' + id);
+        if (!input || !fb) return;
+        const val = parseFloat(input.value.trim().replace(',', '.'));
+        const correct = Math.abs(val - expected) / Math.max(Math.abs(expected), 0.001) < 0.02; // 2% marge
+        if (correct) {
+            fb.innerHTML = '✓ Correct! ' + (eenheid ? '(' + eenheid + ')' : '');
+            fb.className = 'feedback correct';
+            if (uitlegDiv) uitlegDiv.style.display = 'none';
+        } else {
+            fb.innerHTML = '✗ Niet juist. Controleer je berekening.';
+            fb.className = 'feedback fout';
+            if (uitlegDiv) uitlegDiv.style.display = 'block';
+        }
+    }
+
+    // Controleer ratio (accepteer meerdere equivalente vormen)
+    function checkRatio(id, ...accepted) {
+        const input = document.getElementById('inp-' + id);
+        const fb = document.getElementById('fb-' + id);
+        const uitlegDiv = document.getElementById('uitleg-' + id);
+        if (!input || !fb) return;
+        const val = input.value.trim().toLowerCase().replace(/\s/g, '');
+        const correct = accepted.some(a => val === a.toLowerCase().replace(/\s/g, '') || isEquivalentRatio(val, a));
+        if (correct) {
+            fb.innerHTML = '✓ Correct!';
+            fb.className = 'feedback correct';
+            if (uitlegDiv) uitlegDiv.style.display = 'none';
+        } else {
+            fb.innerHTML = '✗ Niet juist. Denk goed na over de coëfficiënten.';
+            fb.className = 'feedback fout';
+            if (uitlegDiv) uitlegDiv.style.display = 'block';
+        }
+    }
+
+    function isEquivalentRatio(a, b) {
+        // Check if two ratios like "2:4" and "1:2" are equivalent
+        const partsA = a.split(':').map(Number);
+        const partsB = b.split(':').map(Number);
+        if (partsA.length !== partsB.length) return false;
+        if (partsA.some(isNaN) || partsB.some(isNaN)) return false;
+        const factorAB = partsA[0] / partsB[0];
+        return partsA.every((v, i) => Math.abs(v / partsB[i] - factorAB) < 0.001);
+    }
+
+    // Controleer tekst (case-insensitive)
+    function checkText(id, expectedLower, correctLabel) {
+        const input = document.getElementById('inp-' + id);
+        const fb = document.getElementById('fb-' + id);
+        const uitlegDiv = document.getElementById('uitleg-' + id);
+        if (!input || !fb) return;
+        const val = input.value.trim().toLowerCase().replace(/\s+/g, ' ');
+        // Allow some flexibility
+        let correct = val === expectedLower;
+        // Extra flexibility for common variations
+        if (id === 'ov2') correct = val.includes('n2');
+        if (id === 'o3b') correct = (val.includes('o2') && (val.includes('0.5') || val.includes('0,5')));
+        if (id === 'o6c') correct = val.includes('beide');
+        if (correct) {
+            fb.innerHTML = '✓ Correct! ' + (correctLabel || '');
+            fb.className = 'feedback correct';
+            if (uitlegDiv) uitlegDiv.style.display = 'none';
+        } else {
+            fb.innerHTML = '✗ Niet juist. Probeer opnieuw of gebruik de hint.';
+            fb.className = 'feedback fout';
+            if (uitlegDiv) uitlegDiv.style.display = 'block';
+        }
+    }
+
+    // =========================================================
+    // STAP-VOOR-STAP VOORBEELD (Sectie 2)
+    // =========================================================
+    let huidigeStap = 1;
+    const stapIds = ['stap2', 'stap3', 'stap4', 'stap5'];
+
+    function volgendStap() {
+        if (huidigeStap < stapIds.length) {
+            document.getElementById(stapIds[huidigeStap]).classList.add('zichtbaar');
+            huidigeStap++;
+        }
+        if (huidigeStap >= stapIds.length) {
+            document.getElementById('btnStap').textContent = '✓ Alle stappen zichtbaar';
+            document.getElementById('btnStap').disabled = true;
+            document.getElementById('btnStap').style.background = '#86efac';
+            document.getElementById('btnStap').style.color = '#14532d';
+        }
+    }
+
+    // =========================================================
+    // STAP-CHECKS SECTIE 3 (tussentijdse invulvelden)
+    // =========================================================
+    function checkStapA() {
+        const input = document.getElementById('inp-s2');
+        const fb = document.getElementById('fb-s2');
+        const val = parseFloat(input.value.trim().replace(',', '.'));
+        if (Math.abs(val - 0.25) < 0.01) {
+            fb.innerHTML = '✓ Correct! n(O₂) = 0,25 mol';
+            fb.className = 'feedback correct';
+        } else {
+            fb.innerHTML = '✗ Niet juist. Gebruik n = m / M = 8,0 / 32,0';
+            fb.className = 'feedback fout';
+        }
+    }
+
+    function checkStapB() {
+        const input = document.getElementById('inp-s3');
+        const fb = document.getElementById('fb-s3');
+        const val = parseFloat(input.value.trim().replace(',', '.'));
+        if (Math.abs(val - 0.50) < 0.01) {
+            fb.innerHTML = '✓ Correct! n(H₂O) = 0,50 mol';
+            fb.className = 'feedback correct';
+        } else {
+            fb.innerHTML = '✗ Niet juist. n(H₂O) = n(O₂) × 2 = 0,25 × 2 = ?';
+            fb.className = 'feedback fout';
+        }
+    }
+
+    function checkStapC() {
+        const input = document.getElementById('inp-s4');
+        const fb = document.getElementById('fb-s4');
+        const uitlegDiv = document.getElementById('uitleg-s4');
+        const val = parseFloat(input.value.trim().replace(',', '.'));
+        if (Math.abs(val - 9.0) < 0.1) {
+            fb.innerHTML = '✓ Correct! m(H₂O) = 9,0 gram ✅';
+            fb.className = 'feedback correct';
+            if (uitlegDiv) uitlegDiv.style.display = 'none';
+        } else {
+            fb.innerHTML = '✗ Niet juist. m = n × M = 0,50 × 18,0 = ?';
+            fb.className = 'feedback fout';
+            if (uitlegDiv) uitlegDiv.style.display = 'block';
+        }
+    }
+
+    // =========================================================
+    // SLIDERS
+    // =========================================================
+
+    function updateCH4Slider() {
+        const mol = parseFloat(document.getElementById('sliderCH4').value);
+        const molO2 = mol * 2;
+        const molCO2 = mol;
+        const molH2O = mol * 2;
+        document.getElementById('CH4SliderOutput').innerHTML =
+            `<strong>${mol.toFixed(1)} mol CH₄</strong> reageert met
+             <strong>${molO2.toFixed(1)} mol O₂</strong>
+             → <strong>${molCO2.toFixed(1)} mol CO₂</strong> +
+             <strong>${molH2O.toFixed(1)} mol H₂O</strong>
+             <br><small style="color:#64748b;">Verhouding 1:2:1:2 blijft altijd kloppen!</small>`;
+    }
+
+    function updateCuSlider() {
+        const mCu = parseFloat(document.getElementById('sliderCu').value);
+        const nCu = mCu / 63.5;
+        const mCuS = nCu * 95.6;
+        document.getElementById('CuSliderOutput').innerHTML =
+            `<strong>${mCu.toFixed(1)} g Cu</strong> = ${nCu.toFixed(4)} mol Cu
+             → <strong>${mCuS.toFixed(2)} g CuS</strong>
+             <br><small style="color:#64748b;">Cu + S → CuS (verhouding 1:1)</small>`;
+    }
+
+    function updateO2Slider() {
+        const mO2 = parseFloat(document.getElementById('sliderO2').value);
+        const nO2 = mO2 / 32.0;
+        const nH2O = nO2 * 2;
+        const mH2O = nH2O * 18.0;
+        document.getElementById('O2SliderOutput').innerHTML =
+            `<strong>${mO2.toFixed(0)} g O₂</strong> = ${nO2.toFixed(4)} mol O₂
+             → <strong>${nH2O.toFixed(4)} mol H₂O</strong>
+             = <strong>${mH2O.toFixed(1)} g H₂O</strong>
+             <br><small style="color:#64748b;">Verhouding O₂:H₂O = 1:2</small>`;
+    }
+
+    function updateOvermaatSlider() {
+        const molO2 = parseFloat(document.getElementById('sliderOvermaat').value);
+        const molCO = 4.0; // vast
+        // Benodigde O2 voor 4 mol CO: 4/2 = 2 mol
+        const benodigdO2 = molCO / 2;
+        const output = document.getElementById('OvermaatOutput');
+        if (Math.abs(molO2 - benodigdO2) < 0.01) {
+            output.innerHTML = `<span style="color:#059669;">✓ Perfecte verhouding! Beide stoffen reageren volledig. 
+            n(O₂) aanwezig = ${molO2} mol = precies ${benodigdO2} mol nodig.</span>`;
+        } else if (molO2 > benodigdO2) {
+            const over = (molO2 - benodigdO2).toFixed(2);
+            output.innerHTML = `<span style="color:#2563eb;"><strong>O₂ is in OVERMAAT.</strong>
+            Nodig voor 4,0 mol CO: ${benodigdO2} mol O₂.
+            Aanwezig: ${molO2} mol O₂.
+            Overmaat: ${over} mol O₂ blijft over.
+            <br>→ CO is de ondermaat → reken met 4,0 mol CO.</span>`;
+        } else {
+            const tekort = (benodigdO2 - molO2).toFixed(2);
+            const reageertCO = (molO2 * 2).toFixed(2);
+            output.innerHTML = `<span style="color:#dc2626;"><strong>O₂ is in ONDERMAAT (beperkende stof).</strong>
+            Aanwezig: ${molO2} mol O₂ — dat is te weinig voor 4,0 mol CO.
+            Slechts ${reageertCO} mol CO kan reageren.
+            <br>→ O₂ is de ondermaat → reken met ${molO2} mol O₂.</span>`;
+        }
+    }
+
+    // =========================================================
+    // ENTER-TOETS SUPPORT
+    // =========================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // Init sliders
+        updateCH4Slider();
+        updateCuSlider();
+        updateO2Slider();
+        updateOvermaatSlider();
+
+        // Enter-toets voor alle invulvelden
+        const inputs = document.querySelectorAll('input[type="text"]');
+        inputs.forEach(input => {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const btn = this.nextElementSibling;
+                    if (btn && btn.tagName === 'BUTTON') btn.click();
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

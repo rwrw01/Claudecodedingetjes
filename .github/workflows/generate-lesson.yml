@@ -93,12 +93,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           for ISSUE_NUM in ${{ steps.issues.outputs.issue_numbers }}; do
-            # Bepaal provider uit issue-labels
-            HAS_CLAUDE=$(gh issue view "$ISSUE_NUM" --json labels --jq '.labels[].name' | grep -c '^claude-les$' || true)
-            if [ "$HAS_CLAUDE" -gt 0 ]; then
-              export AI_PROVIDER="claude"
-            else
+            # Bepaal provider uit issue-labels — Claude is default, mistral-les forceert mistral
+            HAS_MISTRAL=$(gh issue view "$ISSUE_NUM" --json labels --jq '.labels[].name' | grep -c '^mistral-les$' || true)
+            if [ "$HAS_MISTRAL" -gt 0 ]; then
               export AI_PROVIDER="mistral"
+            else
+              export AI_PROVIDER="claude"
             fi
 
             echo "=========================================="

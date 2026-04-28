@@ -64,11 +64,11 @@ def get_env(name: str, required: bool = True) -> str:
 
 
 def get_provider(has_photos: bool = False) -> str:
-    """Bepaal provider. Standaard: mistral. Met foto's → pixtral tenzij expliciet anders."""
-    provider = os.environ.get("AI_PROVIDER", "mistral").strip().lower()
+    """Bepaal provider. Standaard: claude. Met foto's en provider=mistral → pixtral."""
+    provider = os.environ.get("AI_PROVIDER", "claude").strip().lower()
     if provider not in PROVIDERS:
-        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik mistral.")
-        provider = "mistral"
+        print(f"WAARSCHUWING: Onbekende provider '{provider}', gebruik claude.")
+        provider = "claude"
     # Auto-upgrade naar pixtral als foto's aanwezig en provider=mistral
     if provider == "mistral" and has_photos:
         print("  Foto's aanwezig + provider=mistral → automatisch pixtral geselecteerd")

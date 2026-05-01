@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards SE &mdash; Scheikunde HAVO bovenbouw H1-H4</title>
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-light: #d1fae5;
+            --primary-dark: #064e3b;
+            --accent: #e11d48;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 12px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        header {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+        header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        header p { opacity: 0.9; font-size: 1.05rem; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+
+        .breadcrumb {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .breadcrumb:hover { text-decoration: underline; }
+
+        .filter-bar {
+            display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;
+        }
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 999px;
+            background: var(--card); color: var(--muted);
+            font-size: 0.85rem; font-weight: 600; cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .score-bar {
+            display: flex; align-items: center; gap: 1rem;
+            margin-bottom: 1.5rem; padding: 0.75rem 1rem;
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: var(--radius); font-size: 0.9rem; color: var(--muted);
+        }
+        .score-bar strong { color: var(--primary); font-size: 1.1rem; }
+        .progress-track { flex: 1; height: 8px; background: var(--border); border-radius: 999px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); border-radius: 999px; transition: width 0.3s ease; }
+        .reset-btn {
+            padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: var(--radius);
+            background: var(--card); color: var(--muted); font-size: 0.8rem; cursor: pointer;
+        }
+        .reset-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+        .action-bar { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .action-btn {
+            padding: 0.5rem 1.2rem; border: 2px solid var(--primary); border-radius: var(--radius);
+            background: var(--card); color: var(--primary); font-weight: 600; font-size: 0.9rem; cursor: pointer;
+            transition: all 0.15s;
+        }
+        .action-btn:hover { background: var(--primary); color: white; }
+
+        .flash-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+        .flashcard {
+            position: relative; height: 220px; perspective: 1200px; cursor: pointer;
+        }
+        .flashcard-inner {
+            position: relative; width: 100%; height: 100%;
+            transition: transform 0.5s; transform-style: preserve-3d;
+        }
+        .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+        .flashcard-front, .flashcard-back {
+            position: absolute; inset: 0;
+            border-radius: var(--radius);
+            backface-visibility: hidden;
+            padding: 1.2rem;
+            display: flex; flex-direction: column; justify-content: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .flashcard-front { background: var(--card); }
+        .flashcard-front .term {
+            font-size: 1.35rem; font-weight: 700; color: var(--text); text-align: center;
+        }
+        .flashcard-front .hint {
+            margin-top: 1rem; font-size: 0.8rem; color: var(--muted); text-align: center;
+        }
+        .flashcard-front .category-tag {
+            position: absolute; top: 0.7rem; left: 0.7rem;
+            font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem;
+            background: var(--primary-light); color: var(--primary-dark);
+            border-radius: 999px;
+        }
+        .flashcard-back {
+            background: linear-gradient(135deg, #064e3b 0%, #059669 100%);
+            color: white; transform: rotateY(180deg);
+        }
+        .flashcard-back .definition {
+            font-size: 0.92rem; line-height: 1.5; flex: 1; overflow-y: auto;
+        }
+        .flashcard-back .mark-btns {
+            display: flex; gap: 0.5rem; margin-top: 0.7rem;
+        }
+        .flashcard-back .mark-btn {
+            flex: 1; padding: 0.4rem; border: 1px solid rgba(255,255,255,0.4);
+            background: transparent; color: white; font-size: 0.8rem; font-weight: 600;
+            border-radius: 6px; cursor: pointer; transition: background 0.15s;
+        }
+        .flashcard-back .mark-btn:hover { background: rgba(255,255,255,0.2); }
+        .flashcard-back .mark-btn.known { background: rgba(255,255,255,0.3); }
+        .flashcard.known .flashcard-front { border-color: var(--primary); background: #f0fdf4; }
+        .flashcard.known .flashcard-front .term::after {
+            content: ' ✓'; color: var(--primary);
+        }
+
+        footer {
+            text-align: center; padding: 2rem 1rem;
+            color: var(--muted); font-size: 0.85rem;
+        }
+        footer a { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Flashcards SE — H1 t/m H4</h1>
+    <p>Scheikunde HAVO bovenbouw &middot; Bouwstenen, Stoffen, Rekenen, Mengsels</p>
+</header>
+
+<div class="container">
+
+    <a href="../" class="breadcrumb">&larr; Scheikunde HAVO bovenbouw</a>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" data-cat="alle">Alle</button>
+        <button class="filter-btn" data-cat="h1">H1 — Bouwstenen</button>
+        <button class="filter-btn" data-cat="h2">H2 — Stoffen &amp; reacties</button>
+        <button class="filter-btn" data-cat="h3">H3 — Rekenen aan reacties</button>
+        <button class="filter-btn" data-cat="h4">H4 — Mengsels &amp; oplossingen</button>
+    </div>
+
+    <div class="score-bar">
+        <span>Wist ik: <strong id="knownCount">0</strong> / <span id="totalCount">0</span></span>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <button class="reset-btn" onclick="resetAll()">Reset</button>
+    </div>
+
+    <div class="action-bar">
+        <button class="action-btn" onclick="shuffleCards()">Schud kaarten</button>
+        <button class="action-btn" onclick="flipAll()">Alles omdraaien</button>
+    </div>
+
+    <div class="flash-grid" id="flashGrid"></div>
+
+</div>
+
+<footer>
+    <p>Flashcards SE Scheikunde HAVO bovenbouw &middot; H1-H4</p>
+    <p style="margin-top:0.75rem;font-size:0.8rem;line-height:1.6;">
+        Gemaakt door <strong>Ralph Wagter</strong> voor zijn kinderen, met behulp van <a href="https://claude.ai/code">Claude Code</a>.<br>
+        Vrij hergebruik onder de <a href="https://eupl.eu/">EUPL-1.2 licentie</a>.<br>
+        <a href="https://github.com/rwrw01/Claudecodedingetjes">github.com/rwrw01/Claudecodedingetjes</a>
+    </p>
+</footer>
+
+<script>
+const cards = [
+    // ─── H1 Bouwstenen van stoffen ───
+    { term: "Atoom", def: "Het kleinste deeltje van een element. Een atoom bestaat uit een kern (protonen + neutronen) en daaromheen elektronen in schillen.", cat: "h1" },
+    { term: "Proton", def: "Positief geladen deeltje in de kern van een atoom. Het aantal protonen bepaalt om welk element het gaat.", cat: "h1" },
+    { term: "Neutron", def: "Ongeladen deeltje in de kern. Heeft (net als een proton) ongeveer massa 1 u en geeft het atoom extra massa zonder de chemische eigenschappen te veranderen.", cat: "h1" },
+    { term: "Elektron", def: "Negatief geladen deeltje dat in schillen rondom de atoomkern beweegt. Elektronen bepalen het chemisch gedrag van een atoom.", cat: "h1" },
+    { term: "Atoomnummer (Z)", def: "Het aantal protonen in de kern. Het atoomnummer staat onderaan het symbool in het periodiek systeem en is uniek per element.", cat: "h1" },
+    { term: "Massagetal (A)", def: "Het totaal aantal protonen + neutronen in de kern van een atoom. Schrijf je linksboven het symbool, bijvoorbeeld in ¹²C.", cat: "h1" },
+    { term: "Element", def: "Een stof die uit één soort atoom bestaat (alle atomen hebben hetzelfde atoomnummer). Er zijn ongeveer 118 elementen.", cat: "h1" },
+    { term: "Isotoop", def: "Atomen van hetzelfde element met hetzelfde aantal protonen, maar een ander aantal neutronen. Daardoor verschilt hun massagetal, niet hun chemisch gedrag.", cat: "h1" },
+    { term: "Atomaire massa-eenheid (u)", def: "Eenheid voor de massa van atomen en moleculen. 1 u ≈ 1,66·10⁻²⁷ kg. De massa van een atoom in u is bijna gelijk aan het massagetal.", cat: "h1" },
+    { term: "Gemiddelde atoommassa", def: "Het gewogen gemiddelde van de massa's van alle voorkomende isotopen van een element, op basis van hun natuurlijke percentage. Hier rekent het periodiek systeem mee.", cat: "h1" },
+    { term: "Periodiek systeem", def: "Tabel van alle elementen, geordend op atoomnummer en gegroepeerd op chemische eigenschappen. In Binas tabel 99/104.", cat: "h1" },
+    { term: "Hoofdgroep", def: "Verticale kolom in het periodiek systeem (1, 2, 13–18). Elementen in dezelfde hoofdgroep hebben hetzelfde aantal valentie-elektronen en lijken chemisch op elkaar.", cat: "h1" },
+    { term: "Periode", def: "Horizontale rij in het periodiek systeem. De periode geeft aan hoeveel schillen met elektronen een atoom heeft.", cat: "h1" },
+    { term: "Schil (K, L, M, N)", def: "Energieniveau om de atoomkern. Schillen vullen zich van binnen naar buiten: K (max 2 e⁻), L (8), M (18), N (32).", cat: "h1" },
+    { term: "Valentie-elektronen", def: "De elektronen in de buitenste schil. Zij bepalen hoeveel bindingen een atoom maakt en welke ionlading het kan vormen.", cat: "h1" },
+    { term: "Edelgasconfiguratie", def: "De stabiele elektronenverdeling van een edelgas (volle buitenste schil). Andere atomen streven daarnaar door elektronen te delen, op te nemen of af te staan.", cat: "h1" },
+    { term: "Elektronenconfiguratie", def: "Schrijfwijze die aangeeft hoeveel elektronen er per schil zitten, bijvoorbeeld 2,8,1 voor natrium.", cat: "h1" },
+    { term: "Edelgas", def: "Element uit groep 18. Heeft een volle buitenste schil en is daardoor weinig reactief. Voorbeelden: He, Ne, Ar, Kr.", cat: "h1" },
+    { term: "Metaal", def: "Element met weinig valentie-elektronen die makkelijk worden afgestaan. Geleidt elektriciteit en warmte goed; vormt positieve ionen.", cat: "h1" },
+    { term: "Niet-metaal", def: "Element rechtsboven in het periodiek systeem. Neemt elektronen op of deelt ze (covalente binding); geleidt geen stroom in vaste vorm.", cat: "h1" },
+    { term: "Halfmetaal", def: "Element met eigenschappen tussen metaal en niet-metaal in (langs de zigzaglijn in het periodiek systeem), zoals Si of Ge.", cat: "h1" },
+    { term: "Atoomstraal", def: "Maat voor de grootte van een atoom. Neemt toe naar onder in een groep en af van links naar rechts in een periode.", cat: "h1" },
+
+    // ─── H2 Stoffen en reacties (een indeling van stoffen) ───
+    { term: "Atoombinding (covalente binding)", def: "Binding tussen twee niet-metaalatomen die elektronen delen. Per binding wordt één elektronenpaar gedeeld; dit heet een gemeenschappelijk elektronenpaar.", cat: "h2" },
+    { term: "Gemeenschappelijk elektronenpaar", def: "Twee elektronen (één van elk atoom) die samen een covalente binding vormen tussen twee atomen.", cat: "h2" },
+    { term: "Covalentie", def: "Het aantal covalente bindingen dat een atoomsoort kan vormen. H heeft covalentie 1, O heeft 2, N heeft 3, C heeft 4.", cat: "h2" },
+    { term: "Bindingshoek", def: "De hoek tussen twee bindingen rondom een atoom. Bij vier enkele bindingen (zoals in CH₄) is die ongeveer 109,5°.", cat: "h2" },
+    { term: "Kristalrooster", def: "Regelmatige, zich herhalende ruimtelijke ordening waarin de bouwstenen (atomen, ionen of moleculen) van een vaste stof gerangschikt zijn.", cat: "h2" },
+    { term: "Atoomrooster", def: "Kristalrooster van losse atomen die met covalente bindingen aan elkaar vastzitten (bijv. diamant, silicium). Heel hard en zeer hoog smeltpunt.", cat: "h2" },
+    { term: "Metaalrooster", def: "Kristalrooster van metaalatomen waarvan de valentie-elektronen vrij beweegbaar zijn (\"elektronenzee\"). Daardoor geleidt een metaal stroom.", cat: "h2" },
+    { term: "Ionrooster", def: "Kristalrooster waarin positieve en negatieve ionen elkaar afwisselen, bij elkaar gehouden door ionbindingen. Komt voor in zouten.", cat: "h2" },
+    { term: "Molecuulrooster", def: "Kristalrooster van losse moleculen die alleen door zwakke vanderwaalsbindingen bij elkaar gehouden worden. Lage smeltpunten.", cat: "h2" },
+    { term: "Vrije elektronen", def: "Elektronen in een metaalrooster die niet aan één atoom vastzitten. Zij zorgen voor het stroomgeleidend vermogen van metalen.", cat: "h2" },
+    { term: "Metalen (eigenschappen)", def: "Elektrisch en thermisch geleidend, glanzend, vervormbaar (smeedbaar). Geleiden in vaste én vloeibare fase. Bestaan uit een metaalrooster.", cat: "h2" },
+    { term: "Legering", def: "Een mengsel van een metaal met een ander metaal of niet-metaal (bijv. brons, messing, staal). Vaak harder of corrosiebestendiger dan het zuivere metaal.", cat: "h2" },
+    { term: "Moleculaire stof", def: "Stof opgebouwd uit moleculen. Tussen de moleculen werken zwakke vanderwaalsbindingen (en soms waterstofbruggen). Geleidt geen stroom.", cat: "h2" },
+    { term: "Zout (zoutkristal)", def: "Stof opgebouwd uit een ionrooster van positieve en negatieve ionen. Vast: geleidt niet. Vloeibaar of opgelost in water: geleidt wél (vrije ionen).", cat: "h2" },
+    { term: "Stroomgeleiding van zouten", def: "Een zout geleidt alléén stroom in de gesmolten of opgeloste fase, omdat de ionen dan vrij kunnen bewegen. In de vaste fase niet.", cat: "h2" },
+    { term: "Vandervaalsbinding", def: "Zwakke aantrekkingskracht tussen alle moleculen. Hoe groter het molecuul (meer elektronen), hoe sterker de vanderwaalsbinding en hoe hoger het smeltpunt.", cat: "h2" },
+    { term: "Structuurformule", def: "Tekening van een molecuul waarin elke binding als een streepje is weergegeven. Laat zien hoe de atomen aan elkaar zitten.", cat: "h2" },
+    { term: "Molecuulformule", def: "Geeft welke atoomsoorten en hoeveel atomen er in één molecuul zitten, bijvoorbeeld C₂H₆O. Toont géén bindingen.", cat: "h2" },
+    { term: "Index", def: "Het kleine getal achter een atoomsymbool in een formule. Geeft hoeveel atomen van die soort in de eenheid zitten, bijv. de 2 in H₂O.", cat: "h2" },
+    { term: "Coëfficiënt", def: "Het grote getal vóór een formule in een reactievergelijking. Geeft hoeveel deeltjes (of mol) van die stof reageren of ontstaan.", cat: "h2" },
+    { term: "Systematische naam (moleculair)", def: "IUPAC-naam met telwoorden vóór beide atoomsoorten, bijvoorbeeld difosforpentaoxide voor P₂O₅. Mono- bij de eerste mag worden weggelaten.", cat: "h2" },
+    { term: "Telwoorden (mono-, di-, tri-, …)", def: "Voor- en achtervoegsels die het aantal aangeven: mono=1, di=2, tri=3, tetra=4, penta=5, hexa=6, hepta=7, octa=8.", cat: "h2" },
+    { term: "Triviale naam", def: "Vroeger gebruikte naam die niet volgens IUPAC-regels is gemaakt, maar wel toegestaan: water (H₂O), ammoniak (NH₃), methaan (CH₄).", cat: "h2" },
+
+    // ─── H3 Rekenen aan reacties ───
+    { term: "Mol", def: "SI-eenheid voor hoeveelheid stof. 1 mol bevat 6,022·10²³ deeltjes (Avogadro-getal). Symbool: n; eenheid: mol.", cat: "h3" },
+    { term: "Avogadrogetal (Nₐ)", def: "Het aantal deeltjes in 1 mol: Nₐ = 6,022·10²³ mol⁻¹.", cat: "h3" },
+    { term: "Molaire massa (M)", def: "De massa van 1 mol van een stof, in g/mol. Lees je af uit Binas of bereken je door de atoommassa's bij elkaar op te tellen.", cat: "h3" },
+    { term: "Formule n = m / M", def: "Aantal mol = massa (in gram) gedeeld door de molaire massa (in g/mol). Hoekstuk van het rekenen aan reacties.", cat: "h3" },
+    { term: "Molair volume (Vₘ)", def: "Het volume dat 1 mol gas bij standaardomstandigheden inneemt. Bij T = 273 K en p = p₀: 22,4 L/mol; bij 298 K en p₀: 24,5 L/mol.", cat: "h3" },
+    { term: "Reactievergelijking", def: "Symboolweergave van een chemische reactie: beginstoffen → reactieproducten. Atomen links en rechts moeten kloppen (massabehoud).", cat: "h3" },
+    { term: "Kloppend maken (balanceren)", def: "Coëfficiënten plaatsen vóór elke formule zodat het aantal atomen van elk element links en rechts gelijk is.", cat: "h3" },
+    { term: "Molverhouding", def: "Verhouding tussen het aantal mol van twee stoffen in een reactie. Lees je rechtstreeks af uit de coëfficiënten van de kloppende reactievergelijking.", cat: "h3" },
+    { term: "Stoichiometrische verhouding", def: "Andere naam voor de molverhouding uit de reactievergelijking. Wordt gebruikt om te rekenen van de ene stof naar de andere.", cat: "h3" },
+    { term: "5-stappenplan", def: "1) Reactievergelijking, 2) gegeven omrekenen naar mol, 3) molverhouding, 4) gevraagde mol berekenen, 5) terugrekenen naar massa, volume of deeltjes.", cat: "h3" },
+    { term: "Beperkende stof", def: "De beginstof die als eerste op is, en daarmee bepaalt hoeveel product er maximaal kan ontstaan. Berekenen door beide stoffen om te rekenen naar de molverhouding.", cat: "h3" },
+    { term: "Overmaat", def: "De stof die ná de reactie nog over is omdat de andere stof beperkend was. Wordt vaak in een berekening gevraagd: hoeveel blijft er over?", cat: "h3" },
+    { term: "Macroscopisch", def: "Op het niveau van wat je ziet en weegt: gram, liter, kg. Hier rekent een chemicus mee.", cat: "h3" },
+    { term: "Microscopisch", def: "Op het niveau van losse atomen, ionen of moleculen. Onzichtbaar maar verklaart het waarneembare gedrag.", cat: "h3" },
+
+    // ─── H4 Mengsels en oplossingen ───
+    { term: "Zuivere stof", def: "Stof die uit één soort moleculen of formule-eenheden bestaat. Heeft een vast smelt- en kookpunt. Tegenstelling van mengsel.", cat: "h4" },
+    { term: "Mengsel", def: "Twee of meer stoffen door elkaar zonder vaste verhouding. Te scheiden met fysische methoden (filtreren, indampen, destilleren).", cat: "h4" },
+    { term: "Oplossing", def: "Helder mengsel waarin een opgeloste stof gelijkmatig in een oplosmiddel verdeeld is. De deeltjes zijn los, op moleculair niveau.", cat: "h4" },
+    { term: "Verzadigde oplossing", def: "Oplossing waarin de maximale hoeveelheid stof bij die temperatuur is opgelost. Voeg je meer toe, dan blijft dat als bodemkristal liggen.", cat: "h4" },
+    { term: "Onverzadigde oplossing", def: "Oplossing die nog meer van de stof zou kunnen oplossen bij die temperatuur.", cat: "h4" },
+    { term: "Oplosbaarheid", def: "De maximale hoeveelheid stof die in een vaste hoeveelheid oplosmiddel oplost bij een bepaalde temperatuur. Eenheid: g/100 mL of g/L.", cat: "h4" },
+    { term: "Suspensie", def: "Troebel mengsel van vaste deeltjes in een vloeistof die niet oplossen en uiteindelijk bezinken (bv. fijn zand in water).", cat: "h4" },
+    { term: "Emulsie", def: "Troebel mengsel van twee vloeistoffen die niet in elkaar oplossen, bv. olie in water (mayonaise, melk). Nodig: druppeltjes en een emulgator.", cat: "h4" },
+    { term: "Schuim", def: "Mengsel van een gas in een vloeibare of vaste fase, bv. slagroom of piepschuim.", cat: "h4" },
+    { term: "Rook (aerosol)", def: "Mengsel van vaste deeltjes in een gas (bv. fijnstof in lucht). Nevel = vloeibare druppeltjes in gas.", cat: "h4" },
+    { term: "Mesoniveau", def: "Tussen macro en microscopisch in: het niveau van druppeltjes en deeltjes (bv. olie-druppels in een emulsie). Hier zie je de structuur van een mengsel.", cat: "h4" },
+    { term: "Polair molecuul", def: "Molecuul met aan één kant een kleine positieve, aan de andere kant een kleine negatieve lading. Veroorzaakt door een ongelijke ladingsverdeling, zoals in H₂O.", cat: "h4" },
+    { term: "Apolair molecuul", def: "Molecuul met een gelijkmatige ladingsverdeling, geen pluskant of minkant. Bv. CH₄, O₂, vetten.", cat: "h4" },
+    { term: "Hydrofiel (\"waterminnend\")", def: "Eigenschap van polaire stoffen die goed met water mengen (bv. zout, suiker, ethanol). Lossen op in water.", cat: "h4" },
+    { term: "Hydrofoob (\"watervrezend\")", def: "Eigenschap van apolaire stoffen die niet met water mengen (bv. olie, vet, was). Lossen wél op in apolaire oplosmiddelen.", cat: "h4" },
+    { term: "Waterstofbrug", def: "Sterke vanderwaalsbinding tussen moleculen waarin H aan een sterk elektronegatief atoom (O, N of F) is gebonden. Verklaart het hoge kookpunt van water.", cat: "h4" },
+    { term: "Gehalte", def: "Hoe veel van een stof in een mengsel of oplossing zit. Kan worden uitgedrukt als massapercentage, volumepercentage, massa-volumeprocent, ppm of ppb.", cat: "h4" },
+    { term: "Massapercentage (% m/m)", def: "Massa van de opgeloste stof gedeeld door de totale massa, maal 100%. Eenheid: %.", cat: "h4" },
+    { term: "Volumepercentage (% v/v)", def: "Volume van de opgeloste stof gedeeld door het totale volume, maal 100%. Vaak gebruikt bij vloeistoffen of gassen.", cat: "h4" },
+    { term: "Massa-volumeprocent (% m/v)", def: "Massa opgeloste stof in gram, per 100 mL oplossing. Eenheid bv. g/100 mL.", cat: "h4" },
+    { term: "ppm (parts per million)", def: "Het aantal deeltjes opgeloste stof per miljoen deeltjes oplossing. 1 ppm ≈ 1 mg/kg of 1 mg/L bij water.", cat: "h4" },
+    { term: "ppb (parts per billion)", def: "Aantal deeltjes per miljard. 1 ppb ≈ 1 µg/kg. Wordt gebruikt bij heel lage concentraties (sporen, gifstoffen).", cat: "h4" },
+];
+
+const grid = document.getElementById('flashGrid');
+const knownCountEl = document.getElementById('knownCount');
+const totalCountEl = document.getElementById('totalCount');
+const progressFill = document.getElementById('progressFill');
+
+let currentFilter = 'alle';
+let knownSet = new Set();
+
+function renderCards() {
+    const filtered = currentFilter === 'alle' ? cards : cards.filter(c => c.cat === currentFilter);
+    totalCountEl.textContent = filtered.length;
+    grid.innerHTML = '';
+
+    const catLabels = { h1: 'H1 Bouwstenen', h2: 'H2 Stoffen', h3: 'H3 Rekenen', h4: 'H4 Mengsels' };
+
+    filtered.forEach((card) => {
+        const isKnown = knownSet.has(card.term);
+        const el = document.createElement('div');
+        el.className = 'flashcard' + (isKnown ? ' known' : '');
+        el.innerHTML = `
+            <div class="flashcard-inner">
+                <div class="flashcard-front">
+                    <span class="category-tag">${catLabels[card.cat]}</span>
+                    <div class="term">${card.term}</div>
+                    <div class="hint">Klik om te draaien</div>
+                </div>
+                <div class="flashcard-back">
+                    <div class="definition">${card.def}</div>
+                    <div class="mark-btns">
+                        <button class="mark-btn known" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', true)">Wist ik</button>
+                        <button class="mark-btn" onclick="markKnown(event, '${card.term.replace(/'/g, "\\'")}', false)">Nog niet</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        el.addEventListener('click', function(e) {
+            if (e.target.closest('.mark-btn')) return;
+            this.classList.toggle('flipped');
+        });
+        grid.appendChild(el);
+    });
+    updateScore();
+}
+
+function markKnown(e, term, known) {
+    e.stopPropagation();
+    if (known) knownSet.add(term); else knownSet.delete(term);
+    const card = e.target.closest('.flashcard');
+    if (known) {
+        card.classList.add('known');
+        setTimeout(() => card.classList.remove('flipped'), 400);
+    } else {
+        card.classList.remove('known');
+    }
+    updateScore();
+}
+
+function updateScore() {
+    const filtered = currentFilter === 'alle' ? cards : cards.filter(c => c.cat === currentFilter);
+    const count = filtered.filter(c => knownSet.has(c.term)).length;
+    knownCountEl.textContent = count;
+    const pct = filtered.length > 0 ? (count / filtered.length) * 100 : 0;
+    progressFill.style.width = pct + '%';
+}
+
+function resetAll() {
+    knownSet.clear();
+    document.querySelectorAll('.flashcard').forEach(el => {
+        el.classList.remove('flipped', 'known');
+    });
+    updateScore();
+}
+
+function shuffleCards() {
+    const container = document.getElementById('flashGrid');
+    const items = Array.from(container.children);
+    for (let i = items.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        container.appendChild(items[j]);
+        items.splice(j, 1, items[i]);
+    }
+}
+
+function flipAll() {
+    const all = document.querySelectorAll('.flashcard');
+    const anyFlipped = Array.from(all).some(c => c.classList.contains('flipped'));
+    all.forEach(c => {
+        if (anyFlipped) c.classList.remove('flipped');
+        else c.classList.add('flipped');
+    });
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentFilter = this.dataset.cat;
+        renderCards();
+    });
+});
+
+function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+
+shuffleArray(cards);
+renderCards();
+</script>
+
+</body>
+</html>

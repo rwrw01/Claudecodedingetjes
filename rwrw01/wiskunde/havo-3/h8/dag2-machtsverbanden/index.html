@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 2 — Machtsverbanden (§8.5) — Wiskunde HAVO 3</title>
+<style>
+:root { --primary:#0891b2; --primary-light:#cffafe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#0e7490 0%,#0891b2 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.1rem;font-weight:600;color:#0e7490}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.3fr 1fr;align-items:center}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary);font-weight:700;min-width:48px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.btn-group{display:flex;gap:0.4rem}
+.btn-toggle{flex:1;background:white;border:2px solid var(--border);border-radius:8px;padding:0.5rem;font-family:'Georgia',serif;font-size:1rem;cursor:pointer}
+.btn-toggle.active{background:var(--primary);color:white;border-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1.1rem;font-style:italic;text-align:center}
+.try-it{background:#ecfeff;border:2px dashed #67e8f9;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:140px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#0e7490}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+table.cases{border-collapse:collapse;width:100%;margin:0.8rem 0;font-size:0.93rem}
+table.cases th,table.cases td{border:1px solid var(--border);padding:0.5rem 0.7rem;text-align:left}
+table.cases thead{background:var(--primary-light);color:#0e7490;font-weight:600}
+table.cases td.geval{font-family:'Georgia',serif;text-align:center;font-weight:600}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 2 — Machtsverbanden</h1>
+<p>§8.5 — y = a·x² en y = a·x³, en vergelijkingen oplossen</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 3</a> &rsaquo; <a href="../">H8</a> &rsaquo; Dag 2</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 1 (periodieke verbanden)</a></li>
+<li><a href="#wat">Wat is een machtsformule?</a></li>
+<li><a href="#schuif">Speel met de schuif — vier vormen van machtsfunctie</a></li>
+<li><a href="#punten">Punten berekenen op de grafiek</a></li>
+<li><a href="#x2c">Vergelijking <span class="math">x² = c</span> oplossen</a></li>
+<li><a href="#x3c">Vergelijking <span class="math">x³ = c</span> oplossen</a></li>
+<li><a href="#axb">Eerst isoleren — vergelijking <span class="math">a·x² + b = c</span></a></li>
+<li><a href="#oefen">Extra oefenset</a></li>
+<li><a href="#check">Kennischeck</a></li>
+</ol>
+</div>
+
+<!-- 1. Recap Dag 1 -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 1 — periodieke verbanden</h2>
+<div class="try-it">
+<h4>Snelle check (2 min)</h4>
+<div class="q"><label>Een grafiek heeft hoogste stand 10 en laagste stand 4. Wat is de evenwichtsstand?</label><input type="text" id="r1"><button class="btn-hint btn" onclick="checkNumeric('r1',7,0.01,['7'])">Check</button></div>
+<div class="feedback" id="fb-r1"></div>
+<div class="q"><label>... en de amplitude?</label><input type="text" id="r2"><button class="btn-hint btn" onclick="checkNumeric('r2',3,0.01,['3'])">Check</button></div>
+<div class="feedback" id="fb-r2"></div>
+<div class="q"><label>Tussen twee opeenvolgende toppen ligt 6 sec. Wat is de periode?</label><input type="text" id="r3"><button class="btn-hint btn" onclick="checkNumeric('r3',6,0.01,['6'])">Check</button></div>
+<div class="feedback" id="fb-r3"></div>
+</div>
+</div>
+
+<!-- 2. Wat is een machtsformule -->
+<div class="card" id="wat">
+<h2>2. Wat is een machtsformule?</h2>
+<p>Een machtsformule heeft <span class="math">x</span> in een macht (kwadraat, derde macht, etc.) staan. De algemene vorm is:</p>
+<div class="formula"><span class="math-display">y = a · x<sup>n</sup></span> &nbsp; met <span class="math">a ≠ 0</span></div>
+<p>In dit hoofdstuk werk je vooral met <span class="math">n = 2</span> (kwadratisch verband, parabool) en <span class="math">n = 3</span> (kubisch verband).</p>
+<ul style="margin-left:1.2rem">
+<li><span class="math">y = a · x²</span> — een <strong>parabool</strong>. De grafiek heeft <span class="math">(0, 0)</span> als <em>top</em> (of laagste punt). Symmetrisch in de <span class="math">y</span>-as.</li>
+<li><span class="math">y = a · x³</span> — een <strong>kubische grafiek</strong>. <span class="math">(0, 0)</span> is het <em>punt van symmetrie</em>. De grafiek heeft geen top of dal.</li>
+</ul>
+<div class="tip-box"><strong>💡 Onthoud:</strong> elke macht-grafiek gaat door <span class="math">(0, 0)</span>, want bij <span class="math">x = 0</span> krijg je <span class="math">y = a · 0<sup>n</sup> = 0</span>.</div>
+</div>
+
+<!-- 3. Schuif — vier vormen -->
+<div class="card" id="schuif">
+<h2>3. Speel met de schuif — vier vormen 🎚️</h2>
+<p>Beweeg de schuif voor <span class="math">a</span> en wissel tussen <span class="math">n = 2</span> en <span class="math">n = 3</span>. Kijk wat er gebeurt:</p>
+
+<div class="widget">
+<div class="widget-grid">
+<svg id="plotM" viewBox="0 0 320 280" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>macht n</label></div>
+<div class="btn-group">
+<button class="btn-toggle active" id="btn-n2" onclick="setN(2)">n = 2</button>
+<button class="btn-toggle" id="btn-n3" onclick="setN(3)">n = 3</button>
+</div>
+</div>
+<div class="control">
+<div class="control-row"><label>factor a</label><span class="val" id="a-val">1</span></div>
+<input type="range" id="a-slider" min="-2" max="2" step="0.1" value="1">
+</div>
+<div class="formula-live" id="formula-live">y = 1 · x²</div>
+</div>
+</div>
+</div>
+
+<div class="tip-box"><strong>💡 Probeer:</strong>
+<ol style="margin-left:1.2rem;margin-top:0.3rem">
+<li>Zet <span class="math">n = 2</span>, schuif <span class="math">a</span> naar +2: een steile parabool, opent omhoog.</li>
+<li>Zet <span class="math">a</span> naar −2: parabool spiegelt om de <span class="math">x</span>-as, opent omlaag. Top is nog steeds <span class="math">(0, 0)</span>.</li>
+<li>Zet <span class="math">n = 3</span>: nu is <span class="math">(0, 0)</span> niet meer een top maar een doorgangspunt. Bij <span class="math">a &gt; 0</span> stijgend, bij <span class="math">a &lt; 0</span> dalend.</li>
+</ol>
+</div>
+</div>
+
+<!-- 4. Punten berekenen -->
+<div class="card" id="punten">
+<h2>4. Punten berekenen op de grafiek</h2>
+<p>Bij een gegeven <span class="math">x</span>-waarde de bijbehorende <span class="math">y</span>-waarde uitrekenen — dat is gewoon invullen.</p>
+
+<div class="example-box">
+<strong>Voorbeeld:</strong> bij <span class="math">y = 0,2x²</span>, bereken <span class="math">y</span> voor <span class="math">x = 3</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li>Vul in: <span class="math">y = 0,2 · 3²</span></li>
+<li>Eerst kwadrateren: <span class="math">3² = 9</span></li>
+<li>Dan vermenigvuldigen: <span class="math">y = 0,2 · 9 = 1,8</span></li>
+</ol>
+</div>
+
+<div class="warning-box"><strong>⚠️ Volgorde van bewerkingen:</strong> bij <span class="math">y = a · x²</span> doe je <em>eerst</em> de macht <span class="math">x²</span>, en pas <em>daarna</em> vermenigvuldigen met <span class="math">a</span>. Dus <span class="math">−2 · 3² = −2 · 9 = −18</span>, en niet <span class="math">(−2 · 3)² = 36</span>!</div>
+
+<div class="try-it">
+<h4>🧪 Reken zelf</h4>
+<div class="q"><label>Bij <span class="math">y = 0,2x²</span>: bereken <span class="math">y</span> voor <span class="math">x = 4</span></label><input type="text" id="p1"><button class="btn-hint btn" onclick="checkNumeric('p1',3.2,0.001,['3.2','3,2'])">Check</button></div>
+<div class="feedback" id="fb-p1"></div>
+
+<div class="q"><label>Bij <span class="math">y = −1,5x²</span>: bereken <span class="math">y</span> voor <span class="math">x = 2</span></label><input type="text" id="p2"><button class="btn-hint btn" onclick="checkNumeric('p2',-6,0.001,['-6'])">Check</button></div>
+<div class="feedback" id="fb-p2"></div>
+
+<div class="q"><label>Bij <span class="math">y = 0,5x³</span>: bereken <span class="math">y</span> voor <span class="math">x = 2</span></label><input type="text" id="p3"><button class="btn-hint btn" onclick="checkNumeric('p3',4,0.001,['4'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('p3-steps')">Stap</button></div>
+<div class="feedback" id="fb-p3"></div>
+<div class="detail-steps" id="p3-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">2³ = 2 · 2 · 2 = 8</span></li><li><span class="math">y = 0,5 · 8 = 4</span></li></ol>
+</div>
+
+<div class="q"><label>Bij <span class="math">y = 1,5x³</span>: bereken <span class="math">y</span> voor <span class="math">x = −2</span></label><input type="text" id="p4"><button class="btn-hint btn" onclick="checkNumeric('p4',-12,0.001,['-12'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('p4-steps')">Stap</button></div>
+<div class="feedback" id="fb-p4"></div>
+<div class="detail-steps" id="p4-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">(−2)³ = (−2) · (−2) · (−2) = 4 · (−2) = −8</span></li><li><span class="math">y = 1,5 · (−8) = −12</span></li></ol>
+</div>
+</div>
+</div>
+
+<!-- 5. x² = c -->
+<div class="card" id="x2c">
+<h2>5. Vergelijking <span class="math">x² = c</span> oplossen</h2>
+<p>Als <span class="math">x² = c</span>, dan zijn er drie gevallen, afhankelijk van het teken van <span class="math">c</span>:</p>
+
+<table class="cases">
+<thead><tr><th>geval</th><th>aantal oplossingen</th><th>oplossing(en)</th></tr></thead>
+<tbody>
+<tr><td class="geval">c &gt; 0</td><td>twee</td><td><span class="math">x = √c</span> &nbsp;of&nbsp; <span class="math">x = −√c</span></td></tr>
+<tr><td class="geval">c = 0</td><td>één</td><td><span class="math">x = 0</span></td></tr>
+<tr><td class="geval">c &lt; 0</td><td>geen</td><td>(een kwadraat is nooit negatief)</td></tr>
+</tbody>
+</table>
+
+<div class="warning-box"><strong>⚠️ Vergeet het minteken niet!</strong> Bij <span class="math">x² = 25</span> is <span class="math">x = 5</span> én <span class="math">x = −5</span> oplossing. Schrijf altijd <span class="math">x = 5 ∨ x = −5</span> (of: <span class="math">x = ±5</span>).</div>
+
+<div class="example-box">
+<strong>Voorbeeld:</strong> los op <span class="math">x² = 49</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li>Neem de wortel: <span class="math">x = √49</span> of <span class="math">x = −√49</span>.</li>
+<li><span class="math">x = 7 ∨ x = −7</span>.</li>
+</ol>
+</div>
+
+<div class="try-it">
+<h4>🧪 Los op (rond zo nodig af op 2 decimalen)</h4>
+<p style="font-size:0.9rem;color:var(--muted);margin-top:-0.3rem">Tip: typ allebei de oplossingen, gescheiden door komma. Bv. "5,-5" of "−5,5".</p>
+
+<div class="q"><label><span class="math">x² = 36</span></label><input type="text" id="x21"><button class="btn-hint btn" onclick="checkPair('x21',6,-6)">Check</button></div>
+<div class="feedback" id="fb-x21"></div>
+
+<div class="q"><label><span class="math">x² = 17</span></label><input type="text" id="x22"><button class="btn-hint btn" onclick="checkPair('x22',Math.sqrt(17),-Math.sqrt(17),0.02)">Check</button><button class="btn-reveal btn" onclick="toggleSteps('x22-steps')">Stap</button></div>
+<div class="feedback" id="fb-x22"></div>
+<div class="detail-steps" id="x22-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">x = √17 ≈ 4,12</span></li><li><span class="math">x = −√17 ≈ −4,12</span></li><li>Antwoord: <span class="math">x ≈ 4,12 ∨ x ≈ −4,12</span></li></ol>
+</div>
+
+<div class="q"><label><span class="math">x² = −9</span></label><input type="text" id="x23"><button class="btn-hint btn" onclick="checkText('x23',['geen','geenoplossing','geen oplossing','-'])">Check</button></div>
+<div class="feedback" id="fb-x23"></div>
+</div>
+</div>
+
+<!-- 6. x³ = c -->
+<div class="card" id="x3c">
+<h2>6. Vergelijking <span class="math">x³ = c</span> oplossen</h2>
+<p>Een derde macht is anders dan een kwadraat: <strong>negatief is wel mogelijk</strong> (omdat <span class="math">(−2) · (−2) · (−2) = −8</span>).</p>
+<div class="formula"><span class="math-display">x³ = c &nbsp;heeft altijd één oplossing: &nbsp; x = ³√c</span></div>
+<p>De <strong>derdemachtswortel</strong> <span class="math">³√c</span> bestaat ook voor negatieve <span class="math">c</span>. Op de rekenmachine zit hier een knop voor (vaak <span class="math">³√x</span> of via <span class="math">x<sup>(1/3)</sup></span>).</p>
+
+<div class="example-box">
+<strong>Voorbeeld 1:</strong> los op <span class="math">x³ = 27</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li><span class="math">x = ³√27 = 3</span> &nbsp;(want <span class="math">3 · 3 · 3 = 27</span>)</li>
+</ol>
+</div>
+
+<div class="example-box">
+<strong>Voorbeeld 2:</strong> los op <span class="math">x³ = −10</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li><span class="math">x = ³√(−10) ≈ −2,15</span> &nbsp;(rekenmachine, twee decimalen)</li>
+</ol>
+</div>
+
+<div class="warning-box"><strong>⚠️ Bij <span class="math">x³</span> géén ±!</strong> De derdemachtswortel geeft maar één oplossing — het teken zit al in <span class="math">c</span>. Dus: <span class="math">x³ = 8 ⇒ x = 2</span> (alleen positief), <span class="math">x³ = −8 ⇒ x = −2</span> (alleen negatief).</div>
+
+<div class="try-it">
+<h4>🧪 Los op (rond zo nodig af op 2 decimalen)</h4>
+<div class="q"><label><span class="math">x³ = 64</span></label><input type="text" id="x31"><button class="btn-hint btn" onclick="checkNumeric('x31',4,0.01,['4'])">Check</button></div>
+<div class="feedback" id="fb-x31"></div>
+
+<div class="q"><label><span class="math">x³ = −125</span></label><input type="text" id="x32"><button class="btn-hint btn" onclick="checkNumeric('x32',-5,0.01,['-5'])">Check</button></div>
+<div class="feedback" id="fb-x32"></div>
+
+<div class="q"><label><span class="math">x³ = 21</span></label><input type="text" id="x33"><button class="btn-hint btn" onclick="checkNumeric('x33',Math.cbrt(21),0.02,[])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('x33-steps')">Stap</button></div>
+<div class="feedback" id="fb-x33"></div>
+<div class="detail-steps" id="x33-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">x = ³√21 ≈ 2,76</span> (rekenmachine)</li></ol>
+</div>
+</div>
+</div>
+
+<!-- 7. ax² + b = c -->
+<div class="card" id="axb">
+<h2>7. Vergelijking <span class="math">a·x² + b = c</span> — eerst isoleren</h2>
+<p>Bij vergelijkingen met "extra getallen" eromheen: werk eerst de <span class="math">b</span> en de factor <span class="math">a</span> weg, voordat je de wortel of derdemachtswortel neemt.</p>
+<div class="formula">
+<strong>Stappen:</strong>
+<ol style="margin-left:1.4rem;margin-top:0.3rem">
+<li>Tel de "losse" getallen weg (<span class="math">+ b</span> of <span class="math">− b</span>).</li>
+<li>Deel door de factor voor de macht (<span class="math">a</span>).</li>
+<li>Neem de wortel (bij <span class="math">x²</span>) of de derdemachtswortel (bij <span class="math">x³</span>).</li>
+<li>Bij <span class="math">x²</span>: vergeet de ± niet. Bij <span class="math">x³</span>: één oplossing.</li>
+</ol>
+</div>
+
+<div class="example-box">
+<strong>Voorbeeld 1:</strong> los op <span class="math">5x² + 2 = 47</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li>Trek 2 af: <span class="math">5x² = 45</span></li>
+<li>Deel door 5: <span class="math">x² = 9</span></li>
+<li>Neem de wortel: <span class="math">x = 3 ∨ x = −3</span></li>
+</ol>
+</div>
+
+<div class="example-box">
+<strong>Voorbeeld 2:</strong> los op <span class="math">3x³ + 20 = −7</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li>Trek 20 af: <span class="math">3x³ = −27</span></li>
+<li>Deel door 3: <span class="math">x³ = −9</span></li>
+<li>Neem de derdemachtswortel: <span class="math">x = ³√(−9) ≈ −2,08</span></li>
+</ol>
+</div>
+
+<div class="try-it">
+<h4>🧪 Los op</h4>
+<div class="q"><label><span class="math">2x² + 4 = 60</span></label><input type="text" id="ax1" placeholder="..."><button class="btn-hint btn" onclick="checkPair('ax1',Math.sqrt(28),-Math.sqrt(28),0.02)">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ax1-steps')">Stap</button></div>
+<div class="feedback" id="fb-ax1"></div>
+<div class="detail-steps" id="ax1-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Trek 4 af: <span class="math">2x² = 56</span></li>
+<li>Deel door 2: <span class="math">x² = 28</span></li>
+<li><span class="math">x = √28 ≈ 5,29</span> ∨ <span class="math">x = −√28 ≈ −5,29</span></li>
+</ol>
+</div>
+
+<div class="q"><label><span class="math">3x² − 50 = 100</span></label><input type="text" id="ax2"><button class="btn-hint btn" onclick="checkPair('ax2',Math.sqrt(50),-Math.sqrt(50),0.02)">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ax2-steps')">Stap</button></div>
+<div class="feedback" id="fb-ax2"></div>
+<div class="detail-steps" id="ax2-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Tel 50 op: <span class="math">3x² = 150</span></li>
+<li>Deel door 3: <span class="math">x² = 50</span></li>
+<li><span class="math">x = √50 ≈ 7,07</span> ∨ <span class="math">x = −√50 ≈ −7,07</span></li>
+</ol>
+</div>
+
+<div class="q"><label><span class="math">2x³ − 6 = 10</span></label><input type="text" id="ax3"><button class="btn-hint btn" onclick="checkNumeric('ax3',2,0.01,['2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ax3-steps')">Stap</button></div>
+<div class="feedback" id="fb-ax3"></div>
+<div class="detail-steps" id="ax3-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Tel 6 op: <span class="math">2x³ = 16</span></li>
+<li>Deel door 2: <span class="math">x³ = 8</span></li>
+<li><span class="math">x = ³√8 = 2</span></li>
+</ol>
+</div>
+
+<div class="q"><label><span class="math">3x² + 12 = 0</span> &nbsp;(let op!)</label><input type="text" id="ax4"><button class="btn-hint btn" onclick="checkText('ax4',['geen','geenoplossing','geen oplossing'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ax4-steps')">Stap</button></div>
+<div class="feedback" id="fb-ax4"></div>
+<div class="detail-steps" id="ax4-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Trek 12 af: <span class="math">3x² = −12</span></li>
+<li>Deel door 3: <span class="math">x² = −4</span></li>
+<li>Een kwadraat kan niet negatief zijn → <strong>geen oplossing</strong>.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- 8. Extra oefenset -->
+<div class="card" id="oefen">
+<h2>8. Extra oefenset</h2>
+<p>Onderstaande zijn extra oefensommen. Voor de échte huiswerkopgaven 44–56 moet je nog naar het boek.</p>
+
+<h3>Opgave A — Punten berekenen</h3>
+<p>Gegeven <span class="math">y = −0,5x²</span>.</p>
+<div class="q"><label>a) <span class="math">y</span> bij <span class="math">x = 4</span> = </label><input type="text" id="oA1"><button class="btn-hint btn" onclick="checkNumeric('oA1',-8,0.001,['-8'])">Check</button></div>
+<div class="feedback" id="fb-oA1"></div>
+<div class="q"><label>b) <span class="math">y</span> bij <span class="math">x = −2</span> = </label><input type="text" id="oA2"><button class="btn-hint btn" onclick="checkNumeric('oA2',-2,0.001,['-2'])">Check</button></div>
+<div class="feedback" id="fb-oA2"></div>
+
+<h3>Opgave B — x² = c</h3>
+<div class="q"><label>a) <span class="math">x² = 81</span></label><input type="text" id="oB1"><button class="btn-hint btn" onclick="checkPair('oB1',9,-9)">Check</button></div>
+<div class="feedback" id="fb-oB1"></div>
+<div class="q"><label>b) <span class="math">x² = 50</span></label><input type="text" id="oB2"><button class="btn-hint btn" onclick="checkPair('oB2',Math.sqrt(50),-Math.sqrt(50),0.02)">Check</button></div>
+<div class="feedback" id="fb-oB2"></div>
+<div class="q"><label>c) <span class="math">x² = 0</span></label><input type="text" id="oB3"><button class="btn-hint btn" onclick="checkNumeric('oB3',0,0.001,['0'])">Check</button></div>
+<div class="feedback" id="fb-oB3"></div>
+
+<h3>Opgave C — x³ = c</h3>
+<div class="q"><label>a) <span class="math">x³ = 8</span></label><input type="text" id="oC1"><button class="btn-hint btn" onclick="checkNumeric('oC1',2,0.01,['2'])">Check</button></div>
+<div class="feedback" id="fb-oC1"></div>
+<div class="q"><label>b) <span class="math">x³ = −1</span></label><input type="text" id="oC2"><button class="btn-hint btn" onclick="checkNumeric('oC2',-1,0.01,['-1'])">Check</button></div>
+<div class="feedback" id="fb-oC2"></div>
+<div class="q"><label>c) <span class="math">x³ = 100</span></label><input type="text" id="oC3"><button class="btn-hint btn" onclick="checkNumeric('oC3',Math.cbrt(100),0.02,[])">Check</button></div>
+<div class="feedback" id="fb-oC3"></div>
+
+<h3>Opgave D — Eerst isoleren</h3>
+<div class="q"><label>a) <span class="math">2x² + 8 = 58</span></label><input type="text" id="oD1"><button class="btn-hint btn" onclick="checkPair('oD1',5,-5)">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oD1-steps')">Stap</button></div>
+<div class="feedback" id="fb-oD1"></div>
+<div class="detail-steps" id="oD1-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">2x² = 50</span></li><li><span class="math">x² = 25</span></li><li><span class="math">x = 5 ∨ x = −5</span></li></ol>
+</div>
+
+<div class="q"><label>b) <span class="math">0,5x³ + 2 = 6</span></label><input type="text" id="oD2"><button class="btn-hint btn" onclick="checkNumeric('oD2',2,0.01,['2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oD2-steps')">Stap</button></div>
+<div class="feedback" id="fb-oD2"></div>
+<div class="detail-steps" id="oD2-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">0,5x³ = 4</span></li><li><span class="math">x³ = 8</span></li><li><span class="math">x = ³√8 = 2</span></li></ol>
+</div>
+
+<div class="q"><label>c) <span class="math">−2x² + 1 = 9</span></label><input type="text" id="oD3"><button class="btn-hint btn" onclick="checkText('oD3',['geen','geenoplossing','geen oplossing'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oD3-steps')">Stap</button></div>
+<div class="feedback" id="fb-oD3"></div>
+<div class="detail-steps" id="oD3-steps">
+<h5>Stappenplan</h5>
+<ol><li><span class="math">−2x² = 8</span></li><li><span class="math">x² = −4</span></li><li>Geen oplossing.</li></ol>
+</div>
+</div>
+
+<!-- 9. Kennischeck -->
+<div class="card" id="check">
+<h2>9. Kennischeck</h2>
+<ul style="margin-left:1.2rem">
+<li>Ik herken de vorm <span class="math">y = a · x<sup>n</sup></span> als machtsformule.</li>
+<li>Ik weet dat <span class="math">y = a · x²</span> een parabool is met top in <span class="math">(0, 0)</span>.</li>
+<li>Ik weet dat <span class="math">y = a · x³</span> een kubische grafiek is met punt van symmetrie in <span class="math">(0, 0)</span>.</li>
+<li>Ik kan punten berekenen op de grafiek (eerst macht, dan vermenigvuldigen).</li>
+<li>Ik los <span class="math">x² = c</span> correct op (twee opl. bij <span class="math">c &gt; 0</span>, één bij <span class="math">c = 0</span>, geen bij <span class="math">c &lt; 0</span>).</li>
+<li>Ik los <span class="math">x³ = c</span> correct op (altijd één oplossing, ook bij <span class="math">c &lt; 0</span>).</li>
+<li>Ik isoleer eerst voordat ik de wortel/derdemachtswortel neem.</li>
+</ul>
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 3?</strong> Daar krijg je <em>omgekeerd evenredige verbanden</em> (§8.6) en gemengde toets-sommen.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../dag1-periodieke-verbanden/">← Dag 1</a>
+<a href="../dag3-omgekeerd-evenredig-en-gemengd/">Dag 3 →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 3 — H8 Dag 2: Machtsverbanden</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ===== Plot machtsfunctie =====
+let currentN = 2;
+function setN(n){
+  currentN = n;
+  document.getElementById('btn-n2').classList.toggle('active', n===2);
+  document.getElementById('btn-n3').classList.toggle('active', n===3);
+  drawM();
+}
+
+function drawM(){
+  const svg = document.getElementById('plotM');
+  const W = 320, H = 280, padL = 30, padR = 10, padT = 15, padB = 30;
+  const xMin = -4, xMax = 4, yMin = -10, yMax = 10;
+  const xs = x => padL + (x - xMin)/(xMax - xMin) * (W - padL - padR);
+  const ys = y => padT + (yMax - y)/(yMax - yMin) * (H - padT - padB);
+  let s = '';
+  for(let gx = Math.ceil(xMin); gx <= Math.floor(xMax); gx++){
+    s += `<line x1="${xs(gx)}" y1="${padT}" x2="${xs(gx)}" y2="${H-padB}" stroke="#eef2f7"/>`;
+  }
+  for(let gy = -10; gy <= 10; gy += 2){
+    s += `<line x1="${padL}" y1="${ys(gy)}" x2="${W-padR}" y2="${ys(gy)}" stroke="#eef2f7"/>`;
+  }
+  s += `<line x1="${padL}" y1="${ys(0)}" x2="${W-padR}" y2="${ys(0)}" stroke="#94a3b8"/>`;
+  s += `<line x1="${xs(0)}" y1="${padT}" x2="${xs(0)}" y2="${H-padB}" stroke="#94a3b8"/>`;
+  for(let gx = -4; gx <= 4; gx++){
+    if(gx === 0) continue;
+    s += `<text x="${xs(gx)}" y="${ys(0)+12}" font-size="9" fill="#64748b" text-anchor="middle">${gx}</text>`;
+  }
+  for(let gy = -10; gy <= 10; gy += 4){
+    if(gy === 0) continue;
+    s += `<text x="${xs(0)-4}" y="${ys(gy)+3}" font-size="9" fill="#64748b" text-anchor="end">${gy}</text>`;
+  }
+  // origin
+  s += `<circle cx="${xs(0)}" cy="${ys(0)}" r="3" fill="#e11d48"/>`;
+  s += `<text x="${xs(0)+5}" y="${ys(0)-5}" font-size="9" fill="#e11d48">(0,0)</text>`;
+  // curve
+  const a = +document.getElementById('a-slider').value;
+  let path = '';
+  let pen = false;
+  for(let i = 0; i <= 320; i++){
+    const x = xMin + (xMax - xMin) * i / 320;
+    const y = a * Math.pow(x, currentN);
+    if(!isFinite(y) || y < yMin - 5 || y > yMax + 5){ pen = false; continue; }
+    path += (pen ? ' L' : ' M') + xs(x) + ',' + ys(y);
+    pen = true;
+  }
+  s += `<path d="${path}" stroke="#0891b2" stroke-width="2.4" fill="none"/>`;
+  svg.innerHTML = s;
+  document.getElementById('a-val').textContent = a.toFixed(2);
+  document.getElementById('formula-live').innerHTML = `y = ${a.toFixed(2)} · x<sup>${currentN}</sup>`;
+}
+document.getElementById('a-slider').addEventListener('input', drawM);
+drawM();
+
+// ===== Antwoord-checkers =====
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/[−–—]/g,'-').replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){ fb.classList.remove('correct','incorrect'); fb.classList.add('show', ok ? 'correct' : 'incorrect'); fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw.'; }
+}
+function checkNumeric(id, target, tol, alsoAccept){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const raw = normalize(el.value);
+  let ok = false;
+  if(alsoAccept && alsoAccept.some(a => normalize(a) === raw)) ok = true;
+  if(!ok){
+    const num = parseFloat(raw);
+    if(isFinite(num) && Math.abs(num - target) <= tol) ok = true;
+  }
+  if(!ok && raw.includes('/')){
+    const [a,b] = raw.split('/').map(parseFloat);
+    if(isFinite(a) && isFinite(b) && b !== 0 && Math.abs(a/b - target) <= tol) ok = true;
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){ fb.classList.remove('correct','incorrect'); fb.classList.add('show', ok ? 'correct' : 'incorrect'); fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.'; }
+}
+// checkPair: leerling vult twee waarden in (gescheiden door komma of "of"/"v" of " "), vergelijken met 2 targets in willekeurige volgorde
+function checkPair(id, t1, t2, tol){
+  if(typeof tol === 'undefined') tol = 0.01;
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const raw = (el.value || '').toLowerCase()
+    .replace(/[−–—]/g,'-')
+    .replace(/\s+/g,' ').trim()
+    .replace(/\s+of\s+/g,',').replace(/\s+v\s+/g,',').replace(/∨/g,',').replace(/\bv\b/g,',')
+    .replace(/x\s*=/g,'').replace(/[±]/g,'')
+    .replace(/,/g,';').replace(/;\s*/g,';');
+  // try split on ; first; if only one number plus ' ' inside, try space
+  let parts = raw.split(';').filter(s => s.length > 0);
+  if(parts.length === 1){
+    parts = parts[0].split(/\s+/).filter(s => s.length > 0);
+  }
+  parts = parts.map(s => s.replace(/\./g,'.').replace(',','.'));
+  let ok = false;
+  if(parts.length === 2){
+    const v1 = parseFloat(parts[0]), v2 = parseFloat(parts[1]);
+    if(isFinite(v1) && isFinite(v2)){
+      ok = (Math.abs(v1-t1)<=tol && Math.abs(v2-t2)<=tol) || (Math.abs(v1-t2)<=tol && Math.abs(v2-t1)<=tol);
+    }
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){ fb.classList.remove('correct','incorrect'); fb.classList.add('show', ok ? 'correct' : 'incorrect'); fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — vergeet de ± niet.'; }
+}
+function toggleSteps(id){ document.getElementById(id).classList.toggle('show'); }
+</script>
+</body>
+</html>

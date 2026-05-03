@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 3 — Omgekeerd evenredig &amp; gemengd (§8.6) — Wiskunde HAVO 3</title>
+<style>
+:root { --primary:#0891b2; --primary-light:#cffafe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#0e7490 0%,#0891b2 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.1rem;font-weight:600;color:#0e7490}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.3fr 1fr;align-items:center}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary);font-weight:700;min-width:48px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1.1rem;font-style:italic;text-align:center}
+.try-it{background:#ecfeff;border:2px dashed #67e8f9;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:140px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#0e7490}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+table.tabel{border-collapse:collapse;width:100%;margin:0.8rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:#0e7490;font-weight:600}
+.type-cards{display:grid;grid-template-columns:1fr;gap:0.8rem;margin:1rem 0}
+@media(min-width:720px){.type-cards{grid-template-columns:1fr 1fr}}
+.type-card{background:white;border:2px solid var(--border);border-radius:10px;padding:0.9rem 1.1rem}
+.type-card h4{color:var(--primary);margin-bottom:0.3rem;font-size:0.95rem}
+.type-card .formule{font-family:'Georgia',serif;font-style:italic;color:#0e7490;font-weight:600;margin:0.3rem 0}
+.type-card .signaal{font-size:0.85rem;color:var(--muted);margin-top:0.4rem}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 3 — Omgekeerd evenredig &amp; gemengd</h1>
+<p>§8.6 — y = a/x, en alle stof in de mix</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 3</a> &rsaquo; <a href="../">H8</a> &rsaquo; Dag 3</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 1 + 2</a></li>
+<li><a href="#wat">Wat is omgekeerd evenredig?</a></li>
+<li><a href="#schuif">Speel met de schuif — y = a/x</a></li>
+<li><a href="#tabel">Omgekeerd evenredig herkennen aan een tabel</a></li>
+<li><a href="#typen">Welk type verband is het? — herken-strategie</a></li>
+<li><a href="#oefen">Gemengde oefenset (alle 6 typen)</a></li>
+<li><a href="#tips">Tips voor de toets vrijdag 8 mei</a></li>
+<li><a href="#check">Eindcheck</a></li>
+</ol>
+</div>
+
+<!-- 1. Recap -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 1 + 2</h2>
+<div class="try-it">
+<h4>Snelle check (3 min)</h4>
+<div class="q"><label>De temperatuur van een bad schommelt tussen 38°C en 42°C en heeft periode 6 minuten. Wat is de evenwichtsstand?</label><input type="text" id="r1"><button class="btn-hint btn" onclick="checkNumeric('r1',40,0.01,['40'])">Check</button></div>
+<div class="feedback" id="fb-r1"></div>
+
+<div class="q"><label>... en de amplitude?</label><input type="text" id="r2"><button class="btn-hint btn" onclick="checkNumeric('r2',2,0.01,['2'])">Check</button></div>
+<div class="feedback" id="fb-r2"></div>
+
+<div class="q"><label>Los op: <span class="math">x² = 49</span> (twee oplossingen, gescheiden door komma)</label><input type="text" id="r3"><button class="btn-hint btn" onclick="checkPair('r3',7,-7)">Check</button></div>
+<div class="feedback" id="fb-r3"></div>
+
+<div class="q"><label>Los op: <span class="math">x³ = −27</span></label><input type="text" id="r4"><button class="btn-hint btn" onclick="checkNumeric('r4',-3,0.01,['-3'])">Check</button></div>
+<div class="feedback" id="fb-r4"></div>
+
+<div class="q"><label>Bij <span class="math">y = 0,4 · x²</span>: bereken <span class="math">y</span> voor <span class="math">x = 5</span></label><input type="text" id="r5"><button class="btn-hint btn" onclick="checkNumeric('r5',10,0.01,['10'])">Check</button></div>
+<div class="feedback" id="fb-r5"></div>
+</div>
+</div>
+
+<!-- 2. Wat is omgekeerd evenredig -->
+<div class="card" id="wat">
+<h2>2. Wat is omgekeerd evenredig?</h2>
+<p>Soms gaat de ene grootheid <em>omhoog</em> als de andere <em>omlaag</em> gaat — en wel zó, dat het product altijd hetzelfde blijft.</p>
+<p><strong>Voorbeeld uit het boek:</strong> 12 schilders kunnen een gebouw schilderen in 6 dagen. Hoe meer schilders je inzet, hoe minder dagen je nodig hebt. Maar de hoeveelheid werk (mensdagen) blijft gelijk.</p>
+<table class="tabel">
+<thead><tr><th>aantal schilders <span class="math">x</span></th><th>1</th><th>2</th><th>3</th><th>4</th><th>6</th><th>8</th><th>12</th></tr></thead>
+<tbody>
+<tr><th>aantal dagen <span class="math">y</span></th><td>72</td><td>36</td><td>24</td><td>18</td><td>12</td><td>9</td><td>6</td></tr>
+<tr><th><span class="math">x · y</span></th><td>72</td><td>72</td><td>72</td><td>72</td><td>72</td><td>72</td><td>72</td></tr>
+</tbody>
+</table>
+<div class="formula">
+<div><strong>Definitie:</strong> <span class="math-display">y is omgekeerd evenredig met x &nbsp; ⇔ &nbsp; x · y = a</span> (constante)</div>
+<div style="margin-top:0.4rem"><strong>Formule:</strong> <span class="math-display">y = a / x</span></div>
+</div>
+<div class="tip-box"><strong>💡 Andere woorden voor hetzelfde:</strong> "hyperbolisch verband" — de grafiek is een <em>hyperbool</em>.</div>
+
+<div class="warning-box"><strong>⚠️ Niet te verwarren met:</strong> "afnemend verband" of "lineair dalend". Bij omgekeerd evenredig blijft <span class="math">x · y</span> constant. Bij lineair dalend (<span class="math">y = -2x + 10</span>) is dat niet zo.</div>
+</div>
+
+<!-- 3. Schuif -->
+<div class="card" id="schuif">
+<h2>3. Speel met de schuif — y = a/x 🎚️</h2>
+<p>Beweeg <span class="math">a</span> en kijk hoe de hyperbool van vorm verandert.</p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plotH" viewBox="0 0 320 240" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>constante a</label><span class="val" id="aH-val">12</span></div>
+<input type="range" id="aH" min="2" max="30" step="1" value="12">
+</div>
+<div class="formula-live" id="formH">y = 12 / x</div>
+</div>
+</div>
+</div>
+<div class="tip-box"><strong>💡 Wat zie je?</strong>
+<ol style="margin-left:1.2rem;margin-top:0.3rem">
+<li>De grafiek raakt nooit de assen — dat zijn <em>asymptoten</em>.</li>
+<li>Voor grotere <span class="math">a</span> ligt de grafiek verder van de oorsprong.</li>
+<li>Bij <span class="math">x &gt; 0</span> is de grafiek dalend; bij <span class="math">x &lt; 0</span> ook dalend (in spiegelbeeld).</li>
+</ol>
+</div>
+</div>
+
+<!-- 4. Tabel herkennen -->
+<div class="card" id="tabel">
+<h2>4. Omgekeerd evenredig herkennen aan een tabel</h2>
+<p>Voor een tabel met <span class="math">x</span>-waarden en <span class="math">y</span>-waarden:</p>
+<div class="formula">
+<strong>Test:</strong> bereken <span class="math">x · y</span> voor elke kolom. Is het <strong>steeds hetzelfde getal</strong>? Dan is het verband <strong>omgekeerd evenredig</strong>, en dat getal is <span class="math">a</span>.
+</div>
+
+<div class="example-box">
+<strong>Voorbeeld:</strong> klopt de tabel hieronder met een omgekeerd evenredig verband?
+<table class="tabel" style="margin-top:0.4rem">
+<thead><tr><th>x</th><th>2</th><th>4</th><th>5</th><th>10</th></tr></thead>
+<tbody><tr><th>y</th><td>30</td><td>15</td><td>12</td><td>6</td></tr></tbody>
+</table>
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li><span class="math">2 · 30 = 60</span></li>
+<li><span class="math">4 · 15 = 60</span></li>
+<li><span class="math">5 · 12 = 60</span></li>
+<li><span class="math">10 · 6 = 60</span></li>
+</ol>
+Allemaal 60. Ja, omgekeerd evenredig. Formule: <span class="math">y = 60 / x</span>.
+</div>
+
+<div class="try-it">
+<h4>🧪 Probeer zelf</h4>
+<p>Onderzoek of dit verband omgekeerd evenredig is.</p>
+<table class="tabel">
+<thead><tr><th>x</th><th>1</th><th>2</th><th>4</th><th>8</th></tr></thead>
+<tbody><tr><th>y</th><td>24</td><td>12</td><td>6</td><td>3</td></tr></tbody>
+</table>
+<div class="q"><label>Is het omgekeerd evenredig?</label><input type="text" id="t1" placeholder="ja of nee"><button class="btn-hint btn" onclick="checkText('t1',['ja','jawel','klopt'])">Check</button></div>
+<div class="feedback" id="fb-t1"></div>
+<div class="q"><label>Wat is de constante <span class="math">a</span>?</label><input type="text" id="t2"><button class="btn-hint btn" onclick="checkNumeric('t2',24,0.01,['24'])">Check</button></div>
+<div class="feedback" id="fb-t2"></div>
+<div class="q"><label>Geef de formule (vorm <span class="math">y = …/x</span>):</label><input type="text" id="t3"><button class="btn-hint btn" onclick="checkText('t3',['y=24/x','24/x'])">Check</button></div>
+<div class="feedback" id="fb-t3"></div>
+</div>
+</div>
+
+<!-- 5. Welk type verband -->
+<div class="card" id="typen">
+<h2>5. Welk type verband is het? — herken-strategie</h2>
+<p>Bij een toetssom is de eerste vraag altijd: <strong>welk type verband heb ik?</strong> Want dat bepaalt welke formule en aanpak je gebruikt. In dit hoofdstuk komen 6 typen voor:</p>
+
+<div class="type-cards">
+<div class="type-card">
+<h4>1. Lineair (recht evenredig)</h4>
+<div class="formule">y = a · x &nbsp; of &nbsp; y = a · x + b</div>
+<div class="signaal">Signaal: per stap erbij telkens <em>hetzelfde getal erbij</em>.</div>
+</div>
+<div class="type-card">
+<h4>2. Exponentiële groei</h4>
+<div class="formule">N = b · g<sup>t</sup></div>
+<div class="signaal">Signaal: per stap erbij telkens <em>met hetzelfde getal vermenigvuldigen</em> (de groeifactor).</div>
+</div>
+<div class="type-card">
+<h4>3. Periodiek</h4>
+<div class="formule">grafiek herhaalt zich</div>
+<div class="signaal">Signaal: tabel of grafiek met op-en-neer-beweging die zich herhaalt. Spreek over periode/evenwichtsstand/amplitude.</div>
+</div>
+<div class="type-card">
+<h4>4. Kwadratisch</h4>
+<div class="formule">y = a · x²</div>
+<div class="signaal">Signaal: parabool, top in (0,0). Bij verdubbeling van <span class="math">x</span> wordt <span class="math">y</span> 4× zo groot.</div>
+</div>
+<div class="type-card">
+<h4>5. Derdemacht</h4>
+<div class="formule">y = a · x³</div>
+<div class="signaal">Signaal: kubische grafiek, puntsymmetrisch. Bij verdubbeling van <span class="math">x</span> wordt <span class="math">y</span> 8× zo groot.</div>
+</div>
+<div class="type-card">
+<h4>6. Omgekeerd evenredig</h4>
+<div class="formule">y = a / x</div>
+<div class="signaal">Signaal: <span class="math">x · y</span> blijft hetzelfde. Bij verdubbeling van <span class="math">x</span> wordt <span class="math">y</span> de helft.</div>
+</div>
+</div>
+
+<div class="try-it">
+<h4>🧪 Welk type? — herken aan tabel of beschrijving</h4>
+
+<div class="q"><label>a) Tabel: x = 1, 2, 3, 4 en y = 5, 10, 15, 20.</label><input type="text" id="ty1" style="width:200px"><button class="btn-hint btn" onclick="checkText('ty1',['lineair','rechtevenredig','recht evenredig','1','type1'])">Check</button></div>
+<div class="feedback" id="fb-ty1"></div>
+
+<div class="q"><label>b) Tabel: x = 1, 2, 3, 4 en y = 60, 30, 20, 15.</label><input type="text" id="ty2" style="width:200px"><button class="btn-hint btn" onclick="checkText('ty2',['omgekeerdevenredig','omgekeerd evenredig','hyperbolisch','6','type6'])">Check</button></div>
+<div class="feedback" id="fb-ty2"></div>
+
+<div class="q"><label>c) Tabel: x = 0, 1, 2, 3 en y = 2, 6, 18, 54.</label><input type="text" id="ty3" style="width:200px"><button class="btn-hint btn" onclick="checkText('ty3',['exponentieel','exponentiele','exponentielegroei','exponentieelgroei','2','type2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ty3-steps')">Stap</button></div>
+<div class="feedback" id="fb-ty3"></div>
+<div class="detail-steps" id="ty3-steps">
+<h5>Hint</h5>
+<ol><li>Kijk naar de <em>verhouding</em> tussen opeenvolgende y-waarden: 6/2 = 3, 18/6 = 3, 54/18 = 3. Steeds maal 3 → exponentiële groei met groeifactor 3.</li></ol>
+</div>
+
+<div class="q"><label>d) Tabel: x = 1, 2, 3, 4 en y = 0,5, 2, 4,5, 8.</label><input type="text" id="ty4" style="width:200px"><button class="btn-hint btn" onclick="checkText('ty4',['kwadratisch','kwadratisch verband','y=ax2','4','type4'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ty4-steps')">Stap</button></div>
+<div class="feedback" id="fb-ty4"></div>
+<div class="detail-steps" id="ty4-steps">
+<h5>Hint</h5>
+<ol><li>Bij <span class="math">x = 1, 2, 3, 4</span> staat <span class="math">y = 0,5, 2, 4,5, 8</span>. Dat is <span class="math">0,5 · 1², 0,5 · 2², 0,5 · 3², 0,5 · 4²</span> = kwadratisch met <span class="math">a = 0,5</span>.</li></ol>
+</div>
+</div>
+</div>
+
+<!-- 6. Gemengde oefenset -->
+<div class="card" id="oefen">
+<h2>6. Gemengde oefenset (alle typen door elkaar)</h2>
+<p>Hieronder oefensommen die in toetsstijl alle 6 verbanden door elkaar mengen.</p>
+
+<h3>Opgave A — Schilders</h3>
+<p>Een ploeg van 8 schilders schildert een huis in 6 dagen. Hoeveel dagen hebben 12 schilders nodig?</p>
+<div class="q"><label>Aantal dagen:</label><input type="text" id="oA1"><button class="btn-hint btn" onclick="checkNumeric('oA1',4,0.01,['4'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oA1-steps')">Stap</button></div>
+<div class="feedback" id="fb-oA1"></div>
+<div class="detail-steps" id="oA1-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Type: omgekeerd evenredig (meer mensen → minder dagen, totaal werk gelijk).</li>
+<li><span class="math">a = 8 · 6 = 48</span> mensdagen.</li>
+<li><span class="math">y = 48 / 12 = 4</span> dagen.</li>
+</ol>
+</div>
+
+<h3>Opgave B — Reuzenrad</h3>
+<p>Een reuzenrad heeft hoogte 30 m en gondels op de grond. Eén ronde duurt 90 seconden.</p>
+<div class="q"><label>a) Periode (sec):</label><input type="text" id="oB1"><button class="btn-hint btn" onclick="checkNumeric('oB1',90,0.01,['90'])">Check</button></div>
+<div class="feedback" id="fb-oB1"></div>
+<div class="q"><label>b) Evenwichtsstand (m):</label><input type="text" id="oB2"><button class="btn-hint btn" onclick="checkNumeric('oB2',15,0.01,['15'])">Check</button></div>
+<div class="feedback" id="fb-oB2"></div>
+<div class="q"><label>c) Amplitude (m):</label><input type="text" id="oB3"><button class="btn-hint btn" onclick="checkNumeric('oB3',15,0.01,['15'])">Check</button></div>
+<div class="feedback" id="fb-oB3"></div>
+
+<h3>Opgave C — Inhoud bol</h3>
+<p>De inhoud <span class="math">V</span> in cm³ van een bol met straal <span class="math">r</span> in cm wordt gegeven door <span class="math">V = (4/3)π · r³</span>. Bereken <span class="math">V</span> voor een bol met straal 3 cm. Rond af op een geheel getal.</p>
+<div class="q"><label><span class="math">V ≈ </span> (cm³):</label><input type="text" id="oC1"><button class="btn-hint btn" onclick="checkNumeric('oC1',113,1,['113'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oC1-steps')">Stap</button></div>
+<div class="feedback" id="fb-oC1"></div>
+<div class="detail-steps" id="oC1-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">3³ = 27</span></li>
+<li><span class="math">(4/3) · π · 27 = 36π ≈ 113,10</span></li>
+<li>Afgerond: <span class="math">V ≈ 113</span> cm³.</li>
+</ol>
+</div>
+
+<h3>Opgave D — Bevolkingsgroei</h3>
+<p>Een gemeente had op 1 januari 2020 25.000 inwoners. De verwachting is dat het aantal inwoners elk jaar met 2% toeneemt.</p>
+<div class="q"><label>a) Geef de groeifactor:</label><input type="text" id="oD1"><button class="btn-hint btn" onclick="checkNumeric('oD1',1.02,0.001,['1.02','1,02'])">Check</button></div>
+<div class="feedback" id="fb-oD1"></div>
+<div class="q"><label>b) Hoeveel inwoners op 1 januari 2024? (rond af op gehelen)</label><input type="text" id="oD2"><button class="btn-hint btn" onclick="checkNumeric('oD2',27060,2,['27060','27061'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oD2-steps')">Stap</button></div>
+<div class="feedback" id="fb-oD2"></div>
+<div class="detail-steps" id="oD2-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">N = 25.000 · 1,02<sup>4</sup></span></li>
+<li><span class="math">1,02<sup>4</sup> ≈ 1,0824</span></li>
+<li><span class="math">N ≈ 25.000 · 1,0824 ≈ 27.060</span></li>
+</ol>
+</div>
+
+<h3>Opgave E — Vergelijking</h3>
+<p>Los exact op: <span class="math">3x² − 12 = 75</span>.</p>
+<div class="q"><label><span class="math">x = </span> (geef beide oplossingen):</label><input type="text" id="oE1"><button class="btn-hint btn" onclick="checkPair('oE1',Math.sqrt(29),-Math.sqrt(29),0.02)">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oE1-steps')">Stap</button></div>
+<div class="feedback" id="fb-oE1"></div>
+<div class="detail-steps" id="oE1-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Tel 12 op: <span class="math">3x² = 87</span></li>
+<li>Deel door 3: <span class="math">x² = 29</span></li>
+<li><span class="math">x = √29 ≈ 5,39</span> ∨ <span class="math">x = −√29 ≈ −5,39</span></li>
+</ol>
+</div>
+
+<h3>Opgave F — Omgekeerd evenredig formule</h3>
+<p>Voor een gas geldt: <span class="math">druk · volume</span> is constant. Bij volume 5 liter is de druk 8 bar. Wat is de druk bij een volume van 4 liter?</p>
+<div class="q"><label>druk (bar):</label><input type="text" id="oF1"><button class="btn-hint btn" onclick="checkNumeric('oF1',10,0.01,['10'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oF1-steps')">Stap</button></div>
+<div class="feedback" id="fb-oF1"></div>
+<div class="detail-steps" id="oF1-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Constante: <span class="math">5 · 8 = 40</span>.</li>
+<li>Bij volume 4: druk = <span class="math">40 / 4 = 10</span> bar.</li>
+</ol>
+</div>
+
+<h3>Opgave G — Type bepalen</h3>
+<p>Een spaarbedrag van €500 staat tegen 1,5% rente per jaar.</p>
+<div class="q"><label>Welk type verband?</label><input type="text" id="oG1" style="width:240px"><button class="btn-hint btn" onclick="checkText('oG1',['exponentieel','exponentielegroei','exponentiele groei'])">Check</button></div>
+<div class="feedback" id="fb-oG1"></div>
+<div class="q"><label>Bedrag na 10 jaar (rond af op centen):</label><input type="text" id="oG2"><button class="btn-hint btn" onclick="checkNumeric('oG2',580.27,0.05,['580.27','580,27'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oG2-steps')">Stap</button></div>
+<div class="feedback" id="fb-oG2"></div>
+<div class="detail-steps" id="oG2-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Groeifactor: <span class="math">1,015</span>.</li>
+<li><span class="math">B = 500 · 1,015<sup>10</sup> ≈ 500 · 1,16054 ≈ 580,27</span></li>
+</ol>
+</div>
+</div>
+
+<!-- 7. Tips voor toets -->
+<div class="card" id="tips">
+<h2>7. Tips voor de toets vrijdag 8 mei 🎯</h2>
+<ol style="margin-left:1.4rem">
+<li><strong>Lees rustig.</strong> Welk type verband zie je? Streep desnoods de aanwijzingen aan in de opgavetekst.</li>
+<li><strong>Schrijf de formule eerst op.</strong> Zelfs als je nog niets weet — opschrijven helpt structureren.</li>
+<li><strong>Bij vergelijkingen: eerst isoleren.</strong> <span class="math">a · x² + b = c</span> → eerst <span class="math">b</span> wegwerken, dan <span class="math">a</span>, dan wortel.</li>
+<li><strong>Bij <span class="math">x²</span>: vergeet de ± niet.</strong> Bij <span class="math">x³</span> juist niet ±.</li>
+<li><strong>Bij periodiek: eerst evenwichtsstand, dan amplitude.</strong> Twee stappen, niet één.</li>
+<li><strong>Bij omgekeerd evenredig: bereken eerst <span class="math">a = x · y</span>.</strong> Dan kun je elke andere combinatie uitrekenen.</li>
+<li><strong>Controleer met een ander punt.</strong> Heb je een formule? Vul nog één punt in om te zien of het klopt.</li>
+<li><strong>Schrijf eenheden op.</strong> Bij dagen, meters, °C, bar — vergeet ze niet bij het antwoord.</li>
+</ol>
+</div>
+
+<!-- 8. Eindcheck -->
+<div class="card" id="check">
+<h2>8. Eindcheck</h2>
+<ul style="margin-left:1.2rem">
+<li>Ik herken een omgekeerd evenredig verband aan het feit dat <span class="math">x · y</span> constant is.</li>
+<li>Ik kan de formule <span class="math">y = a / x</span> opstellen vanuit een tabel.</li>
+<li>Ik kan onderscheid maken tussen lineair, exponentieel, kwadratisch, derdemacht, omgekeerd evenredig en periodiek.</li>
+<li>Ik kan de toetsvragen aanvliegen door eerst het type te bepalen, dan de formule, dan de berekening.</li>
+</ul>
+<div class="tip-box" style="margin-top:1rem"><strong>🎓 Klaar voor de oefentoets!</strong> Doe nu de oefentoets onder toetsomstandigheden (30 minuten, geen knopjes opklikken).</div>
+<div style="margin-top:1rem"><a href="../oefentoets/" style="display:inline-block;background:#7c3aed;color:white;padding:0.7rem 1.4rem;border-radius:8px;text-decoration:none;font-weight:600">▶ Naar de oefentoets</a></div>
+</div>
+
+<div class="nav-bottom">
+<a href="../dag2-machtsverbanden/">← Dag 2</a>
+<a href="../oefentoets/">Oefentoets →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 3 — H8 Dag 3: Omgekeerd evenredig &amp; gemengd</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// Hyperbool plot y = a/x
+function drawH(){
+  const svg = document.getElementById('plotH');
+  const W = 320, H = 240, padL = 30, padR = 10, padT = 15, padB = 30;
+  const xMin = -10, xMax = 10, yMin = -10, yMax = 10;
+  const xs = x => padL + (x - xMin)/(xMax - xMin) * (W - padL - padR);
+  const ys = y => padT + (yMax - y)/(yMax - yMin) * (H - padT - padB);
+  let s = '';
+  for(let gx = xMin; gx <= xMax; gx += 2){
+    s += `<line x1="${xs(gx)}" y1="${padT}" x2="${xs(gx)}" y2="${H-padB}" stroke="#eef2f7"/>`;
+  }
+  for(let gy = yMin; gy <= yMax; gy += 2){
+    s += `<line x1="${padL}" y1="${ys(gy)}" x2="${W-padR}" y2="${ys(gy)}" stroke="#eef2f7"/>`;
+  }
+  s += `<line x1="${padL}" y1="${ys(0)}" x2="${W-padR}" y2="${ys(0)}" stroke="#94a3b8"/>`;
+  s += `<line x1="${xs(0)}" y1="${padT}" x2="${xs(0)}" y2="${H-padB}" stroke="#94a3b8"/>`;
+  for(let gx = -8; gx <= 8; gx += 4){
+    if(gx === 0) continue;
+    s += `<text x="${xs(gx)}" y="${ys(0)+12}" font-size="9" fill="#64748b" text-anchor="middle">${gx}</text>`;
+  }
+  for(let gy = -8; gy <= 8; gy += 4){
+    if(gy === 0) continue;
+    s += `<text x="${xs(0)-4}" y="${ys(gy)+3}" font-size="9" fill="#64748b" text-anchor="end">${gy}</text>`;
+  }
+  const a = +document.getElementById('aH').value;
+  // rechter tak (x > 0)
+  let pathR = '';
+  for(let i = 0; i <= 200; i++){
+    const x = 0.1 + (xMax - 0.1) * i / 200;
+    const y = a / x;
+    if(y < yMin - 1 || y > yMax + 1) continue;
+    pathR += (pathR === '' ? 'M' : ' L') + xs(x) + ',' + ys(y);
+  }
+  // linker tak (x < 0)
+  let pathL = '';
+  for(let i = 0; i <= 200; i++){
+    const x = xMin + (-0.1 - xMin) * i / 200;
+    const y = a / x;
+    if(y < yMin - 1 || y > yMax + 1) continue;
+    pathL += (pathL === '' ? 'M' : ' L') + xs(x) + ',' + ys(y);
+  }
+  s += `<path d="${pathR}" stroke="#0891b2" stroke-width="2.4" fill="none"/>`;
+  s += `<path d="${pathL}" stroke="#0891b2" stroke-width="2.4" fill="none"/>`;
+  svg.innerHTML = s;
+  document.getElementById('aH-val').textContent = a;
+  document.getElementById('formH').textContent = `y = ${a} / x`;
+}
+document.getElementById('aH').addEventListener('input', drawH);
+drawH();
+
+// ===== Antwoord-checkers =====
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/[−–—]/g,'-').replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){ fb.classList.remove('correct','incorrect'); fb.classList.add('show', ok ? 'correct' : 'incorrect'); fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw.'; }
+}
+function checkNumeric(id, target, tol, alsoAccept){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const raw = normalize(el.value);
+  let ok = false;
+  if(alsoAccept && alsoAccept.some(a => normalize(a) === raw)) ok = true;
+  if(!ok){
+    const num = parseFloat(raw);
+    if(isFinite(num) && Math.abs(num - target) <= tol) ok = true;
+  }
+  if(!ok && raw.includes('/')){
+    const [a,b] = raw.split('/').map(parseFloat);
+    if(isFinite(a) && isFinite(b) && b !== 0 && Math.abs(a/b - target) <= tol) ok = true;
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){ fb.classList.remove('correct','incorrect'); fb.classList.add('show', ok ? 'correct' : 'incorrect'); fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw.'; }
+}
+function checkPair(id, t1, t2, tol){
+  if(typeof tol === 'undefined') tol = 0.01;
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const raw = (el.value || '').toLowerCase()
+    .replace(/[−–—]/g,'-')
+    .replace(/\s+/g,' ').trim()
+    .replace(/\s+of\s+/g,',').replace(/\s+v\s+/g,',').replace(/∨/g,',').replace(/\bv\b/g,',')
+    .replace(/x\s*=/g,'').replace(/[±]/g,'')
+    .replace(/,/g,';').replace(/;\s*/g,';');
+  let parts = raw.split(';').filter(s => s.length > 0);
+  if(parts.length === 1){ parts = parts[0].split(/\s+/).filter(s => s.length > 0); }
+  let ok = false;
+  if(parts.length === 2){
+    const v1 = parseFloat(parts[0]), v2 = parseFloat(parts[1]);
+    if(isFinite(v1) && isFinite(v2)){
+      ok = (Math.abs(v1-t1)<=tol && Math.abs(v2-t2)<=tol) || (Math.abs(v1-t2)<=tol && Math.abs(v2-t1)<=tol);
+    }
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){ fb.classList.remove('correct','incorrect'); fb.classList.add('show', ok ? 'correct' : 'incorrect'); fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — vergeet de ± niet.'; }
+}
+function toggleSteps(id){ document.getElementById(id).classList.toggle('show'); }
+</script>
+</body>
+</html>

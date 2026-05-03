@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefentoets H8 — Wiskunde HAVO 3</title>
+<style>
+:root { --primary:#7c3aed; --primary-light:#ede9fe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.85}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.intro{background:var(--primary-light);border:1px solid var(--primary);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.intro h2{color:var(--primary);font-size:1.1rem;margin-bottom:0.5rem}
+.intro ul{margin-left:1.4rem;margin-top:0.4rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative}
+.card.scored-correct{border-color:var(--success);background:#f0fdf4}
+.card.scored-incorrect{border-color:var(--accent);background:#fff1f2}
+.opgave-num{display:inline-block;background:var(--primary);color:white;border-radius:999px;padding:0.15rem 0.85rem;font-size:0.85rem;font-weight:700;margin-right:0.4rem}
+.card h2{font-size:1.2rem;color:var(--primary);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:2px solid var(--primary-light)}
+.card p{margin:0.5rem 0}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.deelvraag{margin:1rem 0;padding:0.8rem 1rem;background:#fafbfc;border-left:3px solid var(--primary-light);border-radius:0 8px 8px 0}
+.deelvraag .deeltitel{font-weight:600;color:var(--primary);margin-bottom:0.4rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.5rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text]{border:2px solid var(--border);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#6d28d9}
+.btn-secondary{background:#e2e8f0;color:var(--text)}
+.btn-secondary:hover{background:#cbd5e1}
+.btn-show{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-show:hover{background:#fde68a}
+.btn-big{font-size:1rem;padding:0.7rem 1.5rem;font-weight:700}
+.answer-block{display:none;background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.9rem 1.1rem;margin-top:0.7rem}
+.answer-block.show{display:block}
+.answer-block h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.answer-block ol{padding-left:1.2rem}
+.answer-block li{margin:0.3rem 0;font-size:0.92rem}
+.score-card{background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;border-radius:var(--radius);padding:2rem;text-align:center;margin:2rem 0;display:none}
+.score-card.show{display:block}
+.score-card .pct{font-size:3rem;font-weight:800;margin:0.5rem 0}
+.score-card .msg{font-size:1.1rem;opacity:0.95}
+.timer{position:fixed;bottom:1rem;right:1rem;background:white;border:2px solid var(--primary);border-radius:999px;padding:0.5rem 1.1rem;font-family:'Georgia',serif;font-size:1rem;font-weight:700;color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:100}
+.timer.warning{background:#fef3c7;border-color:#eab308}
+.timer.danger{background:#fff1f2;border-color:var(--accent);color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:0.6rem;margin:1.5rem 0;justify-content:center}
+table.tabel{border-collapse:collapse;width:100%;margin:0.6rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:var(--primary);font-weight:600}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Oefentoets H8 — Wiskunde HAVO 3</h1>
+<p>Klaar voor vrijdag 8 mei 2026?</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 3</a> &rsaquo; <a href="../">H8</a> &rsaquo; Oefentoets</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>📝 Voor je begint</h2>
+<ul>
+<li>Geplande tijd: <strong>30 minuten</strong>. De timer rechtsonder loopt mee.</li>
+<li>Maak alle opgaven <em>zonder</em> de uitwerkingen open te klikken.</li>
+<li>Klik aan het einde op <strong>"Score berekenen"</strong> om alles in één keer te checken.</li>
+<li>Ná de score: klik per opgave op <strong>"Toon uitwerking"</strong> om je werk te vergelijken.</li>
+<li>Onvoldoende? Loop Dag 1, 2 en 3 nog eens door.</li>
+</ul>
+</div>
+
+<div class="actions">
+<button class="btn btn-big" onclick="startTimer()">▶ Start timer</button>
+<button class="btn btn-secondary btn-big" onclick="resetAll()">↺ Reset alles</button>
+</div>
+
+<!-- Opgave 1: periodiek -->
+<div class="card" id="card-1">
+<h2><span class="opgave-num">1</span>Periodiek verband uit een tabel</h2>
+<p>Een waterhoogte op een rivier is gemeten:</p>
+<table class="tabel">
+<thead><tr><th>tijd (uur)</th><th>0</th><th>2</th><th>4</th><th>6</th><th>8</th><th>10</th><th>12</th></tr></thead>
+<tbody><tr><th>hoogte (m)</th><td>3</td><td>7</td><td>3</td><td>−1</td><td>3</td><td>7</td><td>3</td></tr></tbody>
+</table>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Wat is de periode?</div>
+<div class="q"><label>Periode (uur):</label><input type="text" id="o1a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Wat is de evenwichtsstand?</div>
+<div class="q"><label>Evenwichtsstand (m):</label><input type="text" id="o1b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Wat is de amplitude?</div>
+<div class="q"><label>Amplitude (m):</label><input type="text" id="o1c"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-1')">Toon uitwerking</button>
+<div class="answer-block" id="a-1">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> Bij t = 0 is hoogte 3 en stijgend (volgende waarde 7). Bij t = 4 is hoogte 3 maar dalend (volgende waarde −1). Pas op t = 8 is de hoogte weer 3 én stijgend, net als bij t = 0. <strong>Periode = 8 uur.</strong></p>
+<p><strong>b)</strong> Hoogste = 7, laagste = −1. Evenwichtsstand = (7 + (−1))/2 = <strong>3 m.</strong></p>
+<p><strong>c)</strong> Amplitude = 7 − 3 = <strong>4 m.</strong></p>
+</div>
+</div>
+
+<!-- Opgave 2: machtsformule punten -->
+<div class="card" id="card-2">
+<h2><span class="opgave-num">2</span>Machtsformule — punten berekenen</h2>
+<p>Gegeven is de formule <span class="math">y = −0,8 · x²</span>.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Bereken <span class="math">y</span> voor <span class="math">x = 5</span>.</div>
+<div class="q"><label><span class="math">y = </span></label><input type="text" id="o2a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Bereken <span class="math">y</span> voor <span class="math">x = −3</span>.</div>
+<div class="q"><label><span class="math">y = </span></label><input type="text" id="o2b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Heeft de grafiek een hoogste of een laagste punt?</div>
+<div class="q"><label>(hoogste / laagste):</label><input type="text" id="o2c" style="width:200px"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-2')">Toon uitwerking</button>
+<div class="answer-block" id="a-2">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">y = −0,8 · 5² = −0,8 · 25 = −20</span>.</p>
+<p><strong>b)</strong> <span class="math">y = −0,8 · (−3)² = −0,8 · 9 = −7,2</span>. Let op: eerst <span class="math">x²</span>, dan vermenigvuldigen.</p>
+<p><strong>c)</strong> <strong>Hoogste punt</strong>, namelijk <span class="math">(0, 0)</span>. Want <span class="math">a = −0,8 &lt; 0</span>, dus de parabool opent omlaag.</p>
+</div>
+</div>
+
+<!-- Opgave 3: vergelijkingen -->
+<div class="card" id="card-3">
+<h2><span class="opgave-num">3</span>Vergelijkingen oplossen — rond af op 2 decimalen waar nodig</h2>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Los op: <span class="math">x² = 81</span></div>
+<div class="q"><label><span class="math">x = </span> (twee oplossingen, gescheiden door komma):</label><input type="text" id="o3a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Los op: <span class="math">x³ = −64</span></div>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o3b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Los op: <span class="math">2x² + 5 = 55</span></div>
+<div class="q"><label><span class="math">x = </span> (twee oplossingen):</label><input type="text" id="o3c"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">d) Los op: <span class="math">x² = −20</span></div>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o3d"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-3')">Toon uitwerking</button>
+<div class="answer-block" id="a-3">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">x = 9 ∨ x = −9</span>.</p>
+<p><strong>b)</strong> <span class="math">x = ³√(−64) = −4</span> (want <span class="math">(−4)³ = −64</span>).</p>
+<p><strong>c)</strong> <span class="math">2x² = 50 ⇒ x² = 25 ⇒ x = 5 ∨ x = −5</span>.</p>
+<p><strong>d)</strong> Een kwadraat is nooit negatief. <strong>Geen oplossing</strong>.</p>
+</div>
+</div>
+
+<!-- Opgave 4: omgekeerd evenredig -->
+<div class="card" id="card-4">
+<h2><span class="opgave-num">4</span>Omgekeerd evenredig — werkverdeling</h2>
+<p>Voor een schoonmaakbedrijf werken altijd genoeg mensen om een ruimte in 6 uur schoon te maken met 4 mensen.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Geef de constante <span class="math">a</span>.</div>
+<div class="q"><label><span class="math">a = </span></label><input type="text" id="o4a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Hoeveel uur kost het met 8 mensen?</div>
+<div class="q"><label>(uur):</label><input type="text" id="o4b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Hoeveel mensen heb je nodig om het in 3 uur te doen?</div>
+<div class="q"><label>(mensen):</label><input type="text" id="o4c"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-4')">Toon uitwerking</button>
+<div class="answer-block" id="a-4">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">a = 4 · 6 = 24</span> mensuren.</p>
+<p><strong>b)</strong> <span class="math">y = 24/8 = 3</span> uur.</p>
+<p><strong>c)</strong> <span class="math">x = 24/3 = 8</span> mensen.</p>
+</div>
+</div>
+
+<!-- Opgave 5: type herkennen + exponentieel -->
+<div class="card" id="card-5">
+<h2><span class="opgave-num">5</span>Type verband + exponentieel</h2>
+<p>Een spaarbedrag van €800 staat tegen een rente van 2% per jaar.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Welk type verband is dit?</div>
+<div class="q"><label>(één van de zes typen):</label><input type="text" id="o5a" style="width:240px"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Geef de groeifactor.</div>
+<div class="q"><label>g =</label><input type="text" id="o5b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Wat is het bedrag na 5 jaar? Rond af op centen.</div>
+<div class="q"><label>€</label><input type="text" id="o5c"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-5')">Toon uitwerking</button>
+<div class="answer-block" id="a-5">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <strong>Exponentieel verband</strong> (per jaar wordt het bedrag met dezelfde factor vermenigvuldigd).</p>
+<p><strong>b)</strong> Groeifactor <span class="math">g = 1,02</span>.</p>
+<p><strong>c)</strong> <span class="math">B = 800 · 1,02<sup>5</sup> = 800 · 1,10408 ≈ 883,26</span> &nbsp; → <strong>€ 883,26</strong>.</p>
+</div>
+</div>
+
+<!-- Score knop -->
+<div class="actions">
+<button class="btn btn-big" onclick="checkAll()">📊 Score berekenen</button>
+</div>
+
+<div class="score-card" id="score-card">
+<div style="font-size:1rem">Je score</div>
+<div class="pct" id="score-pct">—</div>
+<div id="score-detail" style="opacity:0.9"></div>
+<div class="msg" id="score-msg"></div>
+</div>
+
+<div class="nav-bottom">
+<a href="../dag3-omgekeerd-evenredig-en-gemengd/">← Dag 3</a>
+<a href="../">↑ H8 overzicht</a>
+</div>
+
+</div>
+
+<div class="timer" id="timer">⏱ 30:00</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 3 — Oefentoets H8</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/[−–—]/g,'-').replace(/\s+/g,'').replace(/,/g,'.');
+}
+
+// Antwoord-keys
+const KEY = {
+  // Opgave 1 — periodiek
+  'o1a': {numeric:8, tol:0.01, also:['8']},
+  'o1b': {numeric:3, tol:0.01, also:['3']},
+  'o1c': {numeric:4, tol:0.01, also:['4']},
+  // Opgave 2 — machtsformule
+  'o2a': {numeric:-20, tol:0.01, also:['-20']},
+  'o2b': {numeric:-7.2, tol:0.01, also:['-7.2','-7,2','-36/5']},
+  'o2c': {accept:['hoogste','hoogste punt','top']},
+  // Opgave 3 — vergelijkingen
+  'o3a': {pair:[9,-9], tol:0.01},
+  'o3b': {numeric:-4, tol:0.01, also:['-4']},
+  'o3c': {pair:[5,-5], tol:0.01},
+  'o3d': {accept:['geen','geen oplossing','geenoplossing','-']},
+  // Opgave 4 — omgekeerd evenredig
+  'o4a': {numeric:24, tol:0.01, also:['24']},
+  'o4b': {numeric:3, tol:0.01, also:['3']},
+  'o4c': {numeric:8, tol:0.01, also:['8']},
+  // Opgave 5 — exponentieel
+  'o5a': {accept:['exponentieel','exponentielegroei','exponentiele groei','exponentieel verband']},
+  'o5b': {numeric:1.02, tol:0.001, also:['1.02','1,02']},
+  'o5c': {numeric:883.26, tol:0.05, also:['883.26','883,26']}
+};
+
+function checkOne(id, key){
+  const el = document.getElementById(id);
+  if(!el) return null;
+  const norm = normalize(el.value);
+  if(!norm) { el.classList.add('incorrect'); return false; }
+  let ok = false;
+  if(key.also && key.also.some(a => normalize(a) === norm)) ok = true;
+  if(!ok && key.accept){
+    ok = key.accept.some(a => normalize(a) === norm);
+  }
+  if(!ok && typeof key.numeric === 'number'){
+    const num = parseFloat(norm);
+    if(isFinite(num) && Math.abs(num - key.numeric) <= key.tol) ok = true;
+    if(!ok && norm.includes('/')){
+      const [a,b] = norm.split('/').map(parseFloat);
+      if(isFinite(a) && isFinite(b) && b !== 0 && Math.abs(a/b - key.numeric) <= key.tol) ok = true;
+    }
+  }
+  if(!ok && key.pair){
+    const raw = (el.value || '').toLowerCase()
+      .replace(/[−–—]/g,'-')
+      .replace(/\s+/g,' ').trim()
+      .replace(/\s+of\s+/g,',').replace(/\s+v\s+/g,',').replace(/∨/g,',').replace(/\bv\b/g,',')
+      .replace(/x\s*=/g,'').replace(/[±]/g,'')
+      .replace(/,/g,';').replace(/;\s*/g,';');
+    let parts = raw.split(';').filter(s => s.length > 0);
+    if(parts.length === 1){ parts = parts[0].split(/\s+/).filter(s => s.length > 0); }
+    if(parts.length === 2){
+      const v1 = parseFloat(parts[0]), v2 = parseFloat(parts[1]);
+      const [t1,t2] = key.pair;
+      if(isFinite(v1) && isFinite(v2)){
+        ok = (Math.abs(v1-t1)<=key.tol && Math.abs(v2-t2)<=key.tol) || (Math.abs(v1-t2)<=key.tol && Math.abs(v2-t1)<=key.tol);
+      }
+    }
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  return ok;
+}
+
+function checkAll(){
+  let total = 0, correct = 0;
+  const perCard = {};
+  Object.keys(KEY).forEach(id => {
+    const m = id.match(/o(\d)/);
+    const cardId = m ? 'card-' + m[1] : null;
+    const ok = checkOne(id, KEY[id]);
+    total++;
+    if(ok) correct++;
+    if(cardId){
+      if(!perCard[cardId]) perCard[cardId] = {total:0, correct:0};
+      perCard[cardId].total++;
+      if(ok) perCard[cardId].correct++;
+    }
+  });
+  Object.keys(perCard).forEach(cardId => {
+    const card = document.getElementById(cardId);
+    card.classList.remove('scored-correct','scored-incorrect');
+    if(perCard[cardId].correct === perCard[cardId].total) card.classList.add('scored-correct');
+    else if(perCard[cardId].correct === 0) card.classList.add('scored-incorrect');
+  });
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  const sc = document.getElementById('score-card');
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-detail').textContent = correct + ' van ' + total + ' onderdelen goed';
+  let msg = '';
+  if(pct >= 85) msg = '🎉 Top! Je bent klaar voor de toets.';
+  else if(pct >= 70) msg = '👍 Goed bezig — kijk nog even naar wat fout ging.';
+  else if(pct >= 50) msg = '📚 Loop Dag 1, 2 en 3 nog eens door — vooral wat hier fout ging.';
+  else msg = '💪 Niet ontmoedigen! Maak Dag 1 t/m 3 opnieuw.';
+  document.getElementById('score-msg').textContent = msg;
+  sc.classList.add('show');
+  sc.scrollIntoView({behavior:'smooth', block:'center'});
+}
+function toggleAnswer(id){
+  document.getElementById(id).classList.toggle('show');
+}
+function resetAll(){
+  Object.keys(KEY).forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.value=''; el.classList.remove('correct','incorrect'); }
+  });
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('scored-correct','scored-incorrect'));
+  document.querySelectorAll('.answer-block').forEach(a => a.classList.remove('show'));
+  document.getElementById('score-card').classList.remove('show');
+  resetTimer();
+}
+// Timer
+let timerInt = null, secondsLeft = 30 * 60;
+function fmt(s){ const m = Math.floor(s/60), sec = s%60; return '⏱ ' + m + ':' + (sec<10?'0':'') + sec; }
+function tick(){
+  secondsLeft--;
+  const t = document.getElementById('timer');
+  t.textContent = fmt(secondsLeft);
+  t.classList.remove('warning','danger');
+  if(secondsLeft <= 60) t.classList.add('danger');
+  else if(secondsLeft <= 5*60) t.classList.add('warning');
+  if(secondsLeft <= 0){ clearInterval(timerInt); timerInt = null; t.textContent = '⏱ 0:00'; }
+}
+function startTimer(){ if(timerInt) return; timerInt = setInterval(tick, 1000); }
+function resetTimer(){ if(timerInt){ clearInterval(timerInt); timerInt = null; } secondsLeft = 30*60; document.getElementById('timer').textContent = fmt(secondsLeft); document.getElementById('timer').classList.remove('warning','danger'); }
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoofdstuk 8 — Wiskunde HAVO 3</title>
+<style>
+:root { --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; --primary:#0891b2; --primary-light:#cffafe; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,#0e7490 0%,#0891b2 100%);color:white;padding:2.5rem 1rem;text-align:center}
+header h1{font-size:1.9rem;margin-bottom:0.3rem}
+header p{opacity:0.9;font-size:1rem}
+.breadcrumb{padding:1rem;max-width:780px;margin:0 auto;font-size:0.9rem;color:var(--muted)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:780px;margin:0 auto;padding:1rem 1rem 2.5rem;flex:1}
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.intro h2{color:var(--primary);font-size:1.05rem;margin-bottom:0.5rem}
+.intro p{margin:0.4rem 0;font-size:0.95rem}
+.intro ul{margin-left:1.4rem;margin-top:0.4rem}
+.intro li{margin:0.3rem 0;font-size:0.95rem}
+.card{display:flex;align-items:center;gap:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 1px 3px rgba(0,0,0,0.08);padding:1.5rem;margin-bottom:1.25rem;text-decoration:none;color:var(--text);transition:transform 0.15s,box-shadow 0.15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.1)}
+.card-icon{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:white;flex-shrink:0}
+.card h2{font-size:1.15rem;margin-bottom:0.2rem}
+.card p{color:var(--muted);font-size:0.9rem;margin:0}
+.card.toets{border:2px solid var(--primary);background:linear-gradient(135deg,#fff,#f0f9ff)}
+.card.disabled{opacity:0.55;pointer-events:none}
+footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:0.85rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Hoofdstuk 8 — Procenten, groei &amp; verbanden</h1>
+<p>Wiskunde HAVO 3 — toetsvoorbereiding</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../">Wiskunde</a> &rsaquo; <a href="../">HAVO 3</a> &rsaquo; H8</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>📚 Wat ga je leren?</h2>
+<p>Drie dagen toetsvoorbereiding voor hoofdstuk 8. Per dag een eigen interactieve les. Werk in volgorde.</p>
+<ul>
+<li><strong>Dag 1</strong> — §8.4 Periodieke verbanden (periode, evenwichtsstand, amplitude)</li>
+<li><strong>Dag 2</strong> — §8.5 Machtsverbanden (y = a·x<sup>n</sup>) en vergelijkingen oplossen</li>
+<li><strong>Dag 3</strong> — §8.6 Omgekeerd evenredig + gemengde toetsstof</li>
+<li><strong>Oefentoets</strong> — 30 min, alle stof gemengd, met timer en eigen score</li>
+</ul>
+</div>
+
+<a href="dag1-periodieke-verbanden/" class="card">
+<div class="card-icon" style="background:linear-gradient(135deg,#0e7490,#0891b2)">D1</div>
+<div>
+<h2 style="color:#0e7490">Dag 1 — Periodieke verbanden</h2>
+<p>§8.4 — periode, evenwichtsstand, amplitude. Pijnpunt: periode aflezen.</p>
+</div>
+</a>
+
+<a href="dag2-machtsverbanden/" class="card">
+<div class="card-icon" style="background:linear-gradient(135deg,#0e7490,#0891b2)">D2</div>
+<div>
+<h2 style="color:#0e7490">Dag 2 — Machtsverbanden</h2>
+<p>§8.5 — y = a·x², y = a·x³ en vergelijkingen oplossen</p>
+</div>
+</a>
+
+<a href="dag3-omgekeerd-evenredig-en-gemengd/" class="card">
+<div class="card-icon" style="background:linear-gradient(135deg,#0e7490,#0891b2)">D3</div>
+<div>
+<h2 style="color:#0e7490">Dag 3 — Omgekeerd evenredig + gemengd</h2>
+<p>§8.6 — y = a/x en alle stof gemengd, plus tips voor de toets</p>
+</div>
+</a>
+
+<a href="oefentoets/" class="card toets">
+<div class="card-icon" style="background:linear-gradient(135deg,#4c1d95,#a855f7)">★</div>
+<div>
+<h2 style="color:#7c3aed">Oefentoets — H8</h2>
+<p>30 min, 5 opgaven, eigen score — voor 8 mei 2026</p>
+</div>
+</a>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 3 — Hoofdstuk 8</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+</body>
+</html>

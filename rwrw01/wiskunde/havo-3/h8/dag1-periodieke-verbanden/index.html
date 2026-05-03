@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 1 — Periodieke verbanden (§8.4) — Wiskunde HAVO 3</title>
+<style>
+:root { --primary:#0891b2; --primary-light:#cffafe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#0e7490 0%,#0891b2 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.1rem;font-weight:600;color:#0e7490}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.3fr 1fr;align-items:center}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary);font-weight:700;min-width:48px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1rem;font-style:italic;text-align:center}
+.try-it{background:#ecfeff;border:2px dashed #67e8f9;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:120px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#0e7490}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+table.tabel{border-collapse:collapse;width:100%;margin:0.8rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:#0e7490;font-weight:600}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 1 — Periodieke verbanden</h1>
+<p>§8.4 — Periode, evenwichtsstand en amplitude</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 3</a> &rsaquo; <a href="../">H8</a> &rsaquo; Dag 1</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Korte recap §8.1–§8.3 (groei en groeifactor)</a></li>
+<li><a href="#wat">Wat is een periodiek verband?</a></li>
+<li><a href="#begrippen">Drie begrippen: periode, evenwichtsstand, amplitude</a></li>
+<li><a href="#schuifjes">Speel met de schuifjes — zie wat elk getal doet</a></li>
+<li><a href="#periode-aflezen">Periode aflezen — drie methodes</a></li>
+<li><a href="#even-amp">Evenwichtsstand en amplitude berekenen</a></li>
+<li><a href="#oefen">Extra oefenset (eigen materiaal)</a></li>
+<li><a href="#check">Kennischeck</a></li>
+</ol>
+</div>
+
+<!-- 1. Recap -->
+<div class="card" id="recap">
+<h2>1. Recap §8.1–§8.3</h2>
+<p>Voordat we starten met periodieke verbanden, even kort opfrissen.</p>
+<div class="try-it">
+<h4>Snelle check (2 min)</h4>
+<div class="q"><label>Een hoeveelheid neemt elk jaar met 8% toe. Wat is de groeifactor?</label><input type="text" id="r1"><button class="btn-hint btn" onclick="checkText('r1',['1.08','1,08'])">Check</button></div>
+<div class="feedback" id="fb-r1"></div>
+
+<div class="q"><label>De groeifactor per jaar is 0,92. Hoeveel procent neemt het af?</label><input type="text" id="r2" placeholder="..%"><button class="btn-hint btn" onclick="checkText('r2',['8','8%','8 %'])">Check</button></div>
+<div class="feedback" id="fb-r2"></div>
+
+<div class="q"><label>De formule voor exponentiële groei is <span class="math">N = b · g<sup>?</sup></span>. Vul aan.</label><input type="text" id="r3"><button class="btn-hint btn" onclick="checkText('r3',['t','x','n'])">Check</button></div>
+<div class="feedback" id="fb-r3"></div>
+</div>
+</div>
+
+<!-- 2. Wat is periodiek -->
+<div class="card" id="wat">
+<h2>2. Wat is een periodiek verband?</h2>
+<p>Sommige dingen herhalen zich steeds: het op-en-neer-gaan van een reuzenrad, het op- en afgaan van de zee (eb en vloed), de temperatuur door de dag heen, je hartslag.</p>
+<div class="formula"><span class="math-display">Periodiek verband = een verband dat zich steeds op dezelfde manier herhaalt</span></div>
+<p>De grafiek van een periodiek verband bestaat uit precies dezelfde golf, telkens opnieuw. Hieronder zie je een voorbeeld:</p>
+<svg viewBox="0 0 400 180" style="width:100%;background:white;border:1px solid var(--border);border-radius:8px">
+<line x1="40" y1="90" x2="380" y2="90" stroke="#94a3b8" stroke-width="1"/>
+<line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8" stroke-width="1"/>
+<text x="200" y="175" font-size="11" fill="#64748b" text-anchor="middle">tijd</text>
+<text x="20" y="95" font-size="11" fill="#64748b">y</text>
+<path id="introWave" d="" stroke="#0891b2" stroke-width="2.5" fill="none"/>
+</svg>
+<div class="tip-box"><strong>💡 Voorbeelden uit het boek:</strong> Reuzenrad (foto met Floris), London Eye, getijden in Port Isaac, ademhaling, zonsopkomst-temperatuur.</div>
+</div>
+
+<!-- 3. Drie begrippen -->
+<div class="card" id="begrippen">
+<h2>3. Drie begrippen die je moet kennen</h2>
+
+<h3>📏 Periode</h3>
+<p>De <strong>periode</strong> is de <em>tijd</em> die nodig is voor één volledige golf. Daarna herhaalt het patroon zich.</p>
+<div class="formula">Eenheid: meestal seconden, minuten, uren, dagen of maanden — kijk naar de horizontale as!</div>
+
+<h3>⚖️ Evenwichtsstand</h3>
+<p>De <strong>evenwichtsstand</strong> is het gemiddelde tussen de hoogste en de laagste waarde. Het is de horizontale lijn waar de golf precies in het midden is.</p>
+<div class="formula"><span class="math-display">evenwichtsstand = (hoogste stand + laagste stand) / 2</span></div>
+
+<h3>📐 Amplitude</h3>
+<p>De <strong>amplitude</strong> is hoe ver de golf maximaal naar boven (of beneden) gaat <em>vanaf</em> de evenwichtsstand. Je rekent hem uit door eerst de evenwichtsstand te bepalen, en dan het verschil met de top (of het dal) te nemen.</p>
+<div class="formula"><span class="math-display">amplitude = hoogste stand − evenwichtsstand</span></div>
+
+<div class="warning-box"><strong>⚠️ Veelgemaakte fout:</strong> de amplitude is <em>niet</em> hoogste stand − laagste stand! Dat is dubbel zo groot als de echte amplitude. Bereken eerst de evenwichtsstand, dan de amplitude als het verschil tussen top en evenwichtsstand.</div>
+</div>
+
+<!-- 4. Schuifjes -->
+<div class="card" id="schuifjes">
+<h2>4. Speel met de schuifjes 🎚️</h2>
+<p>Beweeg de drie schuifjes en kijk wat er gebeurt met de grafiek. De rode stippellijn is de evenwichtsstand. Probeer eerst alleen het schuifje voor de periode, daarna de andere.</p>
+
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot1" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>📏 periode</label><span class="val" id="P-val">4</span></div>
+<input type="range" id="P" min="1" max="12" step="0.5" value="4">
+</div>
+<div class="control">
+<div class="control-row"><label>⚖️ evenwichtsstand</label><span class="val" id="E-val">5</span></div>
+<input type="range" id="E" min="0" max="10" step="0.5" value="5">
+</div>
+<div class="control">
+<div class="control-row"><label>📐 amplitude</label><span class="val" id="A-val">3</span></div>
+<input type="range" id="A" min="0.5" max="5" step="0.25" value="3">
+</div>
+<div class="formula-live" id="info1">periode = 4 sec | evenw. = 5 | amplitude = 3</div>
+</div>
+</div>
+</div>
+
+<div class="tip-box"><strong>💡 Probeer dit:</strong>
+<ol style="margin-left:1.2rem;margin-top:0.3rem">
+<li>Zet periode op 6 — wat zie je? Hoe vaak past één golf op het scherm?</li>
+<li>Zet evenwichtsstand op 8 — schuift de golf omhoog of omlaag?</li>
+<li>Zet amplitude op 1 — wordt de golf platter of hoger?</li>
+</ol>
+</div>
+</div>
+
+<!-- 5. Periode aflezen -->
+<div class="card" id="periode-aflezen">
+<h2>5. Periode aflezen — hét pijnpunt 🎯</h2>
+<p>Veel leerlingen vinden dit lastig. Hier zijn drie betrouwbare methodes om de periode af te lezen uit een grafiek:</p>
+
+<h3>Methode 1 — Top tot top</h3>
+<p>Vind een hoogste punt (top) en de eerstvolgende top. Het verschil in <span class="math">x</span>-waarde (tijd) is de periode.</p>
+<svg viewBox="0 0 400 160" style="width:100%;background:white;border:1px solid var(--border);border-radius:8px;margin-top:0.5rem">
+<line x1="40" y1="80" x2="380" y2="80" stroke="#94a3b8"/>
+<line x1="40" y1="20" x2="40" y2="140" stroke="#94a3b8"/>
+<path d="M40,80 Q70,20 100,80 Q130,140 160,80 Q190,20 220,80 Q250,140 280,80 Q310,20 340,80 Q370,140 380,80" stroke="#0891b2" stroke-width="2" fill="none"/>
+<circle cx="100" cy="35" r="4" fill="#e11d48"/>
+<circle cx="220" cy="35" r="4" fill="#e11d48"/>
+<line x1="100" y1="35" x2="220" y2="35" stroke="#e11d48" stroke-dasharray="3,3"/>
+<text x="160" y="25" font-size="11" fill="#e11d48" text-anchor="middle">periode = afstand tussen 2 toppen</text>
+</svg>
+
+<h3>Methode 2 — Dal tot dal</h3>
+<p>Werkt precies hetzelfde maar dan met laagste punten. Beide methodes geven hetzelfde antwoord.</p>
+
+<h3>Methode 3 — Twee gelijke punten verder (de slimme manier)</h3>
+<p>Soms zijn toppen lastig precies te zien. Kies dan een punt op de evenwichtsstand <strong>waar de grafiek omhoog gaat</strong>, en zoek het volgende punt waar de grafiek óók op de evenwichtsstand zit én óók omhoog gaat.</p>
+<div class="warning-box"><strong>⚠️ Pas op!</strong> Als je een punt op de evenwichtsstand neemt waar de grafiek omhoog gaat, en het volgende punt waar de grafiek omlaag gaat — dan heb je maar een <strong>halve</strong> periode gemeten!</div>
+
+<div class="try-it">
+<h4>🧪 Lees zelf af — vier voorbeelden</h4>
+<p>Hieronder vier kleine grafieken. Lees de periode af. Op de horizontale as: tijd in seconden.</p>
+
+<svg id="leesgrafiek" viewBox="0 0 700 130" style="width:100%;background:white;border:1px solid var(--border);border-radius:8px;margin:0.5rem 0"></svg>
+
+<div class="q"><label>Periode A (sec):</label><input type="text" id="pA"><button class="btn-hint btn" onclick="checkNumeric('pA',4,0.1,['4'])">Check</button></div>
+<div class="feedback" id="fb-pA"></div>
+<div class="q"><label>Periode B (sec):</label><input type="text" id="pB"><button class="btn-hint btn" onclick="checkNumeric('pB',6,0.1,['6'])">Check</button></div>
+<div class="feedback" id="fb-pB"></div>
+<div class="q"><label>Periode C (sec):</label><input type="text" id="pC"><button class="btn-hint btn" onclick="checkNumeric('pC',8,0.1,['8'])">Check</button></div>
+<div class="feedback" id="fb-pC"></div>
+<div class="q"><label>Periode D (sec):</label><input type="text" id="pD"><button class="btn-hint btn" onclick="checkNumeric('pD',12,0.1,['12'])">Check</button></div>
+<div class="feedback" id="fb-pD"></div>
+</div>
+</div>
+
+<!-- 6. Evenwichtsstand en amplitude berekenen -->
+<div class="card" id="even-amp">
+<h2>6. Evenwichtsstand en amplitude berekenen</h2>
+<p>Als je <span class="math">max</span> en <span class="math">min</span> kunt aflezen, doe je het in twee stappen:</p>
+<div class="formula">
+<div><strong>Stap 1:</strong> <span class="math-display">evenwichtsstand = (hoogste stand + laagste stand) / 2</span></div>
+<div style="margin-top:0.4rem"><strong>Stap 2:</strong> <span class="math-display">amplitude = hoogste stand − evenwichtsstand</span></div>
+</div>
+
+<div class="example-box">
+<strong>Voorbeeld:</strong> een grafiek heeft top op <span class="math">y = 9</span> en dal op <span class="math">y = 1</span>.
+<ol style="margin-left:1.2rem;margin-top:0.4rem">
+<li>evenwichtsstand = (9 + 1) / 2 = <strong>5</strong></li>
+<li>amplitude = 9 − 5 = <strong>4</strong></li>
+</ol>
+</div>
+
+<div class="try-it">
+<h4>🧪 Reken zelf</h4>
+<p>Bij een periodieke beweging is de hoogste stand 14 cm en de laagste stand 2 cm.</p>
+<div class="q"><label>evenwichtsstand:</label><input type="text" id="ea1"><button class="btn-hint btn" onclick="checkNumeric('ea1',8,0.01,['8'])">Check</button></div>
+<div class="feedback" id="fb-ea1"></div>
+<div class="q"><label>amplitude:</label><input type="text" id="ea2"><button class="btn-hint btn" onclick="checkNumeric('ea2',6,0.01,['6'])">Check</button></div>
+<div class="feedback" id="fb-ea2"></div>
+</div>
+
+<div class="try-it">
+<h4>🧪 Twee verder</h4>
+<p>Een grafiek heeft hoogste stand 6,5 m en laagste stand −2,5 m.</p>
+<div class="q"><label>evenwichtsstand (m):</label><input type="text" id="ea3"><button class="btn-hint btn" onclick="checkNumeric('ea3',2,0.01,['2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ea3-steps')">Stap</button></div>
+<div class="feedback" id="fb-ea3"></div>
+<div class="detail-steps" id="ea3-steps">
+<h5>Stappenplan</h5>
+<ol><li>(6,5 + (−2,5)) / 2 = 4 / 2 = 2</li></ol>
+</div>
+<div class="q"><label>amplitude (m):</label><input type="text" id="ea4"><button class="btn-hint btn" onclick="checkNumeric('ea4',4.5,0.01,['4.5','4,5','9/2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('ea4-steps')">Stap</button></div>
+<div class="feedback" id="fb-ea4"></div>
+<div class="detail-steps" id="ea4-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>evenwichtsstand = (6,5 + (−2,5)) / 2 = 2 (zie vorige vraag)</li>
+<li>amplitude = 6,5 − 2 = 4,5</li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- 7. Oefenopgaven -->
+<div class="card" id="oefen">
+<h2>7. Extra oefenset (eigen materiaal)</h2>
+<p>Onderstaande opgaven zijn van mij, als extra training. Voor de échte huiswerk-opgaven 35–41 uit jouw boek moet je nog naar de boekopgaven zelf. Een paar daarvan komen later in dag 3.</p>
+
+<h3>Aflees-opgave — uit een grafiek</h3>
+<p>Hieronder zie je een grafiek. Lees alle drie de waarden af.</p>
+<svg id="leesgraf2" viewBox="0 0 400 200" style="width:100%;background:white;border:1px solid var(--border);border-radius:8px;margin:0.5rem 0"></svg>
+<div class="q"><label>Periode (uren):</label><input type="text" id="oA-p"><button class="btn-hint btn" onclick="checkNumeric('oA-p',6,0.1,['6'])">Check</button></div>
+<div class="feedback" id="fb-oA-p"></div>
+<div class="q"><label>Evenwichtsstand:</label><input type="text" id="oA-e"><button class="btn-hint btn" onclick="checkNumeric('oA-e',5,0.1,['5'])">Check</button></div>
+<div class="feedback" id="fb-oA-e"></div>
+<div class="q"><label>Amplitude:</label><input type="text" id="oA-a"><button class="btn-hint btn" onclick="checkNumeric('oA-a',3,0.1,['3'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oA-steps')">Stap</button></div>
+<div class="feedback" id="fb-oA-a"></div>
+<div class="detail-steps" id="oA-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Lees max en min af op de y-as: max = 8, min = 2.</li>
+<li>Lees afstand tussen twee toppen af op de x-as: ~6 uur.</li>
+<li>Evenwichtsstand = (8 + 2) / 2 = 5.</li>
+<li>Amplitude = 8 − 5 = 3.</li>
+</ol>
+</div>
+
+<h3>Opgave A — Reuzenrad Floris</h3>
+<p>Floris zit in een reuzenrad. Zijn hoogste punt is 24 m boven de grond, zijn laagste punt is op grondniveau. Eén ronde duurt 24 seconden.</p>
+<div class="q"><label>a) Evenwichtsstand (m):</label><input type="text" id="o35b"><button class="btn-hint btn" onclick="checkNumeric('o35b',12,0.01,['12'])">Check</button></div>
+<div class="feedback" id="fb-o35b"></div>
+
+<div class="q"><label>b) Amplitude (m):</label><input type="text" id="o35c"><button class="btn-hint btn" onclick="checkNumeric('o35c',12,0.01,['12'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o35-steps')">Stap</button></div>
+<div class="feedback" id="fb-o35c"></div>
+<div class="detail-steps" id="o35-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Evenwichtsstand = (24 + 0) / 2 = 12 m.</li>
+<li>Amplitude = 24 − 12 = 12 m.</li>
+</ol>
+</div>
+
+<h3>Opgave B — Tabel aflezen (zoals Port Isaac uit jouw boek)</h3>
+<p>De waterhoogte op een rivier is opgemeten en in onderstaande tabel gezet:</p>
+<table class="tabel">
+<thead><tr><th>tijd (uur)</th><th>0</th><th>3</th><th>6</th><th>9</th><th>12</th><th>15</th><th>18</th><th>21</th><th>24</th></tr></thead>
+<tbody><tr><th>hoogte (m)</th><td>5</td><td>8</td><td>5</td><td>2</td><td>5</td><td>8</td><td>5</td><td>2</td><td>5</td></tr></tbody>
+</table>
+<div class="q"><label>a) Periode (uur):</label><input type="text" id="oB-p"><button class="btn-hint btn" onclick="checkNumeric('oB-p',12,0.1,['12'])">Check</button></div>
+<div class="feedback" id="fb-oB-p"></div>
+<div class="q"><label>b) Evenwichtsstand (m):</label><input type="text" id="oB-e"><button class="btn-hint btn" onclick="checkNumeric('oB-e',5,0.1,['5'])">Check</button></div>
+<div class="feedback" id="fb-oB-e"></div>
+<div class="q"><label>c) Amplitude (m):</label><input type="text" id="oB-a"><button class="btn-hint btn" onclick="checkNumeric('oB-a',3,0.1,['3'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('oB-steps')">Stap</button></div>
+<div class="feedback" id="fb-oB-a"></div>
+<div class="detail-steps" id="oB-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>De tabel herhaalt zich: 5 → 8 → 5 → 2 → 5 → ... De waarde "5" komt steeds terug op t = 0, 6, 12, 18 — maar pas op: bij t=6 staat hij op 5 én daalt, bij t=12 staat hij op 5 én stijgt. Zelfde gedrag (stijgend op evenwichtsstand) is dus pas weer op t = 12. <strong>Periode = 12 uur.</strong></li>
+<li>Hoogste = 8, laagste = 2. Evenwichtsstand = (8 + 2) / 2 = 5 m.</li>
+<li>Amplitude = 8 − 5 = 3 m.</li>
+</ol>
+</div>
+
+<h3>Opgave C — Periode, evenwichtsstand, amplitude uit grafiek</h3>
+<p>Een grafiek heeft top op <span class="math">y = 4,5</span> en dal op <span class="math">y = −2,5</span>. Tussen twee opeenvolgende toppen ligt 5 seconden.</p>
+<div class="q"><label>a) Periode (sec):</label><input type="text" id="o36a"><button class="btn-hint btn" onclick="checkNumeric('o36a',5,0.01,['5'])">Check</button></div>
+<div class="feedback" id="fb-o36a"></div>
+<div class="q"><label>b) Evenwichtsstand:</label><input type="text" id="o36b"><button class="btn-hint btn" onclick="checkNumeric('o36b',1,0.01,['1'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o36-steps')">Stap</button></div>
+<div class="feedback" id="fb-o36b"></div>
+<div class="q"><label>c) Amplitude:</label><input type="text" id="o36c"><button class="btn-hint btn" onclick="checkNumeric('o36c',3.5,0.01,['3.5','3,5','7/2'])">Check</button></div>
+<div class="feedback" id="fb-o36c"></div>
+<div class="detail-steps" id="o36-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Evenwichtsstand = (4,5 + (−2,5)) / 2 = 2 / 2 = 1.</li>
+<li>Amplitude = 4,5 − 1 = 3,5.</li>
+</ol>
+</div>
+
+<h3>Opgave D — Hartslag</h3>
+<p>Een hartslagmonitor laat zien dat het hart elke 0,8 seconden één keer slaat. De drukverschillen liggen tussen 80 mmHg en 120 mmHg.</p>
+<div class="q"><label>a) Periode (sec):</label><input type="text" id="o37a"><button class="btn-hint btn" onclick="checkNumeric('o37a',0.8,0.001,['0.8','0,8','4/5'])">Check</button></div>
+<div class="feedback" id="fb-o37a"></div>
+<div class="q"><label>b) Evenwichtsstand (mmHg):</label><input type="text" id="o37b"><button class="btn-hint btn" onclick="checkNumeric('o37b',100,0.01,['100'])">Check</button></div>
+<div class="feedback" id="fb-o37b"></div>
+<div class="q"><label>c) Amplitude (mmHg):</label><input type="text" id="o37c"><button class="btn-hint btn" onclick="checkNumeric('o37c',20,0.01,['20'])">Check</button></div>
+<div class="feedback" id="fb-o37c"></div>
+</div>
+
+<!-- 8. Kennischeck -->
+<div class="card" id="check">
+<h2>8. Kennischeck — kun je dit?</h2>
+<ul style="margin-left:1.2rem">
+<li>Ik weet wat een periodiek verband is.</li>
+<li>Ik kan de periode aflezen uit een grafiek (top tot top, dal tot dal, of "twee gelijke punten verder").</li>
+<li>Ik kan evenwichtsstand uitrekenen: (hoogste + laagste) / 2.</li>
+<li>Ik weet dat amplitude = hoogste stand − evenwichtsstand (en dus <em>niet</em> hoogste − laagste).</li>
+<li>Ik weet dat de eenheid van de periode aansluit op de horizontale as (sec, min, uur, dag…).</li>
+</ul>
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 2?</strong> Daar leer je over <em>machtsverbanden</em>: y = a·xⁿ — heel andere stof, maar even belangrijk voor de toets.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../">← Terug naar H8</a>
+<a href="../dag2-machtsverbanden/">Dag 2: Machtsverbanden →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 3 — H8 Dag 1: Periodieke verbanden</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// Intro wave (vast, alleen visueel)
+(function(){
+  const path = document.getElementById('introWave');
+  let d = '';
+  for(let x = 40; x <= 380; x++){
+    const t = (x - 40) / 30;
+    const y = 90 - 50 * Math.sin(t);
+    d += (x === 40 ? 'M' : ' L') + x + ',' + y;
+  }
+  path.setAttribute('d', d);
+})();
+
+// Aflees-grafiek (oefenopgave bij sectie 7): periode 6 uur, evenw 5, amp 3
+(function(){
+  const svg = document.getElementById('leesgraf2');
+  if(!svg) return;
+  // viewBox 400×200; assen op x=40 (y-as) en y=160 (x-as), x-as loopt tot 380
+  // y-bereik 0..10 → y_pixel = 160 − y * 14
+  // x-bereik 0..18 → x_pixel = 40 + t * 18.9
+  let s = '';
+  // grid
+  for(let t = 0; t <= 18; t += 2){
+    const X = 40 + t * 18.9;
+    s += `<line x1="${X}" y1="20" x2="${X}" y2="160" stroke="#eef2f7"/>`;
+    s += `<text x="${X}" y="175" font-size="10" fill="#64748b" text-anchor="middle">${t}</text>`;
+  }
+  for(let y = 0; y <= 10; y += 2){
+    const Y = 160 - y * 14;
+    s += `<line x1="40" y1="${Y}" x2="380" y2="${Y}" stroke="#eef2f7"/>`;
+    s += `<text x="34" y="${Y+3}" font-size="10" fill="#64748b" text-anchor="end">${y}</text>`;
+  }
+  // assen
+  s += `<line x1="40" y1="20" x2="40" y2="160" stroke="#94a3b8"/>`;
+  s += `<line x1="40" y1="160" x2="380" y2="160" stroke="#94a3b8"/>`;
+  s += `<text x="380" y="178" font-size="10" fill="#64748b" text-anchor="end">tijd (uren)</text>`;
+  // curve
+  let d = '';
+  for(let t = 0; t <= 18; t += 0.1){
+    const y = 5 + 3 * Math.sin(2 * Math.PI * t / 6);
+    const X = 40 + t * 18.9, Y = 160 - y * 14;
+    d += (d === '' ? 'M' : ' L') + X.toFixed(1) + ',' + Y.toFixed(1);
+  }
+  s += `<path d="${d}" stroke="#0891b2" stroke-width="2.4" fill="none"/>`;
+  svg.innerHTML = s;
+})();
+
+// Vier oefen-leesgrafieken (A=4, B=6, C=8, D=12 seconden)
+// Elke subgrafiek: viewBox-breedte 175 (4 stuks naast elkaar in 700-px viewBox)
+// Lokale x-as: x=20 is de y-as, x=160 is einde van de tijd-as.
+// Schaal: 10 px = 1 sec (zelfde als labels 2,4,6,...,12 op posities 40,60,80,100,120,140)
+(function(){
+  const svg = document.getElementById('leesgrafiek');
+  if(!svg) return;
+  const subs = [
+    {label:'A', period:4, offsetX:0},
+    {label:'B', period:6, offsetX:175},
+    {label:'C', period:8, offsetX:350},
+    {label:'D', period:12, offsetX:525}
+  ];
+  let s = '';
+  subs.forEach(sub => {
+    const ox = sub.offsetX;
+    s += `<g transform="translate(${ox},0)">`;
+    // assen
+    s += `<line x1="20" y1="60" x2="160" y2="60" stroke="#94a3b8"/>`;
+    s += `<line x1="20" y1="15" x2="20" y2="105" stroke="#94a3b8"/>`;
+    // labels op tijd-as
+    [2,4,6,8,10,12].forEach(t => {
+      const X = 20 + t * 10;
+      s += `<text x="${X}" y="118" font-size="8" fill="#64748b" text-anchor="middle">${t}</text>`;
+    });
+    // grafiek-letter
+    s += `<text x="90" y="125" font-size="11" font-weight="700" fill="#0e7490" text-anchor="middle">grafiek ${sub.label}</text>`;
+    // sin-curve y = 60 - 35 * sin(2π · t / period)
+    let d = '';
+    for(let px = 20; px <= 160; px += 0.5){
+      const t = (px - 20) / 10;
+      const y = 60 - 35 * Math.sin(2 * Math.PI * t / sub.period);
+      d += (d === '' ? 'M' : ' L') + px.toFixed(1) + ',' + y.toFixed(1);
+    }
+    s += `<path d="${d}" stroke="#0891b2" stroke-width="2" fill="none"/>`;
+    s += `</g>`;
+  });
+  svg.innerHTML = s;
+})();
+
+// ===== Plot widget voor periodieke grafiek met sliders =====
+function makePeriodicPlot(svgId){
+  const svg = document.getElementById(svgId);
+  const W = 360, H = 240, padL = 35, padR = 10, padT = 15, padB = 30;
+  // x-as toont 0..24 (eenheid op het schuifje is 'sec')
+  const xMin = 0, xMax = 24, yMin = 0, yMax = 12;
+  const xs = x => padL + (x - xMin) / (xMax - xMin) * (W - padL - padR);
+  const ys = y => padT + (yMax - y) / (yMax - yMin) * (H - padT - padB);
+  return function draw(state){
+    let s = '';
+    // grid
+    for(let gx = xMin; gx <= xMax; gx += 2){
+      const X = xs(gx);
+      s += `<line x1="${X}" y1="${padT}" x2="${X}" y2="${H-padB}" stroke="#eef2f7"/>`;
+    }
+    for(let gy = yMin; gy <= yMax; gy += 2){
+      const Y = ys(gy);
+      s += `<line x1="${padL}" y1="${Y}" x2="${W-padR}" y2="${Y}" stroke="#eef2f7"/>`;
+    }
+    // assen
+    s += `<line x1="${padL}" y1="${ys(0)}" x2="${W-padR}" y2="${ys(0)}" stroke="#94a3b8"/>`;
+    s += `<line x1="${xs(0)}" y1="${padT}" x2="${xs(0)}" y2="${H-padB}" stroke="#94a3b8"/>`;
+    // x-labels
+    for(let gx = 0; gx <= xMax; gx += 4){
+      s += `<text x="${xs(gx)}" y="${ys(0)+12}" font-size="10" fill="#64748b" text-anchor="middle">${gx}</text>`;
+    }
+    for(let gy = 0; gy <= yMax; gy += 2){
+      s += `<text x="${xs(0)-4}" y="${ys(gy)+3}" font-size="10" fill="#64748b" text-anchor="end">${gy}</text>`;
+    }
+    s += `<text x="${W-15}" y="${ys(0)+22}" font-size="10" fill="#64748b">tijd (sec)</text>`;
+    // evenwichtsstand (rood gestippeld)
+    const Ey = state.E;
+    if(Ey >= yMin && Ey <= yMax){
+      const Y = ys(Ey);
+      s += `<line x1="${padL}" y1="${Y}" x2="${W-padR}" y2="${Y}" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="4,3"/>`;
+      s += `<text x="${W-padR-4}" y="${Y-4}" font-size="10" fill="#e11d48" text-anchor="end">evenwichtsstand</text>`;
+    }
+    // top en dal lijnen (lichtgrijs)
+    const top = state.E + state.A, dal = state.E - state.A;
+    if(top <= yMax) s += `<line x1="${padL}" y1="${ys(top)}" x2="${W-padR}" y2="${ys(top)}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2"/>`;
+    if(dal >= yMin) s += `<line x1="${padL}" y1="${ys(dal)}" x2="${W-padR}" y2="${ys(dal)}" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="2,2"/>`;
+    // periode-marker
+    const X1 = xs(0), X2 = xs(state.P);
+    if(X2 < W - padR){
+      s += `<line x1="${X1}" y1="${padT+5}" x2="${X2}" y2="${padT+5}" stroke="#0891b2" stroke-width="2"/>`;
+      s += `<line x1="${X1}" y1="${padT+2}" x2="${X1}" y2="${padT+8}" stroke="#0891b2" stroke-width="2"/>`;
+      s += `<line x1="${X2}" y1="${padT+2}" x2="${X2}" y2="${padT+8}" stroke="#0891b2" stroke-width="2"/>`;
+      s += `<text x="${(X1+X2)/2}" y="${padT-2}" font-size="10" fill="#0891b2" text-anchor="middle">periode</text>`;
+    }
+    // curve y = E + A * sin(2π * x / P)
+    let path = '';
+    for(let i = 0; i <= 360; i++){
+      const x = xMin + (xMax - xMin) * i / 360;
+      const y = state.E + state.A * Math.sin(2 * Math.PI * x / state.P);
+      const Y = ys(y);
+      path += (i === 0 ? 'M' : ' L') + xs(x) + ',' + Y;
+    }
+    s += `<path d="${path}" stroke="#0891b2" stroke-width="2.4" fill="none"/>`;
+    svg.innerHTML = s;
+  };
+}
+const draw1 = makePeriodicPlot('plot1');
+function update1(){
+  const P = +document.getElementById('P').value;
+  const E = +document.getElementById('E').value;
+  const A = +document.getElementById('A').value;
+  document.getElementById('P-val').textContent = P;
+  document.getElementById('E-val').textContent = E;
+  document.getElementById('A-val').textContent = A;
+  document.getElementById('info1').textContent = `periode = ${P} sec | evenw. = ${E} | amplitude = ${A}`;
+  draw1({P, E, A});
+}
+['P','E','A'].forEach(id => document.getElementById(id).addEventListener('input', update1));
+update1();
+
+// ===== Antwoord-checkers =====
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){
+    fb.classList.remove('correct','incorrect');
+    fb.classList.add('show', ok ? 'correct' : 'incorrect');
+    fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw.';
+  }
+}
+function checkNumeric(id, target, tol, alsoAccept){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const raw = (el.value || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  let ok = false;
+  if(alsoAccept && alsoAccept.some(a => a.toLowerCase().replace(/\s+/g,'').replace(/,/g,'.') === raw)) ok = true;
+  if(!ok){
+    const num = parseFloat(raw);
+    if(isFinite(num) && Math.abs(num - target) <= tol) ok = true;
+  }
+  if(!ok && raw.includes('/')){
+    const [a,b] = raw.split('/').map(parseFloat);
+    if(isFinite(a) && isFinite(b) && b !== 0 && Math.abs(a/b - target) <= tol) ok = true;
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){
+    fb.classList.remove('correct','incorrect');
+    fb.classList.add('show', ok ? 'correct' : 'incorrect');
+    fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.';
+  }
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

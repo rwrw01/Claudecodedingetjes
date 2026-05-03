@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 1 — Exponentiële standaardgrafiek &amp; één translatie tegelijk — Wiskunde HAVO 4</title>
+<style>
+:root { --primary:#2563eb; --primary-light:#dbeafe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.85}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.1rem;font-weight:600;color:var(--primary)}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.2fr 1fr;align-items:center}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary);font-weight:700;min-width:48px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1.1rem;font-style:italic;text-align:center}
+.asymptote-info{font-size:0.9rem;color:var(--muted);text-align:center;margin-top:0.3rem}
+.try-it{background:#f0f9ff;border:2px dashed #93c5fd;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:110px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#1d4ed8}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.feedback.info{background:#f0f9ff;color:#0369a1;border:1px solid #7dd3fc}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 1 — Exponentiële standaardgrafiek</h1>
+<p>Eén translatie tegelijk: zien wat er beweegt</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../">Wiskunde</a> &rsaquo; <a href="../">HAVO 4</a> &rsaquo; Exponenten Dag 1</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#intro">Wat is een exponentiële functie?</a></li>
+<li><a href="#standaard">De standaardgrafiek <span class="math">y = g<sup>x</sup></span> — speel met g</a></li>
+<li><a href="#vermx">Vermenigvuldigen t.o.v. de x-as (a)</a></li>
+<li><a href="#vermy">Vermenigvuldigen t.o.v. de y-as (b)</a></li>
+<li><a href="#transx">Translatie horizontaal (c, 0)</a></li>
+<li><a href="#transy">Translatie verticaal (0, d) — de asymptoot beweegt mee!</a></li>
+<li><a href="#oefen">Oefenopgaven 47, 48, 49</a></li>
+<li><a href="#check">Kennischeck</a></li>
+</ol>
+</div>
+
+<!-- Sectie 1: Intro -->
+<div class="card" id="intro">
+<h2>1. Wat is een exponentiële functie?</h2>
+<p>Een exponentiële functie heeft de variabele <span class="math">x</span> in de <strong>exponent</strong>:</p>
+<div class="formula"><span class="math-display">f(x) = g<sup>x</sup></span> &nbsp; met <span class="math">g &gt; 0</span> en <span class="math">g ≠ 1</span></div>
+<p>Hier heet <span class="math">g</span> het <strong>grondtal</strong>. De grafiek heeft altijd:</p>
+<ul style="margin-left:1.2rem">
+<li>domein <span class="math">D<sub>f</sub> = ℝ</span> (alle reële getallen)</li>
+<li>bereik <span class="math">B<sub>f</sub> = (0, →)</span> — y is altijd positief</li>
+<li>de <span class="math">x</span>-as (lijn <span class="math">y = 0</span>) als <strong>horizontale asymptoot</strong></li>
+</ul>
+<div class="tip-box"><strong>💡 Onthoud:</strong> de grafiek raakt de <span class="math">x</span>-as nooit echt, hij komt er alleen oneindig dicht bij.</div>
+<div class="tip-box"><strong>📝 Notatie tip:</strong> bij een interval staat <span class="math">→</span> voor <span class="math">+∞</span> en <span class="math">←</span> voor <span class="math">−∞</span>. Bij invulvelden in deze les kun je ook gewoon <span class="math">y &gt; 5</span> of <span class="math">&lt;5</span> typen — dat wordt ook geaccepteerd.</div>
+</div>
+
+<!-- Sectie 2: Standaardgrafiek -->
+<div class="card" id="standaard">
+<h2>2. De standaardgrafiek <span class="math">y = g<sup>x</sup></span></h2>
+<p>Beweeg de slider en kijk wat er gebeurt. Probeer eerst <span class="math">g &gt; 1</span> en daarna <span class="math">0 &lt; g &lt; 1</span>.</p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot1" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>grondtal g</label><span class="val" id="g1-val">2</span></div>
+<input type="range" id="g1" min="0.2" max="4" step="0.1" value="2">
+</div>
+<div class="formula-live" id="f1-formula">y = 2<sup>x</sup></div>
+<div class="asymptote-info" id="f1-asym">asymptoot: y = 0</div>
+</div>
+</div>
+</div>
+<div class="try-it">
+<h4>🔎 Tussenvragen — zet je waarnemingen op een rij</h4>
+<div class="q"><label>Bij welke waarde van g gaat de grafiek <strong>dalend</strong>?</label><input type="text" id="q-dalend" placeholder="bv. g = ..."><button class="btn-hint btn" onclick="checkText('q-dalend',['0&lt;g&lt;1','0 &lt; g &lt; 1','tussen 0 en 1','kleiner dan 1','&lt;1'])">Check</button></div>
+<div class="feedback" id="fb-q-dalend"></div>
+<div class="q"><label>Door welk vast punt gaat de grafiek altijd, voor élk grondtal g?</label><input type="text" id="q-vast" placeholder="bv. (0, ...)"><button class="btn-hint btn" onclick="checkText('q-vast',['(0,1)','(0, 1)','0,1'])">Check</button></div>
+<div class="feedback" id="fb-q-vast"></div>
+<div class="tip-box" style="margin-top:0.8rem"><strong>Hint:</strong> elke macht met exponent 0 levert 1 op. Dus <span class="math">g<sup>0</sup> = 1</span> voor élke g.</div>
+</div>
+</div>
+
+<!-- Sectie 3: Vermenigvuldigen t.o.v. x-as -->
+<div class="card" id="vermx">
+<h2>3. Vermenigvuldigen t.o.v. de <span class="math">x</span>-as — factor a</h2>
+<p>Wat doet de factor <span class="math">a</span> in <span class="math">y = a · g<sup>x</sup></span>? Houd <span class="math">g = 2</span> vast en beweeg <span class="math">a</span>:</p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot2" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>factor a</label><span class="val" id="a2-val">1</span></div>
+<input type="range" id="a2" min="-3" max="3" step="0.1" value="1">
+</div>
+<div class="formula-live" id="f2-formula">y = 1 · 2<sup>x</sup></div>
+<div class="asymptote-info" id="f2-asym">asymptoot: y = 0</div>
+</div>
+</div>
+</div>
+<div class="formula"><strong>Regel:</strong> de grafiek wordt <em>verticaal uitgerekt</em> met factor <span class="math">a</span>. Bij <span class="math">a &lt; 0</span> klapt hij om de <span class="math">x</span>-as.</div>
+<div class="example-box"><strong>Voorbeeld:</strong> bij <span class="math">a = 3</span> ligt elk punt 3× zo hoog. Het punt <span class="math">(0, 1)</span> wordt <span class="math">(0, 3)</span>. De asymptoot blijft <span class="math">y = 0</span>.</div>
+<div class="tip-box"><strong>💡 Bij <span class="math">a &lt; 0</span>:</strong> de grafiek <em>spiegelt om de <span class="math">x</span>-as</em> én rekt verticaal uit. Bereik wordt dan <span class="math">(←, 0)</span>. Probeer <span class="math">a = −2</span> in de slider en kijk wat er gebeurt.</div>
+</div>
+
+<!-- Sectie 4: Vermenigvuldigen t.o.v. y-as -->
+<div class="card" id="vermy">
+<h2>4. Vermenigvuldigen t.o.v. de <span class="math">y</span>-as — factor b</h2>
+<p>Bij vermenigvuldigen t.o.v. de <span class="math">y</span>-as met factor <span class="math">b</span> vervang je in de formule <span class="math">x</span> door <span class="math"><sup>1</sup>⁄<sub>b</sub> · x</span>. Dat is een belangrijke val: <strong>de factor klapt om!</strong></p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot3" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>factor b</label><span class="val" id="b3-val">1</span></div>
+<input type="range" id="b3" min="0.25" max="4" step="0.05" value="1">
+</div>
+<div class="formula-live" id="f3-formula">y = 2<sup>x</sup></div>
+<div class="asymptote-info" id="f3-asym">asymptoot: y = 0</div>
+</div>
+</div>
+</div>
+<div class="example-box"><strong>Voorbeeld:</strong> vermenigvuldig <span class="math">y = 2<sup>x</sup></span> t.o.v. de <span class="math">y</span>-as met factor 3. Dan wordt <span class="math">x</span> vervangen door <span class="math"><sup>1</sup>⁄<sub>3</sub>·x</span>, dus <span class="math">y = 2<sup>x/3</sup></span>. De grafiek wordt <em>horizontaal 3× zo breed</em>.</div>
+<div class="try-it">
+<h4>🧪 Probeer zelf</h4>
+<div class="q"><label>Geef de formule als <span class="math">y = 2<sup>x</sup></span> wordt vermenigvuldigd t.o.v. de <span class="math">y</span>-as met factor 4.</label><input type="text" id="q-vermy" placeholder="y = 2^..."><button class="btn-hint btn" onclick="checkText('q-vermy',['y=2^(x/4)','y=2^(0.25x)','y = 2^(x/4)','2^(x/4)','2^(0,25x)','y=2^(1/4 x)','y=2^(¼x)','y=2^x/4','2^x/4','y=2^(1/4x)','2^(1/4x)'])">Check</button></div>
+<div class="feedback" id="fb-q-vermy"></div>
+</div>
+</div>
+
+<!-- Sectie 5: Translatie horizontaal -->
+<div class="card" id="transx">
+<h2>5. Translatie horizontaal — translatie (c, 0)</h2>
+<p>Een translatie van <span class="math">c</span> in de <span class="math">x</span>-richting verplaatst de grafiek. In de formule vervang je <span class="math">x</span> door <span class="math">x − c</span>.</p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot4" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>verschuiving c</label><span class="val" id="c4-val">0</span></div>
+<input type="range" id="c4" min="-4" max="4" step="0.1" value="0">
+</div>
+<div class="formula-live" id="f4-formula">y = 2<sup>x</sup></div>
+<div class="asymptote-info" id="f4-asym">asymptoot: y = 0</div>
+</div>
+</div>
+</div>
+<div class="formula"><strong>Regel:</strong> translatie <span class="math">(c, 0)</span> &rarr; vervang <span class="math">x</span> door <span class="math">x − c</span>. De asymptoot <span class="math">y = 0</span> verandert <strong>niet</strong>.</div>
+<div class="tip-box"><strong>⚠️ Let op het minteken:</strong> bij een translatie van <span class="math">+3</span> naar rechts staat in de formule <span class="math">x − 3</span>, niet <span class="math">x + 3</span>.</div>
+</div>
+
+<!-- Sectie 6: Translatie verticaal -->
+<div class="card" id="transy">
+<h2>6. Translatie verticaal — translatie (0, d)</h2>
+<p>Een translatie van <span class="math">d</span> in de <span class="math">y</span>-richting telt <span class="math">d</span> bij de functiewaarde op. <strong>Nu beweegt de asymptoot wél mee!</strong></p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot5" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>verschuiving d</label><span class="val" id="d5-val">0</span></div>
+<input type="range" id="d5" min="-4" max="4" step="0.1" value="0">
+</div>
+<div class="formula-live" id="f5-formula">y = 2<sup>x</sup></div>
+<div class="asymptote-info" id="f5-asym">asymptoot: y = 0</div>
+</div>
+</div>
+</div>
+<div class="formula"><strong>Regel:</strong> translatie <span class="math">(0, d)</span> &rarr; tel <span class="math">d</span> op bij de formule. De <strong>asymptoot wordt <span class="math">y = d</span></strong>.</div>
+<div class="try-it">
+<h4>🧪 Probeer zelf</h4>
+<div class="q"><label>Wat is de asymptoot van <span class="math">y = 2<sup>x</sup> + 5</span>?</label><input type="text" id="q-asym" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('q-asym',['y=5','y = 5','5'])">Check</button></div>
+<div class="feedback" id="fb-q-asym"></div>
+<div class="q"><label>Wat is het bereik van <span class="math">y = 2<sup>x</sup> + 5</span>?</label><input type="text" id="q-bereik" placeholder="bv. y > 5"><button class="btn-hint btn" onclick="checkText('q-bereik',['(5,→)','(5,->)','(5,→ )','(5, →)','&gt;5','y&gt;5','5&lt;y','5,→','(5,inf)','(5,oneindig)','(5,∞)'])">Check</button></div>
+<div class="feedback" id="fb-q-bereik"></div>
+</div>
+</div>
+
+<!-- Sectie 7: Oefenopgaven -->
+<div class="card" id="oefen">
+<h2>7. Oefenopgaven 47, 48, 49 — uit het boek</h2>
+
+<h3>Opgave 47 — voorspel de grafiek</h3>
+<p>Gegeven zijn <span class="math">f(x) = 2<sup>x</sup></span> en <span class="math">g(x) = 2<sup>x/3</sup></span>. De grafiek van <span class="math">g</span> ontstaat uit die van <span class="math">f</span> door een vermenigvuldiging t.o.v. de <span class="math">y</span>-as.</p>
+<div class="q"><label>Wat is de vermenigvuldigingsfactor?</label><input type="text" id="o47" placeholder="bv. 2 of 1/3"><button class="btn-hint btn" onclick="checkText('o47',['3','factor 3','met 3'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o47-steps')">Stappenplan</button></div>
+<div class="feedback" id="fb-o47"></div>
+<div class="detail-steps" id="o47-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Bij vermenigvuldigen t.o.v. de <span class="math">y</span>-as met factor <span class="math">b</span> wordt <span class="math">x</span> vervangen door <span class="math"><sup>1</sup>⁄<sub>b</sub>·x</span>.</li>
+<li>In de formule staat nu <span class="math"><sup>1</sup>⁄<sub>3</sub>·x</span>, dus <span class="math"><sup>1</sup>⁄<sub>b</sub> = <sup>1</sup>⁄<sub>3</sub></span>.</li>
+<li>Conclusie: <span class="math">b = 3</span>.</li>
+</ol>
+</div>
+
+<h3>Opgave 48 — bereik &amp; asymptoot</h3>
+<p>Geef bereik en horizontale asymptoot van <span class="math">f(x) = 5 − 6 · 0,4<sup>x</sup></span>.</p>
+<div class="q"><label>Asymptoot:</label><input type="text" id="o48a" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('o48a',['y=5','y = 5','5'])">Check</button></div>
+<div class="feedback" id="fb-o48a"></div>
+<div class="q"><label>Bereik:</label><input type="text" id="o48b" placeholder="bv. y < 5"><button class="btn-hint btn" onclick="checkText('o48b',['(←,5)','(←, 5)','(-∞,5)','y&lt;5','&lt;5','(-inf,5)','(-oneindig,5)','5&gt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o48-steps')">Stappenplan</button></div>
+<div class="feedback" id="fb-o48b"></div>
+<div class="detail-steps" id="o48-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Standaard <span class="math">0,4<sup>x</sup></span> heeft bereik <span class="math">(0, →)</span>, asymptoot <span class="math">y = 0</span>.</li>
+<li>Bij <span class="math">−6 · 0,4<sup>x</sup></span> (factor −6 t.o.v. <span class="math">x</span>-as): bereik wordt <span class="math">(←, 0)</span>, asymptoot blijft <span class="math">y = 0</span>.</li>
+<li>Bij <span class="math">5 − 6 · 0,4<sup>x</sup></span> (translatie +5 omhoog): bereik wordt <span class="math">(←, 5)</span>, asymptoot wordt <span class="math">y = 5</span>.</li>
+</ol>
+</div>
+
+<h3>Opgave 49 — bereik &amp; asymptoot</h3>
+<p>Geef bereik en horizontale asymptoot van <span class="math">g(x) = 3 · 2<sup>3x</sup> + 4</span>.</p>
+<div class="q"><label>Asymptoot:</label><input type="text" id="o49a" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('o49a',['y=4','y = 4','4'])">Check</button></div>
+<div class="feedback" id="fb-o49a"></div>
+<div class="q"><label>Bereik:</label><input type="text" id="o49b" placeholder="bv. y > 4"><button class="btn-hint btn" onclick="checkText('o49b',['(4,→)','(4,->)','(4, →)','y&gt;4','&gt;4','(4,inf)','(4,oneindig)','(4,∞)','4&lt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o49-steps')">Stappenplan</button></div>
+<div class="feedback" id="fb-o49b"></div>
+<div class="detail-steps" id="o49-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">2<sup>3x</sup></span> is een exponentiële functie met grondtal &gt; 1: bereik <span class="math">(0, →)</span>.</li>
+<li><span class="math">3 · 2<sup>3x</sup></span>: nog steeds bereik <span class="math">(0, →)</span> want positieve factor.</li>
+<li>+4 omhoog schuift alles op: bereik <span class="math">(4, →)</span>, asymptoot <span class="math">y = 4</span>.</li>
+</ol>
+</div>
+</div>
+
+<!-- Sectie 8: Kennischeck -->
+<div class="card" id="check">
+<h2>8. Kennischeck — kun je dit?</h2>
+<ul style="margin-left:1.2rem">
+<li>Ik kan zien wanneer een exponentiële grafiek dalend is en wanneer stijgend.</li>
+<li>Ik weet dat de grafiek altijd door <span class="math">(0, 1)</span> gaat.</li>
+<li>Ik weet wat factor <span class="math">a</span> doet (verticaal rekken / spiegelen om <span class="math">x</span>-as).</li>
+<li>Ik weet dat bij vermenigvuldigen t.o.v. de <span class="math">y</span>-as met factor <span class="math">b</span> in de formule <span class="math">x</span> vervangen wordt door <sup>1</sup>⁄<sub>b</sub>·<span class="math">x</span>.</li>
+<li>Ik weet dat <span class="math">y = g<sup>x</sup> + d</span> de asymptoot <span class="math">y = d</span> heeft.</li>
+</ul>
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 2:</strong> daar ga je alle transformaties tegelijk doen — eerst rekken, dan schuiven — en formules herleiden tot <span class="math">y = b · g<sup>x</sup></span>.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../">← Terug naar HAVO 4</a>
+<a href="../exponenten-dag2-transformaties/">Dag 2: Transformaties combineren →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 4 — Dag 1: Exponentiële standaardgrafiek</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ===== Plot helper =====
+function makePlot(svgId, evalFn, opts){
+  const svg = document.getElementById(svgId);
+  const W = 320, H = 260, padL = 30, padR = 10, padT = 15, padB = 30;
+  const xMin = -4, xMax = 4, yMin = -2, yMax = 8;
+  const xs = x => padL + (x - xMin) / (xMax - xMin) * (W - padL - padR);
+  const ys = y => padT + (yMax - y) / (yMax - yMin) * (H - padT - padB);
+  function draw(state){
+    let s = '';
+    // grid
+    for(let gx = Math.ceil(xMin); gx <= Math.floor(xMax); gx++){
+      const X = xs(gx);
+      s += `<line x1="${X}" y1="${padT}" x2="${X}" y2="${H-padB}" stroke="#eef2f7" stroke-width="1"/>`;
+    }
+    for(let gy = Math.ceil(yMin); gy <= Math.floor(yMax); gy++){
+      const Y = ys(gy);
+      s += `<line x1="${padL}" y1="${Y}" x2="${W-padR}" y2="${Y}" stroke="#eef2f7" stroke-width="1"/>`;
+    }
+    // axes
+    s += `<line x1="${padL}" y1="${ys(0)}" x2="${W-padR}" y2="${ys(0)}" stroke="#94a3b8" stroke-width="1.2"/>`;
+    s += `<line x1="${xs(0)}" y1="${padT}" x2="${xs(0)}" y2="${H-padB}" stroke="#94a3b8" stroke-width="1.2"/>`;
+    // labels
+    for(let gx = xMin; gx <= xMax; gx++){
+      if(gx === 0) continue;
+      s += `<text x="${xs(gx)}" y="${ys(0)+12}" font-size="9" fill="#64748b" text-anchor="middle">${gx}</text>`;
+    }
+    for(let gy = yMin; gy <= yMax; gy += 2){
+      if(gy === 0) continue;
+      s += `<text x="${xs(0)-4}" y="${ys(gy)+3}" font-size="9" fill="#64748b" text-anchor="end">${gy}</text>`;
+    }
+    // asymptote (dashed red)
+    if(typeof state.asymY === 'number' && state.asymY >= yMin && state.asymY <= yMax){
+      const Y = ys(state.asymY);
+      s += `<line x1="${padL}" y1="${Y}" x2="${W-padR}" y2="${Y}" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="4,3"/>`;
+      s += `<text x="${W-padR-4}" y="${Y-4}" font-size="9" fill="#e11d48" text-anchor="end">y = ${(+state.asymY.toFixed(2))}</text>`;
+    }
+    // reference (lichte) curve van y = 2^x voor vergelijking
+    if(opts && opts.showReference){
+      let p = '';
+      for(let i = 0; i <= 200; i++){
+        const x = xMin + (xMax - xMin) * i / 200;
+        const y = Math.pow(2, x);
+        if(y < yMin - 1 || y > yMax + 1){ p += ''; continue; }
+        p += (p ? ' L' : 'M') + xs(x) + ',' + ys(y);
+      }
+      s += `<path d="${p}" stroke="#cbd5e1" stroke-width="1.5" fill="none" stroke-dasharray="2,2"/>`;
+    }
+    // main curve
+    let path = '';
+    let pen = false;
+    for(let i = 0; i <= 320; i++){
+      const x = xMin + (xMax - xMin) * i / 320;
+      const y = evalFn(x, state);
+      if(!isFinite(y) || y < yMin - 5 || y > yMax + 5){ pen = false; continue; }
+      path += (pen ? ' L' : ' M') + xs(x) + ',' + ys(y);
+      pen = true;
+    }
+    s += `<path d="${path}" stroke="#2563eb" stroke-width="2.2" fill="none"/>`;
+    // marker for (0, y(0)) if visible
+    const y0 = evalFn(0, state);
+    if(isFinite(y0) && y0 >= yMin && y0 <= yMax){
+      s += `<circle cx="${xs(0)}" cy="${ys(y0)}" r="3" fill="#2563eb"/>`;
+    }
+    svg.innerHTML = s;
+  }
+  return draw;
+}
+
+// Plot 1: y = g^x
+const draw1 = makePlot('plot1', (x, st) => Math.pow(st.g, x));
+function update1(){
+  const g = +document.getElementById('g1').value;
+  document.getElementById('g1-val').textContent = g.toFixed(2);
+  document.getElementById('f1-formula').innerHTML = `y = ${g.toFixed(2)}<sup>x</sup>`;
+  document.getElementById('f1-asym').textContent = 'asymptoot: y = 0';
+  draw1({g, asymY: 0});
+}
+document.getElementById('g1').addEventListener('input', update1);
+update1();
+
+// Plot 2: y = a * 2^x
+const draw2 = makePlot('plot2', (x, st) => st.a * Math.pow(2, x), {showReference:true});
+function update2(){
+  const a = +document.getElementById('a2').value;
+  document.getElementById('a2-val').textContent = a.toFixed(2);
+  document.getElementById('f2-formula').innerHTML = `y = ${a.toFixed(2)} · 2<sup>x</sup>`;
+  document.getElementById('f2-asym').textContent = 'asymptoot: y = 0';
+  draw2({a, asymY: 0});
+}
+document.getElementById('a2').addEventListener('input', update2);
+update2();
+
+// Plot 3: y = 2^(x/b)  (vermenigvuldigen t.o.v. y-as met factor b)
+const draw3 = makePlot('plot3', (x, st) => Math.pow(2, x / st.b), {showReference:true});
+function update3(){
+  const b = +document.getElementById('b3').value;
+  document.getElementById('b3-val').textContent = b.toFixed(2);
+  document.getElementById('f3-formula').innerHTML = `y = 2<sup>x/${b.toFixed(2)}</sup>`;
+  document.getElementById('f3-asym').textContent = 'asymptoot: y = 0';
+  draw3({b, asymY: 0});
+}
+document.getElementById('b3').addEventListener('input', update3);
+update3();
+
+// Plot 4: y = 2^(x - c)
+const draw4 = makePlot('plot4', (x, st) => Math.pow(2, x - st.c), {showReference:true});
+function update4(){
+  const c = +document.getElementById('c4').value;
+  document.getElementById('c4-val').textContent = c.toFixed(2);
+  let exp;
+  if(Math.abs(c) < 0.05) exp = 'x';
+  else if(c > 0) exp = `x − ${c.toFixed(2)}`;
+  else exp = `x + ${Math.abs(c).toFixed(2)}`;
+  document.getElementById('f4-formula').innerHTML = `y = 2<sup>${exp}</sup>`;
+  document.getElementById('f4-asym').textContent = 'asymptoot: y = 0';
+  draw4({c, asymY: 0});
+}
+document.getElementById('c4').addEventListener('input', update4);
+update4();
+
+// Plot 5: y = 2^x + d
+const draw5 = makePlot('plot5', (x, st) => Math.pow(2, x) + st.d, {showReference:true});
+function update5(){
+  const d = +document.getElementById('d5').value;
+  document.getElementById('d5-val').textContent = d.toFixed(2);
+  let extra;
+  if(Math.abs(d) < 0.05) extra = '';
+  else if(d > 0) extra = ` + ${d.toFixed(2)}`;
+  else extra = ` − ${Math.abs(d).toFixed(2)}`;
+  document.getElementById('f5-formula').innerHTML = `y = 2<sup>x</sup>${extra}`;
+  document.getElementById('f5-asym').textContent = `asymptoot: y = ${d.toFixed(2)}`;
+  draw5({d, asymY: d});
+}
+document.getElementById('d5').addEventListener('input', update5);
+update5();
+
+// ===== Antwoord-checker =====
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect','info');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.';
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

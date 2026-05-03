@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 3 — Exponentiële vergelijkingen &amp; intro logaritme — Wiskunde HAVO 4</title>
+<style>
+:root { --primary:#2563eb; --primary-light:#dbeafe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.85}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.1rem;font-weight:600;color:var(--primary)}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.try-it{background:#f0f9ff;border:2px dashed #93c5fd;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:130px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#1d4ed8}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.bridge{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
+.bridge .col{background:white;border:1px solid var(--border);border-radius:8px;padding:0.9rem 1.1rem}
+.bridge .col h4{color:var(--primary);font-size:0.95rem;margin-bottom:0.4rem}
+.bridge .col .ex{font-family:'Georgia',serif;font-size:1rem}
+@media(max-width:600px){.bridge{grid-template-columns:1fr}}
+table.power-table{border-collapse:collapse;width:100%;font-family:'Georgia',serif;margin:1rem 0;font-size:0.95rem}
+table.power-table th,table.power-table td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.power-table thead{background:var(--primary-light);color:var(--primary);font-weight:600}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 3 — Vergelijkingen &amp; intro logaritme</h1>
+<p>Van <span class="math">g<sup>A</sup> = g<sup>B</sup></span> naar <span class="math"><sup>g</sup>log(x)</span></p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../">Wiskunde</a> &rsaquo; <a href="../">HAVO 4</a> &rsaquo; Exponenten Dag 3</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 2</a></li>
+<li><a href="#expver">Exponentiële vergelijkingen — gelijke grondtallen</a></li>
+<li><a href="#oefenexp">Oefenen: opgaven 62, 63, 64</a></li>
+<li><a href="#brug">Bruggetje: tabel met machten — wat is de "omkering"?</a></li>
+<li><a href="#log">De logaritme — definitie en notatie</a></li>
+<li><a href="#oefenlog">Oefenen: opgaven 69, 70, 71</a></li>
+<li><a href="#check">Kennischeck</a></li>
+</ol>
+</div>
+
+<!-- Sectie 1: Recap -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 2</h2>
+<div class="try-it">
+<h4>Snelle check</h4>
+<div class="q"><label>Schrijf <span class="math">y = 6 · 2<sup>3x − 2</sup></span> in de vorm <span class="math">y = b · g<sup>x</sup></span>. Wat is <span class="math">b</span>?</label><input type="text" id="r1"><button class="btn-hint btn" onclick="checkText('r1',['1.5','1,5','3/2'])">Check</button></div>
+<div class="feedback" id="fb-r1"></div>
+<div class="q"><label>... en <span class="math">g</span>?</label><input type="text" id="r2"><button class="btn-hint btn" onclick="checkText('r2',['8'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('r-steps')">Stappen</button></div>
+<div class="feedback" id="fb-r2"></div>
+<div class="detail-steps" id="r-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">2<sup>3x − 2</sup> = 2<sup>3x</sup> · 2<sup>−2</sup> = 8<sup>x</sup> · ¼</span></li>
+<li><span class="math">y = 6 · 8<sup>x</sup> · ¼ = 1,5 · 8<sup>x</sup></span></li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- Sectie 2: Exponentiële vergelijkingen -->
+<div class="card" id="expver">
+<h2>2. Exponentiële vergelijkingen oplossen</h2>
+<p>Als links en rechts hetzelfde grondtal staat, mag je de exponenten aan elkaar gelijkstellen:</p>
+<div class="formula"><span class="math-display">g<sup>A</sup> = g<sup>B</sup>&nbsp; ⇔ &nbsp;A = B</span> &nbsp;(mits <span class="math">g &gt; 0</span>, <span class="math">g ≠ 1</span>)</div>
+<p>De truc is dus: zorg dat je <strong>aan beide kanten hetzelfde grondtal</strong> krijgt, daarna stel je de exponenten gelijk.</p>
+
+<div class="example-box">
+<strong>Voorbeeld 1:</strong> los op <span class="math">3<sup>x + 1</sup> = <sup>1</sup>⁄<sub>3</sub>√3</span>
+<ol style="margin-left:1.2rem;margin-top:0.5rem">
+<li><span class="math"><sup>1</sup>⁄<sub>3</sub> = 3<sup>−1</sup></span> en <span class="math">√3 = 3<sup>½</sup></span>, dus <span class="math"><sup>1</sup>⁄<sub>3</sub>√3 = 3<sup>−1</sup> · 3<sup>½</sup> = 3<sup>−½</sup></span></li>
+<li>Vergelijking wordt: <span class="math">3<sup>x + 1</sup> = 3<sup>−½</sup></span></li>
+<li>Exponenten gelijk: <span class="math">x + 1 = −½</span>, dus <span class="math">x = −1½</span></li>
+</ol>
+</div>
+
+<div class="example-box">
+<strong>Voorbeeld 2:</strong> los op <span class="math">2 · 3<sup>2x − 1</sup> = 18</span>
+<ol style="margin-left:1.2rem;margin-top:0.5rem">
+<li>Deel beide kanten door 2: <span class="math">3<sup>2x − 1</sup> = 9</span></li>
+<li><span class="math">9 = 3<sup>2</sup></span>, dus: <span class="math">3<sup>2x − 1</sup> = 3<sup>2</sup></span></li>
+<li><span class="math">2x − 1 = 2</span>, dus <span class="math">x = 1½</span></li>
+</ol>
+</div>
+
+<div class="warning-box"><strong>⚠️ Eerst isoleren:</strong> als er een factor of getal voor of na de macht staat (zoals "<span class="math">2 · 3<sup>x</sup></span>" of "<span class="math">3<sup>x</sup> + 5</span>"), <strong>haal die er eerst af</strong> voordat je grondtallen gelijk maakt.</div>
+</div>
+
+<!-- Sectie 3: Oefenen 62-64 -->
+<div class="card" id="oefenexp">
+<h2>3. Oefenopgaven 62, 63, 64</h2>
+
+<h3>Opgave 62 — bereken exact de oplossingen</h3>
+<p>a) <span class="math">2<sup>x − 3</sup> = ¼</span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o62a"><button class="btn-hint btn" onclick="checkText('o62a',['1','x=1'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o62a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o62a"></div>
+<div class="detail-steps" id="o62a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">¼ = <sup>1</sup>⁄<sub>2<sup>2</sup></sub> = 2<sup>−2</sup></span></li>
+<li><span class="math">2<sup>x − 3</sup> = 2<sup>−2</sup></span></li>
+<li><span class="math">x − 3 = −2</span> dus <span class="math">x = 1</span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">b) <span class="math">5<sup>x</sup> − 20 = 105</span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o62b"><button class="btn-hint btn" onclick="checkText('o62b',['3','x=3'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o62b-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o62b"></div>
+<div class="detail-steps" id="o62b-steps">
+<h5>Stappenplan — let op!</h5>
+<ol>
+<li>Eerst isoleren: <span class="math">5<sup>x</sup> = 125</span></li>
+<li><span class="math">125 = 5<sup>3</sup></span></li>
+<li><span class="math">5<sup>x</sup> = 5<sup>3</sup></span> dus <span class="math">x = 3</span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">c) <span class="math">5 · 2<sup>x</sup> = 80</span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o62c"><button class="btn-hint btn" onclick="checkText('o62c',['4','x=4'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o62c-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o62c"></div>
+<div class="detail-steps" id="o62c-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Deel door 5: <span class="math">2<sup>x</sup> = 16</span></li>
+<li><span class="math">16 = 2<sup>4</sup></span> dus <span class="math">x = 4</span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">d) <span class="math">3<sup>2x + 7</sup> = 27√3</span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o62d" placeholder="bv. -1,75"><button class="btn-hint btn" onclick="checkText('o62d',['-1.75','-1,75','-7/4','-1¾'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o62d-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o62d"></div>
+<div class="detail-steps" id="o62d-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">27 = 3<sup>3</sup></span> en <span class="math">√3 = 3<sup>½</sup></span></li>
+<li><span class="math">27√3 = 3<sup>3</sup> · 3<sup>½</sup> = 3<sup>3½</sup></span></li>
+<li><span class="math">2x + 7 = 3½</span> dus <span class="math">2x = −3½</span> dus <span class="math">x = −1¾</span> = <span class="math">−1,75</span></li>
+</ol>
+</div>
+
+<h3>Opgave 63 — exact oplossen</h3>
+<p>a) <span class="math">3 · 2<sup>x</sup> + 4 = 28</span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o63a"><button class="btn-hint btn" onclick="checkText('o63a',['3','x=3'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o63a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o63a"></div>
+<div class="detail-steps" id="o63a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Trek 4 af: <span class="math">3 · 2<sup>x</sup> = 24</span></li>
+<li>Deel door 3: <span class="math">2<sup>x</sup> = 8 = 2<sup>3</sup></span></li>
+<li><span class="math">x = 3</span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">b) <span class="math">5<sup>2x − 4</sup> = <sup>1</sup>⁄<sub>25</sub></span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o63b"><button class="btn-hint btn" onclick="checkText('o63b',['1','x=1'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o63b-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o63b"></div>
+<div class="detail-steps" id="o63b-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math"><sup>1</sup>⁄<sub>25</sub> = 5<sup>−2</sup></span></li>
+<li><span class="math">5<sup>2x − 4</sup> = 5<sup>−2</sup></span> dus <span class="math">2x − 4 = −2</span></li>
+<li><span class="math">x = 1</span></li>
+</ol>
+</div>
+
+<h3>Opgave 64 — exact oplossen</h3>
+<p>a) <span class="math">2<sup>x</sup> = ¼√2</span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o64a"><button class="btn-hint btn" onclick="checkText('o64a',['-1.5','-1,5','-3/2','-1½'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o64a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o64a"></div>
+<div class="detail-steps" id="o64a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">¼ = 2<sup>−2</sup></span> en <span class="math">√2 = 2<sup>½</sup></span></li>
+<li><span class="math">¼√2 = 2<sup>−2</sup> · 2<sup>½</sup> = 2<sup>−1½</sup></span></li>
+<li><span class="math">x = −1½</span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">b) <span class="math">2<sup>2x + 1</sup> = 8 · 2<sup>x</sup></span></p>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o64b"><button class="btn-hint btn" onclick="checkText('o64b',['2','x=2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o64b-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o64b"></div>
+<div class="detail-steps" id="o64b-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Schrijf rechts als één macht: <span class="math">8 · 2<sup>x</sup> = 2<sup>3</sup> · 2<sup>x</sup> = 2<sup>x + 3</sup></span></li>
+<li><span class="math">2<sup>2x + 1</sup> = 2<sup>x + 3</sup></span> dus <span class="math">2x + 1 = x + 3</span></li>
+<li><span class="math">x = 2</span></li>
+</ol>
+</div>
+</div>
+
+<!-- Sectie 4: Bruggetje -->
+<div class="card" id="brug">
+<h2>4. Bruggetje — wat is de "omkering" van een macht?</h2>
+<p>Hieronder zie je een tabel met machten van 3:</p>
+<table class="power-table">
+<thead><tr><th><span class="math">x</span></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
+<tbody><tr><th><span class="math">3<sup>x</sup></span></th><td>1</td><td>3</td><td>9</td><td>27</td><td>81</td><td>243</td><td>729</td></tr></tbody>
+</table>
+<p>Vraag: bij welke <span class="math">x</span> hoort de uitkomst <span class="math">81</span>?</p>
+<p>Antwoord: <span class="math">x = 4</span>, want <span class="math">3<sup>4</sup> = 81</span>.</p>
+<div class="formula"><span class="math-display"><sup>3</sup>log(81) = 4</span> &nbsp; betekent: 'de exponent waarmee je 3 moet verheffen om 81 te krijgen, is 4'</div>
+<div class="bridge">
+<div class="col">
+<h4>Macht (bekend)</h4>
+<div class="ex"><span class="math">3<sup>4</sup> = 81</span></div>
+<div class="ex"><span class="math">2<sup>5</sup> = 32</span></div>
+<div class="ex"><span class="math">10<sup>3</sup> = 1000</span></div>
+</div>
+<div class="col">
+<h4>Logaritme (nieuw)</h4>
+<div class="ex"><span class="math"><sup>3</sup>log(81) = 4</span></div>
+<div class="ex"><span class="math"><sup>2</sup>log(32) = 5</span></div>
+<div class="ex"><span class="math"><sup>10</sup>log(1000) = 3</span></div>
+</div>
+</div>
+</div>
+
+<!-- Sectie 5: Logaritme definitie -->
+<div class="card" id="log">
+<h2>5. De logaritme — definitie</h2>
+<div class="formula"><span class="math-display"><sup>g</sup>log(x) = a &nbsp; ⇔ &nbsp; g<sup>a</sup> = x</span></div>
+<p><span class="math"><sup>g</sup>log(x)</span> heet "de <strong>g</strong>-logaritme van <strong>x</strong>" en is de exponent waarmee je <span class="math">g</span> moet verheffen om <span class="math">x</span> te krijgen. Voorwaarden: <span class="math">g &gt; 0</span>, <span class="math">g ≠ 1</span>, <span class="math">x &gt; 0</span>.</p>
+<div class="tip-box"><strong>💡 Twee handige regels:</strong>
+<div style="margin-top:0.4rem"><span class="math"><sup>g</sup>log(g<sup>a</sup>) = a</span> &nbsp; (de logaritme 'pakt de exponent eruit') &nbsp; bijvoorbeeld: <span class="math"><sup>2</sup>log(2<sup>5</sup>) = 5</span></div>
+<div><span class="math">g<sup><sup>g</sup>log(x)</sup> = x</span> &nbsp; (logaritme en macht heffen elkaar op) &nbsp; bijvoorbeeld: <span class="math">3<sup><sup>3</sup>log(7)</sup> = 7</span></div>
+</div>
+<div class="warning-box"><strong>⚠️ Lees de notatie goed:</strong> in <span class="math"><sup>2</sup>log(x)</span> staat de <strong>2</strong> als klein superscript <em>vóór</em> "log" — dat is het <strong>grondtal</strong>. Het is dus iets anders dan <span class="math">log(x<sup>2</sup>)</span> (waar 2 een macht van x is) en ook anders dan <span class="math">2 · log(x)</span> (vermenigvuldigen).</div>
+
+<div class="example-box">
+<strong>Voorbeeld:</strong> bereken <span class="math"><sup>2</sup>log(<sup>1</sup>⁄<sub>8</sub>)</span>.
+<ol style="margin-left:1.2rem;margin-top:0.5rem">
+<li><span class="math"><sup>1</sup>⁄<sub>8</sub> = <sup>1</sup>⁄<sub>2<sup>3</sup></sub> = 2<sup>−3</sup></span></li>
+<li><span class="math"><sup>2</sup>log(2<sup>−3</sup>) = −3</span></li>
+</ol>
+</div>
+</div>
+
+<!-- Sectie 6: Oefenen 69-71 -->
+<div class="card" id="oefenlog">
+<h2>6. Oefenopgaven 69, 70, 71</h2>
+
+<h3>Opgave 69 — bereken exact</h3>
+<div class="q"><label>a) <span class="math"><sup>5</sup>log(125)</span></label><input type="text" id="o69a"><button class="btn-hint btn" onclick="checkText('o69a',['3'])">Check</button></div>
+<div class="feedback" id="fb-o69a"></div>
+<div class="q"><label>b) <span class="math"><sup>10</sup>log(0,1)</span></label><input type="text" id="o69b"><button class="btn-hint btn" onclick="checkText('o69b',['-1'])">Check</button></div>
+<div class="feedback" id="fb-o69b"></div>
+<div class="q"><label>c) <span class="math"><sup>3</sup>log(1)</span></label><input type="text" id="o69c"><button class="btn-hint btn" onclick="checkText('o69c',['0'])">Check</button></div>
+<div class="feedback" id="fb-o69c"></div>
+<div class="q"><label>d) <span class="math"><sup>7</sup>log(49)</span></label><input type="text" id="o69d"><button class="btn-hint btn" onclick="checkText('o69d',['2'])">Check</button></div>
+<div class="feedback" id="fb-o69d"></div>
+<div class="q"><label>e) <span class="math"><sup>2</sup>log(√2)</span></label><input type="text" id="o69e"><button class="btn-hint btn" onclick="checkText('o69e',['0.5','0,5','1/2','½'])">Check</button></div>
+<div class="feedback" id="fb-o69e"></div>
+<div class="q"><label>f) <span class="math"><sup>2</sup>log(0,5)</span></label><input type="text" id="o69f"><button class="btn-hint btn" onclick="checkText('o69f',['-1'])">Check</button></div>
+<div class="feedback" id="fb-o69f"></div>
+
+<h3>Opgave 70 — bereken exact</h3>
+<div class="q"><label>a) <span class="math"><sup>4</sup>log(64√2)</span></label><input type="text" id="o70a"><button class="btn-hint btn" onclick="checkText('o70a',['3.25','3,25','13/4','3¼'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o70a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o70a"></div>
+<div class="detail-steps" id="o70a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li>Schrijf alles als macht van 4: <span class="math">64 = 4<sup>3</sup></span> en <span class="math">√2 = 2<sup>½</sup> = 4<sup>¼</sup></span></li>
+<li><span class="math">64√2 = 4<sup>3</sup> · 4<sup>¼</sup> = 4<sup>3¼</sup></span></li>
+<li><span class="math"><sup>4</sup>log(4<sup>3¼</sup>) = 3¼ = 3,25</span></li>
+</ol>
+</div>
+
+<div class="q"><label>b) <span class="math"><sup>3</sup>log(<sup>1</sup>⁄<sub>27</sub>√3)</span></label><input type="text" id="o70b"><button class="btn-hint btn" onclick="checkText('o70b',['-2.5','-2,5','-5/2','-2½'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o70b-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o70b"></div>
+<div class="detail-steps" id="o70b-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math"><sup>1</sup>⁄<sub>27</sub> = 3<sup>−3</sup></span> en <span class="math">√3 = 3<sup>½</sup></span></li>
+<li><span class="math"><sup>1</sup>⁄<sub>27</sub> · √3 = 3<sup>−3</sup> · 3<sup>½</sup> = 3<sup>−2½</sup></span></li>
+<li><span class="math"><sup>3</sup>log(3<sup>−2½</sup>) = −2½ = −2,5</span></li>
+</ol>
+</div>
+
+<h3>Opgave 71 — licht toe</h3>
+<div class="q"><label>a) <span class="math"><sup>3</sup>log(x) = 2</span> &nbsp;⇒&nbsp; <span class="math">x =</span></label><input type="text" id="o71a"><button class="btn-hint btn" onclick="checkText('o71a',['9'])">Check</button></div>
+<div class="feedback" id="fb-o71a"></div>
+<div class="q"><label>b) <span class="math"><sup>3</sup>log(x) = −2</span> &nbsp;⇒&nbsp; <span class="math">x =</span></label><input type="text" id="o71b"><button class="btn-hint btn" onclick="checkNumeric('o71b',1/9,0.001,['1/9','3^-2','3^(-2)'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o71b-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o71b"></div>
+<div class="detail-steps" id="o71b-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math"><sup>3</sup>log(x) = −2</span> betekent <span class="math">3<sup>−2</sup> = x</span></li>
+<li><span class="math">x = <sup>1</sup>⁄<sub>9</sub></span></li>
+</ol>
+</div>
+</div>
+
+<!-- Sectie 7: Kennischeck -->
+<div class="card" id="check">
+<h2>7. Kennischeck</h2>
+<ul style="margin-left:1.2rem">
+<li>Ik kan <span class="math">g<sup>A</sup> = g<sup>B</sup></span> oplossen door grondtallen gelijk te maken en exponenten gelijk te stellen.</li>
+<li>Ik isoleer eerst de macht (los staande factoren of getallen wegwerken) voordat ik exponenten vergelijk.</li>
+<li>Ik weet wat <span class="math"><sup>g</sup>log(x)</span> betekent en kan zo'n logaritme uitrekenen door <span class="math">x</span> als macht van <span class="math">g</span> te schrijven.</li>
+<li>Ik weet dat <span class="math"><sup>g</sup>log(x) = y</span> hetzelfde is als <span class="math">x = g<sup>y</sup></span>.</li>
+</ul>
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 4:</strong> daar leer je logaritmische vergelijkingen oplossen, hoe de grafiek van <span class="math">y = <sup>g</sup>log(x)</span> eruitziet, en hoe je transformaties op een logaritmische functie analyseert.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../exponenten-dag2-transformaties/">← Dag 2</a>
+<a href="../exponenten-dag4-logaritmische-functies/">Dag 4: Logaritmische functies →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 4 — Dag 3: Vergelijkingen &amp; intro logaritme</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){
+    fb.classList.remove('correct','incorrect');
+    fb.classList.add('show', ok ? 'correct' : 'incorrect');
+    fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.';
+  }
+}
+function checkNumeric(id, target, tol, alsoAccept){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const raw = (el.value || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+  let ok = false;
+  if(alsoAccept && alsoAccept.some(a => a.toLowerCase().replace(/\s+/g,'').replace(/,/g,'.') === raw)) ok = true;
+  if(!ok){
+    const num = parseFloat(raw);
+    if(isFinite(num) && Math.abs(num - target) <= tol) ok = true;
+  }
+  if(!ok && raw.includes('/')){
+    const [a,b] = raw.split('/').map(parseFloat);
+    if(isFinite(a) && isFinite(b) && b !== 0 && Math.abs(a/b - target) <= tol) ok = true;
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){
+    fb.classList.remove('correct','incorrect');
+    fb.classList.add('show', ok ? 'correct' : 'incorrect');
+    fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.';
+  }
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

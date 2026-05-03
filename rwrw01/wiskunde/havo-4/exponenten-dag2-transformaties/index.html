@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 2 — Transformaties combineren &amp; herleiden — Wiskunde HAVO 4</title>
+<style>
+:root { --primary:#2563eb; --primary-light:#dbeafe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.85}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.1rem;font-weight:600;color:var(--primary)}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#f8fafc;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.2fr 1fr;align-items:center}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary);font-weight:700;min-width:48px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1.05rem;font-style:italic;text-align:center}
+.asymptote-info{font-size:0.9rem;color:var(--muted);text-align:center;margin-top:0.3rem}
+.try-it{background:#f0f9ff;border:2px dashed #93c5fd;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:130px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#1d4ed8}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.steps-stack{display:flex;flex-direction:column;gap:0.6rem;margin:1rem 0}
+.steps-stack .stage{background:white;border:1px solid var(--border);border-radius:8px;padding:0.6rem 0.9rem;font-family:'Georgia',serif;font-size:1rem}
+.steps-stack .stage.active{border-color:var(--primary);background:var(--primary-light)}
+.steps-stack .stage .arrow{font-size:0.85rem;color:var(--muted);font-style:italic;font-family:inherit;display:block;margin-top:0.2rem}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 2 — Transformaties combineren</h1>
+<p>Eerst rekken, dán schuiven — en herleiden tot <span class="math">y = b · g<sup>x</sup></span></p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../">Wiskunde</a> &rsaquo; <a href="../">HAVO 4</a> &rsaquo; Exponenten Dag 2</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 1</a></li>
+<li><a href="#alle-sliders">Alle transformaties tegelijk — alle sliders aan</a></li>
+<li><a href="#volgorde">Volgorde van transformaties</a></li>
+<li><a href="#voorbeeld150">Stap-voor-stap voorbeeld f(x) = 150 − 0,7<sup>2x − 3</sup></a></li>
+<li><a href="#rekenregels">Rekenregels voor machten</a></li>
+<li><a href="#herleiden">Herleiden tot y = b · g<sup>x</sup></a></li>
+<li><a href="#oefen">Oefenopgaven 53, 55, 56, 57, 58</a></li>
+<li><a href="#check">Kennischeck</a></li>
+</ol>
+</div>
+
+<!-- Sectie 1: Recap -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 1 — kun je dit nog?</h2>
+<div class="try-it">
+<h4>Snelle check (2 min)</h4>
+<div class="q"><label>Welk grondtal hoort bij een <em>dalende</em> exponentiële grafiek?</label><input type="text" id="r1" placeholder="g ..."><button class="btn-hint btn" onclick="checkText('r1',['0&lt;g&lt;1','tussen 0 en 1','&lt;1','kleiner dan 1'])">Check</button></div>
+<div class="feedback" id="fb-r1"></div>
+
+<div class="q"><label>Wat is de asymptoot van <span class="math">f(x) = 3 · 2<sup>x</sup> − 7</span>?</label><input type="text" id="r2" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('r2',['y=-7','y = -7','-7','y=−7'])">Check</button></div>
+<div class="feedback" id="fb-r2"></div>
+
+<div class="q"><label>De grafiek van <span class="math">y = 2<sup>x</sup></span> wordt vermenigvuldigd t.o.v. de <span class="math">y</span>-as met factor 5. Geef de formule.</label><input type="text" id="r3" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('r3',['y=2^(x/5)','2^(x/5)','y=2^(0.2x)','y=2^(1/5x)','y=2^(1/5 x)'])">Check</button></div>
+<div class="feedback" id="fb-r3"></div>
+</div>
+</div>
+
+<!-- Sectie 2: alle sliders -->
+<div class="card" id="alle-sliders">
+<h2>2. Alle transformaties tegelijk</h2>
+<p>Hieronder zie je <span class="math">f(x) = a · g<sup>(x − c)/b</sup> + d</span>. Beweeg elke slider en zie hoe de grafiek meebeweegt. De grijze stippellijn is de standaardgrafiek <span class="math">y = 2<sup>x</sup></span> ter vergelijking.</p>
+<div class="widget">
+<div class="widget-grid">
+<svg id="plotAll" viewBox="0 0 320 260" preserveAspectRatio="xMidYMid meet"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>grondtal g</label><span class="val" id="gA-val">2</span></div>
+<input type="range" id="gA" min="0.3" max="4" step="0.1" value="2">
+</div>
+<div class="control">
+<div class="control-row"><label>factor a (verticaal)</label><span class="val" id="aA-val">1</span></div>
+<input type="range" id="aA" min="-3" max="3" step="0.1" value="1">
+</div>
+<div class="control">
+<div class="control-row"><label>factor b (horizontaal)</label><span class="val" id="bA-val">1</span></div>
+<input type="range" id="bA" min="0.25" max="3" step="0.05" value="1">
+</div>
+<div class="control">
+<div class="control-row"><label>verschuiving c (horiz.)</label><span class="val" id="cA-val">0</span></div>
+<input type="range" id="cA" min="-3" max="3" step="0.1" value="0">
+</div>
+<div class="control">
+<div class="control-row"><label>verschuiving d (vert.)</label><span class="val" id="dA-val">0</span></div>
+<input type="range" id="dA" min="-4" max="4" step="0.1" value="0">
+</div>
+<div class="formula-live" id="fA-formula">y = 2<sup>x</sup></div>
+<div class="asymptote-info" id="fA-asym">asymptoot: y = 0</div>
+</div>
+</div>
+</div>
+<div class="tip-box"><strong>💡 Probeer dit:</strong> zet eerst alleen <span class="math">a = 2</span> (verticaal rekken). Dan ook <span class="math">d = 3</span> erbij (omhoog schuiven). Zie hoe de asymptoot meeschuift naar <span class="math">y = 3</span>, niet naar <span class="math">y = 6</span> — eerst rekken dan schuiven, niet andersom!</div>
+</div>
+
+<!-- Sectie 3: Volgorde -->
+<div class="card" id="volgorde">
+<h2>3. Volgorde van transformaties</h2>
+<p>Bij <span class="math">y = a · g<sup>(x − c)/b</sup> + d</span> moet je in deze volgorde denken:</p>
+<div class="formula"><span class="math-display">1. vermenigvuldigen (a en b) &nbsp;&rarr;&nbsp; 2. transleren (c en d)</span></div>
+<p>Dat is een vaste afspraak in dit hoofdstuk: <strong>vermenigvuldigingen ten opzichte van de assen, daarna translaties.</strong></p>
+<div class="warning-box"><strong>⚠️ Veel gemaakte fout:</strong> als je eerst <span class="math">d</span> oplet en daarna <span class="math">a</span>, krijg je een verkeerde asymptoot. De asymptoot van <span class="math">y = a · g<sup>x</sup> + d</span> is altijd <span class="math">y = d</span>, niet <span class="math">y = a + d</span>.</div>
+</div>
+
+<!-- Sectie 4: Voorbeeld 150 -->
+<div class="card" id="voorbeeld150">
+<h2>4. Voorbeeld — <span class="math">f(x) = 150 − 0,7<sup>2x − 3</sup></span></h2>
+<p>Hoe ontstaat deze grafiek uit de standaardgrafiek <span class="math">y = 0,7<sup>x</sup></span>? Klik op de stappen om de volgorde te zien.</p>
+<div class="steps-stack" id="stages150">
+<div class="stage" data-stage="0">
+<strong>Start:</strong> <span class="math">y = 0,7<sup>x</sup></span>
+<span class="arrow">↓ vermenigvuldigen t.o.v. y-as met factor <span class="math"><sup>1</sup>⁄<sub>2</sub></span> &nbsp;(want x → 2x betekent b = ½)</span>
+</div>
+<div class="stage" data-stage="1">
+<strong>Stap 1:</strong> <span class="math">y = 0,7<sup>2x</sup></span>
+<span class="arrow">↓ translatie (1½, 0) — in de exponent <span class="math">2x</span> wordt <span class="math">x</span> vervangen door <span class="math">(x − 1½)</span>, dus <span class="math">2(x − 1½) = 2x − 3</span></span>
+</div>
+<div class="stage" data-stage="2">
+<strong>Stap 2:</strong> <span class="math">y = 0,7<sup>2x − 3</sup></span>
+<span class="arrow">↓ vermenigvuldigen t.o.v. x-as met factor −1 (spiegelen om <span class="math">x</span>-as)</span>
+</div>
+<div class="stage" data-stage="3">
+<strong>Stap 3:</strong> <span class="math">y = −0,7<sup>2x − 3</sup></span>
+<span class="arrow">↓ translatie (0, 150) — tel 150 erbij op</span>
+</div>
+<div class="stage" data-stage="4">
+<strong>Eindresultaat:</strong> <span class="math">f(x) = 150 − 0,7<sup>2x − 3</sup></span>
+</div>
+</div>
+<button class="btn btn-reveal" onclick="cycleStages()">▶ Stap voor stap</button>
+<button class="btn btn-hint" onclick="resetStages()">↺ Reset</button>
+<div class="example-box" style="margin-top:1rem"><strong>Bereik en asymptoot:</strong> omdat <span class="math">0,7<sup>2x − 3</sup> &gt; 0</span>, is <span class="math">−0,7<sup>2x − 3</sup> &lt; 0</span>, dus <span class="math">150 − 0,7<sup>2x − 3</sup> &lt; 150</span>. Bereik: <span class="math">(←, 150)</span>. Asymptoot: <span class="math">y = 150</span>.</div>
+<div class="warning-box"><strong>⚠️ Let op het minteken:</strong> <span class="math">−0,7<sup>x</sup></span> betekent niet hetzelfde als <span class="math">(−0,7)<sup>x</sup></span>. Het minteken hoort bij het hele resultaat (dus <span class="math">−1 · 0,7<sup>x</sup></span>), niet bij het grondtal. Het grondtal van een exponentiële functie is altijd positief.</div>
+</div>
+
+<!-- Sectie 5: Rekenregels -->
+<div class="card" id="rekenregels">
+<h2>5. Rekenregels voor machten — herhaling</h2>
+<div class="formula">
+<div><span class="math">g<sup>p</sup> · g<sup>q</sup> = g<sup>p + q</sup></span></div>
+<div><span class="math"><sup>g<sup>p</sup></sup>⁄<sub>g<sup>q</sup></sub> = g<sup>p − q</sup></span></div>
+<div><span class="math">(g<sup>p</sup>)<sup>q</sup> = g<sup>p · q</sup></span></div>
+<div><span class="math">g<sup>−p</sup> = <sup>1</sup>⁄<sub>g<sup>p</sup></sub></span></div>
+</div>
+<div class="try-it">
+<h4>🧪 Herken de regel — vul de exponent in</h4>
+<div class="q"><label><span class="math">3<sup>5</sup> · 3<sup>2</sup> = 3<sup>?</sup></span></label><input type="text" id="rr1"><button class="btn-hint btn" onclick="checkText('rr1',['7'])">Check</button></div>
+<div class="feedback" id="fb-rr1"></div>
+<div class="q"><label><span class="math">(2<sup>3</sup>)<sup>4</sup> = 2<sup>?</sup></span></label><input type="text" id="rr2"><button class="btn-hint btn" onclick="checkText('rr2',['12'])">Check</button></div>
+<div class="feedback" id="fb-rr2"></div>
+<div class="q"><label><span class="math"><sup>5<sup>8</sup></sup>⁄<sub>5<sup>3</sup></sub> = 5<sup>?</sup></span></label><input type="text" id="rr3"><button class="btn-hint btn" onclick="checkText('rr3',['5'])">Check</button></div>
+<div class="feedback" id="fb-rr3"></div>
+<div class="q"><label><span class="math">2<sup>−3</sup> = <sup>1</sup>⁄<sub>?</sub></span></label><input type="text" id="rr4"><button class="btn-hint btn" onclick="checkText('rr4',['8','2^3'])">Check</button></div>
+<div class="feedback" id="fb-rr4"></div>
+</div>
+</div>
+
+<!-- Sectie 6: Herleiden -->
+<div class="card" id="herleiden">
+<h2>6. Herleiden tot <span class="math">y = b · g<sup>x</sup></span></h2>
+<p>Een formule als <span class="math">y = 40 · 3<sup>2x + 1</sup></span> kun je herleiden zodat <span class="math">x</span> alleen nog 'losstaand' in de exponent staat. Dat doe je met de rekenregels.</p>
+<div class="example-box">
+<strong>Voorbeeld:</strong> herleid <span class="math">y = 40 · 3<sup>2x + 1</sup></span> tot <span class="math">y = b · g<sup>x</sup></span>.
+<ol style="margin-left:1.2rem;margin-top:0.5rem">
+<li><span class="math">3<sup>2x + 1</sup> = 3<sup>2x</sup> · 3<sup>1</sup></span> (regel <span class="math">g<sup>p+q</sup>=g<sup>p</sup>·g<sup>q</sup></span>)</li>
+<li><span class="math">3<sup>2x</sup> = (3<sup>2</sup>)<sup>x</sup> = 9<sup>x</sup></span></li>
+<li>Dus: <span class="math">y = 40 · 9<sup>x</sup> · 3 = 120 · 9<sup>x</sup></span></li>
+</ol>
+Antwoord: <span class="math">b = 120</span> en <span class="math">g = 9</span>.
+</div>
+<div class="try-it">
+<h4>🧪 Herleid zelf</h4>
+<div class="q"><label>Schrijf <span class="math">y = 15 · 2<sup>3x + 2</sup></span> in de vorm <span class="math">y = b · g<sup>x</sup></span>. Geef <span class="math">b</span>:</label><input type="text" id="h1a" placeholder="b = ..."><button class="btn-hint btn" onclick="checkText('h1a',['60','b=60'])">Check</button></div>
+<div class="feedback" id="fb-h1a"></div>
+<div class="q"><label>... en <span class="math">g</span>:</label><input type="text" id="h1b" placeholder="g = ..."><button class="btn-hint btn" onclick="checkText('h1b',['8','g=8'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('h1-steps')">Stappenplan</button></div>
+<div class="feedback" id="fb-h1b"></div>
+<div class="detail-steps" id="h1-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">2<sup>3x + 2</sup> = 2<sup>3x</sup> · 2<sup>2</sup> = 2<sup>3x</sup> · 4</span></li>
+<li><span class="math">2<sup>3x</sup> = (2<sup>3</sup>)<sup>x</sup> = 8<sup>x</sup></span></li>
+<li><span class="math">y = 15 · 8<sup>x</sup> · 4 = 60 · 8<sup>x</sup></span>, dus <span class="math">b = 60</span>, <span class="math">g = 8</span>.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- Sectie 7: Oefenopgaven -->
+<div class="card" id="oefen">
+<h2>7. Oefenopgaven uit het boek</h2>
+
+<h3>Opgave 53 — herleid tot <span class="math">y = b · g<sup>x</sup></span></h3>
+<p>a) <span class="math">y = 5 · 2<sup>3x + 1</sup></span></p>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o53a-b" placeholder="b"><button class="btn-hint btn" onclick="checkText('o53a-b',['10'])">Check</button></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o53a-g" placeholder="g"><button class="btn-hint btn" onclick="checkText('o53a-g',['8'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o53a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o53a-b"></div>
+<div class="feedback" id="fb-o53a-g"></div>
+<div class="detail-steps" id="o53a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">2<sup>3x + 1</sup> = 2<sup>3x</sup> · 2 = 8<sup>x</sup> · 2</span></li>
+<li><span class="math">y = 5 · 8<sup>x</sup> · 2 = 10 · 8<sup>x</sup></span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">b) <span class="math">y = 260 · 4<sup>(½)x + 1</sup></span></p>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o53b-b"><button class="btn-hint btn" onclick="checkText('o53b-b',['1040','1.040','1040.0'])">Check</button></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o53b-g"><button class="btn-hint btn" onclick="checkText('o53b-g',['2'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o53b-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o53b-b"></div>
+<div class="feedback" id="fb-o53b-g"></div>
+<div class="detail-steps" id="o53b-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">4<sup>(½)x + 1</sup> = 4<sup>(½)x</sup> · 4<sup>1</sup> = 4<sup>(½)x</sup> · 4</span></li>
+<li><span class="math">4<sup>(½)x</sup> = (4<sup>½</sup>)<sup>x</sup> = 2<sup>x</sup></span> (want <span class="math">4<sup>½</sup> = √4 = 2</span>)</li>
+<li><span class="math">y = 260 · 2<sup>x</sup> · 4 = 1040 · 2<sup>x</sup></span></li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">c) <span class="math">y = 8 · 4<sup>2x − 1</sup></span></p>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o53c-b"><button class="btn-hint btn" onclick="checkText('o53c-b',['2'])">Check</button></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o53c-g"><button class="btn-hint btn" onclick="checkText('o53c-g',['16'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o53c-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o53c-b"></div>
+<div class="feedback" id="fb-o53c-g"></div>
+<div class="detail-steps" id="o53c-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">4<sup>2x − 1</sup> = 4<sup>2x</sup> · 4<sup>−1</sup> = 16<sup>x</sup> · ¼</span></li>
+<li><span class="math">y = 8 · 16<sup>x</sup> · ¼ = 2 · 16<sup>x</sup></span></li>
+</ol>
+</div>
+
+<h3>Opgave 55 — bereik &amp; asymptoot</h3>
+<p>Geef bereik en asymptoot van de volgende functies.</p>
+
+<p>a) <span class="math">f(x) = 1 − 3 · 0,5<sup>x</sup></span></p>
+<div class="q"><label>asymptoot:</label><input type="text" id="o55a-as"><button class="btn-hint btn" onclick="checkText('o55a-as',['y=1','y = 1','1'])">Check</button></div>
+<div class="q"><label>bereik:</label><input type="text" id="o55a-br" placeholder="bv. y < 1"><button class="btn-hint btn" onclick="checkText('o55a-br',['(←,1)','(-∞,1)','(-inf,1)','y&lt;1','&lt;1','1&gt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o55a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o55a-as"></div>
+<div class="feedback" id="fb-o55a-br"></div>
+<div class="detail-steps" id="o55a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">0,5<sup>x</sup> &gt; 0</span> dus <span class="math">3 · 0,5<sup>x</sup> &gt; 0</span> en <span class="math">−3 · 0,5<sup>x</sup> &lt; 0</span>.</li>
+<li><span class="math">f(x) = 1 + (−3 · 0,5<sup>x</sup>) &lt; 1</span>. Bereik <span class="math">(←, 1)</span>, asymptoot <span class="math">y = 1</span>.</li>
+</ol>
+</div>
+
+<p style="margin-top:1rem">b) <span class="math">g(x) = 4 · 3<sup>0,2x</sup> − 7</span></p>
+<div class="q"><label>asymptoot:</label><input type="text" id="o55b-as"><button class="btn-hint btn" onclick="checkText('o55b-as',['y=-7','y = -7','-7','y=−7'])">Check</button></div>
+<div class="q"><label>bereik:</label><input type="text" id="o55b-br" placeholder="bv. y > -7"><button class="btn-hint btn" onclick="checkText('o55b-br',['(-7,→)','(-7,->)','(-7,inf)','(-7,oneindig)','y&gt;-7','&gt;-7','-7&lt;y'])">Check</button></div>
+<div class="feedback" id="fb-o55b-as"></div>
+<div class="feedback" id="fb-o55b-br"></div>
+
+<h3>Opgave 56 — schrijf in de vorm <span class="math">y = b · g<sup>x</sup></span></h3>
+<p>a) <span class="math">y = 5 · (½)<sup>2x − 1</sup></span> &nbsp;&nbsp; (geef b en g)</p>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o56a-b"><button class="btn-hint btn" onclick="checkText('o56a-b',['10'])">Check</button></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o56a-g"><button class="btn-hint btn" onclick="checkText('o56a-g',['1/4','0.25','0,25','¼'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o56a-steps')">Stappen</button></div>
+<div class="feedback" id="fb-o56a-b"></div>
+<div class="feedback" id="fb-o56a-g"></div>
+<div class="detail-steps" id="o56a-steps">
+<h5>Stappenplan</h5>
+<ol>
+<li><span class="math">(½)<sup>2x − 1</sup> = (½)<sup>2x</sup> · (½)<sup>−1</sup> = ((½)<sup>2</sup>)<sup>x</sup> · 2 = (¼)<sup>x</sup> · 2</span></li>
+<li><span class="math">y = 5 · (¼)<sup>x</sup> · 2 = 10 · (¼)<sup>x</sup></span></li>
+</ol>
+</div>
+
+<h3>Opgave 58 — terugrekenen</h3>
+<p>Gegeven: <span class="math">g(x) = ½ · 3<sup>x</sup> − 2</span>. De grafiek van <span class="math">g</span> ontstaat uit de grafiek van <span class="math">y = 3<sup>x</sup></span> door eerst een vermenigvuldiging en daarna een translatie. Geef vermenigvuldigingsfactor en translatie.</p>
+<div class="q"><label>verm.factor (t.o.v. <span class="math">x</span>-as):</label><input type="text" id="o58-a"><button class="btn-hint btn" onclick="checkText('o58-a',['1/2','0.5','0,5','½'])">Check</button></div>
+<div class="q"><label>translatie:</label><input type="text" id="o58-tr" placeholder="(p, q)"><button class="btn-hint btn" onclick="checkText('o58-tr',['(0,-2)','(0, -2)','(0,−2)'])">Check</button></div>
+<div class="feedback" id="fb-o58-a"></div>
+<div class="feedback" id="fb-o58-tr"></div>
+</div>
+
+<!-- Sectie 8: Kennischeck -->
+<div class="card" id="check">
+<h2>8. Kennischeck — kun je dit?</h2>
+<ul style="margin-left:1.2rem">
+<li>Ik weet dat eerst alle vermenigvuldigingen, dán alle translaties komen.</li>
+<li>Ik kan de asymptoot van <span class="math">a · g<sup>x</sup> + d</span> zonder rekenen aflezen: <span class="math">y = d</span>.</li>
+<li>Ik kan <span class="math">g<sup>p+q</sup> = g<sup>p</sup>·g<sup>q</sup></span> en <span class="math">(g<sup>p</sup>)<sup>q</sup> = g<sup>p·q</sup></span> toepassen.</li>
+<li>Ik kan een formule als <span class="math">15 · 2<sup>3x + 2</sup></span> herleiden tot <span class="math">b · g<sup>x</sup></span>.</li>
+</ul>
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 3:</strong> daar leer je hoe je <em>oplossingen</em> vindt voor exponentiële vergelijkingen (<span class="math">g<sup>A</sup> = g<sup>B</sup></span>) en wat een <em>logaritme</em> is.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../exponenten-dag1-standaardgrafiek/">← Dag 1</a>
+<a href="../exponenten-dag3-vergelijkingen-logaritme/">Dag 3: Vergelijkingen &amp; logaritme →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 4 — Dag 2: Transformaties combineren</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ===== Plot helper (zelfde patroon als Dag 1) =====
+function makePlot(svgId, evalFn, opts){
+  const svg = document.getElementById(svgId);
+  const W = 320, H = 260, padL = 30, padR = 10, padT = 15, padB = 30;
+  const xMin = -4, xMax = 4, yMin = -4, yMax = 8;
+  const xs = x => padL + (x - xMin) / (xMax - xMin) * (W - padL - padR);
+  const ys = y => padT + (yMax - y) / (yMax - yMin) * (H - padT - padB);
+  function draw(state){
+    let s = '';
+    for(let gx = Math.ceil(xMin); gx <= Math.floor(xMax); gx++){
+      const X = xs(gx);
+      s += `<line x1="${X}" y1="${padT}" x2="${X}" y2="${H-padB}" stroke="#eef2f7" stroke-width="1"/>`;
+    }
+    for(let gy = Math.ceil(yMin); gy <= Math.floor(yMax); gy++){
+      const Y = ys(gy);
+      s += `<line x1="${padL}" y1="${Y}" x2="${W-padR}" y2="${Y}" stroke="#eef2f7" stroke-width="1"/>`;
+    }
+    s += `<line x1="${padL}" y1="${ys(0)}" x2="${W-padR}" y2="${ys(0)}" stroke="#94a3b8" stroke-width="1.2"/>`;
+    s += `<line x1="${xs(0)}" y1="${padT}" x2="${xs(0)}" y2="${H-padB}" stroke="#94a3b8" stroke-width="1.2"/>`;
+    for(let gx = xMin; gx <= xMax; gx++){
+      if(gx === 0) continue;
+      s += `<text x="${xs(gx)}" y="${ys(0)+12}" font-size="9" fill="#64748b" text-anchor="middle">${gx}</text>`;
+    }
+    for(let gy = yMin; gy <= yMax; gy += 2){
+      if(gy === 0) continue;
+      s += `<text x="${xs(0)-4}" y="${ys(gy)+3}" font-size="9" fill="#64748b" text-anchor="end">${gy}</text>`;
+    }
+    if(typeof state.asymY === 'number' && state.asymY >= yMin && state.asymY <= yMax){
+      const Y = ys(state.asymY);
+      s += `<line x1="${padL}" y1="${Y}" x2="${W-padR}" y2="${Y}" stroke="#e11d48" stroke-width="1.2" stroke-dasharray="4,3"/>`;
+      s += `<text x="${W-padR-4}" y="${Y-4}" font-size="9" fill="#e11d48" text-anchor="end">y = ${(+state.asymY.toFixed(2))}</text>`;
+    }
+    if(opts && opts.showReference){
+      let p = '';
+      for(let i = 0; i <= 200; i++){
+        const x = xMin + (xMax - xMin) * i / 200;
+        const y = Math.pow(2, x);
+        if(y < yMin - 1 || y > yMax + 1){ continue; }
+        p += (p ? ' L' : 'M') + xs(x) + ',' + ys(y);
+      }
+      s += `<path d="${p}" stroke="#cbd5e1" stroke-width="1.5" fill="none" stroke-dasharray="2,2"/>`;
+    }
+    let path = '';
+    let pen = false;
+    for(let i = 0; i <= 320; i++){
+      const x = xMin + (xMax - xMin) * i / 320;
+      const y = evalFn(x, state);
+      if(!isFinite(y) || y < yMin - 5 || y > yMax + 5){ pen = false; continue; }
+      path += (pen ? ' L' : ' M') + xs(x) + ',' + ys(y);
+      pen = true;
+    }
+    s += `<path d="${path}" stroke="#2563eb" stroke-width="2.2" fill="none"/>`;
+    svg.innerHTML = s;
+  }
+  return draw;
+}
+
+// Plot All: y = a * g^((x-c)/b) + d
+const drawAll = makePlot('plotAll', (x, st) => st.a * Math.pow(st.g, (x - st.c) / st.b) + st.d, {showReference:true});
+function updateAll(){
+  const g = +document.getElementById('gA').value;
+  const a = +document.getElementById('aA').value;
+  const b = +document.getElementById('bA').value;
+  const c = +document.getElementById('cA').value;
+  const d = +document.getElementById('dA').value;
+  document.getElementById('gA-val').textContent = g.toFixed(2);
+  document.getElementById('aA-val').textContent = a.toFixed(2);
+  document.getElementById('bA-val').textContent = b.toFixed(2);
+  document.getElementById('cA-val').textContent = c.toFixed(2);
+  document.getElementById('dA-val').textContent = d.toFixed(2);
+  // Build formula display
+  let exp;
+  if(Math.abs(c) < 0.05 && Math.abs(b - 1) < 0.025) exp = 'x';
+  else if(Math.abs(c) < 0.05) exp = `x/${b.toFixed(2)}`;
+  else if(Math.abs(b - 1) < 0.025) exp = `x ${c >= 0 ? '−' : '+'} ${Math.abs(c).toFixed(2)}`;
+  else exp = `(x ${c >= 0 ? '−' : '+'} ${Math.abs(c).toFixed(2)})/${b.toFixed(2)}`;
+  let coef = Math.abs(a - 1) < 0.025 ? '' : `${a.toFixed(2)} · `;
+  let extra;
+  if(Math.abs(d) < 0.05) extra = '';
+  else if(d > 0) extra = ` + ${d.toFixed(2)}`;
+  else extra = ` − ${Math.abs(d).toFixed(2)}`;
+  document.getElementById('fA-formula').innerHTML = `y = ${coef}${g.toFixed(2)}<sup>${exp}</sup>${extra}`;
+  document.getElementById('fA-asym').textContent = `asymptoot: y = ${d.toFixed(2)}`;
+  drawAll({g, a, b, c, d, asymY: d});
+}
+['gA','aA','bA','cA','dA'].forEach(id => document.getElementById(id).addEventListener('input', updateAll));
+updateAll();
+
+// ===== Stages voor voorbeeld 150 =====
+let currentStage = 0;
+function highlightStage(idx){
+  document.querySelectorAll('#stages150 .stage').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+}
+function cycleStages(){
+  highlightStage(currentStage);
+  currentStage = (currentStage + 1) % 5;
+}
+function resetStages(){
+  currentStage = 0;
+  document.querySelectorAll('#stages150 .stage').forEach(el => el.classList.remove('active'));
+}
+
+// ===== Antwoord-checker =====
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-' + id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  if(fb){
+    fb.classList.remove('correct','incorrect');
+    fb.classList.add('show', ok ? 'correct' : 'incorrect');
+    fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.';
+  }
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

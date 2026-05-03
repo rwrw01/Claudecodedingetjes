@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 3 — Warmtepomp en rendement (§5.4) — Natuurkunde HAVO 4</title>
+<style>
+:root { --primary:#ea580c; --primary-dark:#9a3412; --primary-light:#ffedd5; --accent:#dc2626; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#9a3412 0%,#ea580c 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.15rem;font-weight:700;color:var(--primary-dark);font-family:'Georgia',serif}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#fff7ed;border:1px solid #fed7aa;border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.1fr 1fr;align-items:start}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary-dark);font-weight:700;min-width:80px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1rem;text-align:center;margin-top:0.4rem}
+.try-it{background:#fff7ed;border:2px dashed #fb923c;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary-dark);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:var(--primary-dark)}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.detail-steps .calc{font-family:'Georgia',serif;background:white;padding:0.3rem 0.5rem;border-radius:4px;display:inline-block;margin:0.15rem 0}
+table.tabel{border-collapse:collapse;width:100%;margin:0.8rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:var(--primary-dark);font-weight:600}
+.recap{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.recap strong{color:#15803d}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.nav-bottom a{flex:1;min-width:140px;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+ul.checklist{list-style:none;padding:0}
+ul.checklist li{padding:0.4rem 0 0.4rem 1.8rem;position:relative;font-size:0.95rem;cursor:pointer}
+ul.checklist li::before{content:"☐";position:absolute;left:0;font-size:1.1rem;color:var(--primary)}
+ul.checklist li.done::before{content:"✓";color:var(--success);font-weight:700}
+.energiebalans{display:grid;grid-template-columns:1fr;gap:0.5rem;margin:1rem 0}
+.energiebalans .balk{display:flex;align-items:center;gap:0.5rem;font-size:0.9rem}
+.energiebalans .balk-fill{height:24px;border-radius:4px;display:flex;align-items:center;padding:0 0.5rem;color:white;font-weight:700;font-size:0.85rem;white-space:nowrap}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 3 — Warmtepomp en rendement</h1>
+<p>§5.4 — De warmtepomp en hoe je rendement berekent</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Natuurkunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H5</a> &rsaquo; Dag 3</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 2 — drie snelle vragen</a></li>
+<li><a href="#waarom">Waarom warmtepompen? Korte context</a></li>
+<li><a href="#werking">Werking van een warmtepomp</a></li>
+<li><a href="#rendement">Rendement — de formule</a></li>
+<li><a href="#slider">Schuif aan rendement-instellingen</a></li>
+<li><a href="#vb10">Voorbeeld 10 — rendement van een warmtepomp</a></li>
+<li><a href="#vb11">Voorbeeld 11 — warmtepomp warmt cv-water op</a></li>
+<li><a href="#opgaven">Oefenopgaven 25, 29, 30, 31</a></li>
+<li><a href="#kennischeck">Kennischeck</a></li>
+</ol>
+</div>
+
+<!-- ============ RECAP ============ -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 2 — Q = c·m·ΔT</h2>
+
+<div class="recap">
+<strong>Vraag 1.</strong> Hoeveel warmte (in J) is nodig om 0,50 kg water 12 K op te warmen? Rond af op 2 sf.<br>
+<input type="number" step="any" id="r1d3" style="width:120px;margin-top:0.4rem" placeholder="J">
+<button class="btn" onclick="checkNumeric('r1d3', 25080, 600)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-r1d3')">Stappenplan</button>
+<div class="feedback" id="fb-r1d3"></div>
+<div class="detail-steps" id="s-r1d3">
+<h5>Uitwerking</h5>
+<p>Q = c·m·ΔT = 4180 · 0,50 · 12 = 25 080 J ≈ 2,5·10⁴ J</p>
+</div>
+</div>
+
+<div class="recap">
+<strong>Vraag 2.</strong> Welke heeft de hoogste soortelijke warmte: water, koper, ijzer of aluminium?<br>
+<input type="text" id="r2d3" style="width:160px;margin-top:0.4rem" placeholder="materiaal">
+<button class="btn" onclick="checkText('r2d3', ['water'])">Check</button>
+<div class="feedback" id="fb-r2d3"></div>
+</div>
+
+<div class="recap">
+<strong>Vraag 3.</strong> Een verwarming van 2,0 kW staat 5 minuten aan. Hoeveel warmte (in J) levert hij?<br>
+<input type="number" step="any" id="r3d3" style="width:140px;margin-top:0.4rem" placeholder="J">
+<button class="btn" onclick="checkNumeric('r3d3', 600000, 1000)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-r3d3')">Stappenplan</button>
+<div class="feedback" id="fb-r3d3"></div>
+<div class="detail-steps" id="s-r3d3">
+<h5>Uitwerking</h5>
+<p>Q = P · Δt = 2000 · 300 = 600 000 J = 6,0·10⁵ J</p>
+</div>
+</div>
+</div>
+
+<!-- ============ WAAROM ============ -->
+<div class="card" id="waarom">
+<h2>2. Waarom warmtepompen? Korte context</h2>
+
+<p>Tot nu toe verwarmen we onze huizen meestal met aardgas. Bij verbranding van aardgas komt CO<sub>2</sub> vrij — een broeikasgas dat bijdraagt aan opwarming van de aarde. Daarom wil Nederland van het gas af: de <strong>energietransitie</strong>.</p>
+
+<p>Het probleem: alleen elektrisch verwarmen (zoals een straalkacheltje) kost héél veel stroom. De truc van een warmtepomp: hij gebruikt elektriciteit om <strong>warmte van buiten naar binnen te verplaatsen</strong>. Hij maakt geen warmte, hij <em>verplaatst</em> hem. Daardoor levert hij meer warmte dan hij aan stroom verbruikt — soms wel 4× zoveel.</p>
+
+<div class="tip-box"><strong>💡 In één zin:</strong> een warmtepomp is feitelijk een omgekeerde koelkast. Een koelkast haalt warmte uit het binnenste en geeft die aan de keuken. Een warmtepomp haalt warmte uit de buitenlucht (of bodem) en geeft die aan je huis.</div>
+</div>
+
+<!-- ============ WERKING ============ -->
+<div class="card" id="werking">
+<h2>3. Werking van een warmtepomp</h2>
+
+<p>Een warmtepomp heeft een gesloten buizensysteem met een koudemiddel (vloeistof die makkelijk verdampt). Vier onderdelen, vier stappen:</p>
+
+<svg viewBox="0 0 480 280" style="width:100%;height:auto;background:#f0f9ff;border:1px solid var(--border);border-radius:8px;display:block;margin:1rem 0">
+<defs>
+<marker id="ar1" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+<marker id="ar2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+</defs>
+<!-- Buiten links -->
+<rect x="10" y="10" width="180" height="260" fill="#dbeafe"/>
+<text x="100" y="35" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="700">Buiten</text>
+<text x="100" y="55" text-anchor="middle" font-size="12" fill="#1e40af">koud (5°C)</text>
+<!-- Binnen rechts -->
+<rect x="290" y="10" width="180" height="260" fill="#fef3c7"/>
+<text x="380" y="35" text-anchor="middle" font-size="14" fill="#9a3412" font-weight="700">Binnen</text>
+<text x="380" y="55" text-anchor="middle" font-size="12" fill="#9a3412">warm (21°C)</text>
+<!-- Warmtepomp box -->
+<rect x="190" y="80" width="100" height="140" fill="white" stroke="#475569" stroke-width="2" rx="8"/>
+<text x="240" y="100" text-anchor="middle" font-size="11" fill="#1e293b" font-weight="600">Warmtepomp</text>
+<!-- Verdamper -->
+<rect x="60" y="120" width="120" height="40" fill="#bfdbfe" stroke="#1e40af" rx="4"/>
+<text x="120" y="135" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="600">Verdamper</text>
+<text x="120" y="150" text-anchor="middle" font-size="9" fill="#1e40af">vloeistof → gas</text>
+<!-- Compressor -->
+<rect x="200" y="115" width="80" height="35" fill="#fed7aa" stroke="#9a3412" rx="4"/>
+<text x="240" y="130" text-anchor="middle" font-size="10" fill="#9a3412" font-weight="600">Compressor</text>
+<text x="240" y="143" text-anchor="middle" font-size="8" fill="#9a3412">elektriciteit ↓</text>
+<!-- Condensor -->
+<rect x="300" y="120" width="120" height="40" fill="#fecaca" stroke="#dc2626" rx="4"/>
+<text x="360" y="135" text-anchor="middle" font-size="10" fill="#dc2626" font-weight="600">Condensor</text>
+<text x="360" y="150" text-anchor="middle" font-size="9" fill="#dc2626">gas → vloeistof</text>
+<!-- Expansieventiel -->
+<rect x="200" y="165" width="80" height="35" fill="#e9d5ff" stroke="#7c3aed" rx="4"/>
+<text x="240" y="180" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="600">Expansie-</text>
+<text x="240" y="192" text-anchor="middle" font-size="10" fill="#7c3aed" font-weight="600">ventiel</text>
+<!-- Pijlen warmte in (van buiten) -->
+<line x1="30" y1="140" x2="55" y2="140" stroke="#dc2626" stroke-width="2.5" marker-end="url(#ar1)"/>
+<text x="40" y="115" text-anchor="middle" font-size="9" fill="#dc2626">warmte uit lucht</text>
+<!-- Pijlen warmte uit (naar binnen) -->
+<line x1="425" y1="140" x2="450" y2="140" stroke="#dc2626" stroke-width="3.5" marker-end="url(#ar1)"/>
+<text x="437" y="115" text-anchor="middle" font-size="9" fill="#dc2626" font-weight="600">warmte naar huis</text>
+<!-- Elektriciteit pijl -->
+<line x1="240" y1="240" x2="240" y2="215" stroke="#16a34a" stroke-width="2" marker-end="url(#ar2)"/>
+<text x="240" y="260" text-anchor="middle" font-size="10" fill="#16a34a">elektrische energie</text>
+<!-- Cyclus pijlen tussen onderdelen (richting van de circulatie) -->
+<defs>
+<marker id="arc" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#64748b"/></marker>
+</defs>
+<line x1="180" y1="140" x2="200" y2="135" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arc)"/>
+<line x1="280" y1="135" x2="300" y2="140" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arc)"/>
+<line x1="300" y1="160" x2="280" y2="180" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arc)"/>
+<line x1="200" y1="180" x2="180" y2="160" stroke="#64748b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#arc)"/>
+</svg>
+
+<table class="tabel">
+<thead><tr><th>Onderdeel</th><th>Wat gebeurt er</th><th>Energie</th></tr></thead>
+<tbody>
+<tr><td><strong>Verdamper</strong> (buiten)</td><td>Koudemiddel (vloeistof) verdampt en neemt warmte op uit de buitenlucht</td><td>warmte IN (gratis uit omgeving)</td></tr>
+<tr><td><strong>Compressor</strong></td><td>Pers het gas samen → temperatuur stijgt verder</td><td>elektriciteit IN (kost geld)</td></tr>
+<tr><td><strong>Condensor</strong> (binnen)</td><td>Heet gas geeft warmte af aan het cv-water of de lucht in huis → wordt weer vloeistof</td><td>warmte UIT (naar huis)</td></tr>
+<tr><td><strong>Expansieventiel</strong></td><td>De vloeistof gaat door een nauw gat — temperatuur en druk dalen → koud → terug naar verdamper</td><td>(geen energie)</td></tr>
+</tbody>
+</table>
+
+<div class="warning-box"><strong>⚠️ Let op:</strong> de warmtepomp <em>verplaatst</em> warmte, hij <em>maakt</em> hem niet. De totale warmte die het huis in gaat = warmte uit de lucht + elektrische energie van de compressor. Dat is de basis waarop het rendement &gt; 100% kan worden.</div>
+</div>
+
+<!-- ============ RENDEMENT ============ -->
+<div class="card" id="rendement">
+<h2>4. Rendement — de formule</h2>
+
+<p>Rendement (η, "èta") zegt: hoeveel van de erin gestopte energie krijg je als nuttige output?</p>
+
+<div class="formula">
+<div class="math-display" style="text-align:center">η = E<sub>nuttig</sub> / E<sub>geïnvesteerd</sub> · 100%</div>
+<p style="margin-top:0.4rem">Of, als je vermogens kent (in plaats van energieën):</p>
+<div class="math-display" style="text-align:center">η = P<sub>nuttig</sub> / P<sub>geïnvesteerd</sub> · 100%</div>
+<ul style="margin-left:1.2rem;margin-top:0.6rem">
+<li><span class="math">η</span> — rendement (in %, of als getal zonder eenheid)</li>
+<li><span class="math">E<sub>nuttig</sub></span> — energie die je echt gebruikt (warmte voor je huis), in J</li>
+<li><span class="math">E<sub>geïnvesteerd</sub></span> — energie die je erin hebt gestopt (elektriciteit), in J</li>
+</ul>
+</div>
+
+<table class="tabel">
+<thead><tr><th>Apparaat</th><th>Typisch rendement</th></tr></thead>
+<tbody>
+<tr><td>Gloeilamp</td><td>~5%</td></tr>
+<tr><td>Auto-motor</td><td>~25–35%</td></tr>
+<tr><td>Hr-ketel (gasverwarming)</td><td>95–105%</td></tr>
+<tr><td>Warmtepomp</td><td>300–500%</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box"><strong>💡 Hoe kan rendement &gt; 100% bij warmtepompen?</strong> Omdat ze niet alleen elektrische energie omzetten in warmte (dat zou 100% zijn), maar ook gratis omgevingswarmte erbij rapen. Voor 1 J elektriciteit komt er ~3 J warmte in je huis: 1 J van de compressor + 2 J uit de buitenlucht. Daarom heet rendement bij warmtepompen ook wel "COP" (Coefficient of Performance).</div>
+</div>
+
+<!-- ============ SLIDER ============ -->
+<div class="card" id="slider">
+<h2>5. Schuif aan de rendement-instellingen</h2>
+
+<p>Schuif aan E<sub>nuttig</sub> en E<sub>geïnvesteerd</sub> en zie hoe het rendement reageert.</p>
+
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot3" viewBox="0 0 320 200" aria-label="Energiebalans"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>E<sub>geïnvesteerd</sub> (kWh)</label><span class="val" id="ein-val">2,0</span></div>
+<input type="range" id="ein" min="0.5" max="10" step="0.1" value="2.0">
+<div style="font-size:0.78rem;color:var(--muted)">elektriciteit erin</div>
+</div>
+<div class="control">
+<div class="control-row"><label>E<sub>nuttig</sub> (kWh)</label><span class="val" id="enut-val">7,0</span></div>
+<input type="range" id="enut" min="0.5" max="20" step="0.1" value="7.0">
+<div style="font-size:0.78rem;color:var(--muted)">warmte naar huis</div>
+</div>
+<div class="formula-live" id="eta-live">η = …%</div>
+</div>
+</div>
+</div>
+
+<div class="tip-box"><strong>💡 Probeer:</strong>
+<ul style="margin-left:1.2rem">
+<li>E<sub>nut</sub> = E<sub>in</sub> → η = 100% (zoals een elektrische kachel)</li>
+<li>E<sub>nut</sub> &lt; E<sub>in</sub> → η &lt; 100% (typische verbranding/motor)</li>
+<li>E<sub>nut</sub> &gt; E<sub>in</sub> → η &gt; 100% (warmtepomp — pakt extra warmte uit de lucht)</li>
+</ul>
+</div>
+</div>
+
+<!-- ============ VOORBEELD 10 ============ -->
+<div class="card" id="vb10">
+<h2>6. Voorbeeld 10 — rendement van een warmtepomp</h2>
+
+<div class="example-box">
+<strong>Opgave:</strong> Een warmtepomp levert 7,30 kWh aan warmte aan een huis af. Daarvoor heeft hij 2,2 kWh aan elektriciteit gebruikt. Bereken het rendement van de warmtepomp.
+</div>
+
+<p><strong>Stap 1 — Welke formule?</strong></p>
+<div class="formula"><div class="math-display">η = E<sub>nuttig</sub> / E<sub>geïnvesteerd</sub> · 100%</div></div>
+
+<p><strong>Stap 2 — Wat weet je?</strong></p>
+<ul style="margin-left:1.4rem">
+<li>E<sub>nuttig</sub> = 7,30 kWh (de warmte die het huis nuttig gebruikt)</li>
+<li>E<sub>geïnvesteerd</sub> = 2,2 kWh (de elektriciteit die je erin steekt)</li>
+</ul>
+
+<p><strong>Stap 3 — Invullen:</strong></p>
+<div class="formula" style="background:white;border-color:var(--border)">
+η = 7,30 / 2,2 · 100% <br>
+η = 3,318… · 100% <br>
+η ≈ 3,3·10² % = 330%
+</div>
+
+<div class="tip-box"><strong>💡 Zo lees je dat:</strong> voor elke 1 kWh elektriciteit krijg je ~3,3 kWh warmte. Het verschil (~2,3 kWh) komt gratis uit de buitenlucht.</div>
+</div>
+
+<!-- ============ VOORBEELD 11 ============ -->
+<div class="card" id="vb11">
+<h2>7. Voorbeeld 11 — warmtepomp warmt cv-water op</h2>
+
+<div class="example-box">
+<strong>Opgave:</strong> De warmtepomp uit voorbeeld 10 wordt aangesloten op de centrale verwarming. Per minuut stroomt er 5,0·10⁻³ m³ water van 15 °C door de warmtepomp en het verlaat de warmtepomp op 45 °C. ρ<sub>water</sub> = 1,00·10³ kg/m³, c<sub>water</sub> = 4,18·10³ J/(kg·K).<br><br>
+<strong>a.</strong> Bereken de hoeveelheid nuttige warmte die de warmtepomp per seconde aan het water afgeeft.<br>
+<strong>b.</strong> Bereken het elektrisch vermogen van de warmtepomp (gebruik het rendement uit voorbeeld 10: 330%).
+</div>
+
+<p><strong>a — Nuttige warmte per seconde (= P<sub>nuttig</sub>):</strong></p>
+<ol style="margin-left:1.4rem">
+<li>Massa per minuut: <span class="math">m</span> = ρ · V = 1000 · 5,0·10⁻³ = 5,0 kg per minuut</li>
+<li>Massa per seconde: <span class="math">ṁ</span> = 5,0 / 60 ≈ 0,083 kg/s (de gestreepte m betekent "per seconde")</li>
+<li>ΔT = 45 − 15 = 30 K</li>
+<li>Warmte per seconde: <span class="math">P</span> = c · <span class="math">ṁ</span> · ΔT</li>
+<li>P<sub>nuttig</sub> = 4180 · 0,0833 · 30 = 10 446 W ≈ 1,0·10<sup>4</sup> W = 10 kW</li>
+</ol>
+
+<p><strong>b — Elektrisch vermogen (P<sub>geïnvesteerd</sub>):</strong></p>
+<ol style="margin-left:1.4rem">
+<li>Formule omdraaien: <span class="math">P<sub>in</sub> = P<sub>nut</sub> / η</span> (met η als verhouding, niet als %)</li>
+<li>η = 330% = 3,30 (deel %-getal door 100)</li>
+<li>P<sub>in</sub> = 10 446 / 3,30 = 3166 W ≈ 3,2·10³ W = 3,2 kW</li>
+</ol>
+
+<div class="tip-box"><strong>💡 Check:</strong> 10 kW warmte vs. 3,2 kW elektrisch → klopt met 330% rendement. Je betaalt voor 3,2 kW aan stroom maar krijgt 10 kW aan verwarming — de rest (6,8 kW) komt uit de buitenlucht.</div>
+</div>
+
+<!-- ============ OPGAVEN ============ -->
+<div class="card" id="opgaven">
+<h2>8. Oefenopgaven uit het boek</h2>
+
+<h3>Opgave 25 — Koelkast vs. warmtepomp (figuur 36–37)</h3>
+<p>Een koelkast en een warmtepomp werken volgens hetzelfde principe, maar hun "nuttige" kant is anders. Voor een koelkast is "nuttig" = warmte uit het koelvak halen. Voor een warmtepomp is "nuttig" = warmte aan het huis afgeven.</p>
+
+<div class="try-it">
+<h4>Vraag 25a — Energiestromen invullen</h4>
+<p>Vul in waar de drie pijlen <strong>"in", "uit", "elektriciteit"</strong> bij een warmtepomp horen:</p>
+
+<div class="q">
+<label>1. Aan de buitenkant van de warmtepomp (verdamper): warmte ____</label>
+<select id="ans-25-1" style="width:140px">
+<option value=""></option>
+<option value="in">in (uit lucht)</option>
+<option value="uit">uit (naar lucht)</option>
+</select>
+<button class="btn" onclick="checkSelect('ans-25-1', 'in')">Check</button>
+</div>
+<div class="feedback" id="fb-ans-25-1"></div>
+
+<div class="q">
+<label>2. Aan de binnenkant van de warmtepomp (condensor): warmte ____</label>
+<select id="ans-25-2" style="width:140px">
+<option value=""></option>
+<option value="in">in (uit huis)</option>
+<option value="uit">uit (naar huis)</option>
+</select>
+<button class="btn" onclick="checkSelect('ans-25-2', 'uit')">Check</button>
+</div>
+<div class="feedback" id="fb-ans-25-2"></div>
+
+<div class="q">
+<label>3. Bij een koelkast: nuttige energie = warmte die ____</label>
+<select id="ans-25-3" style="width:280px">
+<option value=""></option>
+<option value="uit">uit het koelvak gehaald wordt</option>
+<option value="aan">aan de keuken afgegeven wordt</option>
+</select>
+<button class="btn" onclick="checkSelect('ans-25-3', 'uit')">Check</button>
+</div>
+<div class="feedback" id="fb-ans-25-3"></div>
+</div>
+
+<h3>Opgave 29 — Kamer voor ouderzorg</h3>
+<p>De verwarming in een kamer voor ouderzorg moet de kamer-lucht (massa 75 kg) opwarmen van 19,0 °C naar 22,0 °C in 7,2 minuten. c<sub>lucht</sub> = 1,00·10³ J/(kg·K).</p>
+
+<div class="try-it">
+<div class="q">
+<label>a. Bereken de warmte (in J) die nodig is om de lucht op te warmen.</label>
+<input type="number" step="any" id="ans-29a" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-29a', 225000, 1500)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-29a')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-29a"></div>
+<div class="detail-steps" id="s-29a">
+<h5>Uitwerking 29a</h5>
+<ol>
+<li>ΔT = 22,0 − 19,0 = 3,0 K</li>
+<li>Q = c·m·ΔT = 1000 · 75 · 3,0 = 225 000 J = 2,25·10⁵ J</li>
+</ol>
+</div>
+
+<div class="q">
+<label>b. Bereken het minimale vermogen (in W) dat de verwarming moet leveren als al deze warmte naar de lucht gaat.</label>
+<input type="number" step="any" id="ans-29b" placeholder="W">
+<button class="btn" onclick="checkNumeric('ans-29b', 521, 15)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-29b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-29b"></div>
+<div class="detail-steps" id="s-29b">
+<h5>Uitwerking 29b</h5>
+<ol>
+<li>Tijd: 7,2 min · 60 = 432 s</li>
+<li>P = Q / Δt = 225 000 / 432 = 520,8 W ≈ 5,2·10² W</li>
+</ol>
+</div>
+</div>
+
+<h3>Opgave 30 — Warmtepomp: vermogen en gratis warmte</h3>
+<p>Een warmtepomp heeft een nuttig vermogen van 8,4 kW (warmte naar het huis) en een elektrisch vermogen van 2,3 kW.</p>
+
+<div class="try-it">
+<div class="q">
+<label>a. Bereken het rendement (in %).</label>
+<input type="number" step="any" id="ans-30a" placeholder="%">
+<button class="btn" onclick="checkNumeric('ans-30a', 365, 10)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-30a')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-30a"></div>
+<div class="detail-steps" id="s-30a">
+<h5>Uitwerking 30a</h5>
+<ol>
+<li>η = P<sub>nut</sub> / P<sub>in</sub> · 100% = 8,4 / 2,3 · 100% = 365% (afgerond)</li>
+<li>Op 2 sf: η ≈ 3,7·10² %</li>
+</ol>
+</div>
+
+<div class="q">
+<label>b. Hoeveel warmte komt per seconde uit de buitenlucht (= "gratis" deel)? In W.</label>
+<input type="number" step="any" id="ans-30b" placeholder="W">
+<button class="btn" onclick="checkNumeric('ans-30b', 6100, 100)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-30b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-30b"></div>
+<div class="detail-steps" id="s-30b">
+<h5>Uitwerking 30b</h5>
+<ol>
+<li>Energiebalans: P<sub>uit lucht</sub> = P<sub>nuttig</sub> − P<sub>elektrisch</sub></li>
+<li>P<sub>uit lucht</sub> = 8400 − 2300 = 6100 W = 6,1·10³ W</li>
+</ol>
+</div>
+</div>
+
+<h3>Opgave 31 — Arthur: hr-ketel of warmtepomp?</h3>
+<p>Arthur vergelijkt twee opties voor zijn nieuwe woning. De gegevens uit het boek (figuur 41):</p>
+<table class="tabel">
+<thead><tr><th></th><th>Hr-ketel</th><th>Warmtepomp</th></tr></thead>
+<tbody>
+<tr><td>Aanschafprijs</td><td>€ 1090</td><td>€ 7000</td></tr>
+<tr><td>Energieverbruik per jaar</td><td>1200 m³ aardgas</td><td>1953 kWh elektriciteit</td></tr>
+<tr><td>Energiekosten per jaar</td><td>€ 1,35 per m³</td><td>€ 0,34 per kWh</td></tr>
+<tr><td>Rendement</td><td>1,0</td><td>(reken je zelf)</td></tr>
+</tbody>
+</table>
+<p>Stookwaarde aardgas (Groningen) ≈ 32·10⁶ J/m³. 1 kWh = 3,6·10⁶ J.</p>
+
+<div class="try-it">
+<div class="q">
+<label>a. Bereken de jaarlijkse energiekosten van de hr-ketel (in €). Rond af op € 10.</label>
+<input type="number" step="any" id="ans-31a" placeholder="€">
+<button class="btn" onclick="checkNumeric('ans-31a', 1620, 15)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-31a')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-31a"></div>
+<div class="detail-steps" id="s-31a">
+<h5>Uitwerking 31a</h5>
+<p>Kosten = 1200 m³ · € 1,35 = € 1620 per jaar</p>
+</div>
+
+<div class="q">
+<label>b. Bereken de jaarlijkse energiekosten van de warmtepomp (in €). Rond af op € 10.</label>
+<input type="number" step="any" id="ans-31b" placeholder="€">
+<button class="btn" onclick="checkNumeric('ans-31b', 664, 10)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-31b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-31b"></div>
+<div class="detail-steps" id="s-31b">
+<h5>Uitwerking 31b</h5>
+<p>Kosten = 1953 kWh · € 0,34 = € 664 per jaar</p>
+</div>
+
+<div class="q">
+<label>c. Bereken het rendement van de warmtepomp (uitgaand van zelfde nuttige warmte als hr-ketel). Antwoord in % afgerond op 10%.</label>
+<input type="number" step="any" id="ans-31c" placeholder="%">
+<button class="btn" onclick="checkNumeric('ans-31c', 547, 25)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-31c')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-31c"></div>
+<div class="detail-steps" id="s-31c">
+<h5>Uitwerking 31c</h5>
+<ol>
+<li>Nuttige warmte (hr-ketel, η=100%): E<sub>nut</sub> = 1200 · 32·10⁶ = 3,84·10¹⁰ J</li>
+<li>Warmtepomp gebruikt: E<sub>in</sub> = 1953 · 3,6·10⁶ = 7,03·10⁹ J</li>
+<li>η = E<sub>nut</sub> / E<sub>in</sub> · 100% = 3,84·10¹⁰ / 7,03·10⁹ · 100% ≈ 547%</li>
+<li>Op 1 sf: η ≈ 5,5·10² %</li>
+</ol>
+</div>
+
+<div class="q">
+<label>d. Het verschil in jaarlijkse kosten is € (vraag a − vraag b). Hoeveel jaar duurt het tot de hogere aanschaf van de warmtepomp is terugverdiend?</label>
+<input type="number" step="any" id="ans-31d" placeholder="jaar">
+<button class="btn" onclick="checkNumeric('ans-31d', 6.18, 0.5)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-31d')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-31d"></div>
+<div class="detail-steps" id="s-31d">
+<h5>Uitwerking 31d</h5>
+<ol>
+<li>Extra aanschaf: € 7000 − € 1090 = € 5910</li>
+<li>Besparing per jaar: € 1620 − € 664 = € 956</li>
+<li>Terugverdientijd: 5910 / 956 ≈ 6,2 jaar</li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- ============ KENNISCHECK ============ -->
+<div class="card" id="kennischeck">
+<h2>9. Kennischeck — ben je klaar voor Dag 4?</h2>
+
+<ul class="checklist">
+<li onclick="this.classList.toggle('done')">Ik kan in eigen woorden uitleggen waarom een warmtepomp efficiënter is dan een elektrische kachel</li>
+<li onclick="this.classList.toggle('done')">Ik weet de vier onderdelen van een warmtepomp en wat ze doen</li>
+<li onclick="this.classList.toggle('done')">Ik kan η = E<sub>nuttig</sub> / E<sub>geïnvesteerd</sub> · 100% toepassen</li>
+<li onclick="this.classList.toggle('done')">Ik weet waarom warmtepompen rendement &gt; 100% kunnen hebben</li>
+<li onclick="this.classList.toggle('done')">Ik kan de energiebalans P<sub>nut</sub> = P<sub>in</sub> + P<sub>uit lucht</sub> toepassen</li>
+<li onclick="this.classList.toggle('done')">Ik kan een vermogen omrekenen naar warmte per tijd (Q = P·Δt) en andersom</li>
+</ul>
+
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 4:</strong> daar maken we een samenvatting van het hele hoofdstuk: molecuulmodel, faseovergangen en het overzicht van alle formules. Daarna ben je klaar voor de oefentoets.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../dag2-soortelijke-warmte/">← Dag 2: Soortelijke warmte</a>
+<a href="../dag4-molecuulmodel-samenvatting/">Dag 4: Samenvatting →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Natuurkunde HAVO 4 — Dag 3: Warmtepomp en rendement (§5.4)</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============ ENERGIEBALANS-WIDGET ============
+function drawBalans(){
+  const svg = document.getElementById('plot3');
+  const Ein = +document.getElementById('ein').value;
+  const Enut = +document.getElementById('enut').value;
+  document.getElementById('ein-val').textContent = Ein.toFixed(1).replace('.', ',');
+  document.getElementById('enut-val').textContent = Enut.toFixed(1).replace('.', ',');
+
+  const eta = Enut / Ein * 100;
+  document.getElementById('eta-live').innerHTML = `η = ${Enut.toFixed(1).replace('.', ',')} / ${Ein.toFixed(1).replace('.', ',')} · 100% = <strong style="color:#9a3412">${eta.toFixed(0)}%</strong>`;
+
+  const w = 320, h = 200;
+  const maxE = Math.max(Ein, Enut, 1);
+  const barMaxW = 200;
+  const scale = barMaxW / maxE;
+
+  let s = '';
+  // Balk 1: E_in
+  const w1 = Ein * scale;
+  s += `<text x="10" y="40" font-size="11" fill="#1e293b" font-weight="600">E geïnvesteerd</text>`;
+  s += `<rect x="10" y="50" width="${w1}" height="30" fill="#16a34a" rx="4"/>`;
+  s += `<text x="${10 + w1/2}" y="69" text-anchor="middle" font-size="11" fill="white" font-weight="700">${Ein.toFixed(1).replace('.', ',')} kWh</text>`;
+
+  // Balk 2: E_nuttig
+  const w2 = Enut * scale;
+  s += `<text x="10" y="110" font-size="11" fill="#1e293b" font-weight="600">E nuttig</text>`;
+  s += `<rect x="10" y="120" width="${w2}" height="30" fill="#dc2626" rx="4"/>`;
+  s += `<text x="${10 + w2/2}" y="139" text-anchor="middle" font-size="11" fill="white" font-weight="700">${Enut.toFixed(1).replace('.', ',')} kWh</text>`;
+
+  // Rendement-label
+  let cat = '';
+  let cclr = '#64748b';
+  if(eta < 90) { cat = 'verlies (typische motor / lamp)'; cclr = '#dc2626'; }
+  else if(eta <= 110) { cat = 'volledige omzetting (~elektrische kachel)'; cclr = '#0891b2'; }
+  else { cat = 'warmtepomp-bereik'; cclr = '#16a34a'; }
+  s += `<text x="160" y="180" text-anchor="middle" font-size="12" fill="${cclr}" font-weight="700">η = ${eta.toFixed(0)}% — ${cat}</text>`;
+
+  svg.innerHTML = s;
+}
+['ein','enut'].forEach(id => document.getElementById(id).addEventListener('input', drawBalans));
+drawBalans();
+
+// ============ ANTWOORD-CHECKERS ============
+function normalize(s){
+  return (s||'').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar de hint of het stappenplan.';
+}
+function checkNumeric(id, target, tol){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const v = parseFloat((el.value||'').toString().replace(',','.'));
+  const ok = isFinite(v) && Math.abs(v - target) <= tol;
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Niet helemaal — kijk in het stappenplan welke stap je mist.';
+}
+function checkSelect(id, target){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const ok = el.value === target;
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — denk aan de werking van de warmtepomp.';
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

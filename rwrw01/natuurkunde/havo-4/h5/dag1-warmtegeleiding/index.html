@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 1 — Warmtestroom door geleiding (§5.3) — Natuurkunde HAVO 4</title>
+<style>
+:root { --primary:#ea580c; --primary-dark:#9a3412; --primary-light:#ffedd5; --accent:#dc2626; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#9a3412 0%,#ea580c 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.15rem;font-weight:700;color:var(--primary-dark);font-family:'Georgia',serif}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#fff7ed;border:1px solid #fed7aa;border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.3fr 1fr;align-items:center}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary-dark);font-weight:700;min-width:80px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1rem;text-align:center;margin-top:0.4rem}
+.try-it{background:#fff7ed;border:2px dashed #fb923c;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary-dark);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:var(--primary-dark)}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.detail-steps .calc{font-family:'Georgia',serif;background:white;padding:0.3rem 0.5rem;border-radius:4px;display:inline-block;margin:0.15rem 0}
+table.tabel{border-collapse:collapse;width:100%;margin:0.8rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:var(--primary-dark);font-weight:600}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.nav-bottom a{flex:1;min-width:140px;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+ul.checklist{list-style:none;padding:0}
+ul.checklist li{padding:0.4rem 0 0.4rem 1.8rem;position:relative;font-size:0.95rem}
+ul.checklist li::before{content:"☐";position:absolute;left:0;font-size:1.1rem;color:var(--primary)}
+ul.checklist li.done::before{content:"✓";color:var(--success);font-weight:700}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 1 — Warmtestroom door geleiding</h1>
+<p>§5.3 — De formule P = λ·A·ΔT/d en hoe je 'm gebruikt</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Natuurkunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H5</a> &rsaquo; Dag 1</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#wat">Warmte vs. warmtestroom — wat is wat?</a></li>
+<li><a href="#formule">De formule P = λ·A·ΔT/d</a></li>
+<li><a href="#schuiven">Speel met de schuifjes — krijg gevoel voor de formule</a></li>
+<li><a href="#voorbeeld">Voorbeeld: warmtestroom door een woonkamerraam</a></li>
+<li><a href="#omdraaien">Formule omdraaien om iets anders te berekenen</a></li>
+<li><a href="#opgaven">Oefenopgaven (boek opg. 19 + extra)</a></li>
+<li><a href="#kennischeck">Kennischeck — ben je klaar voor Dag 2?</a></li>
+</ol>
+</div>
+
+<!-- ============ 1. WAT IS WAT ============ -->
+<div class="card" id="wat">
+<h2>1. Warmte vs. warmtestroom — wat is wat?</h2>
+
+<p>In dit hoofdstuk komen <strong>twee verschillende grootheden</strong> langs die makkelijk door elkaar te halen zijn. Eerst even goed uit elkaar:</p>
+
+<table class="tabel">
+<thead><tr><th>Naam</th><th>Symbool</th><th>Eenheid</th><th>Wat het is</th></tr></thead>
+<tbody>
+<tr><td>Warmte</td><td><span class="math">Q</span></td><td>J (joule)</td><td>De totale energie die overgaat</td></tr>
+<tr><td>Warmtestroom</td><td><span class="math">P</span></td><td>W (watt = J/s)</td><td>Energie per seconde — een vermogen</td></tr>
+</tbody>
+</table>
+
+<div class="formula">
+Verband tussen <span class="math">Q</span> en <span class="math">P</span>:
+<div class="math-display" style="text-align:center;margin-top:0.4rem">P = Q / Δt</div>
+<p style="margin-top:0.4rem;font-size:0.9rem">Een verwarming met <span class="math">P</span> = 1500 W levert dus per seconde 1500 J warmte. In één uur is dat <span class="math">Q = P · Δt</span> = 1500 · 3600 = 5,4·10<sup>6</sup> J.</p>
+</div>
+
+<div class="tip-box"><strong>💡 Onthoud:</strong> als de vraag begint met "hoeveel warmte..." → <span class="math">Q</span> in joule. Begint hij met "hoe snel gaat warmte over..." of er staat "per seconde" / "vermogen" → <span class="math">P</span> in watt.</div>
+
+</div>
+
+<!-- ============ 2. FORMULE ============ -->
+<div class="card" id="formule">
+<h2>2. De formule voor warmtestroom door een muur of raam</h2>
+
+<p>Stel je staat binnen in een warme kamer en buiten is het koud. Door het glas of de muur "lekt" er voortdurend warmte naar buiten. Die warmtestroom hangt af van vier dingen:</p>
+
+<div class="formula">
+<div class="math-display" style="text-align:center">P = λ · A · ΔT / d</div>
+<ul style="margin-left:1.2rem;margin-top:0.6rem">
+<li><span class="math">P</span> — warmtestroom in W</li>
+<li><span class="math">λ</span> (lambda) — thermische geleidbaarheid in W/(m·K), zegt hoe goed het materiaal warmte doorlaat</li>
+<li><span class="math">A</span> — oppervlakte in m²</li>
+<li><span class="math">ΔT</span> — temperatuurverschil tussen binnen en buiten in K (of °C, zelfde getal)</li>
+<li><span class="math">d</span> — dikte van de wand of het glas in m</li>
+</ul>
+</div>
+
+<h3>Wat is thermische geleidbaarheid (λ)?</h3>
+<p>λ is een <strong>materiaaleigenschap</strong>. Een hoge λ betekent: warmte komt makkelijk doorheen (= slecht voor isolatie). Een lage λ betekent: het materiaal isoleert goed.</p>
+
+<table class="tabel">
+<thead><tr><th>Materiaal</th><th>λ in W/(m·K)</th></tr></thead>
+<tbody>
+<tr><td>Koper</td><td>390</td></tr>
+<tr><td>Aluminium</td><td>237</td></tr>
+<tr><td>IJzer</td><td>80,4</td></tr>
+<tr><td>Glas (vensterglas)</td><td>0,93</td></tr>
+<tr><td>Hout</td><td>0,16</td></tr>
+<tr><td>Glaswol (isolatie)</td><td>0,040</td></tr>
+<tr><td>Lucht (stilstaand)</td><td>0,026</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box"><strong>💡 Logica:</strong> metalen hebben heel hoge λ — daarom voelt een metalen tafel veel kouder aan dan houten tafel met dezelfde temperatuur. Het metaal trekt sneller warmte uit je hand weg.</div>
+
+<div class="warning-box"><strong>⚠️ Eenheden!</strong> Let op dat <span class="math">d</span> in <strong>meter</strong> staat. Als de dikte gegeven is in mm of cm, eerst omrekenen:
+<br>• 4,0 mm = 4,0·10<sup>−3</sup> m = 0,0040 m
+<br>• 12 cm = 0,12 m</div>
+
+</div>
+
+<!-- ============ 3. SCHUIVEN ============ -->
+<div class="card" id="schuiven">
+<h2>3. Speel met de schuifjes — krijg gevoel voor de formule</h2>
+
+<p>Hieronder zie je een huis-doorsnede met één wand. Schuif aan de vier knoppen en kijk hoe de warmtestroom <span class="math">P</span> verandert. Probeer te voorspellen vóór je schuift — klopt het?</p>
+
+<div class="widget" id="widget1">
+<div class="widget-grid">
+<svg id="plot1" viewBox="0 0 320 220" aria-label="Doorsnede van een wand"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>λ — geleidbaarheid</label><span class="val" id="lam-val">0,93</span></div>
+<input type="range" id="lam" min="0.04" max="2" step="0.01" value="0.93">
+<div style="font-size:0.78rem;color:var(--muted)">0,04 = isolatie · 0,93 = glas · 2,0 = beton</div>
+</div>
+<div class="control">
+<div class="control-row"><label>A — oppervlakte (m²)</label><span class="val" id="A-val">1,5</span></div>
+<input type="range" id="A" min="0.5" max="10" step="0.1" value="1.5">
+</div>
+<div class="control">
+<div class="control-row"><label>ΔT — temp.verschil (K)</label><span class="val" id="dT-val">19</span></div>
+<input type="range" id="dT" min="1" max="40" step="1" value="19">
+</div>
+<div class="control">
+<div class="control-row"><label>d — dikte (mm)</label><span class="val" id="d-val">4</span></div>
+<input type="range" id="d" min="2" max="200" step="1" value="4">
+</div>
+<div class="formula-live" id="P-live">P = … W</div>
+</div>
+</div>
+</div>
+
+<div class="tip-box"><strong>💡 Wat valt op?</strong>
+<ul style="margin-left:1.2rem">
+<li>Verdubbel de dikte <span class="math">d</span> → <span class="math">P</span> wordt half zo groot.</li>
+<li>Verdubbel het temperatuurverschil <span class="math">ΔT</span> → <span class="math">P</span> wordt twee keer zo groot.</li>
+<li>Verdubbel <span class="math">A</span> of <span class="math">λ</span> → <span class="math">P</span> wordt ook twee keer zo groot.</li>
+</ul>
+Dat is precies wat je verwacht uit de formule: <span class="math">A</span>, <span class="math">λ</span> en <span class="math">ΔT</span> staan in de teller (recht evenredig), <span class="math">d</span> in de noemer (omgekeerd evenredig).</div>
+
+</div>
+
+<!-- ============ 4. VOORBEELD ============ -->
+<div class="card" id="voorbeeld">
+<h2>4. Voorbeeld — warmtestroom door een raam</h2>
+
+<div class="example-box">
+<strong>Opgave:</strong> Op een koude winterochtend is de buitentemperatuur 2,0 °C en de woonkamer is 21,0 °C. Een raam is 1,5 m bij 1,0 m, gemaakt van enkel vensterglas (λ = 0,93 W/(m·K)) met een dikte van 4,0 mm. Bereken de warmtestroom door het raam.
+</div>
+
+<p><strong>Stap 1 — Wat weet je?</strong></p>
+<ul style="margin-left:1.4rem">
+<li>λ = 0,93 W/(m·K)</li>
+<li>A = 1,5 · 1,0 = 1,5 m²</li>
+<li>ΔT = 21,0 − 2,0 = 19 K</li>
+<li>d = 4,0 mm = 4,0·10<sup>−3</sup> m</li>
+</ul>
+
+<p><strong>Stap 2 — Welke formule?</strong></p>
+<div class="formula"><div class="math-display">P = λ · A · ΔT / d</div></div>
+
+<p><strong>Stap 3 — Invullen:</strong></p>
+<div class="formula" style="background:white;border-color:var(--border)">
+P = 0,93 · 1,5 · 19 / (4,0·10<sup>−3</sup>) <br>
+P = 26,505 / 0,0040 <br>
+P = 6626 W ≈ 6,6·10<sup>3</sup> W = 6,6 kW
+</div>
+
+<div class="tip-box"><strong>💡 Realistisch?</strong> Per uur lekt er dus ongeveer 6,6 · 3600 ≈ 24 MJ aan warmte naar buiten. Dat is heel veel — daarom is dubbel glas zo'n verbetering: in dubbelglas zit een laagje stilstaande lucht (λ ≈ 0,026), die isoleert ~36× beter dan glas zelf.</div>
+
+</div>
+
+<!-- ============ 5. OMDRAAIEN ============ -->
+<div class="card" id="omdraaien">
+<h2>5. Formule omdraaien om iets anders te berekenen</h2>
+
+<p>De formule <span class="math">P = λ · A · ΔT / d</span> kun je omdraaien om elke andere grootheid uit te rekenen, zolang je de andere drie kent. Die omdraai-stap is precies waar het wel eens fout gaat.</p>
+
+<table class="tabel">
+<thead><tr><th>Wat zoek je?</th><th>Geef je</th><th>Formule</th></tr></thead>
+<tbody>
+<tr><td><span class="math">P</span></td><td>λ, A, ΔT, d</td><td><span class="math">P = λ·A·ΔT / d</span></td></tr>
+<tr><td><span class="math">λ</span></td><td>P, A, ΔT, d</td><td><span class="math">λ = P·d / (A·ΔT)</span></td></tr>
+<tr><td><span class="math">d</span></td><td>P, λ, A, ΔT</td><td><span class="math">d = λ·A·ΔT / P</span></td></tr>
+<tr><td><span class="math">A</span></td><td>P, λ, ΔT, d</td><td><span class="math">A = P·d / (λ·ΔT)</span></td></tr>
+<tr><td><span class="math">ΔT</span></td><td>P, λ, A, d</td><td><span class="math">ΔT = P·d / (λ·A)</span></td></tr>
+</tbody>
+</table>
+
+<div class="warning-box"><strong>⚠️ Niet uit het hoofd leren.</strong> Onthoud alleen <span class="math">P = λ·A·ΔT/d</span>. De rest leid je af door op papier te delen / vermenigvuldigen.</div>
+
+<div class="try-it">
+<h4>Mini-oefening — formule omdraaien</h4>
+
+<div class="q">
+<label>a. Schrijf de formule voor <span class="math">d</span> als je <span class="math">P</span>, <span class="math">λ</span>, <span class="math">A</span> en <span class="math">ΔT</span> kent. Type je antwoord (gebruik * voor maal en / voor delen):</label>
+<input type="text" id="ans-omdraai-d" placeholder="...">
+<button class="btn" onclick="checkText('ans-omdraai-d', ['lambda*a*dt/p','λ*a*δt/p','la*a*dt/p','l*a*dt/p','a*lambda*dt/p','a*l*dt/p','dt*a*lambda/p','dt*a*l/p'])">Check</button>
+</div>
+<div class="feedback" id="fb-ans-omdraai-d"></div>
+
+<div class="q">
+<label>b. Stel: <span class="math">P</span> = 80 W, λ = 0,040 W/(m·K), A = 4,0 m², ΔT = 20 K. Bereken <span class="math">d</span> in cm. Rond af op één decimaal.</label>
+<input type="number" id="ans-omdraai-d2" step="any" placeholder="cm">
+<button class="btn" onclick="checkNumeric('ans-omdraai-d2', 4.0, 0.15)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-omdraai')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-omdraai-d2"></div>
+
+<div class="detail-steps" id="steps-omdraai">
+<h5>Stappenplan</h5>
+<ol>
+<li>Formule omschrijven: <span class="calc">d = λ·A·ΔT / P</span></li>
+<li>Invullen: <span class="calc">d = 0,040 · 4,0 · 20 / 80</span></li>
+<li>Reken teller: <span class="calc">0,040 · 4,0 · 20 = 3,2</span></li>
+<li>Delen: <span class="calc">d = 3,2 / 80 = 0,040 m</span></li>
+<li>Omrekenen: <span class="calc">0,040 m · 100 = 4,0 cm</span></li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============ 6. OEFENOPGAVEN ============ -->
+<div class="card" id="opgaven">
+<h2>6. Oefenopgaven uit het boek</h2>
+
+<h3>Opgave 19 — Je lichaam zweet</h3>
+<p>Je lichaam houdt de huidtemperatuur op ongeveer 37 °C. Op een dag waarop het buiten 28 °C is, geeft je huid per seconde 110 J aan warmte af aan de buitenlucht. Het lichaam heeft een totale oppervlakte van ongeveer 1,5 m² en de huid (inclusief vetlaag) is gemiddeld 5,0 mm dik.</p>
+
+<div class="warning-box"><strong>⚠️ Valkuil:</strong> de dikte staat in mm. Reken eerst om naar m vóór je invult. 5,0 mm = 5,0·10⁻³ m = 0,0050 m.</div>
+
+<div class="try-it">
+<h4>Vragen</h4>
+
+<div class="q">
+<label>a. Welke grootheid moet je hier uitrekenen om te weten hoe goed je huid isoleert?</label>
+<input type="text" id="ans-19a" placeholder="naam grootheid">
+<button class="btn" onclick="checkText('ans-19a', ['thermische geleidbaarheid','geleidbaarheid','lambda','λ','warmtegeleidingscoefficient','warmtegeleidingscoëfficiënt','thermische geleidingscoefficient','thermische geleidingscoëfficiënt','warmtegeleidingsvermogen','warmtegeleiding','warmtegeleidingscoefficient','warmtegeleidingsvermogen','warmtegeleidbaarheid'])">Check</button>
+</div>
+<div class="feedback" id="fb-ans-19a"></div>
+
+<div class="q">
+<label>b. Bereken de thermische geleidbaarheid van je huid in W/(m·K). Rond af op 2 significante cijfers.</label>
+<input type="number" id="ans-19b" step="any" placeholder="W/(m·K)">
+<button class="btn" onclick="checkNumeric('ans-19b', 0.041, 0.005)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-19b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-19b"></div>
+
+<div class="detail-steps" id="steps-19b">
+<h5>Stappenplan opgave 19b</h5>
+<ol>
+<li>Wat weet je: <span class="calc">P = 110 W</span> (110 J per seconde = 110 W), <span class="calc">A = 1,5 m²</span>, <span class="calc">ΔT = 37 − 28 = 9 K</span>, <span class="calc">d = 5,0 mm = 5,0·10⁻³ m</span></li>
+<li>Formule: <span class="calc">P = λ·A·ΔT/d</span> → omdraaien naar λ: <span class="calc">λ = P·d / (A·ΔT)</span></li>
+<li>Invullen: <span class="calc">λ = 110 · 5,0·10⁻³ / (1,5 · 9)</span></li>
+<li>Teller: <span class="calc">110 · 0,005 = 0,55</span></li>
+<li>Noemer: <span class="calc">1,5 · 9 = 13,5</span></li>
+<li>Delen: <span class="calc">λ = 0,55 / 13,5 = 0,0407…</span></li>
+<li>Afronden op 2 sf: <span class="calc">λ ≈ 0,041 W/(m·K)</span></li>
+</ol>
+<p style="margin-top:0.5rem;font-size:0.85rem">Vergelijk: glas heeft λ = 0,93 — je huid isoleert ~23× beter dan glas. Logisch, want de vetlaag werkt als isolator.</p>
+</div>
+</div>
+
+<h3>Extra-opgave A — Kruipruimte met glaswol</h3>
+<p>Onder een vloer van 30 m² ligt een laag glaswol van 8,0 cm dikte (λ = 0,040 W/(m·K)). De vloer is 21 °C, de kruipruimte is 6,0 °C. Bereken de warmtestroom door de geïsoleerde vloer.</p>
+
+<div class="try-it">
+<div class="q">
+<label>Warmtestroom <span class="math">P</span> in W. Geef het exacte resultaat van de berekening.</label>
+<input type="number" id="ans-A" step="any" placeholder="W">
+<button class="btn" onclick="checkNumeric('ans-A', 225, 5)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-A')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-A"></div>
+
+<div class="detail-steps" id="steps-A">
+<h5>Stappenplan extra-opgave A</h5>
+<ol>
+<li>Wat weet je: <span class="calc">λ = 0,040 W/(m·K)</span>, <span class="calc">A = 30 m²</span>, <span class="calc">ΔT = 21 − 6,0 = 15 K</span>, <span class="calc">d = 8,0 cm = 0,080 m</span></li>
+<li>Formule: <span class="calc">P = λ·A·ΔT/d</span></li>
+<li>Invullen: <span class="calc">P = 0,040 · 30 · 15 / 0,080</span></li>
+<li>Teller: <span class="calc">0,040 · 30 · 15 = 18</span></li>
+<li>Delen: <span class="calc">P = 18 / 0,080 = 225 W</span></li>
+<li>Eindantwoord: <span class="calc">P = 225 W</span> (op 2 sf afgerond: <span class="calc">2,3·10² W</span> — beide goed)</li>
+</ol>
+</div>
+</div>
+
+<h3>Extra-opgave B — Aluminium pan op het vuur</h3>
+<p>Een aluminium pan staat op het vuur. De bodem is 2,0 mm dik en heeft een oppervlakte van 320 cm². De buitenkant van de bodem is 180 °C, de binnenkant (waar het water zit) is 100 °C. λ_aluminium = 237 W/(m·K).</p>
+
+<div class="try-it">
+<div class="q">
+<label>Bereken de warmtestroom door de bodem in W. Rond af op 2 significante cijfers.</label>
+<input type="number" id="ans-B" step="any" placeholder="W">
+<button class="btn" onclick="checkNumeric('ans-B', 3.0e5, 1.0e4)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-B')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-B"></div>
+
+<div class="detail-steps" id="steps-B">
+<h5>Stappenplan extra-opgave B</h5>
+<ol>
+<li>Eenheden eerst: <span class="calc">A = 320 cm² = 320·10⁻⁴ m² = 0,032 m²</span>, <span class="calc">d = 2,0 mm = 2,0·10⁻³ m = 0,0020 m</span></li>
+<li>Wat weet je: <span class="calc">λ = 237 W/(m·K)</span>, <span class="calc">ΔT = 180 − 100 = 80 K</span></li>
+<li>Formule: <span class="calc">P = λ·A·ΔT/d</span></li>
+<li>Invullen: <span class="calc">P = 237 · 0,032 · 80 / 0,0020</span></li>
+<li>Teller: <span class="calc">237 · 0,032 · 80 = 606,7</span></li>
+<li>Delen: <span class="calc">P = 606,7 / 0,0020 = 3,03·10⁵ W</span></li>
+<li>Afronden op 2 sf: <span class="calc">P ≈ 3,0·10⁵ W</span> (= 300 kW)</li>
+</ol>
+<p style="margin-top:0.5rem;font-size:0.85rem">Wow, 300 kW — dat is realistisch want de aluminium bodem geleidt razendsnel; vandaar dat het water zo snel kan koken.</p>
+</div>
+</div>
+
+</div>
+
+<!-- ============ 7. KENNISCHECK ============ -->
+<div class="card" id="kennischeck">
+<h2>7. Kennischeck — ben je klaar voor Dag 2?</h2>
+<p>Lees de checklist door. Vink alleen aan wat je écht zonder spieken kunt uitleggen.</p>
+
+<ul class="checklist" id="checklist">
+<li onclick="this.classList.toggle('done')">Ik weet het verschil tussen warmte (Q in J) en warmtestroom (P in W)</li>
+<li onclick="this.classList.toggle('done')">Ik kan de formule P = λ·A·ΔT/d uit mijn hoofd opschrijven met alle symbolen en eenheden</li>
+<li onclick="this.classList.toggle('done')">Ik kan een dikte van mm of cm omrekenen naar m</li>
+<li onclick="this.classList.toggle('done')">Ik weet wat λ betekent en welke materialen hoge en lage λ hebben</li>
+<li onclick="this.classList.toggle('done')">Ik kan de formule omdraaien naar λ, d, A of ΔT zonder de tabel te gebruiken</li>
+<li onclick="this.classList.toggle('done')">Ik kan zien dat verdubbeling van d → P halveert (omgekeerd evenredig)</li>
+</ul>
+
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 2:</strong> daar gaat het over een andere formule: <span class="math">Q = c·m·ΔT</span> voor de hoeveelheid warmte die nodig is om iets op te warmen. De truc wordt: kiezen welke formule je gebruikt — vandaag zijn alle vragen P-vragen, morgen niet.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../">← Terug naar H5</a>
+<a href="../dag2-soortelijke-warmte/">Dag 2: Soortelijke warmte →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Natuurkunde HAVO 4 — Dag 1: Warmtestroom door geleiding (§5.3)</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============ HUIS-DOORSNEDE TEKENING + LIVE FORMULE ============
+function drawHouse(){
+  const svg = document.getElementById('plot1');
+  const lam = +document.getElementById('lam').value;
+  const A = +document.getElementById('A').value;
+  const dT = +document.getElementById('dT').value;
+  const d_mm = +document.getElementById('d').value;
+  const d_m = d_mm / 1000;
+
+  document.getElementById('lam-val').textContent = lam.toFixed(2).replace('.', ',');
+  document.getElementById('A-val').textContent = A.toFixed(1).replace('.', ',');
+  document.getElementById('dT-val').textContent = dT.toFixed(0);
+  document.getElementById('d-val').textContent = d_mm.toFixed(0);
+
+  const P = lam * A * dT / d_m;
+  let pStr;
+  if(P >= 1000) pStr = (P/1000).toFixed(1).replace('.', ',') + ' kW (' + P.toExponential(2).replace('e+', '·10^').replace('.', ',') + ' W)';
+  else pStr = P.toFixed(1).replace('.', ',') + ' W';
+  document.getElementById('P-live').innerHTML = 'P = λ · A · ΔT / d = <strong style="color:#9a3412">' + pStr + '</strong>';
+
+  // Visuele intensiteit van de warmtestroom — pijldikte schalen
+  const arrowW = Math.min(20, Math.max(2, Math.log10(Math.max(1,P)) * 3));
+
+  // Tekening: kamer (links warm), wand (midden), buiten (rechts koud)
+  // Kleuren: warm rood/oranje, koud blauw, wand grijs (dikte schaalt)
+  const wandX = 140;
+  const wandW = Math.min(80, Math.max(8, d_mm * 0.4));
+  const w = 320, h = 220;
+
+  let s = '';
+  // Vaste binnentemperatuur 20°C — buiten = 20 - dT (= koud)
+  const T_in = 20;
+  const T_out = T_in - dT;
+
+  // binnen (links) — warm
+  s += `<rect x="0" y="0" width="${wandX}" height="${h}" fill="#fef3c7"/>`;
+  s += `<text x="${wandX/2}" y="30" text-anchor="middle" font-size="13" fill="#9a3412" font-weight="600">Binnen</text>`;
+  s += `<text x="${wandX/2}" y="50" text-anchor="middle" font-size="11" fill="#9a3412">${T_in}°C (warm)</text>`;
+
+  // wand
+  s += `<rect x="${wandX}" y="0" width="${wandW}" height="${h}" fill="#94a3b8" stroke="#475569"/>`;
+  s += `<text x="${wandX + wandW/2}" y="${h-10}" text-anchor="middle" font-size="9" fill="#1e293b">d=${d_mm}mm</text>`;
+
+  // buiten (rechts) — koud
+  s += `<rect x="${wandX+wandW}" y="0" width="${w-wandX-wandW}" height="${h}" fill="#dbeafe"/>`;
+  s += `<text x="${(wandX+wandW+w)/2}" y="30" text-anchor="middle" font-size="13" fill="#1e40af" font-weight="600">Buiten</text>`;
+  s += `<text x="${(wandX+wandW+w)/2}" y="50" text-anchor="middle" font-size="11" fill="#1e40af">${T_out}°C (koud)</text>`;
+
+  // ΔT-pijl
+  s += `<text x="${w/2}" y="${h/2 - 30}" text-anchor="middle" font-size="11" fill="#1e293b">ΔT = ${dT} K</text>`;
+
+  // warmtestroom-pijlen — dikker bij grotere P
+  const arrowY = [80, 120, 160];
+  for(const y of arrowY){
+    const x1 = wandX - 30, x2 = wandX + wandW + 30;
+    s += `<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#dc2626" stroke-width="${arrowW.toFixed(1)}" marker-end="url(#ah)"/>`;
+  }
+
+  s = `<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker></defs>` + s;
+
+  svg.innerHTML = s;
+}
+['lam','A','dT','d'].forEach(id => document.getElementById(id).addEventListener('input', drawHouse));
+drawHouse();
+
+// ============ ANTWOORD-CHECKERS ============
+function normalize(s){
+  return (s||'').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar het stappenplan.';
+}
+function checkNumeric(id, target, tol){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const v = parseFloat((el.value||'').toString().replace(',','.'));
+  const ok = isFinite(v) && Math.abs(v - target) <= tol;
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Niet helemaal — kijk in het stappenplan welke stap je mist.';
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

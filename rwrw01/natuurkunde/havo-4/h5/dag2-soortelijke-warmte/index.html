@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 2 — Soortelijke warmte (§5.3) — Natuurkunde HAVO 4</title>
+<style>
+:root { --primary:#ea580c; --primary-dark:#9a3412; --primary-light:#ffedd5; --accent:#dc2626; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#9a3412 0%,#ea580c 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.15rem;font-weight:700;color:var(--primary-dark);font-family:'Georgia',serif}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.widget{background:#fff7ed;border:1px solid #fed7aa;border-radius:var(--radius);padding:1rem;margin:1rem 0}
+.widget-grid{display:grid;grid-template-columns:1fr;gap:0.8rem}
+@media(min-width:720px){.widget-grid{grid-template-columns:1.1fr 1fr;align-items:start}}
+.widget svg{width:100%;height:auto;background:white;border:1px solid var(--border);border-radius:8px;display:block}
+.controls{display:flex;flex-direction:column;gap:0.7rem}
+.control{display:flex;flex-direction:column;gap:0.2rem;font-size:0.92rem}
+.control-row{display:flex;justify-content:space-between;align-items:baseline}
+.control-row label{font-weight:600}
+.control-row .val{font-family:'Georgia',serif;color:var(--primary-dark);font-weight:700;min-width:80px;text-align:right}
+input[type=range]{width:100%;accent-color:var(--primary)}
+select{width:100%;padding:0.4rem;border:2px solid var(--border);border-radius:8px;font-size:0.95rem}
+.formula-live{background:white;border:2px solid var(--primary-light);border-radius:8px;padding:0.6rem 0.8rem;font-family:'Georgia',serif;font-size:1rem;text-align:center;margin-top:0.4rem}
+.try-it{background:#fff7ed;border:2px dashed #fb923c;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary-dark);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:var(--primary-dark)}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.btn-reveal{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.btn-reveal:hover{background:#dcfce7}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.detail-steps .calc{font-family:'Georgia',serif;background:white;padding:0.3rem 0.5rem;border-radius:4px;display:inline-block;margin:0.15rem 0}
+table.tabel{border-collapse:collapse;width:100%;margin:0.8rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:var(--primary-dark);font-weight:600}
+.recap{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.recap strong{color:#15803d}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.nav-bottom a{flex:1;min-width:140px;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+ul.checklist{list-style:none;padding:0}
+ul.checklist li{padding:0.4rem 0 0.4rem 1.8rem;position:relative;font-size:0.95rem;cursor:pointer}
+ul.checklist li::before{content:"☐";position:absolute;left:0;font-size:1.1rem;color:var(--primary)}
+ul.checklist li.done::before{content:"✓";color:var(--success);font-weight:700}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 2 — Soortelijke warmte</h1>
+<p>§5.3 deel 2 — De formule Q = c·m·ΔT en wanneer je 'm gebruikt</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Natuurkunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H5</a> &rsaquo; Dag 2</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 1 — drie snelle vragen</a></li>
+<li><a href="#wat">Waarom verschillen stoffen in opwarmen?</a></li>
+<li><a href="#formule">De formule Q = c·m·ΔT</a></li>
+<li><a href="#schuiven">Schuif aan c, m, ΔT — voel de formule</a></li>
+<li><a href="#welke-formule">P of Q? — welke formule wanneer?</a></li>
+<li><a href="#voorbeeld">Voorbeeld: kamer-lucht opwarmen</a></li>
+<li><a href="#opgaven">Oefenopgaven 18 + 22 + extra</a></li>
+<li><a href="#kennischeck">Kennischeck — ben je klaar voor Dag 3?</a></li>
+</ol>
+</div>
+
+<!-- ============ RECAP ============ -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 1 — Warmtestroom door geleiding</h2>
+<p>Eerst even checken of het van gisteren nog zit. Drie snelle vragen:</p>
+
+<div class="recap">
+<strong>Vraag 1.</strong> Wat is de eenheid van warmtestroom <span class="math">P</span>?<br>
+<input type="text" id="r1" style="width:120px;margin-top:0.4rem">
+<button class="btn" onclick="checkText('r1', ['w','watt','j/s'])">Check</button>
+<div class="feedback" id="fb-r1"></div>
+</div>
+
+<div class="recap">
+<strong>Vraag 2.</strong> Een muur is 10 cm dik en heeft λ = 0,80 W/(m·K), A = 12 m², ΔT = 18 K. Bereken <span class="math">P</span> in W (rond af op 2 sf).<br>
+<input type="number" step="any" id="r2" style="width:120px;margin-top:0.4rem" placeholder="W">
+<button class="btn" onclick="checkNumeric('r2', 1728, 80)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-r2')">Stappenplan</button>
+<div class="feedback" id="fb-r2"></div>
+<div class="detail-steps" id="steps-r2">
+<h5>Uitwerking</h5>
+<ol>
+<li>d omrekenen: <span class="calc">10 cm = 0,10 m</span></li>
+<li>Formule: <span class="calc">P = λ·A·ΔT/d</span></li>
+<li>Invullen: <span class="calc">P = 0,80 · 12 · 18 / 0,10 = 172,8/0,10 = 1728 W ≈ 1,7·10³ W</span></li>
+</ol>
+</div>
+</div>
+
+<div class="recap">
+<strong>Vraag 3.</strong> Welke heeft de hoogste λ (= geleidt warmte het beste): hout, glas, koper of glaswol?<br>
+<input type="text" id="r3" style="width:160px;margin-top:0.4rem" placeholder="materiaal">
+<button class="btn" onclick="checkText('r3', ['koper'])">Check</button>
+<div class="feedback" id="fb-r3"></div>
+</div>
+</div>
+
+<!-- ============ WAT ============ -->
+<div class="card" id="wat">
+<h2>2. Waarom verschillen stoffen in opwarmen?</h2>
+
+<p>Stel je hebt 1 kg water en 1 kg aluminium, allebei van 20 °C. Je geeft beide dezelfde hoeveelheid warmte (bijvoorbeeld 1000 J). Wat denk je: wordt het aluminium of het water warmer?</p>
+
+<div class="example-box"><strong>Het aluminium wordt vééél warmer.</strong> Met dezelfde 1000 J wordt:
+<ul style="margin-left:1.2rem;margin-top:0.4rem">
+<li>1 kg aluminium: ΔT ≈ 1,1 K warmer</li>
+<li>1 kg water: ΔT ≈ 0,24 K warmer (~5× minder)</li>
+</ul>
+</div>
+
+<p>De reden: water heeft een héél hoge "soortelijke warmte". Dat is de <strong>hoeveelheid energie die nodig is om 1 kg van een stof 1 K op te warmen</strong>. Hoe hoger c, hoe meer energie je nodig hebt.</p>
+
+<div class="tip-box"><strong>💡 Dagelijks leven:</strong> hierom blijft de zee 's avonds nog warm terwijl het zand al snel afkoelt — water heeft een héél hoge c, zand veel lagere c.</div>
+
+</div>
+
+<!-- ============ FORMULE ============ -->
+<div class="card" id="formule">
+<h2>3. De formule Q = c·m·ΔT</h2>
+
+<div class="formula">
+<div class="math-display" style="text-align:center">Q = c · m · ΔT</div>
+<ul style="margin-left:1.2rem;margin-top:0.6rem">
+<li><span class="math">Q</span> — warmte (energie) in J</li>
+<li><span class="math">c</span> — soortelijke warmte in J/(kg·K)</li>
+<li><span class="math">m</span> — massa in kg</li>
+<li><span class="math">ΔT</span> — temperatuurverandering in K</li>
+</ul>
+</div>
+
+<h3>Soortelijke warmte van veelgebruikte stoffen</h3>
+<table class="tabel">
+<thead><tr><th>Stof</th><th>c in J/(kg·K)</th><th>c in 10³ J/(kg·K)</th></tr></thead>
+<tbody>
+<tr><td>Water (vloeibaar)</td><td>4,18·10³</td><td>4,18</td></tr>
+<tr><td>Alcohol (ethanol)</td><td>2,43·10³</td><td>2,43</td></tr>
+<tr><td>Lucht</td><td>1,00·10³</td><td>1,00</td></tr>
+<tr><td>Aluminium</td><td>0,88·10³</td><td>0,88</td></tr>
+<tr><td>Beton</td><td>0,84·10³</td><td>0,84</td></tr>
+<tr><td>IJzer</td><td>0,46·10³</td><td>0,460</td></tr>
+<tr><td>Koper</td><td>0,387·10³</td><td>0,387</td></tr>
+<tr><td>Messing</td><td>0,38·10³</td><td>0,380</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box"><strong>💡 Onthoud:</strong> water (4,18·10³) is dé uitschieter naar boven. Metalen liggen tussen 0,38 en 0,88·10³ — een ordegrootte minder dan water. Daarom kost het veel meer energie om water op te warmen dan een ijzer pannetje van dezelfde massa.</div>
+
+<div class="warning-box"><strong>⚠️ Eenheden!</strong> Massa moet in kg, ΔT in K (gewoon T<sub>na</sub> − T<sub>voor</sub>, °C of K maakt niet uit voor verschillen). Q komt er dan in J uit.</div>
+
+</div>
+
+<!-- ============ SCHUIVEN ============ -->
+<div class="card" id="schuiven">
+<h2>4. Schuif aan c, m, ΔT — voel de formule</h2>
+
+<p>Kies een materiaal, schuif aan massa en temperatuurverandering. Zie hoeveel warmte er nodig is om jouw blok op te warmen.</p>
+
+<div class="widget">
+<div class="widget-grid">
+<svg id="plot2" viewBox="0 0 320 220" aria-label="Materiaal opwarmen"></svg>
+<div class="controls">
+<div class="control">
+<div class="control-row"><label>Materiaal</label></div>
+<select id="mat">
+<option value="water">Water (c = 4180)</option>
+<option value="alcohol">Alcohol (c = 2430)</option>
+<option value="lucht">Lucht (c = 1000)</option>
+<option value="aluminium">Aluminium (c = 880)</option>
+<option value="ijzer">IJzer (c = 460)</option>
+<option value="koper">Koper (c = 387)</option>
+<option value="messing">Messing (c = 380)</option>
+<option value="beton">Beton (c = 840)</option>
+</select>
+</div>
+<div class="control">
+<div class="control-row"><label>m — massa (kg)</label><span class="val" id="m-val">1,0</span></div>
+<input type="range" id="m" min="0.1" max="10" step="0.1" value="1.0">
+</div>
+<div class="control">
+<div class="control-row"><label>ΔT (K)</label><span class="val" id="dT2-val">10</span></div>
+<input type="range" id="dT2" min="1" max="100" step="1" value="10">
+</div>
+<div class="formula-live" id="Q-live">Q = c · m · ΔT = … J</div>
+</div>
+</div>
+</div>
+
+<div class="tip-box"><strong>💡 Verken zelf:</strong>
+<ul style="margin-left:1.2rem">
+<li>Kies water (c = 4180), m = 0,5 kg, ΔT = 8 K. Hoeveel J? <em>16 720 J</em></li>
+<li>Wissel naar ijzer, zelfde m en ΔT. Veel kleiner — water vraagt ~9× zoveel als ijzer.</li>
+<li>Verdubbel de massa → Q verdubbelt. Verdubbel ΔT → Q verdubbelt.</li>
+</ul></div>
+
+</div>
+
+<!-- ============ WELKE FORMULE ============ -->
+<div class="card" id="welke-formule">
+<h2>5. P of Q? — welke formule wanneer?</h2>
+
+<p>Vandaag heb je dus twee formules in je toolbox. De truc is: zien welke je nodig hebt.</p>
+
+<table class="tabel">
+<thead><tr><th>Vraagtype</th><th>Wat je zoekt</th><th>Formule</th></tr></thead>
+<tbody>
+<tr><td>"Hoeveel warmte heb je nodig om X op te warmen van A naar B?"</td><td>Q in J</td><td>Q = c·m·ΔT</td></tr>
+<tr><td>"Hoe snel/per seconde gaat warmte door deze muur?"</td><td>P in W</td><td>P = λ·A·ΔT/d</td></tr>
+<tr><td>"Hoe lang duurt het opwarmen?"</td><td>Δt in s</td><td>Eerst Q, dan Δt = Q / P</td></tr>
+<tr><td>"Hoeveel warmte komt er in zoveel seconden door?"</td><td>Q in J</td><td>Eerst P, dan Q = P · Δt</td></tr>
+</tbody>
+</table>
+
+<div class="formula">
+Verband tussen Q en P:
+<div class="math-display" style="text-align:center">Q = P · Δt &nbsp;&nbsp; ⇔ &nbsp;&nbsp; Δt = Q / P</div>
+</div>
+
+<div class="warning-box"><strong>⚠️ Veelgemaakte fout:</strong> de eenheid checken. Als de vraag een <strong>vermogen</strong> noemt (W = J/s) en daarna naar warmte vraagt: vermogen × tijd = warmte. Vergeet de tijd niet!</div>
+
+<div class="try-it">
+<h4>Mini-oefening</h4>
+<div class="q">
+<label>Een verwarming heeft een vermogen van 1500 W en staat 10 minuten aan. Hoeveel warmte (in J) levert hij?</label>
+<input type="number" step="any" id="ans-PQ" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-PQ', 900000, 1000)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-PQ')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-PQ"></div>
+<div class="detail-steps" id="steps-PQ">
+<h5>Stappenplan</h5>
+<ol>
+<li>Tijd in seconden: <span class="calc">10 min · 60 = 600 s</span></li>
+<li>Formule: <span class="calc">Q = P · Δt</span></li>
+<li>Invullen: <span class="calc">Q = 1500 · 600 = 900 000 J = 9,0·10⁵ J</span></li>
+</ol>
+</div>
+</div>
+</div>
+
+<!-- ============ VOORBEELD ============ -->
+<div class="card" id="voorbeeld">
+<h2>6. Voorbeeld — een kamer-lucht opwarmen</h2>
+
+<div class="example-box">
+<strong>Opgave:</strong> Een huiskamer is 6,0 m bij 4,0 m bij 2,5 m. Na het ventileren is de lucht in de kamer 16 °C en moet weer terug naar 20 °C. De dichtheid van lucht is 1,29 kg/m³, c<sub>lucht</sub> = 1,00·10³ J/(kg·K). Bereken de warmte die nodig is om de kamerlucht weer op temperatuur te brengen.
+</div>
+
+<p><strong>Stap 1 — Welke formule?</strong> "Hoeveel warmte" → Q = c·m·ΔT.</p>
+
+<p><strong>Stap 2 — Wat weet je en wat moet je nog uitrekenen?</strong></p>
+<ul style="margin-left:1.4rem">
+<li>c = 1,00·10³ J/(kg·K)</li>
+<li>m = ? — moet je nog uitrekenen via volume × dichtheid</li>
+<li>ΔT = 20 − 16 = 4 K</li>
+</ul>
+
+<p><strong>Stap 3 — Massa berekenen:</strong></p>
+<div class="formula" style="background:white;border-color:var(--border)">
+V = 6,0 · 4,0 · 2,5 = 60 m³ <br>
+m = ρ · V = 1,29 · 60 = 77,4 kg
+</div>
+
+<p><strong>Stap 4 — Q berekenen:</strong></p>
+<div class="formula" style="background:white;border-color:var(--border)">
+Q = c · m · ΔT <br>
+Q = 1,00·10³ · 77,4 · 4 <br>
+Q = 309 600 J ≈ 3,1·10<sup>5</sup> J = 310 kJ
+</div>
+
+<div class="tip-box"><strong>💡 Vergelijk:</strong> dezelfde 60 m³ <em>water</em> opwarmen van 16 naar 20 °C zou kosten:
+Q = 4180 · 60 000 · 4 ≈ 1,0·10<sup>9</sup> J — een miljard joule! Dat is ~3000× zoveel als de lucht. Water is een veel "duurdere" stof om op te warmen.</div>
+
+</div>
+
+<!-- ============ OPGAVEN ============ -->
+<div class="card" id="opgaven">
+<h2>7. Oefenopgaven uit het boek</h2>
+
+<h3>Opgave 18 — Alcohol-thermometer</h3>
+<p>In een thermometer zit 0,40 kg alcohol van 22 °C. Tijdens een proef stijgt de temperatuur van de alcohol tot 65 °C. Bereken de hoeveelheid warmte die de alcohol heeft opgenomen.</p>
+
+<div class="tip-box"><strong>💡 Reminder:</strong> ΔT mag je gewoon in °C uitrekenen (65 − 22 = 43). Voor een verschíl is K en °C hetzelfde getal.</div>
+
+<div class="try-it">
+<div class="q">
+<label>Q in J. Rond af op 2 significante cijfers.</label>
+<input type="number" step="any" id="ans-18" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-18', 41796, 1000)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-18')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-18"></div>
+
+<div class="detail-steps" id="steps-18">
+<h5>Stappenplan opgave 18</h5>
+<ol>
+<li>c<sub>alcohol</sub> opzoeken (Binas tabel 11): <span class="calc">c = 2,43·10³ J/(kg·K)</span></li>
+<li>Wat weet je: <span class="calc">m = 0,40 kg</span>, <span class="calc">ΔT = 65 − 22 = 43 K</span></li>
+<li>Formule: <span class="calc">Q = c·m·ΔT</span></li>
+<li>Invullen: <span class="calc">Q = 2,43·10³ · 0,40 · 43</span></li>
+<li>Reken: <span class="calc">Q = 2430 · 0,40 · 43 = 41 796 J</span></li>
+<li>Afronden op 2 sf: <span class="calc">Q ≈ 4,2·10⁴ J = 42 kJ</span></li>
+</ol>
+</div>
+</div>
+
+<h3>Opgave 22 — Aluminium-staafje (uit figuur 26)</h3>
+<p>Bij een proef houd je een aluminium-staafje (200 g) in een vlam. Het staafje gaat van kamertemperatuur (19 °C) tot 100 °C. Andere staafjes met dezelfde massa van koper, ijzer en messing krijgen ook warmte.</p>
+
+<div class="try-it">
+<div class="q">
+<label>a. Welk metaal geleidt warmte het beste? (Hint: kijk naar λ uit Dag 1.)</label>
+<input type="text" id="ans-22a" placeholder="metaal">
+<button class="btn" onclick="checkText('ans-22a', ['koper'])">Check</button>
+</div>
+<div class="feedback" id="fb-ans-22a"></div>
+
+<div class="q">
+<label>b. Bereken de warmte die nodig is om het aluminium-staafje op te warmen van 19 °C naar 100 °C. Rond af op 2 sf.</label>
+<input type="number" step="any" id="ans-22b" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-22b', 14256, 300)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-22b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-22b"></div>
+<div class="detail-steps" id="steps-22b">
+<h5>Stappenplan opgave 22b</h5>
+<ol>
+<li>c<sub>Al</sub> = 0,88·10³ J/(kg·K) = 880 J/(kg·K)</li>
+<li>m = 200 g = 0,200 kg, ΔT = 100 − 19 = 81 K</li>
+<li>Formule: Q = c·m·ΔT</li>
+<li>Invullen: Q = 880 · 0,200 · 81 = 14 256 J</li>
+<li>Afronden: Q ≈ 1,4·10⁴ J = 14 kJ</li>
+</ol>
+</div>
+
+<div class="q">
+<label>c. Bereken Q voor de andere drie metalen (200 g, ΔT = 81 K). Vul alleen koper in (afgerond op 2 sf, in J).</label>
+<input type="number" step="any" id="ans-22c-koper" placeholder="koper, J">
+<button class="btn" onclick="checkNumeric('ans-22c-koper', 6269, 150)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-22c')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-22c-koper"></div>
+<div class="detail-steps" id="steps-22c">
+<h5>Stappenplan opgave 22c — alle drie</h5>
+<ol>
+<li>c-waardes (Binas 11): koper 387, ijzer 460, messing 380 J/(kg·K)</li>
+<li>Koper: <span class="calc">Q = 387 · 0,200 · 81 = 6269 J ≈ 6,3·10³ J</span></li>
+<li>IJzer: <span class="calc">Q = 460 · 0,200 · 81 = 7452 J ≈ 7,5·10³ J</span></li>
+<li>Messing: <span class="calc">Q = 380 · 0,200 · 81 = 6156 J ≈ 6,2·10³ J</span></li>
+</ol>
+</div>
+
+<div class="q">
+<label>d. Welk staafje gaat als eerste gloeien als je ze met dezelfde vlam verwarmt?</label>
+<input type="text" id="ans-22d" placeholder="metaal">
+<button class="btn" onclick="checkText('ans-22d', ['messing'])">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-22d')">Hint</button>
+</div>
+<div class="feedback" id="fb-ans-22d"></div>
+<div class="detail-steps" id="steps-22d">
+<h5>Hint</h5>
+<p>Bij dezelfde vlam krijgt elk staafje per seconde dezelfde warmtestroom. Het metaal met de <strong>laagste soortelijke warmte</strong> heeft het minst aan energie nodig om dezelfde temperatuurstijging te krijgen — dus stijgt het snelst in temperatuur.</p>
+<p>Vergelijk c: messing (380) &lt; koper (387) &lt; ijzer (460) &lt; aluminium (880). Messing wint nipt, dan koper, dan ijzer, dan aluminium.</p>
+<p><em>Nuance:</em> in de praktijk speelt warmtegeleiding ook mee — koper geleidt veel beter en verdeelt de warmte snel over het hele staafje, waardoor het kopje moeilijker plaatselijk gloeit.</p>
+</div>
+</div>
+
+<h3>Extra-opgave A — Pan met water</h3>
+<p>Je zet een pan met 2,0 L (= 2,0 kg) water op het vuur. De temperatuur stijgt van 20 °C naar 95 °C. De brander levert een vermogen van 2,0 kW.</p>
+
+<div class="try-it">
+<div class="q">
+<label>a. Bereken de warmte (Q) die het water heeft opgenomen. Rond af op 2 sf.</label>
+<input type="number" step="any" id="ans-eA-Q" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-eA-Q', 627000, 5000)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-eA-Q')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-eA-Q"></div>
+<div class="detail-steps" id="steps-eA-Q">
+<h5>Stappenplan a</h5>
+<ol>
+<li>c<sub>water</sub> = 4,18·10³ J/(kg·K), m = 2,0 kg, ΔT = 95 − 20 = 75 K</li>
+<li>Q = 4180 · 2,0 · 75 = 627 000 J ≈ 6,3·10⁵ J</li>
+</ol>
+</div>
+
+<div class="q">
+<label>b. Hoe lang duurt het opwarmen, als al die warmte rechtstreeks naar het water gaat (geen verlies)? Antwoord in seconden, afgerond op gehele seconden.</label>
+<input type="number" step="any" id="ans-eA-t" placeholder="s">
+<button class="btn" onclick="checkNumeric('ans-eA-t', 313.5, 4)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('steps-eA-t')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-eA-t"></div>
+<div class="detail-steps" id="steps-eA-t">
+<h5>Stappenplan b</h5>
+<ol>
+<li>Vermogen → tijd: <span class="calc">Δt = Q / P</span></li>
+<li><span class="calc">Δt = 627 000 / 2000 = 313,5 s ≈ 314 s</span> (≈ 5 min 14 s)</li>
+</ol>
+</div>
+
+<div class="q">
+<label>c. In de praktijk duurt het langer. Geef één reden waarom.</label>
+<input type="text" id="ans-eA-c" placeholder="reden" style="width:280px">
+<button class="btn" onclick="checkText('ans-eA-c', ['warmteverlies','warmteverlies aan omgeving','warmteverlies aan de omgeving','verlies','verdamping','verdamping van water','warmte naar de pan','de pan moet ook opwarmen','pan opwarmen','warmte gaat verloren','niet alle warmte gaat naar het water'])">Check</button>
+</div>
+<div class="feedback" id="fb-ans-eA-c"></div>
+</div>
+
+</div>
+
+<!-- ============ KENNISCHECK ============ -->
+<div class="card" id="kennischeck">
+<h2>8. Kennischeck — ben je klaar voor Dag 3?</h2>
+
+<ul class="checklist">
+<li onclick="this.classList.toggle('done')">Ik kan Q = c·m·ΔT uit mijn hoofd opschrijven met eenheden</li>
+<li onclick="this.classList.toggle('done')">Ik weet dat water een uitschieter hoge c heeft (4,18·10³)</li>
+<li onclick="this.classList.toggle('done')">Ik kan Q = c·m·ΔT omdraaien naar c, m of ΔT</li>
+<li onclick="this.classList.toggle('done')">Bij een vraag kan ik kiezen of ik P = λ·A·ΔT/d of Q = c·m·ΔT moet gebruiken</li>
+<li onclick="this.classList.toggle('done')">Ik kan Q en P combineren via Q = P · Δt en Δt = Q/P</li>
+<li onclick="this.classList.toggle('done')">Ik kan een volume omrekenen naar massa via m = ρ · V</li>
+</ul>
+
+<div class="tip-box" style="margin-top:1rem"><strong>Klaar voor Dag 3:</strong> daar gaan we kijken naar de warmtepomp en het rendement (η). Veel van wat je vandaag geleerd hebt komt terug in voorbeelden waar de warmtepomp water opwarmt.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../dag1-warmtegeleiding/">← Dag 1: Warmtegeleiding</a>
+<a href="../dag3-warmtepomp-rendement/">Dag 3: Warmtepomp →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Natuurkunde HAVO 4 — Dag 2: Soortelijke warmte (§5.3 deel 2)</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============ MATERIAAL-WIDGET ============
+const materialen = {
+  water:    {c:4180, color:'#3b82f6', label:'water'},
+  alcohol:  {c:2430, color:'#a78bfa', label:'alcohol'},
+  lucht:    {c:1000, color:'#cbd5e1', label:'lucht'},
+  aluminium:{c:880,  color:'#9ca3af', label:'aluminium'},
+  beton:    {c:840,  color:'#78716c', label:'beton'},
+  ijzer:    {c:460,  color:'#71717a', label:'ijzer'},
+  koper:    {c:387,  color:'#b45309', label:'koper'},
+  messing:  {c:380,  color:'#ca8a04', label:'messing'}
+};
+
+function drawMat(){
+  const svg = document.getElementById('plot2');
+  const matKey = document.getElementById('mat').value;
+  const m = +document.getElementById('m').value;
+  const dT = +document.getElementById('dT2').value;
+  const mat = materialen[matKey];
+
+  document.getElementById('m-val').textContent = m.toFixed(1).replace('.', ',');
+  document.getElementById('dT2-val').textContent = dT.toFixed(0);
+
+  const Q = mat.c * m * dT;
+  let qStr;
+  if(Q >= 1e6) qStr = (Q/1e6).toFixed(2).replace('.', ',') + ' MJ';
+  else if(Q >= 1000) qStr = (Q/1000).toFixed(1).replace('.', ',') + ' kJ';
+  else qStr = Q.toFixed(0) + ' J';
+
+  document.getElementById('Q-live').innerHTML = `Q = ${mat.c} · ${m.toFixed(1).replace('.', ',')} · ${dT} = <strong style="color:#9a3412">${Q.toLocaleString('nl-NL', {maximumFractionDigits:0})} J</strong> = ${qStr}`;
+
+  const w = 320, h = 220;
+  // blok van materiaal — grootte schaalt met massa
+  const size = Math.min(140, 30 + m * 10);
+  const x = w/2 - size/2;
+  const y = h/2 - size/2;
+
+  // thermometer-bar links
+  const barX = 30, barW = 14, barH = 160, barY = 30;
+  const Tn = Math.min(100, 20 + dT);
+  const fillH = Math.min(barH, (Tn / 100) * barH);
+
+  let s = '';
+  s += `<rect x="${barX}" y="${barY}" width="${barW}" height="${barH}" fill="#e2e8f0" rx="6"/>`;
+  s += `<rect x="${barX}" y="${barY + barH - fillH}" width="${barW}" height="${fillH}" fill="#dc2626" rx="6"/>`;
+  s += `<text x="${barX + barW + 4}" y="${barY + barH - fillH + 4}" font-size="10" fill="#1e293b">${Tn.toFixed(0)}°C</text>`;
+  s += `<text x="${barX + barW/2}" y="${barY - 6}" text-anchor="middle" font-size="9" fill="#64748b">T eind</text>`;
+
+  // blok
+  s += `<rect x="${x}" y="${y}" width="${size}" height="${size}" fill="${mat.color}" stroke="#1e293b" stroke-width="1.5" rx="6"/>`;
+  s += `<text x="${w/2}" y="${y + size/2 - 4}" text-anchor="middle" font-size="13" fill="#fff" font-weight="700" style="paint-order:stroke;stroke:#1e293b;stroke-width:2">${mat.label}</text>`;
+  s += `<text x="${w/2}" y="${y + size/2 + 12}" text-anchor="middle" font-size="11" fill="#fff" style="paint-order:stroke;stroke:#1e293b;stroke-width:2">${m.toFixed(1).replace('.', ',')} kg</text>`;
+
+  // warmte-pijl onderaan
+  const arrowY = h - 25;
+  s += `<line x1="${w/2 - 60}" y1="${arrowY}" x2="${w/2 + 60}" y2="${arrowY}" stroke="#dc2626" stroke-width="3" marker-end="url(#ah2)"/>`;
+  s += `<text x="${w/2}" y="${arrowY - 6}" text-anchor="middle" font-size="10" fill="#9a3412">Q toegevoerd</text>`;
+
+  s = `<defs><marker id="ah2" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker></defs>` + s;
+  svg.innerHTML = s;
+}
+['mat','m','dT2'].forEach(id => document.getElementById(id).addEventListener('input', drawMat));
+drawMat();
+
+// ============ ANTWOORD-CHECKERS ============
+function normalize(s){
+  return (s||'').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw — kijk eens naar de hint of het stappenplan.';
+}
+function checkNumeric(id, target, tol){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const v = parseFloat((el.value||'').toString().replace(',','.'));
+  const ok = isFinite(v) && Math.abs(v - target) <= tol;
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Niet helemaal — kijk in het stappenplan welke stap je mist.';
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

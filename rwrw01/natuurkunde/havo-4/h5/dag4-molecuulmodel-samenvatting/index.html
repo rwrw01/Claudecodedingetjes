@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 4 — Molecuulmodel & samenvatting (§5.5) — Natuurkunde HAVO 4</title>
+<style>
+:root { --primary:#ea580c; --primary-dark:#9a3412; --primary-light:#ffedd5; --accent:#dc2626; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#9a3412 0%,#ea580c 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.9}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1.05rem;margin-bottom:0.6rem;color:var(--primary)}
+.toc ol{padding-left:1.4rem}
+.toc li{margin:0.25rem 0}
+.toc a{color:var(--primary);text-decoration:none;font-size:0.95rem}
+.toc a:hover{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
+.card h2{font-size:1.3rem;color:var(--primary);margin-bottom:0.8rem;padding-bottom:0.5rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1.05rem;color:var(--text);margin:1rem 0 0.5rem}
+.card p{margin:0.5rem 0}
+.formula{background:var(--primary-light);border-left:4px solid var(--primary);border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0;font-size:1.05rem}
+.formula .math-display{font-size:1.15rem;font-weight:700;color:var(--primary-dark);font-family:'Georgia',serif}
+.tip-box{background:#fefce8;border-left:4px solid #eab308;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.tip-box strong{color:#a16207}
+.warning-box{background:#fff1f2;border-left:4px solid #e11d48;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.warning-box strong{color:#be123c}
+.example-box{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.example-box strong{color:#15803d}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.try-it{background:#fff7ed;border:2px dashed #fb923c;border-radius:var(--radius);padding:1.25rem;margin:1.25rem 0}
+.try-it h4{color:var(--primary-dark);margin-bottom:0.7rem;font-size:1rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.6rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+select{border:2px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;font-size:0.95rem}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:var(--primary-dark)}
+.btn-hint{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-hint:hover{background:#fde68a}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.9rem;border-radius:8px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#f0fdf4;color:#166534;border:1px solid #86efac}
+.feedback.incorrect{background:#fff1f2;color:#9f1239;border:1px solid #fca5a5}
+.detail-steps{background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.8rem 1.1rem;margin-top:0.5rem;display:none}
+.detail-steps.show{display:block}
+.detail-steps h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.detail-steps ol{padding-left:1.2rem}
+.detail-steps li{margin:0.25rem 0;font-size:0.88rem}
+.detail-steps .calc{font-family:'Georgia',serif;background:white;padding:0.3rem 0.5rem;border-radius:4px;display:inline-block;margin:0.15rem 0}
+table.tabel{border-collapse:collapse;width:100%;margin:0.8rem 0;font-family:'Georgia',serif;font-size:0.95rem}
+table.tabel th,table.tabel td{border:1px solid var(--border);padding:0.4rem 0.7rem;text-align:center}
+table.tabel thead{background:var(--primary-light);color:var(--primary-dark);font-weight:600}
+.recap{background:#f0fdf4;border-left:4px solid #16a34a;border-radius:0 8px 8px 0;padding:0.9rem 1.2rem;margin:1rem 0}
+.recap strong{color:#15803d}
+.fase-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;margin:1rem 0}
+@media(max-width:600px){.fase-grid{grid-template-columns:1fr}}
+.fase-card{background:#f8fafc;border:2px solid var(--border);border-radius:8px;padding:1rem;text-align:center}
+.fase-card h4{color:var(--primary);margin-bottom:0.4rem;font-size:1rem}
+.fase-card .deeltjes{font-size:1.5rem;letter-spacing:2px;color:#1e40af}
+.formules-tabel td:first-child{font-weight:600;width:30%}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem;flex-wrap:wrap}
+.nav-bottom a{flex:1;min-width:140px;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+.nav-bottom a.toets{background:linear-gradient(135deg,#f5f3ff,white);border:2px solid #7c3aed;color:#7c3aed}
+.nav-bottom a.toets:hover{background:#ede9fe}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+ul.checklist{list-style:none;padding:0}
+ul.checklist li{padding:0.4rem 0 0.4rem 1.8rem;position:relative;font-size:0.95rem;cursor:pointer}
+ul.checklist li::before{content:"☐";position:absolute;left:0;font-size:1.1rem;color:var(--primary)}
+ul.checklist li.done::before{content:"✓";color:var(--success);font-weight:700}
+</style>
+</head>
+<body>
+<header>
+<h1>Dag 4 — Molecuulmodel & samenvatting</h1>
+<p>§5.5 — Faseovergangen, formuleoverzicht en eindopgaven</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Natuurkunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H5</a> &rsaquo; Dag 4</nav>
+
+<div class="container">
+
+<div class="toc">
+<h2>📚 Inhoud van vandaag</h2>
+<ol>
+<li><a href="#recap">Recap Dag 3 — drie snelle vragen</a></li>
+<li><a href="#molecuulmodel">Molecuulmodel: vaste, vloeibare en gasvormige fase</a></li>
+<li><a href="#faseovergangen">Faseovergangen — alle zes</a></li>
+<li><a href="#temp-energie">Temperatuur ↔ kinetische energie</a></li>
+<li><a href="#stookwaarde">Stookwaarde (verbranding van brandstof)</a></li>
+<li><a href="#formules">Formuleoverzicht — alles van hoofdstuk 5</a></li>
+<li><a href="#eindopgave32">Eindopgave 32 — huis verwarmen</a></li>
+<li><a href="#eindopgave33">Eindopgave 33 — kruiken</a></li>
+<li><a href="#kennischeck">Kennischeck en oefentoets</a></li>
+</ol>
+</div>
+
+<!-- ============ RECAP ============ -->
+<div class="card" id="recap">
+<h2>1. Recap Dag 3 — Warmtepomp en rendement</h2>
+
+<div class="recap">
+<strong>Vraag 1.</strong> Wat is de eenheid van rendement (η)?<br>
+<input type="text" id="r1d4" style="width:140px;margin-top:0.4rem" placeholder="">
+<button class="btn" onclick="checkText('r1d4', ['%','procent','geen','geen eenheid','dimensieloos'])">Check</button>
+<div class="feedback" id="fb-r1d4"></div>
+</div>
+
+<div class="recap">
+<strong>Vraag 2.</strong> Een warmtepomp levert 5,0 kW warmte aan een huis met 1,4 kW elektriciteit. Bereken η in %.<br>
+<input type="number" step="any" id="r2d4" style="width:120px;margin-top:0.4rem" placeholder="%">
+<button class="btn" onclick="checkNumeric('r2d4', 357, 10)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-r2d4')">Stappenplan</button>
+<div class="feedback" id="fb-r2d4"></div>
+<div class="detail-steps" id="s-r2d4">
+<h5>Uitwerking</h5>
+<p>η = P<sub>nut</sub>/P<sub>in</sub> · 100% = 5,0/1,4 · 100% = 357% ≈ 3,6·10² %</p>
+</div>
+</div>
+
+<div class="recap">
+<strong>Vraag 3.</strong> In welk onderdeel van de warmtepomp wordt het koudemiddel een gas?<br>
+<select id="r3d4" style="width:200px;margin-top:0.4rem">
+<option value=""></option>
+<option value="verdamper">verdamper</option>
+<option value="compressor">compressor</option>
+<option value="condensor">condensor</option>
+<option value="expansieventiel">expansieventiel</option>
+</select>
+<button class="btn" onclick="checkSelect('r3d4', 'verdamper')">Check</button>
+<div class="feedback" id="fb-r3d4"></div>
+</div>
+</div>
+
+<!-- ============ MOLECUULMODEL ============ -->
+<div class="card" id="molecuulmodel">
+<h2>2. Molecuulmodel: drie fasen</h2>
+
+<p>Elke stof bestaat uit moleculen of atomen die voortdurend bewegen. Hoe ze bewegen en hoe ver ze van elkaar zitten, bepaalt in welke <strong>fase</strong> de stof is.</p>
+
+<div class="fase-grid">
+<div class="fase-card">
+<h4>Vaste fase</h4>
+<div class="deeltjes">●●●<br>●●●<br>●●●</div>
+<p style="font-size:0.85rem;margin-top:0.5rem">Deeltjes vast op hun plek, trillen alleen. Vaste vorm én volume.</p>
+</div>
+<div class="fase-card">
+<h4>Vloeibare fase</h4>
+<div class="deeltjes">●●●<br>● ●●<br>●● ●</div>
+<p style="font-size:0.85rem;margin-top:0.5rem">Deeltjes liggen tegen elkaar maar bewegen langs elkaar. Vast volume, geen vaste vorm.</p>
+</div>
+<div class="fase-card">
+<h4>Gasvormige fase</h4>
+<div class="deeltjes">●&nbsp;&nbsp;●<br>&nbsp;&nbsp;●<br>●&nbsp;●&nbsp;</div>
+<p style="font-size:0.85rem;margin-top:0.5rem">Deeltjes vliegen vrij rond, ver uit elkaar. Geen vaste vorm én geen vast volume.</p>
+</div>
+</div>
+
+<table class="tabel">
+<thead><tr><th>Eigenschap</th><th>Vast</th><th>Vloeibaar</th><th>Gas</th></tr></thead>
+<tbody>
+<tr><td>Vorm</td><td>vast</td><td>past zich aan vat aan</td><td>vult vat helemaal</td></tr>
+<tr><td>Volume</td><td>vast</td><td>vast</td><td>past zich aan</td></tr>
+<tr><td>Afstand deeltjes</td><td>klein</td><td>klein</td><td>groot</td></tr>
+<tr><td>Beweging deeltjes</td><td>trillen</td><td>schuiven</td><td>vliegen</td></tr>
+<tr><td>Aantrekking deeltjes</td><td>sterk</td><td>matig</td><td>verwaarloosbaar</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ============ FASEOVERGANGEN ============ -->
+<div class="card" id="faseovergangen">
+<h2>3. Faseovergangen — alle zes</h2>
+
+<svg viewBox="0 0 480 240" style="width:100%;height:auto;background:#f8fafc;border:1px solid var(--border);border-radius:8px;display:block;margin:1rem 0">
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>
+<marker id="ab" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker>
+</defs>
+<!-- Drie cirkels -->
+<circle cx="80" cy="120" r="50" fill="#cbd5e1" stroke="#475569" stroke-width="2"/>
+<text x="80" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#1e293b">VAST</text>
+<text x="80" y="135" text-anchor="middle" font-size="11" fill="#1e293b">●●●</text>
+
+<circle cx="240" cy="120" r="50" fill="#bfdbfe" stroke="#1e40af" stroke-width="2"/>
+<text x="240" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#1e40af">VLOEIBAAR</text>
+<text x="240" y="135" text-anchor="middle" font-size="11" fill="#1e40af">● ● ●</text>
+
+<circle cx="400" cy="120" r="50" fill="#fef3c7" stroke="#9a3412" stroke-width="2"/>
+<text x="400" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#9a3412">GAS</text>
+<text x="400" y="135" text-anchor="middle" font-size="11" fill="#9a3412">● ●</text>
+
+<!-- Pijlen vast→vloeibaar (smelten - rood) en terug (stollen - blauw) -->
+<line x1="135" y1="105" x2="180" y2="105" stroke="#dc2626" stroke-width="2" marker-end="url(#ar)"/>
+<text x="157" y="98" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="600">smelten</text>
+<line x1="180" y1="135" x2="135" y2="135" stroke="#2563eb" stroke-width="2" marker-end="url(#ab)"/>
+<text x="157" y="153" text-anchor="middle" font-size="11" fill="#2563eb" font-weight="600">stollen</text>
+
+<!-- Pijlen vloeibaar→gas en terug -->
+<line x1="295" y1="105" x2="340" y2="105" stroke="#dc2626" stroke-width="2" marker-end="url(#ar)"/>
+<text x="317" y="98" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="600">verdampen</text>
+<line x1="340" y1="135" x2="295" y2="135" stroke="#2563eb" stroke-width="2" marker-end="url(#ab)"/>
+<text x="317" y="153" text-anchor="middle" font-size="11" fill="#2563eb" font-weight="600">condenseren</text>
+
+<!-- Pijl direct vast↔gas (sublimeren / rijpen) — onderlangs -->
+<path d="M 80 175 Q 240 230 400 175" stroke="#dc2626" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+<text x="240" y="225" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="600">sublimeren →</text>
+
+<path d="M 400 60 Q 240 10 80 60" stroke="#2563eb" stroke-width="2" fill="none" marker-end="url(#ab)"/>
+<text x="240" y="20" text-anchor="middle" font-size="11" fill="#2563eb" font-weight="600">← rijpen (gas naar vast)</text>
+</svg>
+
+<table class="tabel">
+<thead><tr><th>Overgang</th><th>Van</th><th>Naar</th><th>Energie</th></tr></thead>
+<tbody>
+<tr><td><strong>Smelten</strong></td><td>vast</td><td>vloeibaar</td><td>opnemen (warmte erbij)</td></tr>
+<tr><td><strong>Stollen</strong> (vriezen)</td><td>vloeibaar</td><td>vast</td><td>afgeven</td></tr>
+<tr><td><strong>Verdampen</strong> (koken)</td><td>vloeibaar</td><td>gas</td><td>opnemen</td></tr>
+<tr><td><strong>Condenseren</strong></td><td>gas</td><td>vloeibaar</td><td>afgeven</td></tr>
+<tr><td><strong>Sublimeren</strong></td><td>vast</td><td>gas (direct)</td><td>opnemen</td></tr>
+<tr><td><strong>Rijpen</strong> (depositie)</td><td>gas</td><td>vast (direct)</td><td>afgeven</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box"><strong>💡 Vuistregel:</strong> als de stof "naar boven" gaat in energie (vast → vloeibaar → gas), neemt hij warmte <strong>op</strong>. Andersom (gas → vloeibaar → vast) geeft hij warmte <strong>af</strong>. Daarom voelt verdampende alcohol op je huid koel — het neemt warmte van je huid weg.</div>
+
+<div class="warning-box"><strong>⚠️ Faseovergang gebeurt op constante temperatuur.</strong> Bij smelten van ijs blijft de temperatuur 0 °C totdat al het ijs vloeibaar is. De warmte gaat naar het uit elkaar trekken van moleculen, niet naar opwarmen.</div>
+</div>
+
+<!-- ============ TEMP-ENERGIE ============ -->
+<div class="card" id="temp-energie">
+<h2>4. Temperatuur ↔ kinetische energie</h2>
+
+<p>Temperatuur is een maat voor de gemiddelde kinetische energie (bewegingsenergie) van de deeltjes. Hoe sneller ze bewegen, hoe hoger de temperatuur.</p>
+
+<div class="formula">
+<div class="math-display" style="text-align:center">T (in K) = T (in °C) + 273,15</div>
+</div>
+
+<table class="tabel">
+<thead><tr><th>Temperatuur</th><th>Kelvin (K)</th><th>Celsius (°C)</th><th>Wat gebeurt er</th></tr></thead>
+<tbody>
+<tr><td>Absolute nulpunt</td><td>0</td><td>−273,15</td><td>deeltjes (klassiek) stilstand</td></tr>
+<tr><td>Smeltpunt water</td><td>273,15</td><td>0</td><td>ijs ↔ water</td></tr>
+<tr><td>Kamertemperatuur</td><td>293</td><td>20</td><td>—</td></tr>
+<tr><td>Kookpunt water</td><td>373</td><td>100</td><td>water ↔ stoom</td></tr>
+</tbody>
+</table>
+
+<div class="warning-box"><strong>⚠️ Twee regels:</strong> bij <em>verschillen</em> (ΔT) geeft Kelvin en Celsius hetzelfde getal: ΔT = 5 K = 5 °C verschil. Bij <em>absolute waardes</em> moet je in Kelvin werken (bv. ideaal-gas-wet). Voor §5.3 en §5.4 mag je gewoon Celsius gebruiken zolang je met verschillen werkt.</div>
+</div>
+
+<!-- ============ STOOKWAARDE ============ -->
+<div class="card" id="stookwaarde">
+<h2>5. Stookwaarde (verbranding van brandstof)</h2>
+
+<p>De <strong>stookwaarde</strong> r<sub>v</sub> is de hoeveelheid energie die vrijkomt bij verbranding van 1 kg of 1 m³ van een brandstof.</p>
+
+<div class="formula">
+<div class="math-display" style="text-align:center">E = r<sub>v</sub> · m &nbsp;&nbsp;of&nbsp;&nbsp; E = r<sub>v</sub> · V</div>
+<ul style="margin-left:1.2rem;margin-top:0.5rem">
+<li>E — vrijgekomen energie in J</li>
+<li>r<sub>v</sub> — stookwaarde in J/kg of J/m³</li>
+<li>m — massa in kg, V — volume in m³</li>
+</ul>
+</div>
+
+<table class="tabel">
+<thead><tr><th>Brandstof</th><th>Stookwaarde</th></tr></thead>
+<tbody>
+<tr><td>Aardgas (Groningen)</td><td>32·10⁶ J/m³</td></tr>
+<tr><td>Benzine</td><td>33·10⁶ J/L</td></tr>
+<tr><td>Hout</td><td>15·10⁶ J/kg</td></tr>
+<tr><td>Steenkool</td><td>30·10⁶ J/kg</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- ============ FORMULES ============ -->
+<div class="card" id="formules">
+<h2>6. Formuleoverzicht — alles van hoofdstuk 5</h2>
+
+<table class="tabel formules-tabel">
+<thead><tr><th>Wat</th><th>Formule</th><th>Eenheden</th></tr></thead>
+<tbody>
+<tr><td>Temperatuur</td><td><span class="math">T<sub>kelvin</sub> = T<sub>celsius</sub> + 273,15</span></td><td>K, °C</td></tr>
+<tr><td>Stookwaarde</td><td><span class="math">E = r<sub>v</sub> · m</span> &nbsp;of&nbsp; <span class="math">E = r<sub>v</sub> · V</span></td><td>J, J/kg, J/m³</td></tr>
+<tr><td>Debiet</td><td><span class="math">φ = ΔV / Δt</span></td><td>m³/s</td></tr>
+<tr><td>Vermogen ↔ energie</td><td><span class="math">P = E / Δt</span></td><td>W = J/s</td></tr>
+<tr><td>Warmtestroom (geleiding)</td><td><span class="math">P = λ · A · ΔT / d</span></td><td>W, W/(m·K), m², K, m</td></tr>
+<tr><td>Soortelijke warmte</td><td><span class="math">Q = c · m · ΔT</span></td><td>J, J/(kg·K), kg, K</td></tr>
+<tr><td>Rendement</td><td><span class="math">η = E<sub>nut</sub> / E<sub>in</sub> · 100%</span></td><td>%</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box"><strong>💡 Op de toets:</strong> deze tabel mag je in Binas opzoeken. De truc is: <em>welke</em> formule pak je voor welke vraag? Kijk altijd naar de eenheden van wat gevraagd wordt:
+<ul style="margin-left:1.2rem">
+<li>"hoeveel warmte" → J → Q = c·m·ΔT of E = r<sub>v</sub>·V</li>
+<li>"hoe snel/per seconde" → W → P = λ·A·ΔT/d of P = E/Δt</li>
+<li>"hoeveel procent nuttig" → % → rendement</li>
+</ul></div>
+</div>
+
+<!-- ============ EINDOPGAVE 32 ============ -->
+<div class="card" id="eindopgave32">
+<h2>7. Eindopgave 32 — huis verwarmen</h2>
+
+<p>Een huis heeft een totaal isolerend buitenoppervlak van 150 m² (muren + dak + vloer samen). De gemiddelde dikte van de isolerende laag is 12 cm en de gemiddelde λ is 0,080 W/(m·K). De binnentemperatuur is 19 °C, buiten is het 's winters gemiddeld −5 °C. Het stookseizoen duurt 5 maanden (= 150 dagen).</p>
+
+<div class="try-it">
+<div class="q">
+<label>a. Bereken de warmtestroom door de buitenmuur. Antwoord in W, op 2 sf.</label>
+<input type="number" step="any" id="ans-32a" placeholder="W">
+<button class="btn" onclick="checkNumeric('ans-32a', 2400, 100)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-32a')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-32a"></div>
+<div class="detail-steps" id="s-32a">
+<h5>Uitwerking 32a</h5>
+<ol>
+<li>d = 12 cm = 0,12 m, ΔT = 19 − (−5) = 24 K</li>
+<li>P = λ·A·ΔT/d = 0,080 · 150 · 24 / 0,12</li>
+<li>Teller: 0,080 · 150 · 24 = 288</li>
+<li>P = 288 / 0,12 = 2400 W ≈ 2,4·10³ W = 2,4 kW</li>
+</ol>
+</div>
+
+<div class="q">
+<label>b. Bereken de totale energie (in J) die het stookseizoen weglekt door de buitenmuur. Op 2 sf.</label>
+<input type="number" step="any" id="ans-32b" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-32b', 3.11e10, 8e8)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-32b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-32b"></div>
+<div class="detail-steps" id="s-32b">
+<h5>Uitwerking 32b</h5>
+<ol>
+<li>Tijd: 150 dagen · 24 uur · 3600 s = 1,296·10⁷ s</li>
+<li>E = P · Δt = 2400 · 1,296·10⁷ = 3,11·10¹⁰ J ≈ 3,1·10¹⁰ J</li>
+</ol>
+</div>
+
+<div class="q">
+<label>c. Hoeveel m³ aardgas (Groningen, r = 32·10⁶ J/m³) is nodig om dit warmteverlies te compenseren? (Aanname: hr-ketel η = 100%.) Op 2 sf.</label>
+<input type="number" step="any" id="ans-32c" placeholder="m³">
+<button class="btn" onclick="checkNumeric('ans-32c', 972, 40)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-32c')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-32c"></div>
+<div class="detail-steps" id="s-32c">
+<h5>Uitwerking 32c</h5>
+<ol>
+<li>Aardgas nodig: V = E / r = 3,11·10¹⁰ / 32·10⁶</li>
+<li>V = 972 m³ ≈ 9,7·10² m³</li>
+</ol>
+<p style="margin-top:0.5rem;font-size:0.85rem">~970 m³/jaar alleen voor de buitenwand-warmte­verliezen — dat is aan de hoge kant en hoort bij een wat ouder, matig geïsoleerd huis.</p>
+</div>
+</div>
+</div>
+
+<!-- ============ EINDOPGAVE 33 ============ -->
+<div class="card" id="eindopgave33">
+<h2>8. Eindopgave 33 — kruiken (warmtebron in ziekenhuis)</h2>
+
+<p>In een ziekenhuis worden kruiken gevuld met natriumacetaat (een stof met smeltpunt 58 °C). De stof zit in een kruik en wordt opgewarmd, waarna hij langzaam afkoelt en daarbij warmte afgeeft.</p>
+
+<table class="tabel">
+<thead><tr><th></th><th>Smeltpunt (°C)</th><th>Smeltwarmte (·10⁵ J/kg)</th><th>Dichtheid bij 70 °C (·10³ kg/m³)</th></tr></thead>
+<tbody>
+<tr><td>Water</td><td>0</td><td>3,34</td><td>0,978</td></tr>
+<tr><td>Natriumacetaat</td><td>58</td><td>2,89</td><td>1,45</td></tr>
+</tbody>
+</table>
+
+<div class="try-it">
+<div class="q">
+<label>a. Een kruik bevat 1,0 kg natriumacetaat dat al volledig gesmolten is bij 70 °C. Hij koelt af en bij 58 °C begint het stollen. Bereken hoeveel warmte er vrijkomt door alleen het stollen (zonder verder afkoelen). Op 2 sf.</label>
+<input type="number" step="any" id="ans-33a" placeholder="J">
+<button class="btn" onclick="checkNumeric('ans-33a', 289000, 5000)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-33a')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-33a"></div>
+<div class="detail-steps" id="s-33a">
+<h5>Uitwerking 33a</h5>
+<ol>
+<li>Bij stollen wordt smeltwarmte vrijgegeven (geen ΔT, alleen faseovergang)</li>
+<li>Q = m · L<sub>smelt</sub> = 1,0 · 2,89·10⁵ = 2,89·10⁵ J ≈ 2,9·10⁵ J</li>
+</ol>
+</div>
+
+<div class="q">
+<label>b. In een kruikenmoeder (apparaat) zitten twaalf kruiken die elk 7,0·10⁵ J nodig hebben om volledig op te warmen. Het verwarmingselement levert 1,2 kW. Hoe lang duurt het opwarmen? Antwoord in seconden afgerond op 100 s.</label>
+<input type="number" step="any" id="ans-33b" placeholder="s">
+<button class="btn" onclick="checkNumeric('ans-33b', 7000, 200)">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-33b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-ans-33b"></div>
+<div class="detail-steps" id="s-33b">
+<h5>Uitwerking 33b</h5>
+<ol>
+<li>Totaal nodig: Q<sub>tot</sub> = 12 · 7,0·10⁵ = 8,4·10⁶ J</li>
+<li>Vermogen = 1,2 kW = 1200 W</li>
+<li>Δt = Q / P = 8,4·10⁶ / 1200 = 7000 s ≈ 1 uur 57 min</li>
+</ol>
+</div>
+
+<div class="q">
+<label>c. Waarom is natriumacetaat een betere kruik-vulling dan water (kies de beste reden):</label>
+<select id="ans-33c" style="width:100%;max-width:480px">
+<option value=""></option>
+<option value="smelt">Bij stollen rond lichaamstemperatuur (58 °C) komt extra "smeltwarmte" vrij — een tweede warmtebron bovenop afkoelen.</option>
+<option value="dichter">Natriumacetaat is dichter, dus zwaarder per liter.</option>
+<option value="kookpunt">Natriumacetaat heeft een hoger kookpunt dan water.</option>
+</select>
+<button class="btn" onclick="checkSelect('ans-33c', 'smelt')">Check</button>
+</div>
+<div class="feedback" id="fb-ans-33c"></div>
+
+<div class="q">
+<label>d. Tijdens het stollen van de natriumacetaat blijft de temperatuur constant op 58 °C, ook al geeft de stof warmte af. Verklaar dit kort.</label>
+<input type="text" id="ans-33d" placeholder="korte uitleg" style="width:100%;max-width:480px">
+<button class="btn" onclick="checkText('ans-33d', ['faseovergang','bij faseovergang blijft de temperatuur constant','smeltwarmte','smeltwarmte komt vrij','vrijkomende smeltwarmte','de smeltwarmte die vrijkomt compenseert de afkoeling','smeltwarmte compenseert','warmte gaat in faseovergang','energie gaat in faseovergang','de warmte gaat in de faseovergang','bindingen','energie gaat naar bindingen','warmte gaat in de bindingen','energie gaat in bindingen','energie wordt gebruikt voor faseovergang','vrijkomende stollingswarmte','stollingswarmte'])">Check</button>
+<button class="btn btn-hint" onclick="toggleSteps('s-33d')">Hint</button>
+</div>
+<div class="feedback" id="fb-ans-33d"></div>
+<div class="detail-steps" id="s-33d">
+<h5>Hint en modelantwoord</h5>
+<p>Bij een faseovergang gaat de vrijkomende energie niet naar verandering van bewegingsenergie van de deeltjes, maar naar het opnieuw vormen van bindingen tussen ze. Dus de gemiddelde kinetische energie (= temperatuur) verandert niet zolang er nog smeltend/stollend materiaal is.</p>
+<p><strong>Modelantwoord:</strong> "Bij stollen komt smeltwarmte vrij. Die warmte compenseert precies de afkoeling, dus blijft T constant tot al het materiaal vast is."</p>
+</div>
+</div>
+</div>
+
+<!-- ============ KENNISCHECK ============ -->
+<div class="card" id="kennischeck">
+<h2>9. Kennischeck — klaar voor de oefentoets?</h2>
+
+<ul class="checklist">
+<li onclick="this.classList.toggle('done')">Ik weet de drie fasen + hun molecuul-eigenschappen</li>
+<li onclick="this.classList.toggle('done')">Ik kan de zes faseovergangen benoemen en zeggen of er warmte opgenomen of afgegeven wordt</li>
+<li onclick="this.classList.toggle('done')">Ik weet dat T (in K) = T (in °C) + 273,15</li>
+<li onclick="this.classList.toggle('done')">Bij verschillen mag ik gewoon ΔT in °C uitrekenen</li>
+<li onclick="this.classList.toggle('done')">Ik weet dat tijdens een faseovergang de temperatuur constant blijft</li>
+<li onclick="this.classList.toggle('done')">Ik kan de stookwaarde-formule E = r<sub>v</sub>·V toepassen</li>
+<li onclick="this.classList.toggle('done')">Ik kan kiezen welke formule ik nodig heb (P, Q, η, E, etc.)</li>
+<li onclick="this.classList.toggle('done')">Ik kan eenheden omrekenen (mm/cm/m, kg/g, kWh ↔ J)</li>
+</ul>
+
+<div class="tip-box" style="margin-top:1rem"><strong>Volgende stap:</strong> als alles aangevinkt is, doe de oefentoets! Die duurt 30 minuten en dekt alle stof gemengd.</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../dag3-warmtepomp-rendement/">← Dag 3: Warmtepomp</a>
+<a href="../oefentoets/" class="toets">⭐ Oefentoets H5 →</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Natuurkunde HAVO 4 — Dag 4: Molecuulmodel & samenvatting (§5.5)</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+function normalize(s){
+  return (s||'').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+function checkText(id, accepted){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const norm = normalize(el.value);
+  const ok = accepted.some(a => normalize(a) === norm);
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw of bekijk de hint.';
+}
+function checkNumeric(id, target, tol){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const v = parseFloat((el.value||'').toString().replace(',','.'));
+  const ok = isFinite(v) && Math.abs(v - target) <= tol;
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Niet helemaal — kijk in het stappenplan.';
+}
+function checkSelect(id, target){
+  const el = document.getElementById(id);
+  const fb = document.getElementById('fb-'+id);
+  const ok = el.value === target;
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  fb.classList.remove('correct','incorrect');
+  fb.classList.add('show', ok ? 'correct' : 'incorrect');
+  fb.textContent = ok ? '✓ Goed!' : '✗ Probeer opnieuw.';
+}
+function toggleSteps(id){
+  document.getElementById(id).classList.toggle('show');
+}
+</script>
+</body>
+</html>

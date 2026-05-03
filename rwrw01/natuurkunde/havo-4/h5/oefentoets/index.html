@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefentoets — Hoofdstuk 5 Warmte en temperatuur — Natuurkunde HAVO 4</title>
+<style>
+:root { --primary:#7c3aed; --primary-light:#ede9fe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.85}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.intro{background:var(--primary-light);border:1px solid var(--primary);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.intro h2{color:var(--primary);font-size:1.1rem;margin-bottom:0.5rem}
+.intro ul{margin-left:1.4rem;margin-top:0.4rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative}
+.card.scored-correct{border-color:var(--success);background:#f0fdf4}
+.card.scored-incorrect{border-color:var(--accent);background:#fff1f2}
+.opgave-num{display:inline-block;background:var(--primary);color:white;border-radius:999px;padding:0.15rem 0.85rem;font-size:0.85rem;font-weight:700;margin-right:0.4rem}
+.card h2{font-size:1.2rem;color:var(--primary);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1rem;color:var(--text);margin:1rem 0 0.4rem}
+.card p{margin:0.5rem 0}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.deelvraag{margin:1rem 0;padding:0.8rem 1rem;background:#fafbfc;border-left:3px solid var(--primary-light);border-radius:0 8px 8px 0}
+.deelvraag .deeltitel{font-weight:600;color:var(--primary);margin-bottom:0.4rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.5rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text],input[type=number]{border:2px solid var(--border);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+select{border:2px solid var(--border);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.95rem}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#6d28d9}
+.btn-secondary{background:#e2e8f0;color:var(--text)}
+.btn-secondary:hover{background:#cbd5e1}
+.btn-show{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-show:hover{background:#fde68a}
+.btn-big{font-size:1rem;padding:0.7rem 1.5rem;font-weight:700}
+.answer-block{display:none;background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.9rem 1.1rem;margin-top:0.7rem}
+.answer-block.show{display:block}
+.answer-block h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.answer-block ol{padding-left:1.2rem}
+.answer-block li{margin:0.3rem 0;font-size:0.92rem}
+.answer-block .calc{font-family:'Georgia',serif;background:white;padding:0.2rem 0.4rem;border-radius:4px;display:inline-block}
+.score-card{background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;border-radius:var(--radius);padding:2rem;text-align:center;margin:2rem 0;display:none}
+.score-card.show{display:block}
+.score-card .pct{font-size:3rem;font-weight:800;margin:0.5rem 0}
+.score-card .msg{font-size:1.1rem;opacity:0.95}
+.timer{position:fixed;bottom:1rem;right:1rem;background:white;border:2px solid var(--primary);border-radius:999px;padding:0.5rem 1.1rem;font-family:'Georgia',serif;font-size:1rem;font-weight:700;color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:100}
+.timer.warning{background:#fef3c7;border-color:#eab308}
+.timer.danger{background:#fff1f2;border-color:var(--accent);color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:0.6rem;margin:1.5rem 0;justify-content:center}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+.binas{font-size:0.85rem;color:var(--muted);margin-top:0.4rem;font-style:italic}
+</style>
+</head>
+<body>
+<header>
+<h1>Oefentoets — Warmte en temperatuur</h1>
+<p>Klaar voor maandag 11 mei 2026? Test jezelf onder toetsomstandigheden.</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../">Natuurkunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H5</a> &rsaquo; Oefentoets</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>📝 Voor je begint</h2>
+<ul>
+<li>Geplande tijd: <strong>30 minuten</strong>. De timer rechtsonder loopt mee.</li>
+<li>Maak alle opgaven <em>zonder</em> de uitwerkingen open te klikken.</li>
+<li>Klik aan het einde op <strong>"Score berekenen"</strong> om al je antwoorden in één keer te checken.</li>
+<li>Pas <em>na</em> de score: klik per opgave op <strong>"Toon uitwerking"</strong> om je werk te vergelijken.</li>
+<li>Onvoldoende? Loop Dag 1 t/m Dag 4 nog eens door.</li>
+<li>Constanten op deze pagina: c<sub>water</sub> = 4,18·10³ J/(kg·K), L<sub>smelt,ijs</sub> = 3,34·10⁵ J/kg.</li>
+</ul>
+</div>
+
+<div class="actions">
+<button class="btn btn-big" onclick="startTimer()">▶ Start timer</button>
+<button class="btn btn-secondary btn-big" onclick="resetAll()">↺ Reset alles</button>
+</div>
+
+<!-- Opgave 1 — Warmtegeleiding -->
+<div class="card" id="card-1">
+<h2><span class="opgave-num">1</span>Warmtegeleiding door een betonnen tussenwand</h2>
+<p>Een betonnen tussenwand is 4,0 m × 2,8 m groot en 18 cm dik. Voor beton geldt λ = 1,5 W/(m·K). De ene kamer is 21 °C, de andere kamer is 5 °C.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Bereken de warmtestroom door de wand. Geef het antwoord in W (op 2 sf).</div>
+<div class="q"><label>P =</label><input type="number" step="any" id="o1a" placeholder="W"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Hoe verandert de warmtestroom als je de wanddikte verdubbelt naar 36 cm? (Kies wat klopt.)</div>
+<div class="q"><label></label>
+<select id="o1b" style="width:280px">
+<option value=""></option>
+<option value="halveert">P halveert</option>
+<option value="verdubbelt">P verdubbelt</option>
+<option value="gelijk">P blijft gelijk</option>
+<option value="vier">P wordt 4× zo groot</option>
+</select>
+</div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-1')">Toon uitwerking</button>
+<div class="answer-block" id="a-1">
+<h5>Uitwerking</h5>
+<ol>
+<li>A = 4,0 · 2,8 = 11,2 m², ΔT = 21 − 5 = 16 K, d = 0,18 m</li>
+<li>P = λ·A·ΔT/d = <span class="calc">1,5 · 11,2 · 16 / 0,18</span></li>
+<li>Teller: 1,5 · 11,2 · 16 = 268,8</li>
+<li>P = 268,8 / 0,18 = <strong>1493 W ≈ 1,5·10³ W</strong></li>
+<li><strong>b)</strong> d staat in de noemer → d verdubbelen → P halveert.</li>
+</ol>
+</div>
+</div>
+
+<!-- Opgave 2 — Pannetje water -->
+<div class="card" id="card-2">
+<h2><span class="opgave-num">2</span>Een pannetje water opwarmen</h2>
+<p>In een pannetje zit 1,2 kg water van 18 °C. Het wordt opgewarmd tot 88 °C. De brander van het fornuis levert een vermogen van 2,5 kW. We nemen aan dat alle warmte naar het water gaat.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Bereken hoeveel warmte (in J) het water heeft opgenomen (op 2 sf).</div>
+<div class="q"><label>Q =</label><input type="number" step="any" id="o2a" placeholder="J"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Bereken hoe lang het opwarmen duurt (in s, afgerond op gehele seconden).</div>
+<div class="q"><label>Δt =</label><input type="number" step="any" id="o2b" placeholder="s"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-2')">Toon uitwerking</button>
+<div class="answer-block" id="a-2">
+<h5>Uitwerking</h5>
+<ol>
+<li>ΔT = 88 − 18 = 70 K</li>
+<li>Q = c·m·ΔT = <span class="calc">4180 · 1,2 · 70 = 351 120 J ≈ 3,5·10⁵ J</span></li>
+<li>Δt = Q / P = <span class="calc">351 120 / 2500 = 140,4 s ≈ 140 s</span> (≈ 2 min 20 s)</li>
+</ol>
+</div>
+</div>
+
+<!-- Opgave 3 — Warmtepomp -->
+<div class="card" id="card-3">
+<h2><span class="opgave-num">3</span>Warmtepomp en energiebalans</h2>
+<p>Een warmtepomp levert een nuttig vermogen van 4,8 kW (warmte naar het huis) en gebruikt daarvoor 1,2 kW elektriciteit.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Bereken het rendement van de warmtepomp (in %).</div>
+<div class="q"><label>η =</label><input type="number" step="any" id="o3a" placeholder="%"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Bereken het vermogen waarmee gratis warmte uit de buitenlucht wordt opgenomen (in W).</div>
+<div class="q"><label>P =</label><input type="number" step="any" id="o3b" placeholder="W"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Verklaar in één zin waarom een warmtepomp een rendement &gt; 100% kan hebben.</div>
+<div class="q"><label></label>
+<input type="text" id="o3c" placeholder="korte uitleg" style="width:100%;max-width:480px">
+</div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-3')">Toon uitwerking</button>
+<div class="answer-block" id="a-3">
+<h5>Uitwerking</h5>
+<ol>
+<li><strong>a)</strong> η = P<sub>nut</sub> / P<sub>in</sub> · 100% = <span class="calc">4,8 / 1,2 · 100% = 400%</span></li>
+<li><strong>b)</strong> Energiebalans: P<sub>uit lucht</sub> = P<sub>nut</sub> − P<sub>in</sub> = <span class="calc">4800 − 1200 = 3600 W = 3,6·10³ W</span></li>
+<li><strong>c)</strong> De warmtepomp neemt extra (gratis) warmte op uit de buitenlucht (of bodem). Daardoor is de afgegeven warmte groter dan de elektriciteit die je erin stopt — η &gt; 100%.</li>
+</ol>
+</div>
+</div>
+
+<!-- Opgave 4 — Faseovergangen -->
+<div class="card" id="card-4">
+<h2><span class="opgave-num">4</span>Faseovergangen en smeltend ijs</h2>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Hoe heet de overgang vast → gas direct (zonder vloeibare tussenfase)?</div>
+<div class="q"><label></label><input type="text" id="o4a" placeholder="naam overgang" style="width:200px"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Verklaar in één zin waarom de temperatuur van een smeltend ijsblokje constant op 0 °C blijft, ook al krijgt het ijs warmte toegevoerd.</div>
+<div class="q"><label></label><input type="text" id="o4b" placeholder="korte uitleg" style="width:100%;max-width:480px"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Bereken de warmte (in J) die nodig is om een ijsblokje van 80 g van 0 °C volledig te smelten. (L<sub>smelt,ijs</sub> = 3,34·10⁵ J/kg, op 2 sf.)</div>
+<div class="q"><label>Q =</label><input type="number" step="any" id="o4c" placeholder="J"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-4')">Toon uitwerking</button>
+<div class="answer-block" id="a-4">
+<h5>Uitwerking</h5>
+<ol>
+<li><strong>a)</strong> sublimeren</li>
+<li><strong>b)</strong> Tijdens een faseovergang gaat de toegevoerde energie naar het verbreken van bindingen tussen de moleculen, niet naar verhoging van hun bewegingsenergie. De temperatuur (= maat voor gemiddelde kinetische energie) blijft daarom constant.</li>
+<li><strong>c)</strong> Q = m · L<sub>smelt</sub> = <span class="calc">0,080 · 3,34·10⁵ = 26 720 J ≈ 2,7·10⁴ J</span></li>
+</ol>
+</div>
+</div>
+
+<!-- Opgave 5 — Combinatie warmtegeleiding + warmtepomp -->
+<div class="card" id="card-5">
+<h2><span class="opgave-num">5</span>Combinatie — geïsoleerde wand + warmtepomp</h2>
+<p>Een woonkamer heeft een geïsoleerde buitenwand van totaal 35 m². De isolatie is 10 cm dik en bestaat uit glaswol (λ = 0,040 W/(m·K)). Binnen is het 22 °C, buiten 4 °C. Een warmtepomp met rendement η = 350% compenseert continu het warmteverlies door deze wand.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Bereken de warmtestroom door de wand (in W, op 2 sf).</div>
+<div class="q"><label>P<sub>verlies</sub> =</label><input type="number" step="any" id="o5a" placeholder="W"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Welk elektrisch vermogen levert de warmtepomp om dit verlies te compenseren? (in W, op 2 sf)</div>
+<div class="q"><label>P<sub>elek</sub> =</label><input type="number" step="any" id="o5b" placeholder="W"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Hoeveel elektrische energie kost dit per dag? (in kWh, op 2 sf)</div>
+<div class="q"><label>E =</label><input type="number" step="any" id="o5c" placeholder="kWh"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-5')">Toon uitwerking</button>
+<div class="answer-block" id="a-5">
+<h5>Uitwerking</h5>
+<ol>
+<li><strong>a)</strong> ΔT = 22 − 4 = 18 K; P = λ·A·ΔT/d = <span class="calc">0,040 · 35 · 18 / 0,10 = 25,2/0,10 = 252 W ≈ 2,5·10² W</span></li>
+<li><strong>b)</strong> η = 350% = 3,50; P<sub>elek</sub> = P<sub>nut</sub> / η = <span class="calc">252 / 3,50 = 72 W ≈ 72 W (op 2 sf: 7,2·10¹ W)</span></li>
+<li><strong>c)</strong> E = P · Δt = <span class="calc">72 W · 24 h = 1728 Wh = 1,73 kWh ≈ 1,7 kWh</span></li>
+</ol>
+</div>
+</div>
+
+<div class="actions">
+<button class="btn btn-big" onclick="checkAll()">✓ Score berekenen</button>
+<button class="btn btn-secondary btn-big" onclick="resetAll()">↺ Reset alles</button>
+</div>
+
+<div class="score-card" id="score-card">
+<div>Jouw score</div>
+<div class="pct" id="score-pct">0%</div>
+<div id="score-detail"></div>
+<div class="msg" id="score-msg"></div>
+</div>
+
+<div class="nav-bottom">
+<a href="../">← Terug naar H5</a>
+<a href="../dag4-molecuulmodel-samenvatting/">Nog eens Dag 4 →</a>
+</div>
+
+</div>
+
+<div class="timer" id="timer">⏱ 30:00</div>
+
+<footer>
+<p><strong>Natuurkunde HAVO 4 — Hoofdstuk 5 — Oefentoets</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// Antwoord-sleutel: per id óf 'accept' (text varianten), óf 'numeric' {target, tol}, óf 'contains' (open tekst)
+const KEY = {
+  // Opgave 1
+  'o1a': {numeric:{target:1493, tol:50}},
+  'o1b': {accept:['halveert']},
+  // Opgave 2
+  'o2a': {numeric:{target:351120, tol:5000}},
+  'o2b': {numeric:{target:140, tol:3}},
+  // Opgave 3
+  'o3a': {numeric:{target:400, tol:10}},
+  'o3b': {numeric:{target:3600, tol:100}},
+  'o3c': {contains:['lucht','warmte','gratis','omgeving','buiten','extra','bodem']},
+  // Opgave 4
+  'o4a': {accept:['sublimeren','sublimatie','sublimering']},
+  'o4b': {contains:['faseovergang','bindingen','smeltwarmte','energie','constant']},
+  'o4c': {numeric:{target:26720, tol:600}},
+  // Opgave 5
+  'o5a': {numeric:{target:252, tol:8}},
+  'o5b': {numeric:{target:72, tol:3}},
+  'o5c': {numeric:{target:1.73, tol:0.1}}
+};
+
+function normalize(s){
+  return (s||'').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+
+function checkOne(id, key){
+  const el = document.getElementById(id);
+  if(!el) return null;
+  const norm = normalize(el.value);
+  if(!norm) return false;
+  let ok = false;
+  if(key.accept){
+    ok = key.accept.some(a => normalize(a) === norm);
+  }
+  if(!ok && key.numeric){
+    const num = parseFloat(norm);
+    if(isFinite(num) && Math.abs(num - key.numeric.target) <= key.numeric.tol) ok = true;
+  }
+  if(!ok && key.contains){
+    // moet ten minste 1 van de termen bevatten (open uitleg)
+    const hits = key.contains.filter(t => norm.indexOf(normalize(t)) !== -1).length;
+    if(hits >= 1) ok = true;
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  return ok;
+}
+
+function checkAll(){
+  let total = 0, correct = 0;
+  const perCard = {};
+  Object.keys(KEY).forEach(id => {
+    const m = id.match(/o(\d)/);
+    const cardId = m ? 'card-' + m[1] : null;
+    const ok = checkOne(id, KEY[id]);
+    total++;
+    if(ok) correct++;
+    if(cardId){
+      if(!perCard[cardId]) perCard[cardId] = {total:0, correct:0};
+      perCard[cardId].total++;
+      if(ok) perCard[cardId].correct++;
+    }
+  });
+  Object.keys(perCard).forEach(cardId => {
+    const card = document.getElementById(cardId);
+    card.classList.remove('scored-correct','scored-incorrect');
+    if(perCard[cardId].correct === perCard[cardId].total) card.classList.add('scored-correct');
+    else if(perCard[cardId].correct === 0) card.classList.add('scored-incorrect');
+  });
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  const sc = document.getElementById('score-card');
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-detail').textContent = correct + ' van ' + total + ' onderdelen goed';
+  let msg = '';
+  if(pct >= 85) msg = '🎉 Top! Je bent klaar voor de toets.';
+  else if(pct >= 70) msg = '👍 Goed bezig — kijk nog even naar wat fout ging.';
+  else if(pct >= 50) msg = '📚 Loop Dag 1 t/m Dag 4 nog eens door — vooral wat hier fout ging.';
+  else msg = '💪 Niet ontmoedigen! Maak Dag 1 t/m Dag 4 opnieuw, dan komt het wel goed.';
+  document.getElementById('score-msg').textContent = msg;
+  sc.classList.add('show');
+  sc.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function toggleAnswer(id){
+  document.getElementById(id).classList.toggle('show');
+}
+
+function resetAll(){
+  Object.keys(KEY).forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.value=''; el.classList.remove('correct','incorrect'); }
+  });
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('scored-correct','scored-incorrect'));
+  document.querySelectorAll('.answer-block').forEach(a => a.classList.remove('show'));
+  document.getElementById('score-card').classList.remove('show');
+  resetTimer();
+}
+
+// ===== Timer =====
+let timerInt = null, secondsLeft = 30 * 60;
+function fmt(s){
+  const m = Math.floor(s / 60), sec = s % 60;
+  return '⏱ ' + m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+function startTimer(){
+  if(timerInt) return;
+  timerInt = setInterval(() => {
+    secondsLeft--;
+    const t = document.getElementById('timer');
+    t.textContent = fmt(secondsLeft);
+    t.classList.remove('warning','danger');
+    if(secondsLeft <= 60) t.classList.add('danger');
+    else if(secondsLeft <= 5*60) t.classList.add('warning');
+    if(secondsLeft <= 0){
+      clearInterval(timerInt); timerInt = null;
+      t.textContent = '⏱ 0:00';
+    }
+  }, 1000);
+}
+function resetTimer(){
+  if(timerInt){ clearInterval(timerInt); timerInt = null; }
+  secondsLeft = 30 * 60;
+  const t = document.getElementById('timer');
+  t.textContent = fmt(secondsLeft);
+  t.classList.remove('warning','danger');
+}
+</script>
+</body>
+</html>

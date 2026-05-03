@@ -123,11 +123,11 @@ footer a{color:var(--primary);text-decoration:none}
 <p>De truc is dus: zorg dat je <strong>aan beide kanten hetzelfde grondtal</strong> krijgt, daarna stel je de exponenten gelijk.</p>
 
 <div class="example-box">
-<strong>Voorbeeld 1:</strong> los op <span class="math">3<sup>x + 1</sup> = <sup>1</sup>⁄<sub>3</sub>√3</span>
+<strong>Voorbeeld 1:</strong> los op <span class="math">5<sup>x − 2</sup> = 25√5</span>
 <ol style="margin-left:1.2rem;margin-top:0.5rem">
-<li><span class="math"><sup>1</sup>⁄<sub>3</sub> = 3<sup>−1</sup></span> en <span class="math">√3 = 3<sup>½</sup></span>, dus <span class="math"><sup>1</sup>⁄<sub>3</sub>√3 = 3<sup>−1</sup> · 3<sup>½</sup> = 3<sup>−½</sup></span></li>
-<li>Vergelijking wordt: <span class="math">3<sup>x + 1</sup> = 3<sup>−½</sup></span></li>
-<li>Exponenten gelijk: <span class="math">x + 1 = −½</span>, dus <span class="math">x = −1½</span></li>
+<li><span class="math">25 = 5<sup>2</sup></span> en <span class="math">√5 = 5<sup>½</sup></span>, dus <span class="math">25√5 = 5<sup>2</sup> · 5<sup>½</sup> = 5<sup>2½</sup></span></li>
+<li>Vergelijking wordt: <span class="math">5<sup>x − 2</sup> = 5<sup>2½</sup></span></li>
+<li>Exponenten gelijk: <span class="math">x − 2 = 2½</span>, dus <span class="math">x = 4½</span></li>
 </ol>
 </div>
 
@@ -184,7 +184,7 @@ footer a{color:var(--primary);text-decoration:none}
 </div>
 
 <p style="margin-top:1rem">d) <span class="math">3<sup>2x + 7</sup> = 27√3</span></p>
-<div class="q"><label><span class="math">x = </span></label><input type="text" id="o62d" placeholder="bv. -1,75"><button class="btn-hint btn" onclick="checkText('o62d',['-1.75','-1,75','-7/4','-1¾'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o62d-steps')">Stappen</button></div>
+<div class="q"><label><span class="math">x = </span></label><input type="text" id="o62d" placeholder="breuk of decimaal"><button class="btn-hint btn" onclick="checkText('o62d',['-1.75','-1,75','-7/4','-1¾'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o62d-steps')">Stappen</button></div>
 <div class="feedback" id="fb-o62d"></div>
 <div class="detail-steps" id="o62d-steps">
 <h5>Stappenplan</h5>
@@ -285,10 +285,11 @@ footer a{color:var(--primary);text-decoration:none}
 <div class="warning-box"><strong>⚠️ Lees de notatie goed:</strong> in <span class="math"><sup>2</sup>log(x)</span> staat de <strong>2</strong> als klein superscript <em>vóór</em> "log" — dat is het <strong>grondtal</strong>. Het is dus iets anders dan <span class="math">log(x<sup>2</sup>)</span> (waar 2 een macht van x is) en ook anders dan <span class="math">2 · log(x)</span> (vermenigvuldigen).</div>
 
 <div class="example-box">
-<strong>Voorbeeld:</strong> bereken <span class="math"><sup>2</sup>log(<sup>1</sup>⁄<sub>8</sub>)</span>.
+<strong>Voorbeeld:</strong> bereken <span class="math"><sup>2</sup>log(8√2)</span>.
 <ol style="margin-left:1.2rem;margin-top:0.5rem">
-<li><span class="math"><sup>1</sup>⁄<sub>8</sub> = <sup>1</sup>⁄<sub>2<sup>3</sup></sub> = 2<sup>−3</sup></span></li>
-<li><span class="math"><sup>2</sup>log(2<sup>−3</sup>) = −3</span></li>
+<li><span class="math">8 = 2<sup>3</sup></span> en <span class="math">√2 = 2<sup>½</sup></span></li>
+<li><span class="math">8√2 = 2<sup>3</sup> · 2<sup>½</sup> = 2<sup>3½</sup></span></li>
+<li><span class="math"><sup>2</sup>log(2<sup>3½</sup>) = 3½</span></li>
 </ol>
 </div>
 </div>

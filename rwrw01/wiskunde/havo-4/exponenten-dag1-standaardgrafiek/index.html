@@ -136,9 +136,12 @@ footer a{color:var(--primary);text-decoration:none}
 <h4>🔎 Tussenvragen — zet je waarnemingen op een rij</h4>
 <div class="q"><label>Bij welke waarde van g gaat de grafiek <strong>dalend</strong>?</label><input type="text" id="q-dalend" placeholder="bv. g = ..."><button class="btn-hint btn" onclick="checkText('q-dalend',['0&lt;g&lt;1','0 &lt; g &lt; 1','tussen 0 en 1','kleiner dan 1','&lt;1'])">Check</button></div>
 <div class="feedback" id="fb-q-dalend"></div>
-<div class="q"><label>Door welk vast punt gaat de grafiek altijd, voor élk grondtal g?</label><input type="text" id="q-vast" placeholder="bv. (0, ...)"><button class="btn-hint btn" onclick="checkText('q-vast',['(0,1)','(0, 1)','0,1'])">Check</button></div>
+<div class="q"><label>Door welk vast punt gaat de grafiek altijd, voor élk grondtal g?</label><input type="text" id="q-vast" placeholder="(?, ?)"><button class="btn-hint btn" onclick="checkText('q-vast',['(0,1)','(0, 1)','0,1'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('q-vast-hint')">Hint</button></div>
 <div class="feedback" id="fb-q-vast"></div>
-<div class="tip-box" style="margin-top:0.8rem"><strong>Hint:</strong> elke macht met exponent 0 levert 1 op. Dus <span class="math">g<sup>0</sup> = 1</span> voor élke g.</div>
+<div class="detail-steps" id="q-vast-hint">
+<h5>Hint</h5>
+<ol><li>Welke <span class="math">x</span>-waarde geeft voor elk grondtal hetzelfde resultaat? Denk aan een speciale eigenschap van machten.</li></ol>
+</div>
 </div>
 </div>
 
@@ -232,7 +235,7 @@ footer a{color:var(--primary);text-decoration:none}
 <h4>🧪 Probeer zelf</h4>
 <div class="q"><label>Wat is de asymptoot van <span class="math">y = 2<sup>x</sup> + 5</span>?</label><input type="text" id="q-asym" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('q-asym',['y=5','y = 5','5'])">Check</button></div>
 <div class="feedback" id="fb-q-asym"></div>
-<div class="q"><label>Wat is het bereik van <span class="math">y = 2<sup>x</sup> + 5</span>?</label><input type="text" id="q-bereik" placeholder="bv. y > 5"><button class="btn-hint btn" onclick="checkText('q-bereik',['(5,→)','(5,->)','(5,→ )','(5, →)','&gt;5','y&gt;5','5&lt;y','5,→','(5,inf)','(5,oneindig)','(5,∞)'])">Check</button></div>
+<div class="q"><label>Wat is het bereik van <span class="math">y = 2<sup>x</sup> + 5</span>?</label><input type="text" id="q-bereik" placeholder="bv. y > 2"><button class="btn-hint btn" onclick="checkText('q-bereik',['(5,→)','(5,->)','(5,→ )','(5, →)','&gt;5','y&gt;5','5&lt;y','5,→','(5,inf)','(5,oneindig)','(5,∞)'])">Check</button></div>
 <div class="feedback" id="fb-q-bereik"></div>
 </div>
 </div>
@@ -258,7 +261,7 @@ footer a{color:var(--primary);text-decoration:none}
 <p>Geef bereik en horizontale asymptoot van <span class="math">f(x) = 5 − 6 · 0,4<sup>x</sup></span>.</p>
 <div class="q"><label>Asymptoot:</label><input type="text" id="o48a" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('o48a',['y=5','y = 5','5'])">Check</button></div>
 <div class="feedback" id="fb-o48a"></div>
-<div class="q"><label>Bereik:</label><input type="text" id="o48b" placeholder="bv. y < 5"><button class="btn-hint btn" onclick="checkText('o48b',['(←,5)','(←, 5)','(-∞,5)','y&lt;5','&lt;5','(-inf,5)','(-oneindig,5)','5&gt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o48-steps')">Stappenplan</button></div>
+<div class="q"><label>Bereik:</label><input type="text" id="o48b" placeholder="bv. y < 2"><button class="btn-hint btn" onclick="checkText('o48b',['(←,5)','(←, 5)','(-∞,5)','y&lt;5','&lt;5','(-inf,5)','(-oneindig,5)','5&gt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o48-steps')">Stappenplan</button></div>
 <div class="feedback" id="fb-o48b"></div>
 <div class="detail-steps" id="o48-steps">
 <h5>Stappenplan</h5>
@@ -273,7 +276,7 @@ footer a{color:var(--primary);text-decoration:none}
 <p>Geef bereik en horizontale asymptoot van <span class="math">g(x) = 3 · 2<sup>3x</sup> + 4</span>.</p>
 <div class="q"><label>Asymptoot:</label><input type="text" id="o49a" placeholder="y = ..."><button class="btn-hint btn" onclick="checkText('o49a',['y=4','y = 4','4'])">Check</button></div>
 <div class="feedback" id="fb-o49a"></div>
-<div class="q"><label>Bereik:</label><input type="text" id="o49b" placeholder="bv. y > 4"><button class="btn-hint btn" onclick="checkText('o49b',['(4,→)','(4,->)','(4, →)','y&gt;4','&gt;4','(4,inf)','(4,oneindig)','(4,∞)','4&lt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o49-steps')">Stappenplan</button></div>
+<div class="q"><label>Bereik:</label><input type="text" id="o49b" placeholder="bv. y > 2"><button class="btn-hint btn" onclick="checkText('o49b',['(4,→)','(4,->)','(4, →)','y&gt;4','&gt;4','(4,inf)','(4,oneindig)','(4,∞)','4&lt;y'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o49-steps')">Stappenplan</button></div>
 <div class="feedback" id="fb-o49b"></div>
 <div class="detail-steps" id="o49-steps">
 <h5>Stappenplan</h5>

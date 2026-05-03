@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefentoets — Exponenten &amp; logaritmen — Wiskunde HAVO 4</title>
+<style>
+:root { --primary:#7c3aed; --primary-light:#ede9fe; --accent:#e11d48; --success:#16a34a; --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 100%);color:white;padding:3rem 1.5rem 2.5rem;text-align:center}
+header h1{font-size:1.9rem;font-weight:700;margin-bottom:0.5rem}
+header p{font-size:1.05rem;opacity:0.85}
+.breadcrumb{background:white;padding:0.75rem 1.5rem;font-size:0.9rem;border-bottom:1px solid var(--border)}
+.breadcrumb a{color:var(--primary);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:1.5rem 1rem 2rem}
+.intro{background:var(--primary-light);border:1px solid var(--primary);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.intro h2{color:var(--primary);font-size:1.1rem;margin-bottom:0.5rem}
+.intro ul{margin-left:1.4rem;margin-top:0.4rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;position:relative}
+.card.scored-correct{border-color:var(--success);background:#f0fdf4}
+.card.scored-incorrect{border-color:var(--accent);background:#fff1f2}
+.opgave-num{display:inline-block;background:var(--primary);color:white;border-radius:999px;padding:0.15rem 0.85rem;font-size:0.85rem;font-weight:700;margin-right:0.4rem}
+.card h2{font-size:1.2rem;color:var(--primary);margin-bottom:0.6rem;padding-bottom:0.4rem;border-bottom:2px solid var(--primary-light)}
+.card h3{font-size:1rem;color:var(--text);margin:1rem 0 0.4rem}
+.card p{margin:0.5rem 0}
+.math{font-family:'Georgia','Times New Roman',serif;font-style:italic}
+sup{font-size:0.72em;vertical-align:super}
+sub{font-size:0.72em;vertical-align:sub}
+.deelvraag{margin:1rem 0;padding:0.8rem 1rem;background:#fafbfc;border-left:3px solid var(--primary-light);border-radius:0 8px 8px 0}
+.deelvraag .deeltitel{font-weight:600;color:var(--primary);margin-bottom:0.4rem}
+.q{display:flex;flex-wrap:wrap;align-items:center;gap:0.5rem;margin:0.5rem 0}
+.q label{flex:1;min-width:200px;font-size:0.95rem}
+input[type=text]{border:2px solid var(--border);border-radius:8px;padding:0.4rem 0.7rem;font-size:0.95rem;width:160px;font-family:'Georgia',serif}
+input:focus{outline:none;border-color:var(--primary)}
+input.correct{border-color:var(--success);background:#f0fdf4}
+input.incorrect{border-color:var(--accent);background:#fff1f2}
+.btn{background:var(--primary);color:white;border:none;border-radius:8px;padding:0.4rem 1rem;font-size:0.9rem;cursor:pointer}
+.btn:hover{background:#6d28d9}
+.btn-secondary{background:#e2e8f0;color:var(--text)}
+.btn-secondary:hover{background:#cbd5e1}
+.btn-show{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.btn-show:hover{background:#fde68a}
+.btn-big{font-size:1rem;padding:0.7rem 1.5rem;font-weight:700}
+.answer-block{display:none;background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.9rem 1.1rem;margin-top:0.7rem}
+.answer-block.show{display:block}
+.answer-block h5{color:#92400e;margin-bottom:0.4rem;font-size:0.92rem}
+.answer-block ol{padding-left:1.2rem}
+.answer-block li{margin:0.3rem 0;font-size:0.92rem}
+.score-card{background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;border-radius:var(--radius);padding:2rem;text-align:center;margin:2rem 0;display:none}
+.score-card.show{display:block}
+.score-card .pct{font-size:3rem;font-weight:800;margin:0.5rem 0}
+.score-card .msg{font-size:1.1rem;opacity:0.95}
+.timer{position:fixed;bottom:1rem;right:1rem;background:white;border:2px solid var(--primary);border-radius:999px;padding:0.5rem 1.1rem;font-family:'Georgia',serif;font-size:1rem;font-weight:700;color:var(--primary);box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:100}
+.timer.warning{background:#fef3c7;border-color:#eab308}
+.timer.danger{background:#fff1f2;border-color:var(--accent);color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:0.6rem;margin:1.5rem 0;justify-content:center}
+.figure-box{background:white;border:1px dashed var(--border);border-radius:8px;padding:1rem;margin:0.6rem 0;text-align:center;font-size:0.9rem;color:var(--muted)}
+.figure-box svg{max-width:100%;height:auto}
+.nav-bottom{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
+.nav-bottom a{flex:1;background:white;border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-decoration:none;color:var(--text);text-align:center;font-weight:600}
+.nav-bottom a:hover{background:var(--primary-light);border-color:var(--primary)}
+footer{text-align:center;padding:2rem 1rem 3rem;color:var(--muted);font-size:0.85rem;background:white;border-top:1px solid var(--border);margin-top:1rem}
+footer a{color:var(--primary);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+<h1>Oefentoets — Exponenten &amp; logaritmen</h1>
+<p>Klaar voor vrijdag 8 mei? Test jezelf onder toetsomstandigheden.</p>
+</header>
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../">Wiskunde</a> &rsaquo; <a href="../">HAVO 4</a> &rsaquo; Oefentoets</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>📝 Voor je begint</h2>
+<ul>
+<li>Geplande tijd: <strong>30 minuten</strong>. De timer rechtsonder loopt mee.</li>
+<li>Maak alle opgaven <em>zonder</em> de uitwerkingen open te klikken.</li>
+<li>Klik aan het einde op <strong>"Score berekenen"</strong> om al je antwoorden in één keer te checken.</li>
+<li>Pas <em>na</em> de score: klik per opgave op <strong>"Toon uitwerking"</strong> om je werk te vergelijken.</li>
+<li>Onvoldoende? Loop Dag 1 t/m Dag 4 nog eens door.</li>
+</ul>
+</div>
+
+<div class="actions">
+<button class="btn btn-big" onclick="startTimer()">▶ Start timer</button>
+<button class="btn btn-secondary btn-big" onclick="resetAll()">↺ Reset alles</button>
+</div>
+
+<!-- Opgave 1 (C8) -->
+<div class="card" id="card-1">
+<h2><span class="opgave-num">1</span>Transformaties &amp; bereik</h2>
+<p>Geef voor elke functie aan hoe de grafiek ontstaat uit een standaardgrafiek. Geef ook het bereik en de formule van de horizontale asymptoot.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) <span class="math">f(x) = 1 − 3 · 0,5<sup>x</sup></span></div>
+<div class="q"><label>asymptoot:</label><input type="text" id="o1a-as"></div>
+<div class="q"><label>bereik:</label><input type="text" id="o1a-br"></div>
+<div class="q"><label>transformaties:</label><input type="text" id="o1a-tr" style="width:280px" placeholder="vergelijk zelf met uitwerking"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) <span class="math">g(x) = 4 · 3<sup>2x</sup> − 7</span></div>
+<div class="q"><label>asymptoot:</label><input type="text" id="o1b-as"></div>
+<div class="q"><label>bereik:</label><input type="text" id="o1b-br"></div>
+<div class="q"><label>transformaties:</label><input type="text" id="o1b-tr" style="width:280px" placeholder="vergelijk zelf met uitwerking"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-1')">Toon uitwerking</button>
+<div class="answer-block" id="a-1">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> standaardgrafiek <span class="math">y = 0,5<sup>x</sup></span> &rarr; vermenigvuldigen t.o.v. <span class="math">x</span>-as met factor <span class="math">−3</span> &rarr; translatie <span class="math">(0, 1)</span>. Asymptoot <span class="math">y = 1</span>; bereik <span class="math">B<sub>f</sub> = (←, 1)</span>.</p>
+<p><strong>b)</strong> standaardgrafiek <span class="math">y = 3<sup>x</sup></span> &rarr; vermenigvuldigen t.o.v. <span class="math">y</span>-as met factor <span class="math">½</span> (want <span class="math">3<sup>2x</sup></span> betekent <span class="math">x</span> &rarr; <span class="math">2x</span>) &rarr; vermenigvuldigen t.o.v. <span class="math">x</span>-as met factor <span class="math">4</span> &rarr; translatie <span class="math">(0, −7)</span>. Asymptoot <span class="math">y = −7</span>; bereik <span class="math">B<sub>g</sub> = (−7, →)</span>.</p>
+</div>
+</div>
+
+<!-- Opgave 2 (C9) -->
+<div class="card" id="card-2">
+<h2><span class="opgave-num">2</span>Schrijf in de vorm <span class="math">y = b · g<sup>x</sup></span></h2>
+
+<div class="deelvraag">
+<div class="deeltitel">a) <span class="math">y = 5 · 3<sup>2x + 1</sup></span></div>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o2a-b"></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o2a-g"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) <span class="math">y = 2<sup>2x + 4</sup></span></div>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o2b-b"></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o2b-g"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) <span class="math">y = <sup>1</sup>⁄<sub>5<sup>2x − 1</sup></sub></span></div>
+<div class="q"><label><span class="math">b = </span></label><input type="text" id="o2c-b"></div>
+<div class="q"><label><span class="math">g = </span></label><input type="text" id="o2c-g"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-2')">Toon uitwerking</button>
+<div class="answer-block" id="a-2">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">5 · 3<sup>2x + 1</sup> = 5 · 3<sup>2x</sup> · 3<sup>1</sup> = 5 · 9<sup>x</sup> · 3 = 15 · 9<sup>x</sup></span>. <strong>b = 15, g = 9.</strong></p>
+<p><strong>b)</strong> <span class="math">2<sup>2x + 4</sup> = 2<sup>2x</sup> · 2<sup>4</sup> = 4<sup>x</sup> · 16 = 16 · 4<sup>x</sup></span>. <strong>b = 16, g = 4.</strong></p>
+<p><strong>c)</strong> <span class="math"><sup>1</sup>⁄<sub>5<sup>2x − 1</sup></sub> = 5<sup>−(2x − 1)</sup> = 5<sup>1 − 2x</sup> = 5<sup>1</sup> · 5<sup>−2x</sup> = 5 · (5<sup>−2</sup>)<sup>x</sup> = 5 · (<sup>1</sup>⁄<sub>25</sub>)<sup>x</sup></span>. <strong>b = 5, g = <sup>1</sup>⁄<sub>25</sub>.</strong></p>
+</div>
+</div>
+
+<!-- Opgave 3 (C10) -->
+<div class="card" id="card-3">
+<h2><span class="opgave-num">3</span>Bereken exact de oplossingen</h2>
+
+<div class="deelvraag">
+<div class="deeltitel">a) <span class="math">3<sup>x + 2</sup> = 9√3</span></div>
+<div class="q"><label><span class="math">x =</span></label><input type="text" id="o3a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) <span class="math">5 · 2<sup>1 − 3x</sup> = 20</span></div>
+<div class="q"><label><span class="math">x =</span></label><input type="text" id="o3b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) <span class="math">8 · 4<sup>x</sup> = 2<sup>x − 5</sup></span></div>
+<div class="q"><label><span class="math">x =</span></label><input type="text" id="o3c"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-3')">Toon uitwerking</button>
+<div class="answer-block" id="a-3">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">9√3 = 3<sup>2</sup> · 3<sup>½</sup> = 3<sup>2½</sup></span>. Dus <span class="math">x + 2 = 2½</span>, <strong><span class="math">x = ½</span>.</strong></p>
+<p><strong>b)</strong> Deel door 5: <span class="math">2<sup>1 − 3x</sup> = 4 = 2<sup>2</sup></span>. Dus <span class="math">1 − 3x = 2</span>, <strong><span class="math">x = −<sup>1</sup>⁄<sub>3</sub></span>.</strong></p>
+<p><strong>c)</strong> Schrijf links als macht van 2: <span class="math">8 · 4<sup>x</sup> = 2<sup>3</sup> · 2<sup>2x</sup> = 2<sup>2x + 3</sup></span>. Vergelijking: <span class="math">2<sup>2x + 3</sup> = 2<sup>x − 5</sup></span>. Dus <span class="math">2x + 3 = x − 5</span>, <strong><span class="math">x = −8</span>.</strong></p>
+</div>
+</div>
+
+<!-- Opgave 4 (variant op opgave 47) -->
+<div class="card" id="card-4">
+<h2><span class="opgave-num">4</span>Functieanalyse — bereik &amp; ongelijkheid</h2>
+<p>Gegeven is de functie <span class="math">f(x) = 2 · (<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> + 2</span>.</p>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Geef het bereik van <span class="math">f</span>.</div>
+<div class="q"><label>bereik:</label><input type="text" id="o4a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Bereken exact voor welke <span class="math">x</span> geldt <span class="math">4 ≤ f(x) ≤ 20</span>.</div>
+<div class="q"><label>oplossing:</label><input type="text" id="o4b" style="width:200px"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-4')">Toon uitwerking</button>
+<div class="answer-block" id="a-4">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">(<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> &gt; 0</span> dus <span class="math">2 · (<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> &gt; 0</span> dus <span class="math">f(x) &gt; 2</span>. Asymptoot <span class="math">y = 2</span>; bereik <span class="math">B<sub>f</sub> = (2, →)</span>.</p>
+<p><strong>b)</strong> Los de twee grenzen op:</p>
+<ol style="margin-left:1.2rem">
+<li><span class="math">f(x) = 4</span>: <span class="math">2 · (<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> = 2</span> dus <span class="math">(<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> = 1 = (<sup>1</sup>⁄<sub>3</sub>)<sup>0</sup></span> dus <span class="math">x = 2</span>.</li>
+<li><span class="math">f(x) = 20</span>: <span class="math">2 · (<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> = 18</span> dus <span class="math">(<sup>1</sup>⁄<sub>3</sub>)<sup>x − 2</sup> = 9 = (<sup>1</sup>⁄<sub>3</sub>)<sup>−2</sup></span> dus <span class="math">x − 2 = −2</span>, dus <span class="math">x = 0</span>.</li>
+<li><span class="math">f</span> is dalend (grondtal <sup>1</sup>⁄<sub>3</sub> &lt; 1), dus <span class="math">f</span> tussen 4 en 20 betekent <span class="math">x</span> tussen 0 en 2.</li>
+</ol>
+<p><strong>Antwoord: <span class="math">0 ≤ x ≤ 2</span>.</strong></p>
+</div>
+</div>
+
+<!-- Opgave 5 (logaritmische vergelijkingen) -->
+<div class="card" id="card-5">
+<h2><span class="opgave-num">5</span>Logaritmische vergelijkingen</h2>
+
+<div class="deelvraag">
+<div class="deeltitel">a) Bereken exact <span class="math"><sup>4</sup>log(32)</span>.</div>
+<div class="q"><label>uitkomst:</label><input type="text" id="o5a"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">b) Los exact op: <span class="math"><sup>2</sup>log(3x − 5) = 4</span>.</div>
+<div class="q"><label><span class="math">x =</span></label><input type="text" id="o5b"></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Geef de verticale asymptoot van <span class="math">h(x) = <sup>3</sup>log(2x + 8) + 1</span>.</div>
+<div class="q"><label>asymptoot:</label><input type="text" id="o5c"></div>
+</div>
+
+<button class="btn btn-show" onclick="toggleAnswer('a-5')">Toon uitwerking</button>
+<div class="answer-block" id="a-5">
+<h5>Uitwerking</h5>
+<p><strong>a)</strong> <span class="math">32 = 2<sup>5</sup> = (4<sup>½</sup>)<sup>5</sup> = 4<sup>2½</sup></span>. Dus <span class="math"><sup>4</sup>log(32) = 2½</span>.</p>
+<p><strong>b)</strong> <span class="math">3x − 5 = 2<sup>4</sup> = 16</span> dus <span class="math">3x = 21</span>, <strong><span class="math">x = 7</span>.</strong></p>
+<p><strong>c)</strong> Stel argument 0: <span class="math">2x + 8 = 0</span> dus verticale asymptoot <span class="math">x = −4</span>.</p>
+</div>
+</div>
+
+<!-- Score knop -->
+<div class="actions">
+<button class="btn btn-big" onclick="checkAll()">📊 Score berekenen</button>
+</div>
+
+<div class="score-card" id="score-card">
+<div style="font-size:1rem">Je score</div>
+<div class="pct" id="score-pct">—</div>
+<div id="score-detail" style="opacity:0.9"></div>
+<div class="msg" id="score-msg"></div>
+</div>
+
+<div class="nav-bottom">
+<a href="../exponenten-dag4-logaritmische-functies/">← Dag 4</a>
+<a href="../">↑ Terug naar HAVO 4</a>
+</div>
+
+</div>
+
+<div class="timer" id="timer">⏱ 30:00</div>
+
+<footer>
+<p><strong>Wiskunde HAVO 4 — Oefentoets exponenten &amp; logaritmen</strong></p>
+<p style="margin-top:0.75rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ===== Antwoord-keys =====
+// Elke key is een ID, met list van geaccepteerde antwoorden (genormaliseerd) en/of numerieke target.
+const KEY = {
+  // Opgave 1 — transformatie-velden zijn open tekst, niet auto-scoren (leerling vergelijkt zelf met uitwerking)
+  'o1a-as': {accept:['y=1','y = 1','1']},
+  'o1a-br': {accept:['(←,1)','(-∞,1)','(-inf,1)','y<1','<1','1>y','(-oneindig,1)']},
+  'o1b-as': {accept:['y=-7','y = -7','-7']},
+  'o1b-br': {accept:['(-7,→)','(-7,->)','y>-7','>-7','-7<y','(-7,inf)','(-7,oneindig)']},
+  // Opgave 2
+  'o2a-b': {accept:['15']},
+  'o2a-g': {accept:['9']},
+  'o2b-b': {accept:['16']},
+  'o2b-g': {accept:['4']},
+  'o2c-b': {accept:['5']},
+  'o2c-g': {accept:['1/25','0.04','0,04']},
+  // Opgave 3
+  'o3a': {accept:['1/2','0.5','0,5','½','x=1/2','x=0,5','x=0.5']},
+  'o3b': {accept:['-1/3','-0.3333','-0,3333','x=-1/3']},
+  'o3c': {accept:['-8','x=-8']},
+  // Opgave 4
+  'o4a': {accept:['(2,→)','(2,->)','y>2','>2','2<y','(2,inf)','(2,oneindig)']},
+  'o4b': {accept:['0≤x≤2','0<=x<=2','0&lt;=x&lt;=2','x∈[0,2]','[0,2]','0...2']},
+  // Opgave 5
+  'o5a': {accept:['2.5','2,5','5/2','2½']},
+  'o5b': {accept:['7','x=7']},
+  'o5c': {accept:['x=-4','x = -4','-4']}
+};
+
+function normalize(s){
+  return (s || '').toString().toLowerCase().replace(/\s+/g,'').replace(/,/g,'.');
+}
+
+function checkOne(id, key){
+  const el = document.getElementById(id);
+  if(!el) return null;
+  const norm = normalize(el.value);
+  if(!norm) return false; // niet ingevuld telt fout maar geen visuele markering
+  let ok = false;
+  if(key.accept){
+    ok = key.accept.some(a => normalize(a) === norm);
+  }
+  if(!ok && key.contains){
+    // antwoord moet ten minste 2 van de termen bevatten
+    const hits = key.contains.filter(t => norm.indexOf(normalize(t)) !== -1).length;
+    if(hits >= 2) ok = true;
+  }
+  if(!ok && key.numeric){
+    const num = parseFloat(norm);
+    if(isFinite(num) && Math.abs(num - key.numeric.target) <= key.numeric.tol) ok = true;
+  }
+  el.classList.remove('correct','incorrect');
+  el.classList.add(ok ? 'correct' : 'incorrect');
+  return ok;
+}
+
+function checkAll(){
+  let total = 0, correct = 0;
+  // per kaart bijhouden
+  const perCard = {};
+  Object.keys(KEY).forEach(id => {
+    const cardId = id.match(/o(\d)/) ? 'card-' + id.match(/o(\d)/)[1] : null;
+    const ok = checkOne(id, KEY[id]);
+    total++;
+    if(ok) correct++;
+    if(cardId){
+      if(!perCard[cardId]) perCard[cardId] = {total:0, correct:0};
+      perCard[cardId].total++;
+      if(ok) perCard[cardId].correct++;
+    }
+  });
+  // kaart-styling
+  Object.keys(perCard).forEach(cardId => {
+    const card = document.getElementById(cardId);
+    card.classList.remove('scored-correct','scored-incorrect');
+    if(perCard[cardId].correct === perCard[cardId].total) card.classList.add('scored-correct');
+    else if(perCard[cardId].correct === 0) card.classList.add('scored-incorrect');
+  });
+  // score-kaart
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  const sc = document.getElementById('score-card');
+  document.getElementById('score-pct').textContent = pct + '%';
+  document.getElementById('score-detail').textContent = correct + ' van ' + total + ' onderdelen goed';
+  let msg = '';
+  if(pct >= 85) msg = '🎉 Top! Je bent klaar voor de toets.';
+  else if(pct >= 70) msg = '👍 Goed bezig — kijk nog even naar wat fout ging.';
+  else if(pct >= 50) msg = '📚 Loop Dag 1 t/m Dag 4 nog eens door — vooral wat hier fout ging.';
+  else msg = '💪 Niet ontmoedigen! Maak Dag 1 t/m Dag 4 opnieuw, dan komt het.';
+  document.getElementById('score-msg').textContent = msg;
+  sc.classList.add('show');
+  sc.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+function toggleAnswer(id){
+  document.getElementById(id).classList.toggle('show');
+}
+
+function resetAll(){
+  Object.keys(KEY).forEach(id => {
+    const el = document.getElementById(id);
+    if(el){ el.value=''; el.classList.remove('correct','incorrect'); }
+  });
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('scored-correct','scored-incorrect'));
+  document.querySelectorAll('.answer-block').forEach(a => a.classList.remove('show'));
+  document.getElementById('score-card').classList.remove('show');
+  resetTimer();
+}
+
+// ===== Timer =====
+let timerInt = null, secondsLeft = 30 * 60;
+function fmt(s){
+  const m = Math.floor(s / 60), sec = s % 60;
+  return '⏱ ' + m + ':' + (sec < 10 ? '0' : '') + sec;
+}
+function tick(){
+  secondsLeft--;
+  const t = document.getElementById('timer');
+  t.textContent = fmt(secondsLeft);
+  t.classList.remove('warning','danger');
+  if(secondsLeft <= 60) t.classList.add('danger');
+  else if(secondsLeft <= 5 * 60) t.classList.add('warning');
+  if(secondsLeft <= 0){
+    clearInterval(timerInt);
+    timerInt = null;
+    t.textContent = '⏱ 0:00';
+  }
+}
+function startTimer(){
+  if(timerInt) return;
+  timerInt = setInterval(tick, 1000);
+}
+function resetTimer(){
+  if(timerInt){ clearInterval(timerInt); timerInt = null; }
+  secondsLeft = 30 * 60;
+  const t = document.getElementById('timer');
+  t.textContent = fmt(secondsLeft);
+  t.classList.remove('warning','danger');
+}
+</script>
+</body>
+</html>

@@ -133,10 +133,10 @@ footer a{color:var(--primary);text-decoration:none}
 </div>
 
 <div class="example-box">
-<strong>Voorbeeld 2:</strong> los op <span class="math">1 + 2 · <sup>3</sup>log(x) = 7</span>
+<strong>Voorbeeld 2:</strong> los op <span class="math">2 + <sup>5</sup>log(x) = 5</span>
 <ol style="margin-left:1.2rem;margin-top:0.5rem">
-<li>Eerst isoleren: <span class="math">2 · <sup>3</sup>log(x) = 6</span> dus <span class="math"><sup>3</sup>log(x) = 3</span></li>
-<li>Vertaal: <span class="math">x = 3<sup>3</sup> = 27</span></li>
+<li>Eerst isoleren: <span class="math"><sup>5</sup>log(x) = 3</span></li>
+<li>Vertaal: <span class="math">x = 5<sup>3</sup> = 125</span></li>
 </ol>
 </div>
 
@@ -210,7 +210,7 @@ footer a{color:var(--primary);text-decoration:none}
 <div class="q"><label>a) <span class="math">2<sup>x</sup> = ½√2</span> &rArr; <span class="math">x =</span></label><input type="text" id="o74a"><button class="btn-hint btn" onclick="checkText('o74a',['-0.5','-0,5','-1/2','-½'])">Check</button></div>
 <div class="feedback" id="fb-o74a"></div>
 
-<div class="q"><label>b) <span class="math"><sup>3</sup>log(4x − 1) = −2</span> &rArr; <span class="math">x =</span></label><input type="text" id="o74b" placeholder="bv. 5/18 of 0,28"><button class="btn-hint btn" onclick="checkNumeric('o74b',10/36,0.005,['10/36','5/18'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o74b-steps')">Stappen</button></div>
+<div class="q"><label>b) <span class="math"><sup>3</sup>log(4x − 1) = −2</span> &rArr; <span class="math">x =</span></label><input type="text" id="o74b" placeholder="breuk of decimaal"><button class="btn-hint btn" onclick="checkNumeric('o74b',10/36,0.005,['10/36','5/18'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o74b-steps')">Stappen</button></div>
 <div class="feedback" id="fb-o74b"></div>
 <div class="detail-steps" id="o74b-steps">
 <h5>Stappenplan</h5>
@@ -281,11 +281,11 @@ footer a{color:var(--primary);text-decoration:none}
 <div class="tip-box"><strong>💡 Truc:</strong> de verticale asymptoot ligt waar de waarde tussen de logaritme-haakjes 0 wordt. Stel dus <span class="math">ax + b = 0</span> en los <span class="math">x</span> op.</div>
 
 <div class="example-box">
-<strong>Voorbeeld:</strong> bepaal de verticale asymptoot van <span class="math">f(x) = <sup>3</sup>log(2x + 6) − 1</span>.
+<strong>Voorbeeld:</strong> bepaal de verticale asymptoot van <span class="math">f(x) = <sup>2</sup>log(3x − 9) + 4</span>.
 <ol style="margin-left:1.2rem;margin-top:0.5rem">
-<li>Stel het argument 0: <span class="math">2x + 6 = 0</span></li>
-<li><span class="math">x = −3</span></li>
-<li>Verticale asymptoot: <span class="math">x = −3</span>. (De −1 buiten de log heeft hier geen invloed op.)</li>
+<li>Stel het argument 0: <span class="math">3x − 9 = 0</span></li>
+<li><span class="math">x = 3</span></li>
+<li>Verticale asymptoot: <span class="math">x = 3</span>. (De +4 buiten de log heeft hier geen invloed op.)</li>
 </ol>
 </div>
 </div>
@@ -337,7 +337,7 @@ footer a{color:var(--primary);text-decoration:none}
 
 <h3>Opgave 81 — bereken voor welke <span class="math">x</span> geldt <span class="math">f(x) ≤ 7</span></h3>
 <p>Gegeven: <span class="math">f(x) = <sup>3</sup>log(2x − 5) + 4</span>. Bepaal voor welke <span class="math">x</span> geldt <span class="math">f(x) ≤ 7</span>.</p>
-<div class="q"><label>oplossing voor <span class="math">x</span>:</label><input type="text" id="o81" placeholder="bv. 2,5 < x ≤ ..."><button class="btn-hint btn" onclick="checkText('o81',['2.5&lt;x≤16','2,5&lt;x≤16','2.5&lt;x&lt;=16','2,5&lt;x&lt;=16','2½&lt;x≤16','2½&lt;x&lt;=16'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o81-steps')">Stappen</button></div>
+<div class="q"><label>oplossing voor <span class="math">x</span>:</label><input type="text" id="o81" placeholder="a < x ≤ b"><button class="btn-hint btn" onclick="checkText('o81',['2.5&lt;x≤16','2,5&lt;x≤16','2.5&lt;x&lt;=16','2,5&lt;x&lt;=16','2½&lt;x≤16','2½&lt;x&lt;=16'])">Check</button><button class="btn-reveal btn" onclick="toggleSteps('o81-steps')">Stappen</button></div>
 <div class="feedback" id="fb-o81"></div>
 <div class="detail-steps" id="o81-steps">
 <h5>Stappenplan</h5>

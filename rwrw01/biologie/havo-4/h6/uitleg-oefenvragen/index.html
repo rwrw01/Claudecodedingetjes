@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uitleg &amp; oefenvragen H6 — Biologie HAVO 4 — Kapser</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--green:#16a34a;--green-dark:#14532d;--green-light:#dcfce7;--accent:#0891b2;--yellow:#fef3c7;--yellow-dark:#78350f;--red:#fef2f2;--red-dark:#b91c1c;--blue:#dbeafe;--blue-dark:#1e3a8a;--radius:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 100%);color:#fff;padding:2.25rem 1rem;text-align:center}
+header h1{font-size:1.85rem;margin-bottom:0.3rem}
+header .toets-badge{display:inline-block;margin-top:0.5rem;background:rgba(255,255,255,0.2);padding:0.3rem 0.85rem;border-radius:999px;font-size:0.88rem;font-weight:600}
+.breadcrumb{padding:1rem;max-width:900px;margin:0 auto;font-size:0.9rem;color:var(--muted)}
+.breadcrumb a{color:var(--green);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 1rem 2.5rem;flex:1;width:100%}
+
+/* Save bar */
+.save-bar{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;padding:0.75rem 1rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);margin-bottom:1rem;font-size:0.88rem}
+.save-bar .auto-save{display:flex;align-items:center;gap:0.45rem;color:var(--green-dark);font-weight:600;flex:1;min-width:0}
+.save-bar .auto-save .dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(22,163,74,0.6);animation:pulse 2.2s ease-out infinite;flex-shrink:0}
+.save-bar .auto-save .dot.dim{background:var(--muted);animation:none;box-shadow:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,0.55)}70%{box-shadow:0 0 0 10px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.save-bar .saved-text{font-size:0.85rem}
+.save-bar .saved-text small{display:block;font-weight:400;color:var(--muted);font-size:0.75rem;line-height:1.2}
+.btn-mini{padding:0.4rem 0.85rem;font-size:0.82rem;font-weight:600;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;transition:all 0.15s;font-family:inherit;white-space:nowrap}
+.btn-mini:hover{border-color:var(--green);color:var(--green)}
+.btn-mini.danger{color:#b91c1c;border-color:#fecaca}
+.btn-mini.danger:hover{background:#fef2f2;border-color:#b91c1c;color:#b91c1c}
+.btn-mini.danger.confirm{background:#dc2626;color:#fff;border-color:#dc2626}
+.export-link-wrap{display:none;width:100%;margin-top:0.5rem;padding-top:0.6rem;border-top:1px solid #bbf7d0}
+.export-link-wrap.show{display:block}
+.export-link-wrap .export-explain{font-size:0.78rem;color:var(--green-dark);margin-bottom:0.4rem}
+.export-link-wrap .export-row{display:flex;gap:0.4rem;align-items:center}
+.export-link-wrap input{flex:1;padding:0.45rem 0.55rem;border:1px solid var(--border);border-radius:6px;font-size:0.78rem;font-family:monospace;background:#fff}
+
+/* TOC */
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+.toc h2{font-size:1rem;color:var(--green-dark);margin-bottom:0.6rem}
+.toc ol{list-style:none;counter-reset:toc;padding:0}
+.toc li{counter-increment:toc;padding:0.35rem 0;border-bottom:1px dashed var(--border)}
+.toc li:last-child{border-bottom:none}
+.toc li::before{content:counter(toc) ".";color:var(--green);font-weight:700;margin-right:0.5rem}
+.toc a{color:var(--text);text-decoration:none}
+.toc a:hover{color:var(--green)}
+
+/* Section card */
+.section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem;scroll-margin-top:1rem}
+.section h2{font-size:1.4rem;color:var(--green-dark);border-bottom:2px solid var(--green);padding-bottom:0.4rem;margin-bottom:0.85rem}
+.section h3{font-size:1.05rem;color:var(--green-dark);margin:1.1rem 0 0.4rem}
+.section p{margin:0.5rem 0}
+.section ul, .section ol{margin:0.5rem 0 0.5rem 1.4rem}
+.section li{margin:0.25rem 0}
+.section strong{color:var(--green-dark)}
+
+/* Boxes */
+.tip-box{background:var(--yellow);border-left:4px solid #f59e0b;padding:0.75rem 1rem;border-radius:8px;margin:0.85rem 0;font-size:0.92rem}
+.tip-box::before{content:"💡 ";font-weight:700;color:var(--yellow-dark)}
+.warning-box{background:var(--red);border-left:4px solid var(--red-dark);padding:0.75rem 1rem;border-radius:8px;margin:0.85rem 0;font-size:0.92rem}
+.warning-box::before{content:"⚠️ ";font-weight:700;color:var(--red-dark)}
+.example-box{background:var(--green-light);border-left:4px solid var(--green);padding:0.75rem 1rem;border-radius:8px;margin:0.85rem 0;font-size:0.92rem}
+.example-box::before{content:"📝 ";font-weight:700;color:var(--green-dark)}
+.formula{background:linear-gradient(90deg,#ede9fe,#ddd6fe);padding:0.75rem 1rem;border-radius:8px;margin:0.85rem 0;font-size:1.05rem;text-align:center;font-family:Georgia,serif;font-style:italic;color:#4c1d95}
+
+/* Try-it block */
+.try-it{border:2px dashed var(--green);background:#f0fdf4;border-radius:10px;padding:1rem 1.1rem;margin:1rem 0}
+.try-it h4{font-size:0.95rem;color:var(--green-dark);margin-bottom:0.5rem}
+.try-it h4::before{content:"✏️ ";}
+.q-text{margin-bottom:0.5rem}
+.q-text strong{color:var(--green-dark)}
+.q-options{margin:0.4rem 0}
+.q-options label{display:block;padding:0.4rem 0.6rem;margin:0.2rem 0;background:#fff;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:0.92rem;transition:all 0.15s}
+.q-options label:hover{border-color:var(--green);background:#f0fdf4}
+.q-options input[type=radio]{margin-right:0.45rem}
+.q-options label.correct{background:#dcfce7;border-color:var(--green);color:var(--green-dark);font-weight:600}
+.q-options label.wrong{background:#fee2e2;border-color:var(--red-dark);color:var(--red-dark)}
+.input-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin:0.45rem 0}
+.input-row input[type=text]{flex:1;min-width:180px;padding:0.5rem 0.7rem;border:2px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem}
+.input-row input[type=text]:focus{outline:none;border-color:var(--green)}
+.input-row input[type=text].correct{border-color:var(--green);background:#dcfce7}
+.input-row input[type=text].wrong{border-color:var(--red-dark);background:#fee2e2}
+.input-row textarea{flex:1;min-width:240px;padding:0.5rem 0.7rem;border:2px solid var(--border);border-radius:6px;font-family:inherit;font-size:0.95rem;min-height:60px;resize:vertical}
+.btn{padding:0.45rem 0.9rem;border:none;border-radius:6px;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:inherit}
+.btn-check{background:var(--green);color:#fff}
+.btn-check:hover{background:var(--green-dark)}
+.btn-steps{background:#fff;color:var(--green);border:2px solid var(--green)}
+.btn-steps:hover{background:var(--green-light)}
+.feedback{margin-top:0.4rem;padding:0.5rem 0.75rem;border-radius:6px;font-size:0.88rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#dcfce7;color:var(--green-dark)}
+.feedback.wrong{background:#fee2e2;color:var(--red-dark)}
+.feedback.review{background:var(--yellow);color:var(--yellow-dark)}
+.detail-steps{display:none;margin-top:0.55rem;background:#fffbeb;border:1px solid #fde68a;border-radius:6px;padding:0.75rem 0.9rem;font-size:0.9rem;line-height:1.65}
+.detail-steps.show{display:block}
+.detail-steps strong{color:var(--yellow-dark)}
+
+/* Recap quizjes */
+.recap-quiz{display:flex;flex-wrap:wrap;gap:0.5rem;margin:0.5rem 0}
+.recap-quiz button{padding:0.4rem 0.7rem;border:2px solid var(--border);background:#fff;color:var(--text);border-radius:6px;cursor:pointer;font-size:0.85rem;transition:all 0.15s}
+.recap-quiz button.correct{background:#dcfce7;border-color:var(--green);color:var(--green-dark);font-weight:600}
+.recap-quiz button.wrong{background:#fee2e2;border-color:var(--red-dark);color:var(--red-dark)}
+
+/* Widget: enzyme curve */
+.widget{background:#fff;border:1px solid var(--border);border-radius:8px;padding:1rem;margin:1rem 0}
+.widget-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0.75rem;margin:0.5rem 0}
+.widget-controls label{font-size:0.85rem;color:var(--muted);font-weight:600}
+.widget-controls input[type=range]{width:100%;margin-top:0.25rem}
+.widget-info{font-size:0.85rem;color:var(--muted);margin-top:0.4rem}
+.widget-info strong{color:var(--green-dark)}
+
+/* Drag-and-drop */
+.dragdrop-area{margin:0.75rem 0}
+.dd-bank{display:flex;flex-wrap:wrap;gap:0.4rem;padding:0.6rem;background:#f8fafc;border:1px dashed var(--border);border-radius:8px;min-height:50px}
+.dd-item{padding:0.35rem 0.7rem;background:#fff;border:2px solid var(--border);border-radius:6px;font-size:0.85rem;cursor:grab;user-select:none;transition:all 0.12s}
+.dd-item:hover{border-color:var(--green);transform:translateY(-1px)}
+.dd-item.dragging{opacity:0.5}
+.dd-item.selected{background:var(--green);color:#fff;border-color:var(--green-dark);box-shadow:0 0 0 2px rgba(22,163,74,0.3)}
+.dd-targets{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.6rem;margin-top:0.7rem}
+.dd-target{background:#fff;border:1px solid var(--border);border-radius:8px;padding:0.6rem;min-height:75px}
+.dd-target h5{font-size:0.85rem;color:var(--green-dark);margin-bottom:0.35rem}
+.dd-target .dd-slot{min-height:36px;padding:0.4rem;background:#f8fafc;border:1px dashed var(--border);border-radius:6px;display:flex;flex-wrap:wrap;gap:0.3rem;align-content:flex-start}
+.dd-target.over .dd-slot{background:#dcfce7;border-color:var(--green)}
+.dd-target.correct{border-color:var(--green);background:#f0fdf4}
+.dd-target.wrong{border-color:var(--red-dark);background:#fef2f2}
+
+/* Interactive SVG */
+.svg-wrap{margin:1rem 0;text-align:center}
+.svg-wrap svg{max-width:100%;height:auto;border:1px solid var(--border);border-radius:8px;background:#fafafa}
+.organ-tooltip{position:absolute;background:var(--green-dark);color:#fff;padding:0.5rem 0.75rem;border-radius:6px;font-size:0.85rem;max-width:240px;line-height:1.4;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:50;box-shadow:0 4px 12px rgba(0,0,0,0.2)}
+.organ-tooltip.show{opacity:1}
+.organ-tooltip::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--green-dark)}
+[data-organ]{cursor:pointer;transition:filter 0.15s}
+[data-organ]:hover{filter:brightness(1.15)}
+[data-organ].active{filter:brightness(1.25) drop-shadow(0 0 6px var(--green))}
+
+/* Bloed-glucose simulator */
+.glucose-sim{position:relative}
+.glucose-sim .actions{display:flex;flex-wrap:wrap;gap:0.4rem;margin:0.5rem 0}
+
+/* Score summary */
+.score-summary{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(248,250,252,0.6) 0%,#fff 30%);padding:1rem;margin:0 -1rem;border-top:2px solid var(--green);box-shadow:0 -4px 12px rgba(0,0,0,0.05);z-index:10}
+.score-summary .row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;max-width:900px;margin:0 auto}
+.score-summary strong{color:var(--green-dark);font-size:1.05rem}
+.score-bar-track{flex:1;min-width:180px;height:10px;background:var(--border);border-radius:999px;overflow:hidden}
+.score-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),#22c55e);border-radius:999px;transition:width 0.4s ease}
+
+/* Nav-bottom */
+.nav-bottom{display:flex;justify-content:space-between;gap:0.75rem;margin:1.5rem 0;flex-wrap:wrap}
+.nav-bottom a{flex:1;min-width:140px;padding:0.85rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);text-decoration:none;color:var(--text);font-weight:600;text-align:center;transition:all 0.15s}
+.nav-bottom a:hover{border-color:var(--green);color:var(--green)}
+
+/* Footer */
+footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:0.82rem;border-top:1px solid var(--border);margin-top:2rem;background:#fff}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:600px){
+  header h1{font-size:1.45rem}
+  .section{padding:1rem}
+  .section h2{font-size:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Uitleg &amp; oefenvragen — H6 Voeding en vertering</h1>
+<p>Per paragraaf uitleg, interactieve visuals en oefenvragen uit het boek</p>
+<div class="toets-badge">📅 Toets: dinsdag 12 mei 2026</div>
+</header>
+
+<nav class="breadcrumb">
+<a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo;
+<a href="../../../../">Ralph</a> &rsaquo;
+<a href="../../../">Biologie</a> &rsaquo;
+<a href="../../">HAVO 4</a> &rsaquo;
+<a href="../">Hoofdstuk 6</a> &rsaquo; Uitleg &amp; oefenvragen
+</nav>
+
+<div class="container">
+
+<div class="save-bar">
+  <div class="auto-save">
+    <span class="dot dim" id="save-dot"></span>
+    <span class="saved-text" id="saved-status"><strong>Voortgang wordt automatisch opgeslagen</strong><small>Op dit apparaat — werkt offline</small></span>
+  </div>
+  <button class="btn-mini" id="btn-export" title="Genereer een link om je voortgang naar een ander apparaat over te zetten">📱 Naar ander apparaat</button>
+  <button class="btn-mini danger" id="btn-reset" title="Wis alle voortgang op dit apparaat">🗑 Wissen</button>
+  <div class="export-link-wrap" id="export-wrap">
+    <div class="export-explain">Kopieer onderstaande link en open hem op je andere apparaat (telefoon ↔ laptop) — je voortgang gaat mee.</div>
+    <div class="export-row">
+      <input type="text" id="export-link" readonly>
+      <button class="btn-mini" id="btn-copy-link">Kopieer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toc">
+<h2>📚 Inhoud</h2>
+<ol>
+<li><a href="#s61">§6.1 Voeding &amp; gezondheid</a></li>
+<li><a href="#s62">§6.2 Verteringsstelsel — interactieve organen-kaart</a></li>
+<li><a href="#s63">§6.3 Enzymen — temperatuur- &amp; pH-slider</a></li>
+<li><a href="#s64">§6.4 Opname van stoffen — darm-zoom</a></li>
+<li><a href="#s65">§6.5 Lever — bloedglucose-simulator</a></li>
+</ol>
+</div>
+
+<!-- ========== §6.1 ========== -->
+<section class="section" id="s61">
+<h2>§6.1 Voeding &amp; gezondheid</h2>
+
+<p>Je lichaam haalt uit voeding alles wat het nodig heeft. We delen voedingsstoffen in vier groepen op basis van hun <strong>functie</strong>:</p>
+
+<table style="width:100%;border-collapse:collapse;margin:0.85rem 0;font-size:0.92rem">
+<thead><tr style="background:var(--green-light);text-align:left">
+<th style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Groep</th>
+<th style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Functie</th>
+<th style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Voorbeelden</th>
+</tr></thead>
+<tbody>
+<tr><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)"><strong>Bouwstoffen</strong></td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Groei, herstel en onderhoud</td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Eiwitten, mineralen, water</td></tr>
+<tr><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)"><strong>Brandstoffen</strong></td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Energie leveren</td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Koolhydraten, vetten</td></tr>
+<tr><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)"><strong>Beschermende stoffen</strong></td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Beschermen tegen ziekten</td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Vitamines, mineralen</td></tr>
+<tr><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)"><strong>Regelstoffen</strong></td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Regelen processen (enzymwerking, hormonen)</td><td style="padding:0.5rem 0.6rem;border:1px solid var(--border)">Vitamines, mineralen</td></tr>
+</tbody>
+</table>
+
+<div class="tip-box">
+Vitamines en mineralen staan in <em>twee</em> groepen — ze zijn zowel beschermend als regelend. Onthoud: bouw &amp; brand leveren materiaal en energie; bescherm &amp; regel zorgen dat alles goed werkt.
+</div>
+
+<h3>Energiebehoefte en BMI</h3>
+<p>Hoeveel energie je per dag nodig hebt hangt af van leeftijd, geslacht, lichaamsgrootte en hoe actief je bent. Energie wordt uitgedrukt in <strong>kJ</strong> (kilojoule) of <strong>kcal</strong> (kilocalorie).</p>
+
+<div class="formula">BMI = massa (kg) / lengte² (m²)</div>
+
+<div class="example-box">
+<strong>BMI-categorieën (volwassenen):</strong> &lt; 18,5 ondergewicht · 18,5–25 gezond · 25–30 overgewicht · &gt; 30 obesitas.<br>
+Voor jongeren (tot ~18 jaar) gelden andere grenzen die afhangen van leeftijd en geslacht (zie Voedingscentrum).
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 12 — Energiebehoefte (boek)</h4>
+<p class="q-text">Een actieve jongen van 16 jaar heeft een dagelijkse energiebehoefte van 12,5 MJ. Hoeveel kJ is dit?</p>
+<div class="input-row">
+  <input type="text" id="q12-input" placeholder="">
+  <button class="btn btn-check" onclick="checkText('q12-input','q12-fb',['12500','12500 kj','12500kj'],{numericTarget:12500})">Check</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q12-steps')">Stappenplan</button>
+</div>
+<div class="feedback" id="q12-fb"></div>
+<div class="detail-steps" id="q12-steps">
+<strong>Stappenplan</strong><br>
+1 megajoule (MJ) = 1000 kilojoule (kJ).<br>
+12,5 MJ × 1000 = <strong>12.500 kJ</strong>.
+</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 13 — BMI berekenen (boek)</h4>
+<p class="q-text">Anneke is 14 jaar, 1,60 m lang en weegt 50 kg. Bereken haar BMI in 1 decimaal nauwkeurig.</p>
+<div class="input-row">
+  <input type="text" id="q13-input" placeholder="">
+  <button class="btn btn-check" onclick="checkText('q13-input','q13-fb',[],{numericTarget:19.5,tol:0.1})">Check</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q13-steps')">Stappenplan</button>
+</div>
+<div class="feedback" id="q13-fb"></div>
+<div class="detail-steps" id="q13-steps">
+<strong>Stappenplan</strong><br>
+1. Lengte² = 1,60 × 1,60 = 2,56 m²<br>
+2. BMI = 50 / 2,56 = 19,53...<br>
+3. Afgerond op 1 decimaal: <strong>19,5</strong>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 18 — Schijf van Vijf (boek)</h4>
+<p class="q-text">Wat is volgens het Voedingscentrum géén onderdeel van de Schijf van Vijf?</p>
+<div class="q-options" data-q="q18">
+<label><input type="radio" name="q18" value="0"> Volkoren brood</label>
+<label><input type="radio" name="q18" value="1"> Ongezouten noten</label>
+<label><input type="radio" name="q18" value="2"> Frisdrank met suiker</label>
+<label><input type="radio" name="q18" value="3"> Magere yoghurt</label>
+</div>
+<button class="btn btn-check" onclick="checkRadio('q18',2,'q18-fb','Frisdrank met toegevoegde suiker zit niet in de Schijf van Vijf — het hoort bij de zogenoemde \\'dagkeuze-buiten-de-schijf\\' (max. 3–5 kleine porties per dag).')">Check</button>
+<div class="feedback" id="q18-fb"></div>
+</div>
+
+</section>
+
+<!-- ========== §6.2 ========== -->
+<section class="section" id="s62">
+<h2>§6.2 Verteringsstelsel</h2>
+
+<p>Voedsel moet eerst klein gemaakt worden voordat je cellen er iets mee kunnen. Dat gebeurt in twee stappen:</p>
+<ul>
+<li><strong>Mechanische vertering</strong> — fysiek kleiner maken (kauwen, knedende bewegingen). De moleculen veranderen <em>niet</em>.</li>
+<li><strong>Chemische vertering</strong> — moleculen breken met behulp van <strong>verteringsenzymen</strong>. Grote moleculen → kleine moleculen die in het bloed kunnen.</li>
+</ul>
+
+<p>Het voedsel wordt voortgeduwd door <strong>peristaltische bewegingen</strong>: ringspieren in de wand trekken in golven samen, zodat de voedselbrij vooruit gaat — ook ondersteboven (denk aan astronauten).</p>
+
+<h3>Klik op een orgaan om de functie te zien</h3>
+<div class="svg-wrap" style="position:relative">
+<svg id="svg-vertering" viewBox="0 0 600 460" xmlns="http://www.w3.org/2000/svg" aria-label="Verteringsstelsel">
+  <!-- silhouet -->
+  <ellipse cx="300" cy="60" rx="50" ry="55" fill="#fde2c8" stroke="#a16207" stroke-width="1.5"/>
+  <rect x="225" y="105" width="150" height="320" rx="40" fill="#fde2c8" stroke="#a16207" stroke-width="1.5"/>
+  <!-- mond/speeksel -->
+  <g data-organ="mond" data-functie="MOND &amp; SPEEKSEL: kauwen (mechanisch) + amylase in speeksel begint vertering van zetmeel.">
+    <ellipse cx="300" cy="78" rx="14" ry="6" fill="#dc2626"/>
+    <text x="345" y="80" font-size="13" fill="#14532d" font-weight="600">mond</text>
+  </g>
+  <!-- speekselklier -->
+  <g data-organ="speekselklier" data-functie="SPEEKSELKLIEREN: maken speeksel met het enzym amylase. Bevochtigen voedsel zodat het kan glijden.">
+    <circle cx="270" cy="92" r="5" fill="#fbbf24"/>
+    <circle cx="330" cy="92" r="5" fill="#fbbf24"/>
+    <text x="240" y="105" font-size="11" fill="#14532d">speekselklier</text>
+  </g>
+  <!-- slokdarm -->
+  <g data-organ="slokdarm" data-functie="SLOKDARM: transporteert voedsel naar de maag via peristaltische (golvende) bewegingen. Geen vertering.">
+    <rect x="295" y="115" width="10" height="80" fill="#f87171"/>
+    <text x="315" y="160" font-size="13" fill="#14532d" font-weight="600">slokdarm</text>
+  </g>
+  <!-- maag -->
+  <g data-organ="maag" data-functie="MAAG: maagsap met zoutzuur (HCl) en pepsine — start eiwitvertering en doodt bacteriën. Sterke knedende bewegingen.">
+    <path d="M 240 195 Q 235 240 270 270 Q 320 285 335 250 Q 340 215 320 200 L 295 195 Z" fill="#fb923c" stroke="#9a3412" stroke-width="1.5"/>
+    <text x="265" y="240" font-size="13" fill="#14532d" font-weight="700">maag</text>
+  </g>
+  <!-- lever (anatomisch rechts in lichaam = SVG links) -->
+  <g data-organ="lever" data-functie="LEVER: maakt gal (emulgeert vetten), regelt bloedglucose via glycogeen, breekt aminozuren af tot ureum, ontgift.">
+    <path d="M 230 200 Q 235 240 280 245 Q 290 230 285 210 L 245 195 Z" fill="#7c2d12" opacity="0.85"/>
+    <text x="240" y="225" font-size="12" fill="#fff" font-weight="700">lever</text>
+  </g>
+  <!-- galblaas (onder lever) -->
+  <g data-organ="galblaas" data-functie="GALBLAAS: opslag van gal onder de lever. Knijpt gal naar de dunne darm bij een vetrijke maaltijd.">
+    <ellipse cx="265" cy="252" rx="6" ry="9" fill="#65a30d" stroke="#14532d" stroke-width="0.8"/>
+    <text x="180" y="258" font-size="11" fill="#14532d">galblaas</text>
+    <line x1="220" y1="255" x2="258" y2="252" stroke="#14532d" stroke-width="0.8"/>
+  </g>
+  <!-- alvleesklier -->
+  <g data-organ="alvleesklier" data-functie="ALVLEESKLIER (pancreas): maakt alvleessap met enzymen (amylase, trypsine, lipase) + hormonen insuline en glucagon (eilandjes van Langerhans).">
+    <ellipse cx="320" cy="275" rx="30" ry="8" fill="#fde047" stroke="#a16207" stroke-width="1.2"/>
+    <text x="355" y="280" font-size="11" fill="#14532d">alvleesklier</text>
+  </g>
+  <!-- dunne darm -->
+  <g data-organ="dunne-darm" data-functie="DUNNE DARM: belangrijkste plek van vertering en opname. Enzymen uit alvleessap en darmsap, opname via darmplooien, darmvlokken en microvilli.">
+    <path d="M 250 290 Q 230 320 270 340 Q 320 330 290 360 Q 240 380 290 395 Q 340 400 280 415" fill="none" stroke="#f59e0b" stroke-width="14" stroke-linecap="round"/>
+    <text x="345" y="370" font-size="13" fill="#14532d" font-weight="700">dunne darm</text>
+  </g>
+  <!-- dikke darm -->
+  <g data-organ="dikke-darm" data-functie="DIKKE DARM: opname van water en mineralen. Darmbacteriën verteren vezels en maken vitamine K en B-vitamines.">
+    <path d="M 240 290 L 240 410 L 350 410 L 350 290" fill="none" stroke="#92400e" stroke-width="22" stroke-linecap="round"/>
+    <text x="120" y="350" font-size="13" fill="#14532d" font-weight="700">dikke darm</text>
+    <line x1="180" y1="350" x2="225" y2="350" stroke="#14532d" stroke-width="1"/>
+  </g>
+  <!-- endeldarm/anus -->
+  <g data-organ="endeldarm" data-functie="ENDELDARM &amp; ANUS: opslag van ontlasting tot uitscheiding via de anus.">
+    <rect x="290" y="415" width="20" height="20" fill="#92400e"/>
+    <text x="320" y="430" font-size="12" fill="#14532d">endeldarm</text>
+  </g>
+</svg>
+<div class="organ-tooltip" id="organ-tooltip"></div>
+</div>
+
+<div class="tip-box">
+Onthoud de volgorde van mond naar anus: <strong>mond → slokdarm → maag → dunne darm → dikke darm → endeldarm → anus</strong>. De lever, alvleesklier en galblaas geven hun stoffen <em>aan</em> de dunne darm; voedsel komt er niet doorheen.
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 24 — Volgorde organen (boek)</h4>
+<p class="q-text">Een hap voedsel komt achtereenvolgens in welke organen? Vul de volgorde in met komma's:</p>
+<div class="input-row">
+  <input type="text" id="q24-input" placeholder="">
+  <button class="btn btn-check" onclick="checkText('q24-input','q24-fb',[
+    'mond,slokdarm,maag,dunne darm,dikke darm,endeldarm',
+    'mond,slokdarm,maag,dunne darm,dikke darm,endeldarm,anus',
+    'mond,slokdarm,maag,dunne darm,dikke darm,rectum',
+    'mond,slokdarm,maag,dunne darm,dikke darm,rectum,anus',
+    'mond-slokdarm-maag-dunne darm-dikke darm-endeldarm',
+    'mondholte,slokdarm,maag,dunne darm,dikke darm,endeldarm'
+  ])">Check</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q24-steps')">Stappenplan</button>
+</div>
+<div class="feedback" id="q24-fb"></div>
+<div class="detail-steps" id="q24-steps">
+<strong>Volgorde:</strong> mond → slokdarm → maag → dunne darm → dikke darm → endeldarm → anus.<br>
+De lever, alvleesklier en galblaas zitten náást de dunne darm — voedsel komt er niet doorheen, alleen hun verteringssappen wel.
+</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 33 — Welk verteringssap waar? (boek)</h4>
+<p class="q-text">Verbind elk sap met de juiste plaats. Op laptop: <em>sleep</em> de naam. Op tablet/telefoon: <em>tik</em> eerst op een sap, daarna op het juiste vak.</p>
+<div class="dragdrop-area" id="dd1">
+  <div class="dd-bank" id="dd1-bank">
+    <div class="dd-item" draggable="true" data-id="speeksel">Speeksel</div>
+    <div class="dd-item" draggable="true" data-id="maagsap">Maagsap</div>
+    <div class="dd-item" draggable="true" data-id="alvleessap">Alvleessap</div>
+    <div class="dd-item" draggable="true" data-id="darmsap">Darmsap</div>
+    <div class="dd-item" draggable="true" data-id="gal">Gal</div>
+  </div>
+  <div class="dd-targets">
+    <div class="dd-target" data-target="mond" data-correct="speeksel">
+      <h5>Mond</h5><div class="dd-slot"></div>
+    </div>
+    <div class="dd-target" data-target="maag" data-correct="maagsap">
+      <h5>Maag</h5><div class="dd-slot"></div>
+    </div>
+    <div class="dd-target" data-target="alvleesklier" data-correct="alvleessap">
+      <h5>Alvleesklier</h5><div class="dd-slot"></div>
+    </div>
+    <div class="dd-target" data-target="dunne-darm" data-correct="darmsap">
+      <h5>Wand dunne darm</h5><div class="dd-slot"></div>
+    </div>
+    <div class="dd-target" data-target="lever" data-correct="gal">
+      <h5>Lever (→ galblaas)</h5><div class="dd-slot"></div>
+    </div>
+  </div>
+</div>
+<button class="btn btn-check" onclick="checkDragDrop('dd1','q33-fb')">Check</button>
+<div class="feedback" id="q33-fb"></div>
+</div>
+
+</section>
+
+<!-- ========== §6.3 ========== -->
+<section class="section" id="s63">
+<h2>§6.3 Enzymen</h2>
+
+<p>Een <strong>enzym</strong> is een eiwit dat als biokatalysator een specifieke chemische reactie versnelt. Het werkt volgens het <strong>sleutel-slot-principe</strong>: het <strong>substraat</strong> past precies in de actieve plek van het enzym. Daar wordt het tijdelijk gebonden in een <strong>enzym-substraatcomplex</strong>, omgezet tot product, en het enzym komt vrij om opnieuw te werken.</p>
+
+<div class="example-box">
+Amylase + zetmeel → enzym-substraatcomplex → amylase + maltose. Het amylase zelf is na afloop onveranderd — het kan duizenden zetmeelmoleculen achter elkaar splitsen.
+</div>
+
+<h3>Optimumtemperatuur en optimum-pH</h3>
+<p>Elk enzym werkt het snelst bij een bepaalde temperatuur (<strong>optimumtemperatuur</strong>) en een bepaalde pH (<strong>optimum-pH</strong>). Voor menselijke enzymen is de optimumtemperatuur ongeveer 37 °C — de gemiddelde lichaamstemperatuur.</p>
+
+<p>Boven de <strong>maximumtemperatuur</strong> raakt de structuur van het enzym blijvend kapot: <strong>denaturatie</strong>. De actieve plek past dan niet meer op het substraat.</p>
+
+<div class="warning-box">
+Denaturatie door temperatuur is <em>onomkeerbaar</em>: een gebakken ei wordt nooit meer rauw. Bij verkeerde pH kan een enzym soms wel terugveren als de pH hersteld wordt.
+</div>
+
+<h3>Slider: temperatuur → reactiesnelheid</h3>
+<div class="widget">
+<svg id="svg-enzymtemp" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg" aria-label="Temperatuur-curve">
+  <!-- assen -->
+  <line x1="50" y1="20" x2="50" y2="200" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="50" y1="200" x2="470" y2="200" stroke="#64748b" stroke-width="1.5"/>
+  <text x="10" y="115" font-size="11" fill="#64748b" transform="rotate(-90 14 115)">reactiesnelheid</text>
+  <text x="380" y="220" font-size="11" fill="#64748b">temperatuur (°C)</text>
+  <!-- gridlijnen -->
+  <g stroke="#e2e8f0" stroke-width="0.7">
+    <line x1="50" y1="160" x2="470" y2="160"/>
+    <line x1="50" y1="120" x2="470" y2="120"/>
+    <line x1="50" y1="80" x2="470" y2="80"/>
+    <line x1="50" y1="40" x2="470" y2="40"/>
+  </g>
+  <!-- as labels -->
+  <text x="50" y="215" font-size="10" fill="#64748b" text-anchor="middle">0</text>
+  <text x="155" y="215" font-size="10" fill="#64748b" text-anchor="middle">20</text>
+  <text x="260" y="215" font-size="10" fill="#64748b" text-anchor="middle">40</text>
+  <text x="365" y="215" font-size="10" fill="#64748b" text-anchor="middle">60</text>
+  <text x="470" y="215" font-size="10" fill="#64748b" text-anchor="middle">80</text>
+  <!-- curve -->
+  <path id="enzymtemp-curve" d="" fill="none" stroke="#16a34a" stroke-width="2.5"/>
+  <!-- huidige punt -->
+  <circle id="enzymtemp-dot" cx="50" cy="200" r="6" fill="#dc2626"/>
+  <!-- denaturatie marker -->
+  <line id="enzymtemp-denat" x1="0" y1="0" x2="0" y2="0" stroke="#dc2626" stroke-dasharray="4,3" stroke-width="1.2"/>
+</svg>
+<div class="widget-controls">
+<label>Temperatuur: <span id="temp-val">37</span> °C
+<input type="range" id="temp-slider" min="0" max="80" value="37" step="1">
+</label>
+<label>Optimum: <span id="opt-val">37</span> °C
+<input type="range" id="opt-slider" min="20" max="55" value="37" step="1">
+</label>
+</div>
+<div class="widget-info" id="enzymtemp-info">Bij <strong>37 °C</strong> werkt het enzym op zijn snelst (<strong>100%</strong> activiteit).</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 41 — Substraat &amp; product (boek)</h4>
+<p class="q-text">Het enzym <em>maltase</em> werkt op het substraat <em>maltose</em>. Wat is het product?</p>
+<div class="q-options" data-q="q41">
+<label><input type="radio" name="q41" value="0"> Aminozuren</label>
+<label><input type="radio" name="q41" value="1"> Glucose</label>
+<label><input type="radio" name="q41" value="2"> Vetzuren</label>
+<label><input type="radio" name="q41" value="3"> Zetmeel</label>
+</div>
+<button class="btn btn-check" onclick="checkRadio('q41',1,'q41-fb','Maltose is een disaccharide bestaande uit twee glucose-eenheden. Maltase splitst maltose in twee losse glucose-moleculen.')">Check</button>
+<div class="feedback" id="q41-fb"></div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 47 — Optimumtemperatuur uit grafiek (boek)</h4>
+<p class="q-text">In een proef werd de reactiesnelheid van een enzym gemeten bij 10, 20, 30, 37, 45, 55 en 65 °C. De hoogste snelheid was bij 37 °C, vrijwel nul bij 10 °C en 65 °C. Wat is hier de oorzaak van de lage snelheid bij 65 °C?</p>
+<div class="q-options" data-q="q47">
+<label><input type="radio" name="q47" value="0"> Het enzym beweegt te traag</label>
+<label><input type="radio" name="q47" value="1"> Het substraat is op</label>
+<label><input type="radio" name="q47" value="2"> Het enzym is gedenatureerd</label>
+<label><input type="radio" name="q47" value="3"> De pH is veranderd</label>
+</div>
+<button class="btn btn-check" onclick="checkRadio('q47',2,'q47-fb','Boven de maximumtemperatuur verandert de ruimtelijke structuur (denaturatie) blijvend; de actieve plek past niet meer op het substraat. Bij 10 °C is de snelheid laag omdat moleculen weinig botsen — daar werkt het enzym wél nog.')">Check</button>
+<div class="feedback" id="q47-fb"></div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 49 — Pepsine in de dunne darm (boek)</h4>
+<p class="q-text">Pepsine werkt optimaal bij ongeveer pH 2 (maag). Waarom werkt pepsine in de dunne darm vrijwel niet?</p>
+<div class="input-row">
+  <textarea id="q49-input" placeholder=""></textarea>
+</div>
+<div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+  <button class="btn btn-check" onclick="markOpenAnswer('q49','q49-fb')">Was goed ✓</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q49-steps')">Toon modelantwoord</button>
+</div>
+<div class="feedback" id="q49-fb"></div>
+<div class="detail-steps" id="q49-steps">
+<strong>Modelantwoord:</strong> In de dunne darm is de pH licht basisch (ongeveer pH 8) door bicarbonaat uit het alvleessap. Pepsine heeft zijn optimum-pH bij pH 2; bij pH 8 is de structuur van pepsine zo veranderd dat de actieve plek niet meer past — pepsine werkt daar niet meer. In de dunne darm doet trypsine de eiwitvertering verder.
+</div>
+</div>
+
+</section>
+
+<!-- ========== §6.4 ========== -->
+<section class="section" id="s64">
+<h2>§6.4 Opname van stoffen</h2>
+
+<p>Voedingsstoffen moeten van de darm naar het bloed. Daarvoor heeft de dunne darm een <strong>enorm groot opnameoppervlak</strong>: zo'n 200 m² (ongeveer een tennisbaan). Dat lukt door drie niveaus van vouwing:</p>
+
+<ol>
+<li><strong>Darmplooien</strong> — grote plooien in de wand</li>
+<li><strong>Darmvlokken</strong> — vingervormige uitsteeksels op de plooien</li>
+<li><strong>Microvilli</strong> — minuscule uitsteekseltjes op de epitheelcellen</li>
+</ol>
+
+<h3>Klik op een niveau om in te zoomen</h3>
+<div class="svg-wrap" style="position:relative">
+<svg id="svg-darm-zoom" viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg" aria-label="Darm zoom-cascade">
+  <!-- Niveau 1: darm met plooien -->
+  <g data-organ="plooi" data-functie="DARMPLOOIEN: grote ringvormige plooien in de wand van de dunne darm. Vergroten het oppervlak ongeveer 3×.">
+    <rect x="20" y="40" width="180" height="140" fill="#fef3c7" stroke="#a16207" stroke-width="1.5" rx="6"/>
+    <path d="M 20 60 Q 40 65 60 60 M 20 90 Q 50 95 80 90 M 20 120 Q 40 125 60 120 M 20 150 Q 50 155 80 150" stroke="#a16207" stroke-width="2" fill="none"/>
+    <text x="110" y="200" font-size="13" fill="#14532d" font-weight="700" text-anchor="middle">1. Darmplooi</text>
+  </g>
+  <!-- pijl -->
+  <path d="M 210 110 L 240 110 M 232 102 L 240 110 L 232 118" stroke="#16a34a" stroke-width="2" fill="none"/>
+  <!-- Niveau 2: darmvlokken -->
+  <g data-organ="vlok" data-functie="DARMVLOKKEN: vingervormige uitsteeksels op de plooi. Bevatten een bloedvaatje (rood) en een lymfevat (geel) voor opname. Vergroten oppervlak verder ~10×.">
+    <rect x="250" y="40" width="180" height="140" fill="#fef3c7" stroke="#a16207" stroke-width="1.5" rx="6"/>
+    <g transform="translate(260,170)">
+      <path d="M 0 0 Q 5 -50 10 -55 Q 15 -50 20 0 Z" fill="#fbbf24" stroke="#a16207" stroke-width="1"/>
+      <line x1="10" y1="-45" x2="10" y2="-5" stroke="#dc2626" stroke-width="1.5"/>
+      <line x1="6" y1="-30" x2="14" y2="-30" stroke="#fde047" stroke-width="1"/>
+      <path d="M 25 0 Q 30 -55 35 -60 Q 40 -55 45 0 Z" fill="#fbbf24" stroke="#a16207" stroke-width="1"/>
+      <line x1="35" y1="-50" x2="35" y2="-5" stroke="#dc2626" stroke-width="1.5"/>
+      <path d="M 50 0 Q 55 -50 60 -55 Q 65 -50 70 0 Z" fill="#fbbf24" stroke="#a16207" stroke-width="1"/>
+      <line x1="60" y1="-45" x2="60" y2="-5" stroke="#dc2626" stroke-width="1.5"/>
+      <path d="M 75 0 Q 80 -55 85 -60 Q 90 -55 95 0 Z" fill="#fbbf24" stroke="#a16207" stroke-width="1"/>
+      <line x1="85" y1="-50" x2="85" y2="-5" stroke="#dc2626" stroke-width="1.5"/>
+      <path d="M 100 0 Q 105 -50 110 -55 Q 115 -50 120 0 Z" fill="#fbbf24" stroke="#a16207" stroke-width="1"/>
+      <line x1="110" y1="-45" x2="110" y2="-5" stroke="#dc2626" stroke-width="1.5"/>
+      <path d="M 125 0 Q 130 -55 135 -60 Q 140 -55 145 0 Z" fill="#fbbf24" stroke="#a16207" stroke-width="1"/>
+      <line x1="135" y1="-50" x2="135" y2="-5" stroke="#dc2626" stroke-width="1.5"/>
+    </g>
+    <text x="340" y="200" font-size="13" fill="#14532d" font-weight="700" text-anchor="middle">2. Darmvlok</text>
+  </g>
+  <!-- pijl -->
+  <path d="M 440 110 L 470 110 M 462 102 L 470 110 L 462 118" stroke="#16a34a" stroke-width="2" fill="none"/>
+  <!-- Niveau 3: microvilli -->
+  <g data-organ="microvilli" data-functie="MICROVILLI: hele kleine uitsteekseltjes op de epitheelcel van een darmvlok (ook wel borstelzoom). Vergroten oppervlak nog eens ~20× — totaal ~600×.">
+    <rect x="480" y="40" width="200" height="140" fill="#fef3c7" stroke="#a16207" stroke-width="1.5" rx="6"/>
+    <rect x="495" y="100" width="170" height="50" fill="#fed7aa" stroke="#a16207" stroke-width="1"/>
+    <g>
+      <line x1="500" y1="100" x2="500" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="510" y1="100" x2="510" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="520" y1="100" x2="520" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="530" y1="100" x2="530" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="540" y1="100" x2="540" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="550" y1="100" x2="550" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="560" y1="100" x2="560" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="570" y1="100" x2="570" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="580" y1="100" x2="580" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="590" y1="100" x2="590" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="600" y1="100" x2="600" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="610" y1="100" x2="610" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="620" y1="100" x2="620" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="630" y1="100" x2="630" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="640" y1="100" x2="640" y2="78" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="650" y1="100" x2="650" y2="80" stroke="#a16207" stroke-width="1.4"/>
+      <line x1="660" y1="100" x2="660" y2="78" stroke="#a16207" stroke-width="1.4"/>
+    </g>
+    <text x="580" y="200" font-size="13" fill="#14532d" font-weight="700" text-anchor="middle">3. Microvilli</text>
+  </g>
+</svg>
+</div>
+
+<div class="tip-box">
+Door deze drie niveaus is het opnameoppervlak van de dunne darm <strong>~600× groter</strong> dan een gladde buis van dezelfde lengte. Daarom kan opname efficiënt en snel.
+</div>
+
+<h3>Diffusie of actief transport?</h3>
+<p>Stoffen komen op twee manieren door de darmwand het bloed in:</p>
+<ul>
+<li><strong>Diffusie</strong>: van hoge naar lage concentratie, kost de cel <em>geen</em> energie. Manier waarop o.a. water en sommige vetzuren opgenomen worden.</li>
+<li><strong>Actief transport</strong>: tegen het concentratieverschil in, kost de cel <em>wel</em> energie (ATP). Manier waarop o.a. glucose en aminozuren opgenomen worden.</li>
+</ul>
+
+<div class="try-it">
+<h4>Oefenvraag 60 — Diffusie of actief? (boek)</h4>
+<p class="q-text">Aan het eind van de opname is de glucose-concentratie in het darmlumen al laag, maar het lichaam blijft toch glucose opnemen — totdat er praktisch niets meer over is. Welk transportmechanisme maakt dit mogelijk?</p>
+<div class="q-options" data-q="q60">
+<label><input type="radio" name="q60" value="0"> Diffusie</label>
+<label><input type="radio" name="q60" value="1"> Osmose</label>
+<label><input type="radio" name="q60" value="2"> Actief transport</label>
+<label><input type="radio" name="q60" value="3"> Verteringsenzym</label>
+</div>
+<button class="btn btn-check" onclick="checkRadio('q60',2,'q60-fb','Tegen een concentratiegradiënt in (van laag naar hoog) kan alleen via actief transport — dat kost ATP. Diffusie zou alleen werken als glucose hoger was in de darm dan in het bloed.')">Check</button>
+<div class="feedback" id="q60-fb"></div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 64 — Functie van darmvlokken (boek)</h4>
+<p class="q-text">Geef twee redenen waarom darmvlokken belangrijk zijn voor de opname van voedingsstoffen.</p>
+<div class="input-row">
+  <textarea id="q64-input" placeholder=""></textarea>
+</div>
+<div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+  <button class="btn btn-check" onclick="markOpenAnswer('q64','q64-fb')">Was goed ✓</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q64-steps')">Toon modelantwoord</button>
+</div>
+<div class="feedback" id="q64-fb"></div>
+<div class="detail-steps" id="q64-steps">
+<strong>Modelantwoord (twee redenen):</strong><br>
+1. Darmvlokken vergroten samen met darmplooien en microvilli het opnameoppervlak van de dunne darm enorm — daardoor kunnen veel meer voedingsstoffen tegelijk worden opgenomen.<br>
+2. Elke darmvlok bevat een bloedvaatje en een lymfevat dicht onder het epitheel — opgenomen stoffen hoeven maar één laag cellen door om in het bloed of de lymfe te komen, dus de afstand voor diffusie/transport is minimaal.
+</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 71 — Darmbacteriën (boek)</h4>
+<p class="q-text">Noem twee functies van darmbacteriën in de dikke darm.</p>
+<div class="input-row">
+  <textarea id="q71-input" placeholder=""></textarea>
+</div>
+<div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+  <button class="btn btn-check" onclick="markOpenAnswer('q71','q71-fb')">Was goed ✓</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q71-steps')">Toon modelantwoord</button>
+</div>
+<div class="feedback" id="q71-fb"></div>
+<div class="detail-steps" id="q71-steps">
+<strong>Modelantwoord (twee functies, kies er twee):</strong><br>
+- Verteren van voedingsvezels (zoals cellulose) die mensen zelf niet kunnen afbreken.<br>
+- Aanmaken van vitamine K en sommige B-vitamines.<br>
+- Beschermen tegen ziekteverwekkers (concurrentie en stoffen die schadelijke bacteriën remmen).<br>
+- Trainen en stimuleren van het afweersysteem.
+</div>
+</div>
+
+</section>
+
+<!-- ========== §6.5 ========== -->
+<section class="section" id="s65">
+<h2>§6.5 Opslag en afbraak in de lever</h2>
+
+<p>De <strong>lever</strong> is een centrale chemische fabriek met vier hoofdfuncties:</p>
+<ol>
+<li><strong>Bloedglucose op peil houden</strong> — opslaan van glucose als glycogeen, of glycogeen weer afbreken</li>
+<li><strong>Aminozuren afbreken</strong> tot ureum (ammoniak ontstaat als tussenproduct, is giftig)</li>
+<li><strong>Gal maken</strong> — emulgeert vetten in de dunne darm</li>
+<li><strong>Ontgiften</strong> — alcohol, medicijnresten en andere giftige stoffen onschadelijk maken</li>
+</ol>
+
+<div class="tip-box">
+Al het bloed uit de darmen gaat eerst via de <strong>poortader</strong> naar de lever — dáár worden alle voedingsstoffen verwerkt voordat ze de rest van het lichaam bereiken. Dit bloed is zuurstofarm maar wel voedselrijk.
+</div>
+
+<h3>Bloedglucose-simulator</h3>
+<p>Klik op een gebeurtenis om te zien hoe het bloedglucosegehalte verandert en welk hormoon de lever stuurt:</p>
+<div class="widget glucose-sim">
+<svg id="svg-glucose" viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-label="Bloedglucose-simulator">
+  <line x1="50" y1="20" x2="50" y2="200" stroke="#64748b" stroke-width="1.5"/>
+  <line x1="50" y1="200" x2="570" y2="200" stroke="#64748b" stroke-width="1.5"/>
+  <text x="10" y="115" font-size="11" fill="#64748b" transform="rotate(-90 14 115)">glucose (mmol/L)</text>
+  <text x="490" y="220" font-size="11" fill="#64748b">tijd</text>
+  <!-- gridlijnen -->
+  <g stroke="#e2e8f0" stroke-width="0.7">
+    <line x1="50" y1="160" x2="570" y2="160"/>
+    <line x1="50" y1="120" x2="570" y2="120"/>
+    <line x1="50" y1="80" x2="570" y2="80"/>
+    <line x1="50" y1="40" x2="570" y2="40"/>
+  </g>
+  <text x="42" y="163" font-size="10" fill="#64748b" text-anchor="end">3</text>
+  <text x="42" y="123" font-size="10" fill="#64748b" text-anchor="end">5</text>
+  <text x="42" y="83" font-size="10" fill="#64748b" text-anchor="end">7</text>
+  <text x="42" y="43" font-size="10" fill="#64748b" text-anchor="end">9</text>
+  <!-- gezonde band -->
+  <rect x="50" y="115" width="520" height="30" fill="#dcfce7" opacity="0.5"/>
+  <text x="555" y="135" font-size="10" fill="#16a34a" text-anchor="end">gezonde band</text>
+  <!-- curve -->
+  <path id="glucose-curve" d="M 50 120 L 570 120" fill="none" stroke="#dc2626" stroke-width="2.5"/>
+  <!-- hormoon-marker -->
+  <text id="hormone-label" x="300" y="30" font-size="13" fill="#14532d" font-weight="700" text-anchor="middle"></text>
+</svg>
+<div class="actions">
+<button class="btn btn-check" data-event="meal">🍝 Maaltijd eten</button>
+<button class="btn btn-check" data-event="sport">🏃 Sporten / vasten</button>
+<button class="btn btn-steps" data-event="reset">↺ Opnieuw</button>
+</div>
+<div class="widget-info" id="glucose-info">Begin: bloedglucose ~5 mmol/L (gezond). Klik op een knop om te zien wat er gebeurt.</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 78 — Glycogeen of glucagon? (boek)</h4>
+<p class="q-text">Vul aan: na een maaltijd komt veel glucose in het bloed. De lever slaat dit op als ___ onder invloed van het hormoon ___.</p>
+<div class="input-row">
+  <input type="text" id="q78-input" placeholder="">
+  <button class="btn btn-check" onclick="checkText('q78-input','q78-fb',['glycogeen insuline','glycogeen en insuline'])">Check</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q78-steps')">Stappenplan</button>
+</div>
+<div class="feedback" id="q78-fb"></div>
+<div class="detail-steps" id="q78-steps">
+<strong>Antwoord:</strong> glycogeen, insuline.<br>
+Insuline (uit de bètacellen, eilandjes van Langerhans) zet de lever en spieren aan om glucose op te nemen en op te slaan als glycogeen. Glucagon doet juist het tegenovergestelde — bij vasten of inspanning.
+</div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 81 — Bilirubine in ontlasting (boek)</h4>
+<p class="q-text">Waarom is normale ontlasting bruin?</p>
+<div class="q-options" data-q="q81">
+<label><input type="radio" name="q81" value="0"> Door ureum uit de lever</label>
+<label><input type="radio" name="q81" value="1"> Door bilirubine in gal (afbraak van rode bloedcellen)</label>
+<label><input type="radio" name="q81" value="2"> Door glycogeen-resten</label>
+<label><input type="radio" name="q81" value="3"> Door cholesterol</label>
+</div>
+<button class="btn btn-check" onclick="checkRadio('q81',1,'q81-fb','Bilirubine ontstaat bij de afbraak van hemoglobine uit oude rode bloedcellen. De lever scheidt het uit in de gal; in de darm wordt het verder omgezet en geeft het de ontlasting de bruine kleur.')">Check</button>
+<div class="feedback" id="q81-fb"></div>
+</div>
+
+<div class="try-it">
+<h4>Oefenvraag 86 — Functie van de poortader (boek)</h4>
+<p class="q-text">Waarom gaat al het bloed uit de darmen eerst langs de lever, en niet rechtstreeks naar het hart?</p>
+<div class="input-row">
+  <textarea id="q86-input" placeholder=""></textarea>
+</div>
+<div style="display:flex;gap:0.4rem;flex-wrap:wrap">
+  <button class="btn btn-check" onclick="markOpenAnswer('q86','q86-fb')">Was goed ✓</button>
+  <button class="btn btn-steps" onclick="toggleSteps('q86-steps')">Toon modelantwoord</button>
+</div>
+<div class="feedback" id="q86-fb"></div>
+<div class="detail-steps" id="q86-steps">
+<strong>Modelantwoord:</strong> De lever is de centrale verwerkingsplek voor alle opgenomen voedingsstoffen. Door het bloed eerst via de poortader langs de lever te sturen kan de lever:<br>
+- glucose direct opslaan als glycogeen (bloedsuiker stabiel houden);<br>
+- aminozuren uit voeding controleren en eventueel afbreken tot ureum;<br>
+- giftige stoffen (alcohol, medicijnresten) onschadelijk maken voordat ze de rest van het lichaam bereiken.<br>
+Pas daarna gaat het bloed via de leverader terug naar het hart.
+</div>
+</div>
+
+</section>
+
+<!-- Score summary sticky -->
+<div class="score-summary">
+<div class="row">
+<span>Voortgang oefenvragen: <strong><span id="score-done">0</span> / <span id="score-total-q">0</span></strong></span>
+<div class="score-bar-track"><div class="score-bar-fill" id="score-bar-fill" style="width:0%"></div></div>
+<span id="score-msg" style="color:var(--muted);font-size:0.85rem"></span>
+</div>
+</div>
+
+<div class="nav-bottom">
+<a href="../flashcards/">📇 Naar flashcards</a>
+<a href="../">🏠 Hoofdstuk-overzicht</a>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Biologie HAVO 4 — Kapser — Hoofdstuk 6</strong></p>
+<p style="margin-top:0.5rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================================
+// Persistence
+// ============================================================================
+const STORAGE_KEY = 'bio-h6-uitleg-v1';
+const QUESTION_IDS = ['q12','q13','q18','q24','q33','q41','q47','q49','q60','q64','q71','q78','q81','q86'];
+
+const $ = id => document.getElementById(id);
+
+const state = {
+  done: {} // questionId -> 'correct' | 'review' | 'wrong'
+};
+
+function persist() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({v:1, done: state.done, ts: Date.now()}));
+    updateSavedStatus();
+    updateScore();
+  } catch(e) {}
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    const data = JSON.parse(raw);
+    if (data && data.v === 1 && data.done) {
+      state.done = data.done;
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+function loadFromHash() {
+  if (!location.hash || !location.hash.startsWith('#s=')) return false;
+  try {
+    const json = decodeURIComponent(escape(atob(location.hash.slice(3))));
+    const data = JSON.parse(json);
+    if (data && data.v === 1 && data.done) {
+      state.done = data.done;
+      persist();
+      history.replaceState(null,'',location.pathname + location.search);
+      return true;
+    }
+  } catch(e) {}
+  return false;
+}
+
+function buildExportLink() {
+  const json = JSON.stringify({v:1, done: state.done});
+  const b64 = btoa(unescape(encodeURIComponent(json)));
+  return location.origin + location.pathname + '#s=' + b64;
+}
+
+function updateSavedStatus() {
+  const el = $('saved-status');
+  const dot = $('save-dot');
+  if (!el || !dot) return;
+  const n = Object.keys(state.done).length;
+  if (n === 0) {
+    el.innerHTML = '<strong>Voortgang wordt automatisch opgeslagen</strong><small>Op dit apparaat &mdash; werkt offline</small>';
+    dot.classList.add('dim');
+  } else {
+    const tijd = new Date().toLocaleTimeString('nl-NL', {hour:'2-digit',minute:'2-digit'});
+    el.innerHTML = `<strong>✓ Opgeslagen: ${n} vragen beantwoord</strong><small>Laatst bijgewerkt om ${tijd}</small>`;
+    dot.classList.remove('dim');
+    dot.style.animation = 'none';
+    requestAnimationFrame(() => { dot.style.animation = ''; });
+  }
+}
+
+function updateScore() {
+  const total = QUESTION_IDS.length;
+  const done = Object.values(state.done).filter(s => s === 'correct').length;
+  $('score-done').textContent = done;
+  $('score-total-q').textContent = total;
+  $('score-bar-fill').style.width = (100 * done / total) + '%';
+  const msg = $('score-msg');
+  const pct = Math.round(100 * done / total);
+  if (done === 0) msg.textContent = '';
+  else if (pct >= 85) msg.textContent = '🏆 Top!';
+  else if (pct >= 60) msg.textContent = '👍 Goed bezig';
+  else msg.textContent = `${pct}%`;
+}
+
+function setQuestionState(qid, status) {
+  state.done[qid] = status;
+  persist();
+}
+
+// ============================================================================
+// Question helpers
+// ============================================================================
+function normalize(s) {
+  return (s||'').toLowerCase()
+    .replace(/(\d),(\d)/g, '$1.$2')         // decimal comma → dot (so 19,5 == 19.5)
+    .replace(/[\s,;\-→>]+/g, ' ')           // list separators → single space
+    .trim();
+}
+
+function checkText(inputId, fbId, accept, opts) {
+  opts = opts || {};
+  const inp = $(inputId);
+  const fb = $(fbId);
+  const val = inp.value.trim();
+  if (!val) {
+    fb.className = 'feedback show review';
+    fb.textContent = 'Vul eerst een antwoord in.';
+    return;
+  }
+  let ok = false;
+  if (accept && accept.length) {
+    const n = normalize(val);
+    ok = accept.some(a => normalize(a) === n);
+  }
+  if (!ok && typeof opts.numericTarget === 'number') {
+    // Try numeric: extract first number, compare with tolerance
+    const m = val.replace(',', '.').match(/-?\d+(\.\d+)?/);
+    if (m) {
+      const num = parseFloat(m[0]);
+      const tol = opts.tol || 0.01;
+      if (Math.abs(num - opts.numericTarget) <= tol) ok = true;
+    }
+  }
+  inp.classList.remove('correct','wrong');
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  fb.className = 'feedback show ' + (ok ? 'correct' : 'wrong');
+  fb.textContent = ok ? '✓ Klopt!' : '✗ Nog niet — probeer opnieuw of klik op Stappenplan.';
+  setQuestionState(inputId.replace('-input',''), ok ? 'correct' : 'wrong');
+}
+
+function checkRadio(qname, correctIdx, fbId, explanation) {
+  const labels = document.querySelectorAll(`[data-q="${qname}"] label`);
+  const checked = document.querySelector(`input[name="${qname}"]:checked`);
+  const fb = $(fbId);
+  if (!checked) {
+    fb.className = 'feedback show review';
+    fb.textContent = 'Kies eerst een antwoord.';
+    return;
+  }
+  const sel = parseInt(checked.value, 10);
+  labels.forEach((l, i) => {
+    l.classList.remove('correct','wrong');
+    if (i === correctIdx) l.classList.add('correct');
+    else if (i === sel) l.classList.add('wrong');
+  });
+  const ok = sel === correctIdx;
+  fb.className = 'feedback show ' + (ok ? 'correct' : 'wrong');
+  fb.innerHTML = (ok ? '✓ Klopt! ' : '✗ Nog niet — het juiste antwoord is groen gemarkeerd. ') + (explanation||'');
+  setQuestionState(qname, ok ? 'correct' : 'wrong');
+}
+
+function toggleSteps(stepsId) {
+  const el = $(stepsId);
+  el.classList.toggle('show');
+}
+
+function markOpenAnswer(qid, fbId) {
+  const fb = $(fbId);
+  // Require user to have written something AND opened the model answer
+  const stepsEl = $(qid + '-steps');
+  const inputEl = $(qid + '-input');
+  const written = inputEl && inputEl.value && inputEl.value.trim().length >= 10;
+  const stepsOpen = stepsEl && stepsEl.classList.contains('show');
+  if (!written) {
+    fb.className = 'feedback show review';
+    fb.textContent = 'Schrijf eerst je eigen antwoord op (minstens een paar zinnen) — dán kun je het vergelijken.';
+    return;
+  }
+  if (!stepsOpen) {
+    fb.className = 'feedback show review';
+    fb.textContent = 'Klik eerst op "Toon modelantwoord" om je antwoord te kunnen vergelijken.';
+    return;
+  }
+  fb.className = 'feedback show correct';
+  fb.textContent = '✓ Goed dat je het hebt vergeleken. Bewaar deze vraag voor later om nog eens te oefenen.';
+  setQuestionState(qid, 'correct');
+}
+
+// ============================================================================
+// Save bar handlers
+// ============================================================================
+let resetConfirmTimer = null;
+$('btn-reset').addEventListener('click', (e) => {
+  const btn = e.currentTarget;
+  if (!btn.classList.contains('confirm')) {
+    btn.classList.add('confirm');
+    btn.textContent = '⚠ Echt wissen?';
+    clearTimeout(resetConfirmTimer);
+    resetConfirmTimer = setTimeout(() => {
+      btn.classList.remove('confirm');
+      btn.textContent = '↺ Reset';
+    }, 4000);
+    return;
+  }
+  state.done = {};
+  try { localStorage.removeItem(STORAGE_KEY); } catch(err){}
+  btn.classList.remove('confirm');
+  btn.textContent = '↺ Reset';
+  clearTimeout(resetConfirmTimer);
+  $('export-wrap').classList.remove('show');
+  // Clear UI feedback
+  document.querySelectorAll('.feedback').forEach(f => f.classList.remove('show','correct','wrong','review'));
+  document.querySelectorAll('.q-options label').forEach(l => l.classList.remove('correct','wrong'));
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('input[type=text]').forEach(i => { i.value=''; i.classList.remove('correct','wrong'); });
+  document.querySelectorAll('textarea').forEach(t => { t.value=''; });
+  document.querySelectorAll('.detail-steps').forEach(d => d.classList.remove('show'));
+  document.querySelectorAll('.dd-target').forEach(t => {
+    t.classList.remove('correct','wrong');
+    t.querySelector('.dd-slot').innerHTML = '';
+  });
+  // Restore drag bank items
+  initDragDrop(true);
+  updateSavedStatus();
+  updateScore();
+});
+
+$('btn-export').addEventListener('click', () => {
+  const wrap = $('export-wrap');
+  const inp = $('export-link');
+  inp.value = buildExportLink();
+  wrap.classList.add('show');
+  inp.select();
+});
+
+$('btn-copy-link').addEventListener('click', async (e) => {
+  const inp = $('export-link');
+  try {
+    await navigator.clipboard.writeText(inp.value);
+    e.currentTarget.textContent = '✓ Gekopieerd';
+    setTimeout(() => { e.currentTarget.textContent = 'Kopieer'; }, 1800);
+  } catch (err) {
+    inp.select();
+    document.execCommand('copy');
+    e.currentTarget.textContent = '✓ Gekopieerd';
+    setTimeout(() => { e.currentTarget.textContent = 'Kopieer'; }, 1800);
+  }
+});
+
+// ============================================================================
+// Interactieve verteringsstelsel-kaart (tooltip on click)
+// ============================================================================
+const tooltip = $('organ-tooltip');
+let activeOrgan = null;
+
+document.querySelectorAll('[data-organ]').forEach(g => {
+  g.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    document.querySelectorAll('[data-organ]').forEach(x => x.classList.remove('active'));
+    g.classList.add('active');
+    activeOrgan = g;
+    const fn = g.getAttribute('data-functie');
+    tooltip.textContent = fn;
+    // Position tooltip near mouse
+    const wrap = g.closest('.svg-wrap');
+    const rect = wrap.getBoundingClientRect();
+    const x = ev.clientX - rect.left;
+    const y = ev.clientY - rect.top;
+    tooltip.style.left = Math.max(10, Math.min(rect.width - 250, x - 120)) + 'px';
+    tooltip.style.top = Math.max(0, y - 60) + 'px';
+    tooltip.classList.add('show');
+  });
+});
+
+document.addEventListener('click', (ev) => {
+  if (!ev.target.closest('[data-organ]')) {
+    tooltip.classList.remove('show');
+    document.querySelectorAll('[data-organ]').forEach(x => x.classList.remove('active'));
+    activeOrgan = null;
+  }
+});
+
+// ============================================================================
+// Enzyme temperature curve
+// ============================================================================
+function enzymeRate(temp, opt) {
+  // Bell curve, denatures sharply above opt+8
+  if (temp < 0) return 0;
+  const denatStart = opt + 8;
+  if (temp >= denatStart) {
+    // Sharp linear drop to 0 within ~6 °C after denaturation onset
+    const drop = (temp - denatStart) / 6;
+    return Math.max(0, 0.45 - drop * 0.45);
+  }
+  const sigma = 12;
+  return Math.exp(-Math.pow((temp - opt)/sigma, 2));
+}
+
+function drawEnzymeCurve() {
+  const opt = parseInt($('opt-slider').value, 10);
+  const temp = parseInt($('temp-slider').value, 10);
+  const points = [];
+  for (let t = 0; t <= 80; t++) {
+    const r = enzymeRate(t, opt);
+    const x = 50 + (t / 80) * 420;
+    const y = 200 - r * 160;
+    points.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+  }
+  $('enzymtemp-curve').setAttribute('d', 'M ' + points.join(' L '));
+  // Dot
+  const x = 50 + (temp / 80) * 420;
+  const y = 200 - enzymeRate(temp, opt) * 160;
+  $('enzymtemp-dot').setAttribute('cx', x);
+  $('enzymtemp-dot').setAttribute('cy', y);
+  // Denat line
+  const denatX = 50 + ((opt + 8) / 80) * 420;
+  $('enzymtemp-denat').setAttribute('x1', denatX);
+  $('enzymtemp-denat').setAttribute('x2', denatX);
+  $('enzymtemp-denat').setAttribute('y1', 30);
+  $('enzymtemp-denat').setAttribute('y2', 200);
+  // Info
+  $('temp-val').textContent = temp;
+  $('opt-val').textContent = opt;
+  const rate = enzymeRate(temp, opt);
+  const pct = Math.round(rate * 100);
+  let msg;
+  if (temp >= opt + 12) msg = `Bij <strong>${temp} °C</strong> is het enzym <strong>gedenatureerd</strong>. Activiteit ≈ ${pct}%.`;
+  else if (temp >= opt - 2 && temp <= opt + 2) msg = `Bij <strong>${temp} °C</strong> werkt het enzym op zijn snelst (${pct}% activiteit).`;
+  else if (temp < opt - 5) msg = `Bij <strong>${temp} °C</strong> is het enzym te koud — moleculen botsen weinig (${pct}% activiteit).`;
+  else msg = `Bij <strong>${temp} °C</strong> werkt het enzym, maar niet maximaal (${pct}%).`;
+  $('enzymtemp-info').innerHTML = msg;
+}
+$('temp-slider').addEventListener('input', drawEnzymeCurve);
+$('opt-slider').addEventListener('input', drawEnzymeCurve);
+drawEnzymeCurve();
+
+// ============================================================================
+// Drag-and-drop: verteringssappen
+// ============================================================================
+let ddSelectedItem = null;
+
+function moveItemTo(item, zone) {
+  if (!item || !zone) return;
+  if (zone.id === 'dd1-bank') {
+    zone.appendChild(item);
+  } else if (zone.classList.contains('dd-target')) {
+    zone.querySelector('.dd-slot').appendChild(item);
+  } else if (zone.classList.contains('dd-slot')) {
+    zone.appendChild(item);
+  }
+  item.classList.remove('selected');
+  ddSelectedItem = null;
+}
+
+function initDragDrop(reset) {
+  const bank = $('dd1-bank');
+  if (reset) {
+    document.querySelectorAll('#dd1 .dd-item').forEach(it => {
+      it.classList.remove('selected');
+      bank.appendChild(it);
+    });
+    document.querySelectorAll('#dd1 .dd-target').forEach(t => t.classList.remove('correct','wrong'));
+    ddSelectedItem = null;
+  }
+  // Bind handlers exactly once per element using a guard flag
+  document.querySelectorAll('#dd1 .dd-item').forEach(item => {
+    if (item.dataset.bound) return;
+    item.dataset.bound = '1';
+    // Drag (mouse)
+    item.addEventListener('dragstart', (e) => {
+      item.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', item.dataset.id);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+    // Tap (touch + click fallback)
+    item.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (ddSelectedItem === item) {
+        item.classList.remove('selected');
+        ddSelectedItem = null;
+        return;
+      }
+      document.querySelectorAll('#dd1 .dd-item.selected').forEach(x => x.classList.remove('selected'));
+      item.classList.add('selected');
+      ddSelectedItem = item;
+    });
+  });
+  document.querySelectorAll('#dd1 .dd-target, #dd1-bank').forEach(zone => {
+    if (zone.dataset.bound) return;
+    zone.dataset.bound = '1';
+    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+    zone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      zone.classList.remove('over');
+      const id = e.dataTransfer.getData('text/plain');
+      const item = document.querySelector(`#dd1 .dd-item[data-id="${id}"]`);
+      moveItemTo(item, zone);
+    });
+    // Tap-to-place
+    zone.addEventListener('click', (e) => {
+      if (e.target.classList && e.target.classList.contains('dd-item')) return;
+      if (ddSelectedItem) moveItemTo(ddSelectedItem, zone);
+    });
+  });
+}
+initDragDrop(false);
+
+function checkDragDrop(ddId, fbId) {
+  const targets = document.querySelectorAll(`#${ddId} .dd-target`);
+  let correct = 0;
+  let total = targets.length;
+  targets.forEach(t => {
+    const expected = t.dataset.correct;
+    const placed = t.querySelector('.dd-slot .dd-item');
+    t.classList.remove('correct','wrong');
+    if (placed && placed.dataset.id === expected) {
+      t.classList.add('correct');
+      correct++;
+    } else {
+      t.classList.add('wrong');
+    }
+  });
+  const fb = $(fbId);
+  const ok = correct === total;
+  fb.className = 'feedback show ' + (ok ? 'correct' : 'wrong');
+  fb.textContent = ok ? `✓ Allemaal goed (${correct}/${total})!` : `${correct}/${total} goed. Verkeerde plekken zijn rood gemarkeerd — sleep ze terug naar de bank en probeer opnieuw.`;
+  setQuestionState('q33', ok ? 'correct' : 'wrong');
+}
+
+// ============================================================================
+// Bloedglucose-simulator
+// ============================================================================
+function drawGlucose(events) {
+  // Build polyline starting at 5 mmol/L
+  const pts = [];
+  let glu = 5;
+  pts.push([0, glu]);
+  let t = 0;
+  events.forEach(ev => {
+    if (ev === 'meal') {
+      // Glucose rises to ~8 over 30 min, then drops via insulin to ~5
+      for (let i = 1; i <= 6; i++) { t++; glu = Math.min(8.5, glu + 0.6); pts.push([t, glu]); }
+      for (let i = 1; i <= 8; i++) { t++; glu = Math.max(5, glu - 0.45); pts.push([t, glu]); }
+    } else if (ev === 'sport') {
+      // Glucose drops to ~3.8 then glucagon kicks in to restore to ~5
+      for (let i = 1; i <= 5; i++) { t++; glu = Math.max(3.5, glu - 0.35); pts.push([t, glu]); }
+      for (let i = 1; i <= 6; i++) { t++; glu = Math.min(5, glu + 0.25); pts.push([t, glu]); }
+    }
+  });
+  // Map to SVG coords (x: 50..570 over t=0..30, y: 200..40 over glu 3..9)
+  const xMax = Math.max(30, t);
+  const d = pts.map((p,i) => {
+    const x = 50 + (p[0]/xMax)*520;
+    const y = 200 - ((p[1]-3)/6)*160;
+    return (i===0?'M ':'L ') + x.toFixed(1) + ' ' + y.toFixed(1);
+  }).join(' ');
+  $('glucose-curve').setAttribute('d', d);
+  // Hormone label
+  const last = events[events.length-1];
+  let lbl = '';
+  if (last === 'meal') lbl = '💉 Insuline → glycogeen-opslag';
+  else if (last === 'sport') lbl = '🔥 Glucagon → glycogeen → glucose';
+  $('hormone-label').textContent = lbl;
+  // Info
+  let info = '';
+  if (last === 'meal') info = 'Na een maaltijd stijgt het bloedglucosegehalte. De bètacellen geven <strong>insuline</strong> af; de lever en spieren slaan glucose op als <strong>glycogeen</strong>. Glucose daalt weer naar de gezonde band.';
+  else if (last === 'sport') info = 'Bij sport/vasten daalt het bloedglucosegehalte. De alfacellen geven <strong>glucagon</strong> af; de lever breekt glycogeen af tot glucose en geeft het aan het bloed. Glucose stijgt weer.';
+  else info = 'Begin: bloedglucose ~5 mmol/L (gezond). Klik op een knop om te zien wat er gebeurt.';
+  $('glucose-info').innerHTML = info;
+}
+
+let glucoseEvents = [];
+document.querySelectorAll('.glucose-sim button[data-event]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const ev = btn.dataset.event;
+    if (ev === 'reset') {
+      glucoseEvents = [];
+      drawGlucose([]);
+      return;
+    }
+    glucoseEvents.push(ev);
+    if (glucoseEvents.length > 4) glucoseEvents.shift();
+    drawGlucose(glucoseEvents);
+  });
+});
+drawGlucose([]);
+
+// ============================================================================
+// Restore UI from saved state
+// ============================================================================
+function restoreUI() {
+  for (const [qid, status] of Object.entries(state.done)) {
+    const fb = document.getElementById(qid + '-fb');
+    if (fb) {
+      fb.className = 'feedback show ' + (status === 'correct' ? 'correct' : 'wrong');
+      fb.textContent = (status === 'correct' ? '✓ Eerder beantwoord (klopte).' : '✗ Eerder gemarkeerd als fout — probeer opnieuw.');
+    }
+  }
+}
+
+// ============================================================================
+// Init
+// ============================================================================
+const fromHash = loadFromHash();
+if (!fromHash) loadFromStorage();
+updateSavedStatus();
+updateScore();
+restoreUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards H6 — Voeding en vertering — Biologie HAVO 4 — Kapser</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--text:#1e293b;--muted:#64748b;--border:#e2e8f0;--green:#16a34a;--green-dark:#14532d;--green-light:#dcfce7;--accent:#0891b2;--radius:14px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
+header{background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 100%);color:#fff;padding:2.25rem 1rem;text-align:center}
+header h1{font-size:1.85rem;margin-bottom:0.3rem}
+header p{opacity:0.9;font-size:1rem}
+.breadcrumb{padding:1rem;max-width:900px;margin:0 auto;font-size:0.9rem;color:var(--muted)}
+.breadcrumb a{color:var(--green);text-decoration:none}
+.breadcrumb a:hover{text-decoration:underline}
+.container{max-width:900px;margin:0 auto;padding:0 1rem 2.5rem;flex:1;width:100%}
+.intro{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:0.95rem}
+.intro strong{color:var(--green-dark)}
+
+/* Mode tabs */
+.mode-tabs{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.mode-tab{flex:1;min-width:140px;padding:0.75rem 1rem;border:2px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--muted);font-size:0.95rem;font-weight:600;cursor:pointer;text-align:center;transition:all 0.15s}
+.mode-tab:hover{border-color:var(--green);color:var(--green)}
+.mode-tab.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* Filter bar */
+.filter-bar{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem}
+.filter-btn{padding:0.35rem 0.85rem;border:2px solid var(--border);border-radius:999px;background:var(--card);color:var(--muted);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.15s}
+.filter-btn:hover{border-color:var(--green);color:var(--green)}
+.filter-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+/* Score bar */
+.score-bar{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem;padding:0.75rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);font-size:0.9rem;color:var(--muted)}
+.score-bar strong{color:var(--green-dark);font-size:1.05rem}
+.progress-track{flex:1;height:8px;background:var(--border);border-radius:999px;overflow:hidden}
+.progress-fill{height:100%;background:var(--green);border-radius:999px;transition:width 0.3s ease}
+
+/* Card */
+.card-area{position:relative;min-height:340px;perspective:1200px;margin-bottom:1rem}
+.flashcard{position:relative;width:100%;min-height:340px;transform-style:preserve-3d;transition:transform 0.55s cubic-bezier(0.4,0.2,0.2,1);cursor:pointer}
+.flashcard.flipped{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:2rem 1.5rem;box-shadow:0 4px 16px rgba(0,0,0,0.07);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.face-back{transform:rotateY(180deg);background:linear-gradient(135deg,#f0fdf4,#dcfce7)}
+.face .tag{position:absolute;top:0.85rem;right:0.85rem;font-size:0.72rem;font-weight:700;color:var(--green-dark);background:var(--green-light);padding:0.2rem 0.6rem;border-radius:999px;letter-spacing:0.04em}
+.face .counter{position:absolute;top:0.85rem;left:0.85rem;font-size:0.78rem;color:var(--muted);font-weight:600}
+.face h2{font-size:1.6rem;color:var(--green-dark);margin-bottom:0.5rem;line-height:1.2}
+.face .subtitle{font-size:0.85rem;color:var(--muted);margin-top:0.4rem;font-style:italic}
+.face-back p{font-size:1.05rem;color:var(--text);max-width:560px;margin:0 auto}
+.flip-hint{margin-top:1rem;font-size:0.8rem;color:var(--muted)}
+
+/* Self-test mode */
+.test-area{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;min-height:340px;display:flex;flex-direction:column}
+.test-area .tag{align-self:flex-end;font-size:0.72rem;font-weight:700;color:var(--green-dark);background:var(--green-light);padding:0.2rem 0.6rem;border-radius:999px;letter-spacing:0.04em}
+.test-area h2{font-size:1.4rem;color:var(--green-dark);margin:0.75rem 0 1rem;line-height:1.25}
+.test-area textarea{width:100%;min-height:90px;padding:0.7rem;border:2px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.95rem;resize:vertical}
+.test-area textarea:focus{outline:none;border-color:var(--green)}
+.test-actions{display:flex;gap:0.5rem;margin-top:0.75rem;flex-wrap:wrap}
+.btn{padding:0.55rem 1.1rem;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all 0.15s;font-family:inherit}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:hover{background:var(--green-dark)}
+.btn-secondary{background:var(--card);color:var(--green);border:2px solid var(--green)}
+.btn-secondary:hover{background:var(--green-light)}
+.btn-muted{background:#fff;color:var(--muted);border:2px solid var(--border)}
+.btn-muted:hover{border-color:var(--muted);color:var(--text)}
+.feedback{margin-top:0.85rem;padding:0.75rem 1rem;border-radius:8px;font-size:0.92rem;display:none}
+.feedback.show{display:block}
+.feedback.correct{background:#dcfce7;color:#14532d;border-left:4px solid var(--green)}
+.feedback.review{background:#fef3c7;color:#78350f;border-left:4px solid #f59e0b}
+.feedback strong{display:block;margin-bottom:0.3rem}
+.feedback .answer-block{background:#fff;padding:0.6rem 0.75rem;border-radius:6px;margin-top:0.5rem;font-size:0.9rem;line-height:1.55}
+
+/* Nav */
+.nav-row{display:flex;justify-content:space-between;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.nav-row .btn{flex:1;min-width:120px}
+
+/* Empty state */
+.empty{text-align:center;padding:3rem 1rem;color:var(--muted)}
+.empty h3{color:var(--green-dark);margin-bottom:0.5rem}
+
+/* Save bar */
+.save-bar{display:flex;align-items:center;gap:0.6rem;flex-wrap:wrap;padding:0.75rem 1rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:var(--radius);margin-bottom:1rem;font-size:0.88rem}
+.save-bar .auto-save{display:flex;align-items:center;gap:0.45rem;color:var(--green-dark);font-weight:600;flex:1;min-width:0}
+.save-bar .auto-save .dot{width:9px;height:9px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(22,163,74,0.6);animation:pulse 2.2s ease-out infinite;flex-shrink:0}
+.save-bar .auto-save .dot.dim{background:var(--muted);animation:none;box-shadow:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,0.55)}70%{box-shadow:0 0 0 10px rgba(22,163,74,0)}100%{box-shadow:0 0 0 0 rgba(22,163,74,0)}}
+.save-bar .saved-text{font-size:0.85rem}
+.save-bar .saved-text small{display:block;font-weight:400;color:var(--muted);font-size:0.75rem;line-height:1.2}
+.btn-mini{padding:0.4rem 0.85rem;font-size:0.82rem;font-weight:600;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--text);cursor:pointer;transition:all 0.15s;font-family:inherit;white-space:nowrap}
+.btn-mini:hover{border-color:var(--green);color:var(--green)}
+.btn-mini.danger{color:#b91c1c;border-color:#fecaca}
+.btn-mini.danger:hover{background:#fef2f2;border-color:#b91c1c;color:#b91c1c}
+.btn-mini.danger.confirm{background:#dc2626;color:#fff;border-color:#dc2626}
+.export-link-wrap{display:none;width:100%;margin-top:0.5rem;padding-top:0.6rem;border-top:1px solid #bbf7d0}
+.export-link-wrap.show{display:block}
+.export-link-wrap .export-explain{font-size:0.78rem;color:var(--green-dark);margin-bottom:0.4rem}
+.export-link-wrap .export-row{display:flex;gap:0.4rem;align-items:center}
+.export-link-wrap input{flex:1;padding:0.45rem 0.55rem;border:1px solid var(--border);border-radius:6px;font-size:0.78rem;font-family:monospace;background:#fff}
+
+/* Footer */
+footer{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:0.82rem;border-top:1px solid var(--border);margin-top:2rem;background:#fff}
+footer a{color:var(--green);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media (max-width:600px){
+  header h1{font-size:1.5rem}
+  .face h2{font-size:1.3rem}
+  .mode-tab{min-width:100px;font-size:0.85rem;padding:0.6rem 0.5rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>Flashcards — H6 Voeding en vertering</h1>
+<p>Klaar voor 12 mei 2026? Oefen alle dikgedrukte begrippen.</p>
+</header>
+
+<nav class="breadcrumb">
+<a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo;
+<a href="../../../../">Ralph</a> &rsaquo;
+<a href="../../../">Biologie</a> &rsaquo;
+<a href="../../">HAVO 4</a> &rsaquo;
+<a href="../">Hoofdstuk 6</a> &rsaquo; Flashcards
+</nav>
+
+<div class="container">
+
+<div class="intro">
+<strong>Hoe werkt dit?</strong> Kies <em>Bekijken</em> om kaarten te draaien (klik op een kaart of druk op spatie). Kies <em>Zelftest</em> om je antwoord te typen en feedback te krijgen. Filter per paragraaf om gericht te oefenen.
+</div>
+
+<div class="mode-tabs" role="tablist">
+  <button class="mode-tab active" data-mode="view" role="tab">📖 Bekijken</button>
+  <button class="mode-tab" data-mode="test" role="tab">✍️ Zelftest</button>
+  <button class="mode-tab" data-mode="shuffle" role="tab">🔀 Shuffle &amp; herhaal foute</button>
+</div>
+
+<div class="filter-bar" role="group" aria-label="Filter per paragraaf">
+  <button class="filter-btn active" data-filter="all">Alles</button>
+  <button class="filter-btn" data-filter="6.1">§6.1 Voeding &amp; gezondheid</button>
+  <button class="filter-btn" data-filter="6.2">§6.2 Verteringsstelsel</button>
+  <button class="filter-btn" data-filter="6.3">§6.3 Enzymen</button>
+  <button class="filter-btn" data-filter="6.4">§6.4 Opname stoffen</button>
+  <button class="filter-btn" data-filter="6.5">§6.5 Lever</button>
+</div>
+
+<div class="score-bar">
+  <span>Voortgang: <strong id="score-current">0</strong> / <strong id="score-total">0</strong></span>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  <span id="score-correct" style="color:var(--green-dark)"></span>
+</div>
+
+<div class="save-bar">
+  <div class="auto-save">
+    <span class="dot dim" id="save-dot"></span>
+    <span class="saved-text" id="saved-status"><strong>Voortgang wordt automatisch opgeslagen</strong><small>Op dit apparaat — werkt offline</small></span>
+  </div>
+  <button class="btn-mini" id="btn-export" title="Genereer een link om je voortgang naar een ander apparaat over te zetten">📱 Naar ander apparaat</button>
+  <button class="btn-mini danger" id="btn-reset" title="Wis alle voortgang op dit apparaat">🗑 Wissen</button>
+  <div class="export-link-wrap" id="export-wrap">
+    <div class="export-explain">Kopieer onderstaande link en open hem op je andere apparaat (telefoon ↔ laptop) — je voortgang gaat mee.</div>
+    <div class="export-row">
+      <input type="text" id="export-link" readonly>
+      <button class="btn-mini" id="btn-copy-link">Kopieer</button>
+    </div>
+  </div>
+</div>
+
+<!-- View mode -->
+<div id="view-area">
+  <div class="card-area">
+    <div class="flashcard" id="flashcard">
+      <div class="face face-front">
+        <span class="counter" id="view-counter">1 / 1</span>
+        <span class="tag" id="view-tag">§6.1</span>
+        <h2 id="view-front">—</h2>
+        <span class="subtitle" id="view-front-sub"></span>
+        <div class="flip-hint">Klik om te draaien (of druk op spatie)</div>
+      </div>
+      <div class="face face-back">
+        <span class="counter">↺</span>
+        <span class="tag" id="view-tag-back">§6.1</span>
+        <p id="view-back">—</p>
+      </div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="btn btn-muted" id="view-prev">← Vorige</button>
+    <button class="btn btn-secondary" id="view-mark-good">✓ Ken ik</button>
+    <button class="btn btn-primary" id="view-next">Volgende →</button>
+  </div>
+</div>
+
+<!-- Test mode -->
+<div id="test-area" style="display:none">
+  <div class="test-area">
+    <span class="tag" id="test-tag">§6.1</span>
+    <h2 id="test-front">—</h2>
+    <label for="test-input" style="font-size:0.85rem;color:var(--muted);margin-bottom:0.4rem">Typ jouw definitie of korte uitleg:</label>
+    <textarea id="test-input" placeholder="..."></textarea>
+    <div class="test-actions">
+      <button class="btn btn-primary" id="test-check">Toon uitwerking</button>
+      <button class="btn btn-secondary" id="test-correct">Was goed ✓</button>
+      <button class="btn btn-muted" id="test-wrong">Was fout ✗</button>
+      <button class="btn btn-muted" id="test-skip">Volgende →</button>
+    </div>
+    <div class="feedback" id="test-feedback">
+      <strong>Modelantwoord:</strong>
+      <div class="answer-block" id="test-answer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Empty state -->
+<div id="empty-state" style="display:none">
+  <div class="empty">
+    <h3>🎉 Geen kaarten meer!</h3>
+    <p>Je hebt deze ronde afgerond. Klik op een filter of mode om opnieuw te beginnen.</p>
+  </div>
+</div>
+
+</div>
+
+<footer>
+<p><strong>Biologie HAVO 4 — Kapser — Hoofdstuk 6</strong></p>
+<p style="margin-top:0.5rem">
+Gemaakt door <strong>Ralph Wagter</strong> met <a href="https://claude.ai/code">Claude Code</a>.
+Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+<a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================================
+// Flashcard data — alle dikgedrukte begrippen uit Hoofdstuk 6 Voeding & vertering
+// ============================================================================
+const CARDS = [
+  // §6.1 — Invloed van voeding op je gezondheid
+  {p:"6.1", front:"Bouwstoffen", back:"Stoffen uit de voeding die nodig zijn voor groei, herstel en onderhoud van het lichaam (eiwitten, vetten, water, mineralen)."},
+  {p:"6.1", front:"Brandstoffen", back:"Stoffen uit de voeding die energie leveren voor lichaamsprocessen en spierwerking (koolhydraten, vetten, en bij tekort eiwitten)."},
+  {p:"6.1", front:"Beschermende stoffen", back:"Vitamines en mineralen die het lichaam beschermen tegen ziekten en bijdragen aan een goede werking van het immuunsysteem."},
+  {p:"6.1", front:"Regelstoffen", back:"Vitamines en mineralen die nodig zijn voor de regeling van processen in het lichaam (bv. enzymwerking, hormoonwerking)."},
+  {p:"6.1", front:"Energierijke voeding", back:"Voeding met veel energie per gewichtseenheid — veel vet en/of suiker (bv. snoep, koek, frituur)."},
+  {p:"6.1", front:"Energiearme voeding", back:"Voeding met weinig energie per gewichtseenheid — vaak veel water en/of vezels (bv. groenten, fruit)."},
+  {p:"6.1", front:"Schijf van Vijf", back:"Voorlichtingsmodel van het Voedingscentrum dat een gezonde, gevarieerde voeding samenvat in vijf vakken: groente/fruit, brood/granen, zuivel/eiwit, smeer/bereidingsvet en water/thee."},
+  {p:"6.1", front:"Energiebehoefte", back:"De hoeveelheid energie (in kJ of kcal) die een persoon per dag nodig heeft. Hangt af van leeftijd, geslacht, lichaamsgrootte en activiteit."},
+  {p:"6.1", front:"BMI (Body Mass Index)", back:"Verhoudingsgetal tussen gewicht en lengte: BMI = massa (kg) / lengte² (m²). Indicator voor over- of ondergewicht."},
+  {p:"6.1", front:"Additieven", back:"Stoffen die aan voedsel worden toegevoegd om houdbaarheid, smaak, kleur of structuur te verbeteren (E-nummers)."},
+
+  // §6.2 — Verteringsstelsel
+  {p:"6.2", front:"Vertering (spijsvertering)", back:"Het afbreken van grote voedselmoleculen tot kleine moleculen die de cellen kunnen opnemen. Bestaat uit een mechanisch en een chemisch deel."},
+  {p:"6.2", front:"Mechanische vertering", back:"Het fysiek kleiner maken van voedsel zonder dat de moleculen veranderen — door kauwen in de mond en knedende bewegingen in maag en darmen."},
+  {p:"6.2", front:"Chemische vertering", back:"Het afbreken van grote moleculen tot kleinere moleculen met behulp van verteringsenzymen."},
+  {p:"6.2", front:"Verteringsstelsel", back:"Het geheel van organen dat voedsel verteert en opneemt: mond, slokdarm, maag, dunne darm, dikke darm en endeldarm, plus klieren (speeksel, lever, alvleesklier)."},
+  {p:"6.2", front:"Maagdarmkanaal", back:"De doorgaande pijp van mond tot anus waar voedsel doorheen gaat (mondholte → slokdarm → maag → dunne darm → dikke darm → endeldarm)."},
+  {p:"6.2", front:"Peristaltische bewegingen (peristaltiek)", back:"Golfbeweging van spieren in de wand van slokdarm, maag en darmen die de voedselbrij voortduwt."},
+  {p:"6.2", front:"Maagsap", back:"Vloeistof in de maag met zoutzuur (HCl) en het enzym pepsine; breekt eiwitten af en doodt bacteriën."},
+  {p:"6.2", front:"Speeksel", back:"Vloeistof in de mond met het enzym amylase; bevochtigt voedsel en begint de vertering van zetmeel."},
+  {p:"6.2", front:"Alvleessap", back:"Vloeistof uit de alvleesklier met enzymen voor de vertering van koolhydraten, eiwitten en vetten in de dunne darm."},
+  {p:"6.2", front:"Darmsap", back:"Vloeistof uit kliertjes in de wand van de dunne darm; bevat enzymen die de laatste afbraakstappen verzorgen (zoals maltase, lactase)."},
+  {p:"6.2", front:"Polysacchariden", back:"Lange ketens van vele monosachariden, zoals zetmeel en glycogeen. Worden tijdens de vertering afgebroken tot disachariden en monosachariden."},
+  {p:"6.2", front:"Disachariden", back:"Suikers die uit twee gekoppelde monosachariden bestaan, zoals maltose, lactose en sacharose."},
+  {p:"6.2", front:"Monosachariden", back:"Enkelvoudige suikers (één suikermolecuul), zoals glucose, fructose en galactose. Eindproduct van de koolhydraatvertering."},
+  {p:"6.2", front:"Polypeptiden", back:"Lange ketens aminozuren. Vormen samen eiwitten en worden tijdens de vertering afgebroken via peptiden tot losse aminozuren."},
+  {p:"6.2", front:"Aminozuren", back:"De kleinste bouwstenen van eiwitten. Eindproduct van de eiwitvertering; opgenomen via de dunne darm."},
+  {p:"6.2", front:"Triglyceriden (vetten)", back:"Een molecuul glycerol met daaraan drie vetzuren gekoppeld. De voedselvorm waarin de meeste vetten in voeding voorkomen."},
+  {p:"6.2", front:"Vetzuren en glycerol", back:"De afbraakproducten van vetten (triglyceriden) na vertering door lipase. Worden in de dunne darm opgenomen."},
+
+  // §6.3 — Enzymen
+  {p:"6.3", front:"Enzym", back:"Een eiwit dat als biologische katalysator een specifieke chemische reactie versnelt zonder zelf verbruikt te worden."},
+  {p:"6.3", front:"Substraat", back:"De stof waar een enzym op werkt. Past in de actieve plek van het enzym, zoals een sleutel in een slot."},
+  {p:"6.3", front:"Enzym-substraatcomplex", back:"Tijdelijke binding tussen het enzym en zijn substraat in de actieve plek; daarna laat het enzym de producten los en kan het opnieuw werken."},
+  {p:"6.3", front:"Specificiteit van enzymen", back:"Elk enzym werkt op slechts één type substraat (of een kleine groep), doordat alleen dat substraat in de actieve plek past."},
+  {p:"6.3", front:"Optimumtemperatuur", back:"De temperatuur waarbij een enzym het snelst werkt. Bij menselijke enzymen ligt deze rond 37 °C."},
+  {p:"6.3", front:"Optimum-pH", back:"De zuurgraad waarbij een enzym het snelst werkt. Verschilt per enzym (pepsine ≈ pH 2, trypsine ≈ pH 8)."},
+  {p:"6.3", front:"Minimumtemperatuur", back:"De laagste temperatuur waarbij een enzym nog werkt. Daaronder staat de reactie vrijwel stil, maar het enzym blijft intact."},
+  {p:"6.3", front:"Maximumtemperatuur", back:"De hoogste temperatuur waarbij een enzym nog kan werken. Daarboven raakt het enzym blijvend beschadigd (denaturatie)."},
+  {p:"6.3", front:"Denaturatie", back:"Verandering van de ruimtelijke structuur van een enzym (eiwit) door bv. te hoge temperatuur. De actieve plek past dan niet meer op het substraat, dus het enzym werkt niet meer. Bij hoge temperatuur is dit blijvend."},
+  {p:"6.3", front:"Amylase", back:"Verteringsenzym in speeksel en alvleessap dat zetmeel (polysacchariden) afbreekt tot maltose en kleinere koolhydraten."},
+  {p:"6.3", front:"Pepsine", back:"Verteringsenzym in maagsap dat eiwitten afbreekt tot kortere stukken (peptiden); werkt optimaal bij een lage pH (zuur, ongeveer pH 2)."},
+  {p:"6.3", front:"Trypsine", back:"Verteringsenzym in alvleessap dat in de dunne darm peptiden verder afbreekt tot kleinere peptiden; werkt optimaal bij een licht basische pH (ongeveer pH 8)."},
+  {p:"6.3", front:"Lipase", back:"Verteringsenzym in alvleessap en darmsap dat triglyceriden (vetten) afbreekt tot vetzuren en glycerol."},
+  {p:"6.3", front:"Maltase, lactase, sucrase", back:"Disaccharidasen in de dunne darm die respectievelijk maltose, lactose en sacharose afbreken tot monosachariden."},
+  {p:"6.3", front:"Cellulose", back:"Polysaccharide in plantencelwanden. Mensen hebben geen enzym om cellulose af te breken; het is voor ons een voedingsvezel."},
+  {p:"6.3", front:"Voedingsvezels", back:"Onverteerbare delen van plantaardig voedsel (bv. cellulose). Geven volume aan de ontlasting, stimuleren de darmwerking en zijn voedsel voor nuttige darmbacteriën."},
+
+  // §6.4 — Opname van stoffen
+  {p:"6.4", front:"Sluitspieren (sfincters)", back:"Ringspieren rond doorgangen in het maagdarmkanaal (bv. tussen maag en dunne darm) die kunnen openen en sluiten om voedseldoorgang te regelen."},
+  {p:"6.4", front:"Slijmvlies", back:"Binnenste laag van de wand van het maagdarmkanaal. Produceert slijm dat de wand beschermt en het glijden van voedsel bevordert."},
+  {p:"6.4", front:"Darmplooien", back:"Grote plooien in de binnenwand van de dunne darm. Vergroten samen met darmvlokken en microvilli het opnameoppervlak."},
+  {p:"6.4", front:"Darmvlokken", back:"Vingervormige uitsteeksels op de darmplooien in de dunne darm. Vergroten het opnameoppervlak en bevatten een bloed- en lymfevaatje."},
+  {p:"6.4", front:"Microvilli", back:"Hele kleine uitsteekseltjes op het oppervlak van de epitheelcellen van darmvlokken. Vergroten het opnameoppervlak nog verder."},
+  {p:"6.4", front:"Opnameoppervlak", back:"Het totale oppervlak van de darmwand waardoor voedingsstoffen het bloed kunnen bereiken. Sterk vergroot door darmplooien, darmvlokken en microvilli."},
+  {p:"6.4", front:"Diffusie (bij opname)", back:"Verplaatsing van moleculen van een hoge naar een lage concentratie zonder dat de cel er energie voor gebruikt. Manier waarop o.a. water in de darm wordt opgenomen."},
+  {p:"6.4", front:"Actief transport", back:"Verplaatsing van stoffen door celmembranen waarvoor de cel energie (ATP) gebruikt. Nodig voor o.a. opname van glucose en aminozuren tegen een concentratiegradiënt in."},
+  {p:"6.4", front:"Poortader", back:"Bloedvat dat voedselrijk bloed vanuit de darmen rechtstreeks naar de lever brengt. Dit bloed is zuurstofarm omdat de darmen al zuurstof hebben verbruikt."},
+  {p:"6.4", front:"Lymfevat in darmvlok", back:"Vat in een darmvlok dat opgenomen vetten (in de vorm van chylomicronen) afvoert via het lymfestelsel."},
+  {p:"6.4", front:"Darmflora (darmbacteriën)", back:"Verzameling bacteriën in de dikke darm. Helpen bij het verteren van vezels, beschermen tegen ziekteverwekkers en maken vitamine K en sommige B-vitamines aan."},
+  {p:"6.4", front:"Symbiose (darmbacteriën)", back:"Mens en darmbacteriën helpen elkaar: de bacteriën krijgen voedsel en warmte uit de darmen, de mens krijgt vertering van vezels, extra vitamines (zoals K) en bescherming tegen schadelijke bacteriën."},
+
+  // §6.5 — Opslag en afbraak in de lever
+  {p:"6.5", front:"Lever", back:"Groot orgaan in de buikholte met vier hoofdfuncties: (1) opslag van glucose als glycogeen en regeling bloedglucosegehalte, (2) afbraak van aminozuren tot ureum, (3) maken van gal, en (4) ontgifting van giftige stoffen (bv. alcohol)."},
+  {p:"6.5", front:"Glycogeen", back:"Reservevorm van glucose, opgeslagen in lever en spieren. De lever houdt het bloedglucosegehalte op peil door glycogeen af te breken of aan te maken."},
+  {p:"6.5", front:"Bloedglucosegehalte", back:"De concentratie glucose in het bloed (gezond ongeveer 5 mmol/L). Wordt constant gehouden door insuline en glucagon."},
+  {p:"6.5", front:"Insuline", back:"Hormoon uit de bètacellen in de eilandjes van Langerhans (alvleesklier) dat het bloedglucosegehalte verlaagt: stimuleert opname van glucose in cellen en opslag als glycogeen in de lever."},
+  {p:"6.5", front:"Glucagon", back:"Hormoon uit de alfacellen in de eilandjes van Langerhans (alvleesklier) dat het bloedglucosegehalte verhoogt: laat de lever glycogeen afbreken tot glucose en aan het bloed afgeven."},
+  {p:"6.5", front:"Eilandjes van Langerhans", back:"Groepjes hormoonproducerende cellen in de alvleesklier. De alfacellen maken glucagon, de bètacellen maken insuline. Samen regelen ze het bloedglucosegehalte."},
+  {p:"6.5", front:"Diabetes mellitus (suikerziekte)", back:"Aandoening waarbij het lichaam te weinig insuline maakt of er niet goed op reageert; daardoor blijft het bloedglucosegehalte te hoog."},
+  {p:"6.5", front:"Ureum", back:"Afvalstof die in de lever wordt gevormd uit ammoniak (afbraakproduct van aminozuren) en via de nieren als urine wordt uitgescheiden."},
+  {p:"6.5", front:"Cholesterol", back:"Vetachtige stof die deels uit voeding komt en deels door de lever wordt gemaakt. Bouwstof voor celmembranen en hormonen; te veel verhoogt het risico op hart- en vaatziekten."},
+  {p:"6.5", front:"Gal", back:"Geelgroene vloeistof die door de lever wordt gemaakt en in de galblaas wordt opgeslagen. Gal bevat geen enzymen, maar maakt grote vetdruppels in kleine druppeltjes (emulgeren) zodat lipase erbij kan."},
+  {p:"6.5", front:"Galblaas", back:"Klein blaasje onder de lever waarin gal wordt opgeslagen en ingedikt; geeft via de galgang gal af aan de dunne darm bij een vetrijke maaltijd."},
+  {p:"6.5", front:"Bilirubine", back:"Geelbruin afbraakproduct van hemoglobine uit oude rode bloedcellen. Verlaat het lichaam via de gal en geeft ontlasting de bruine kleur."},
+  {p:"6.5", front:"Galstenen", back:"Vaste klontjes (vooral van cholesterol) die in de galblaas of galgangen kunnen ontstaan en de afvoer van gal kunnen blokkeren."},
+  {p:"6.5", front:"Geelzucht", back:"Gele verkleuring van huid en oogwit door ophoping van bilirubine in het bloed, bv. bij een verstopte galgang of leverziekte."},
+  {p:"6.5", front:"Detoxificatie (ontgifting)", back:"De rol van de lever bij het onschadelijk maken van giftige stoffen zoals alcohol, medicijnresten en ammoniak."}
+];
+
+// ============================================================================
+// State
+// ============================================================================
+const STORAGE_KEY = 'bio-h6-flashcards-v1';
+
+const state = {
+  mode: 'view',         // 'view' | 'test' | 'shuffle'
+  filter: 'all',        // 'all' | '6.1' | '6.2' | '6.3' | '6.4' | '6.5'
+  deck: [],             // current ordered list of indices into CARDS
+  pos: 0,               // current index in deck
+  flipped: false,
+  correctIds: new Set(),// CARDS-indices that user has ever marked correct (persisted)
+  wrongIds: [],         // for shuffle mode: queue of cards to retry (session only)
+  answered: new Set()   // CARDS-indices already answered this round (session only)
+};
+
+// ============================================================================
+// Persistence — localStorage + URL-hash
+// ============================================================================
+function persist() {
+  try {
+    const data = {
+      v: 1,
+      mode: state.mode,
+      filter: state.filter,
+      correct: Array.from(state.correctIds),
+      ts: Date.now()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    updateSavedStatus();
+  } catch (e) {}
+}
+
+function loadFromStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    applyData(JSON.parse(raw));
+    return true;
+  } catch (e) { return false; }
+}
+
+function applyData(data) {
+  if (!data || data.v !== 1) return;
+  if (data.mode) state.mode = data.mode;
+  if (data.filter) state.filter = data.filter;
+  if (Array.isArray(data.correct)) {
+    state.correctIds = new Set(data.correct.filter(n => Number.isInteger(n) && n >= 0 && n < CARDS.length));
+  }
+}
+
+function loadFromHash() {
+  if (!location.hash || !location.hash.startsWith('#s=')) return false;
+  try {
+    const b64 = location.hash.slice(3);
+    const json = decodeURIComponent(escape(atob(b64)));
+    const data = JSON.parse(json);
+    applyData(data);
+    persist();
+    history.replaceState(null, '', location.pathname + location.search);
+    return true;
+  } catch (e) { return false; }
+}
+
+function buildExportLink() {
+  const data = {
+    v: 1,
+    mode: state.mode,
+    filter: state.filter,
+    correct: Array.from(state.correctIds)
+  };
+  const json = JSON.stringify(data);
+  const b64 = btoa(unescape(encodeURIComponent(json)));
+  return location.origin + location.pathname + '#s=' + b64;
+}
+
+function updateSavedStatus() {
+  const el = $('saved-status');
+  const dot = $('save-dot');
+  if (!el || !dot) return;
+  const correct = state.correctIds.size;
+  if (correct === 0) {
+    el.innerHTML = '<strong>Voortgang wordt automatisch opgeslagen</strong><small>Op dit apparaat &mdash; werkt offline</small>';
+    dot.classList.add('dim');
+  } else {
+    const tijd = new Date().toLocaleTimeString('nl-NL', {hour:'2-digit', minute:'2-digit'});
+    el.innerHTML = `<strong>✓ Opgeslagen: ${correct} kaarten geleerd</strong><small>Laatst bijgewerkt om ${tijd}</small>`;
+    dot.classList.remove('dim');
+    // Brief pulse on the dot to show "just saved"
+    dot.style.animation = 'none';
+    requestAnimationFrame(() => { dot.style.animation = ''; });
+  }
+}
+
+// ============================================================================
+// Deck building
+// ============================================================================
+function buildDeck() {
+  const indices = CARDS.map((c, i) => ({c, i}))
+    .filter(({c}) => state.filter === 'all' || c.p === state.filter)
+    .map(({i}) => i);
+  if (state.mode === 'shuffle') shuffleArray(indices);
+  state.deck = indices;
+  state.pos = 0;
+  state.flipped = false;
+  state.answered.clear();
+  state.wrongIds = [];
+  // correctIds NOT cleared — persists across rounds and is saved to localStorage
+  render();
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+// ============================================================================
+// Render
+// ============================================================================
+const $ = id => document.getElementById(id);
+
+function render() {
+  document.querySelectorAll('.mode-tab').forEach(b => b.classList.toggle('active', b.dataset.mode === state.mode));
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === state.filter));
+
+  const total = state.deck.length;
+  $('score-total').textContent = total;
+  $('score-current').textContent = Math.min(state.pos + (total > 0 ? 1 : 0), total);
+  const correctInDeck = state.deck.filter(idx => state.correctIds.has(idx)).length;
+  $('score-correct').textContent = total > 0 ? `(${correctInDeck} van ${total} geleerd ✓)` : '';
+  const pct = total > 0 ? Math.round((correctInDeck / total) * 100) : 0;
+  $('progress-fill').style.width = pct + '%';
+
+  $('view-area').style.display = (state.mode === 'view' || state.mode === 'shuffle') ? 'block' : 'none';
+  $('test-area').style.display = (state.mode === 'test') ? 'block' : 'none';
+  $('empty-state').style.display = 'none';
+
+  if (total === 0) {
+    $('view-area').style.display = 'none';
+    $('test-area').style.display = 'none';
+    $('empty-state').style.display = 'block';
+    return;
+  }
+
+  if (state.pos >= total) {
+    if (state.mode === 'shuffle' && state.wrongIds.length > 0) {
+      state.deck = state.wrongIds.slice();
+      shuffleArray(state.deck);
+      state.wrongIds = [];
+      state.pos = 0;
+      state.answered.clear();
+      // keep correctIds so progress feels continuous
+      render();
+      return;
+    }
+    $('view-area').style.display = 'none';
+    $('test-area').style.display = 'none';
+    $('empty-state').style.display = 'block';
+    return;
+  }
+
+  const card = CARDS[state.deck[state.pos]];
+
+  if (state.mode === 'view' || state.mode === 'shuffle') {
+    $('view-counter').textContent = `${state.pos + 1} / ${total}`;
+    $('view-tag').textContent = `§${card.p}`;
+    $('view-tag-back').textContent = `§${card.p}`;
+    $('view-front').textContent = card.front;
+    $('view-back').textContent = card.back;
+    const fc = $('flashcard');
+    fc.classList.toggle('flipped', state.flipped);
+  } else {
+    $('test-tag').textContent = `§${card.p}`;
+    $('test-front').textContent = card.front;
+    $('test-input').value = '';
+    $('test-feedback').classList.remove('show');
+    $('test-input').focus();
+  }
+}
+
+// ============================================================================
+// Event handlers
+// ============================================================================
+document.querySelectorAll('.mode-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.mode = btn.dataset.mode;
+    persist();
+    buildDeck();
+  });
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    state.filter = btn.dataset.filter;
+    persist();
+    buildDeck();
+  });
+});
+
+// Save-bar handlers
+let resetConfirmTimer = null;
+$('btn-reset').addEventListener('click', (e) => {
+  const btn = e.currentTarget;
+  if (!btn.classList.contains('confirm')) {
+    btn.classList.add('confirm');
+    btn.textContent = '⚠ Echt wissen?';
+    clearTimeout(resetConfirmTimer);
+    resetConfirmTimer = setTimeout(() => {
+      btn.classList.remove('confirm');
+      btn.textContent = '↺ Reset';
+    }, 4000);
+    return;
+  }
+  // Confirmed reset
+  state.correctIds.clear();
+  state.answered.clear();
+  state.wrongIds = [];
+  state.pos = 0;
+  state.flipped = false;
+  try { localStorage.removeItem(STORAGE_KEY); } catch(err) {}
+  btn.classList.remove('confirm');
+  btn.textContent = '↺ Reset';
+  clearTimeout(resetConfirmTimer);
+  $('export-wrap').classList.remove('show');
+  updateSavedStatus();
+  buildDeck();
+});
+
+$('btn-export').addEventListener('click', () => {
+  const wrap = $('export-wrap');
+  const inp = $('export-link');
+  inp.value = buildExportLink();
+  wrap.classList.add('show');
+  inp.select();
+});
+
+$('btn-copy-link').addEventListener('click', async (e) => {
+  const inp = $('export-link');
+  try {
+    await navigator.clipboard.writeText(inp.value);
+    e.currentTarget.textContent = '✓ Gekopieerd';
+    setTimeout(() => { e.currentTarget.textContent = 'Kopieer'; }, 1800);
+  } catch (err) {
+    inp.select();
+    document.execCommand('copy');
+    e.currentTarget.textContent = '✓ Gekopieerd';
+    setTimeout(() => { e.currentTarget.textContent = 'Kopieer'; }, 1800);
+  }
+});
+
+$('flashcard').addEventListener('click', () => {
+  state.flipped = !state.flipped;
+  render();
+});
+
+$('view-prev').addEventListener('click', (e) => {
+  if (state.pos > 0) { state.pos--; state.flipped = false; e.currentTarget.blur(); render(); }
+});
+$('view-next').addEventListener('click', (e) => {
+  const cardIdx = state.deck[state.pos];
+  if (state.mode === 'shuffle' && cardIdx !== undefined && !state.answered.has(cardIdx)) {
+    state.wrongIds.push(cardIdx);
+    state.answered.add(cardIdx);
+  }
+  state.pos++;
+  state.flipped = false;
+  e.currentTarget.blur();
+  render();
+});
+$('view-mark-good').addEventListener('click', (e) => {
+  const cardIdx = state.deck[state.pos];
+  state.correctIds.add(cardIdx);
+  state.answered.add(cardIdx);
+  state.pos++;
+  state.flipped = false;
+  e.currentTarget.blur();
+  persist();
+  render();
+});
+
+$('test-check').addEventListener('click', () => {
+  const card = CARDS[state.deck[state.pos]];
+  $('test-answer').textContent = card.back;
+  $('test-feedback').classList.add('show');
+  $('test-feedback').classList.remove('correct','review');
+  $('test-feedback').classList.add('review');
+});
+$('test-correct').addEventListener('click', () => {
+  const cardIdx = state.deck[state.pos];
+  state.correctIds.add(cardIdx);
+  state.answered.add(cardIdx);
+  state.pos++;
+  persist();
+  render();
+});
+$('test-wrong').addEventListener('click', () => {
+  const cardIdx = state.deck[state.pos];
+  // Remove from correctIds if previously marked correct — student wants to relearn
+  state.correctIds.delete(cardIdx);
+  state.answered.add(cardIdx);
+  state.pos++;
+  persist();
+  render();
+});
+$('test-skip').addEventListener('click', () => {
+  state.pos++;
+  render();
+});
+
+document.addEventListener('keydown', (e) => {
+  const tag = e.target.tagName;
+  if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'BUTTON') return;
+  if (state.mode === 'view' || state.mode === 'shuffle') {
+    if (e.code === 'Space') { e.preventDefault(); state.flipped = !state.flipped; render(); }
+    if (e.code === 'ArrowRight') { state.pos++; state.flipped = false; render(); }
+    if (e.code === 'ArrowLeft' && state.pos > 0) { state.pos--; state.flipped = false; render(); }
+  }
+});
+
+// Initial: try URL hash first (deel-link), fall back to localStorage
+const fromHash = loadFromHash();
+if (!fromHash) loadFromStorage();
+updateSavedStatus();
+buildDeck();
+</script>
+</body>
+</html>

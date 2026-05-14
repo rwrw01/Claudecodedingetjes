@@ -132,6 +132,17 @@ header p { font-size: 1.1rem; opacity: 0.92; }
   font-weight: 700;
   margin-right: 0.5rem;
 }
+.points-badge {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-left: 0.4rem;
+  border: 1px solid #fcd34d;
+}
 .card h2 {
   font-size: 1.2rem;
   color: var(--primary-dark);
@@ -152,6 +163,13 @@ header p { font-size: 1.1rem; opacity: 0.92; }
   color: var(--primary-dark);
   margin-bottom: 0.45rem;
 }
+.deelvraag .deelpunten {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 700;
+  margin-left: 0.5rem;
+}
 .q {
   display: flex;
   flex-wrap: wrap;
@@ -168,7 +186,7 @@ input[type=text] {
   border-radius: 8px;
   padding: 0.45rem 0.7rem;
   font-size: 1rem;
-  width: 170px;
+  width: 180px;
   font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
 }
 input:focus { outline: none; border-color: var(--primary); }
@@ -229,6 +247,12 @@ input.incorrect { border-color: var(--danger); background: #fff1f2; }
   font-size: 3.4rem;
   font-weight: 800;
   margin: 0.5rem 0;
+}
+.score-card .cijfer {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin: 0.3rem 0 0.6rem;
+  color: #fde68a;
 }
 .score-card .msg {
   font-size: 1.1rem;
@@ -425,7 +449,7 @@ footer a { color: var(--primary); text-decoration: none; }
 
 <header>
 <h1>Oefentoets — Hoofdstuk 6 De afgeleide functie</h1>
-<p>60 minuten · zes opgaven · klaarmaken voor de toets</p>
+<p>50 minuten · 4 opgaven · 39 punten · proefwerk-niveau</p>
 </header>
 
 <nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../../">Ralph</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H6 Afgeleide functie</a> &rsaquo; Oefentoets</nav>
@@ -435,7 +459,9 @@ footer a { color: var(--primary); text-decoration: none; }
 <div class="intro">
 <h2>Voor je begint</h2>
 <ul>
-<li>Tijd: <strong>60 minuten</strong>. De timer rechtsonder telt af.</li>
+<li>Tijd: <strong>50 minuten</strong>. De timer rechtsonder telt af.</li>
+<li>Totaal te halen: <strong>39 punten</strong>. Per deelvraag staat het puntenaantal.</li>
+<li>Cijfer-formule: <strong>cijfer = punten / 39 × 9 + 1</strong>.</li>
 <li>Vul alle antwoorden in. Geen tussentijdse checks.</li>
 <li>Klik op <strong>"Score berekenen"</strong> aan het einde. Pas dan zie je goed of fout.</li>
 <li>Pas na de score: per opgave verschijnt een <strong>"Uitwerking"</strong>-knop.</li>
@@ -450,263 +476,220 @@ footer a { color: var(--primary); text-decoration: none; }
 </div>
 
 <!-- ============================================================ -->
-<!-- Opgave 1 — raaklijn opstellen + raakpunt bij gegeven helling   -->
+<!-- Opgave 1 — differentiëren (7 punten)                          -->
 <!-- ============================================================ -->
 <div class="card" id="card-1">
-<h2><span class="opgave-num">1</span>Raaklijn en raakpunten — §6.1</h2>
-<p>Gegeven is de functie <strong>f(x) = ⅓x³ + ½x² + 4x + 1</strong>.</p>
+<h2><span class="opgave-num">1</span>Differentiëren <span class="points-badge">7 pt</span></h2>
+<p>Differentieer de volgende functies. Schrijf het antwoord netjes terug in <strong>breukvorm</strong> of <strong>wortelvorm</strong>. Laat alleen negatieve of gebroken exponenten staan als de functie zelf zo gegeven was.</p>
 
-<div class="figure-box">
-<img src="img/fig-opg1.png" alt="Grafiek van f(x) = 1/3 x kubus + 1/2 x kwadraat + 4x + 1 met raaklijn k door punt A(2, 41/3). Lijn k snijdt de y-as in punt B.">
-<figcaption><strong>Figuur 1.</strong> Raaklijn k aan de grafiek van f in punt A.</figcaption>
+<div class="deelvraag">
+<div class="deeltitel">a) f(x) = (4x − 3)² − 7x³ <span class="deelpunten">(2 pt)</span></div>
+<div class="q"><label>f'(x) =</label><input type="text" id="o1a" placeholder="..."></div>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">a) De lijn k raakt f in A met x<sub>A</sub> = 2 en snijdt de y-as in B. Bereken exact de coördinaten van B.</div>
-<div class="q"><label>y<sub>A</sub> = f(2) =</label><input type="text" id="o1a-y" placeholder="..."></div>
-<div class="q"><label>f'(x) =</label><input type="text" id="o1a-fp" placeholder="..."></div>
-<div class="q"><label>helling in A: f'(2) =</label><input type="text" id="o1a-h" placeholder="..."></div>
-<div class="q"><label>y-coördinaat van B:</label><input type="text" id="o1a-yb" placeholder="..."></div>
+<div class="deeltitel">b) g(x) = (x³ + 4x) / ³√x <span class="deelpunten">(3 pt)</span></div>
+<p style="font-size:0.92rem; color:var(--text-soft);">Tip: schrijf ³√x als x<sup>1/3</sup> en deel eerst.</p>
+<div class="q"><label>g'(x) =</label><input type="text" id="o1b" placeholder="..."></div>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">b) In de punten C en D op de grafiek van f is de helling van de raaklijn gelijk aan <strong>4</strong>. Bereken exact de coördinaten van C en D.</div>
-<div class="q"><label>x-coördinaat van C:</label><input type="text" id="o1b-xc" placeholder="..."></div>
-<div class="q"><label>y-coördinaat van C:</label><input type="text" id="o1b-yc" placeholder="..."></div>
-<div class="q"><label>x-coördinaat van D:</label><input type="text" id="o1b-xd" placeholder="..."></div>
-<div class="q"><label>y-coördinaat van D:</label><input type="text" id="o1b-yd" placeholder="..."></div>
+<div class="deeltitel">c) h(x) = 3 / √(5x − 2) <span class="deelpunten">(2 pt)</span></div>
+<div class="q"><label>h'(x) =</label><input type="text" id="o1c" placeholder="..."></div>
 </div>
 
 <button class="btn-show" data-target="ans-1" onclick="toggleAnswer('ans-1')">Toon uitwerking</button>
 <div class="answer-block" id="ans-1">
 <h5>Uitwerking</h5>
-<p><strong>a)</strong></p>
-<div class="formula-line">f(2) = ⅓·8 + ½·4 + 8 + 1 = 8/3 + 2 + 8 + 1 = 8/3 + 33/3 = <strong>41/3</strong></div>
-<div class="formula-line">f'(x) = x² + x + 4</div>
-<div class="formula-line">f'(2) = 4 + 2 + 4 = <strong>10</strong></div>
-<p>Lijn k: y = 10x + b. Vul A(2, 41/3) in:</p>
-<div class="formula-line">41/3 = 10 · 2 + b = 20 + b</div>
-<div class="formula-line">b = 41/3 − 60/3 = −19/3</div>
-<p><strong>B(0, −19/3).</strong></p>
 
-<p><strong>b)</strong> Los op f'(x) = 4:</p>
-<div class="formula-line">x² + x + 4 = 4</div>
-<div class="formula-line">x² + x = 0</div>
-<div class="formula-line">x(x + 1) = 0  →  x = 0 ∨ x = −1</div>
-<p>f(0) = 0 + 0 + 0 + 1 = <strong>1</strong>, dus C(0, 1).</p>
-<p>f(−1) = ⅓·(−1) + ½·1 + 4·(−1) + 1 = −⅓ + ½ − 4 + 1 = −2/6 + 3/6 − 18/6 = <strong>−17/6</strong>, dus D(−1, −17/6).</p>
-<p><strong>C(0, 1) en D(−1, −17/6).</strong></p>
+<p><strong>a)</strong> Werk de haakjes uit en differentieer term voor term.</p>
+<div class="formula-line">f(x) = 16x² − 24x + 9 − 7x³</div>
+<div class="formula-line">f'(x) = 32x − 24 − 21x²</div>
+<div class="formula-line"><strong>f'(x) = −21x² + 32x − 24</strong></div>
+
+<p><strong>b)</strong> Herschrijf eerst.</p>
+<div class="formula-line">g(x) = (x³ + 4x) · x<sup>−1/3</sup> = x<sup>8/3</sup> + 4x<sup>2/3</sup></div>
+<div class="formula-line">g'(x) = (8/3) x<sup>5/3</sup> + 4 · (2/3) x<sup>−1/3</sup></div>
+<div class="formula-line">g'(x) = (8/3) x<sup>5/3</sup> + (8/3) x<sup>−1/3</sup></div>
+<p>Terug naar wortelvorm. Schrijf x<sup>5/3</sup> = x² · x<sup>2/3</sup> = x²·³√x² en x<sup>−1/3</sup> = 1/³√x.</p>
+<div class="formula-line"><strong>g'(x) = (8x²·³√x²)/3 + 8/(3·³√x) = 8(x² + 1)/(3·³√x)</strong></div>
+
+<p><strong>c)</strong> Schrijf h(x) = 3·(5x − 2)<sup>−1/2</sup>. Kettingregel:</p>
+<div class="formula-line">h'(x) = 3 · (−1/2) · (5x − 2)<sup>−3/2</sup> · 5</div>
+<div class="formula-line">h'(x) = −(15/2) · (5x − 2)<sup>−3/2</sup></div>
+<div class="formula-line"><strong>h'(x) = −15 / (2·(5x − 2)·√(5x − 2))</strong></div>
 </div>
 </div>
 
 <!-- ============================================================ -->
-<!-- Opgave 2 — extreme waarden                                    -->
+<!-- Opgave 2 — kubische functie (10 punten)                       -->
 <!-- ============================================================ -->
 <div class="card" id="card-2">
-<h2><span class="opgave-num">2</span>Extreme waarden — §6.1</h2>
-<p>Bereken exact de extreme waarden van <strong>f(x) = x³ − 3x² + 2</strong>.</p>
+<h2><span class="opgave-num">2</span>Raaklijnen aan een derdegraads functie <span class="points-badge">10 pt</span></h2>
+<p>Gegeven is de functie <strong>f(x) = x³ − 6x² + 9x + 2</strong>.</p>
 
-<div class="deelvraag">
-<div class="deeltitel">a) Geef de afgeleide.</div>
-<div class="q"><label>f'(x) =</label><input type="text" id="o2-fp" placeholder="..."></div>
+<div class="figure-box">
+<img src="img/fig-opg2.png" alt="Grafiek van f(x) = x derdemacht min 6 x kwadraat plus 9 x plus 2. Raaklijn k raakt in punt A met x = 4 en snijdt de y-as in B. Twee streep-raaklijnen met helling 24 raken de grafiek in punten C en D.">
+<figcaption><strong>Figuur 1.</strong> Raaklijn k aan f in A, en de twee raakpunten C en D met helling 24.</figcaption>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">b) Voor welke waarden van x is f'(x) = 0?</div>
-<div class="q"><label>kleinste x-waarde:</label><input type="text" id="o2-x1" placeholder="..."></div>
-<div class="q"><label>grootste x-waarde:</label><input type="text" id="o2-x2" placeholder="..."></div>
+<div class="deeltitel">a) De lijn k raakt f in A met x<sub>A</sub> = 4 en snijdt de y-as in B. Bereken algebraïsch de coördinaten van B. <span class="deelpunten">(3 pt)</span></div>
+<div class="q"><label>y<sub>A</sub> = f(4) =</label><input type="text" id="o2a-y" placeholder="..."></div>
+<div class="q"><label>f'(x) =</label><input type="text" id="o2a-fp" placeholder="..."></div>
+<div class="q"><label>helling f'(4) =</label><input type="text" id="o2a-h" placeholder="..."></div>
+<div class="q"><label>y-coördinaat van B:</label><input type="text" id="o2a-yb" placeholder="..."></div>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">c) Bereken de extreme waarden. Geef bij elk aan of het een maximum of minimum is.</div>
-<div class="q"><label>maximum f(...) =</label><input type="text" id="o2-max" placeholder="..."></div>
-<div class="q"><label>minimum f(...) =</label><input type="text" id="o2-min" placeholder="..."></div>
+<div class="deeltitel">b) In de punten C en D raakt een lijn die <strong>evenwijdig</strong> is met de lijn y = 24x − 7. Bereken algebraïsch de coördinaten van C en D. <span class="deelpunten">(4 pt)</span></div>
+<div class="q"><label>x-coördinaat van C (kleinste):</label><input type="text" id="o2b-xc" placeholder="..."></div>
+<div class="q"><label>y-coördinaat van C:</label><input type="text" id="o2b-yc" placeholder="..."></div>
+<div class="q"><label>x-coördinaat van D (grootste):</label><input type="text" id="o2b-xd" placeholder="..."></div>
+<div class="q"><label>y-coördinaat van D:</label><input type="text" id="o2b-yd" placeholder="..."></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Voor welke waarden van p heeft de vergelijking f(x) = p <strong>drie verschillende</strong> oplossingen? Los algebraïsch op via de extreme waarden van f. <span class="deelpunten">(3 pt)</span></div>
+<div class="q"><label>minimale top f(...) =</label><input type="text" id="o2c-min" placeholder="..."></div>
+<div class="q"><label>maximale top f(...) =</label><input type="text" id="o2c-max" placeholder="..."></div>
+<div class="q"><label>p-ondergrens:</label><input type="text" id="o2c-pmin" placeholder="..."></div>
+<div class="q"><label>p-bovengrens:</label><input type="text" id="o2c-pmax" placeholder="..."></div>
 </div>
 
 <button class="btn-show" data-target="ans-2" onclick="toggleAnswer('ans-2')">Toon uitwerking</button>
 <div class="answer-block" id="ans-2">
 <h5>Uitwerking</h5>
-<div class="formula-line">f'(x) = 3x² − 6x = 3x(x − 2)</div>
-<p>Stel f'(x) = 0:</p>
-<div class="formula-line">3x(x − 2) = 0  →  x = 0 ∨ x = 2</div>
-<p>De grafiek is een derdegraads functie met positieve leidende coëfficiënt: hij stijgt voor x &lt; 0, daalt tussen 0 en 2, en stijgt weer na 2. Dus x = 0 is een maximum, x = 2 is een minimum.</p>
-<div class="formula-line">f(0) = 0 − 0 + 2 = 2</div>
-<div class="formula-line">f(2) = 8 − 12 + 2 = −2</div>
-<p><strong>max f(0) = 2 en min f(2) = −2.</strong></p>
+
+<p><strong>a)</strong></p>
+<div class="formula-line">f(4) = 64 − 96 + 36 + 2 = <strong>6</strong></div>
+<div class="formula-line">f'(x) = 3x² − 12x + 9</div>
+<div class="formula-line">f'(4) = 48 − 48 + 9 = <strong>9</strong></div>
+<p>Lijn k: y = 9x + b. Vul A(4, 6) in:</p>
+<div class="formula-line">6 = 9 · 4 + b → b = 6 − 36 = <strong>−30</strong></div>
+<p><strong>B(0, −30).</strong></p>
+
+<p><strong>b)</strong> Helling = 24 betekent f'(x) = 24:</p>
+<div class="formula-line">3x² − 12x + 9 = 24</div>
+<div class="formula-line">3x² − 12x − 15 = 0  →  x² − 4x − 5 = 0</div>
+<div class="formula-line">(x − 5)(x + 1) = 0  →  x = −1 ∨ x = 5</div>
+<p>y-waarden:</p>
+<div class="formula-line">f(−1) = −1 − 6 − 9 + 2 = <strong>−14</strong></div>
+<div class="formula-line">f(5) = 125 − 150 + 45 + 2 = <strong>22</strong></div>
+<p><strong>C(−1, −14) en D(5, 22).</strong></p>
+
+<p><strong>c)</strong> Bepaal de toppen.</p>
+<div class="formula-line">f'(x) = 3x² − 12x + 9 = 3(x − 1)(x − 3) = 0</div>
+<div class="formula-line">x = 1 ∨ x = 3</div>
+<div class="formula-line">f(1) = 1 − 6 + 9 + 2 = 6 (max)</div>
+<div class="formula-line">f(3) = 27 − 54 + 27 + 2 = 2 (min)</div>
+<p>De grafiek stijgt-daalt-stijgt. De horizontale lijn y = p snijdt de grafiek drie keer dan en slechts dan als p strikt tussen min en max ligt.</p>
+<div class="formula-line"><strong>2 &lt; p &lt; 6</strong></div>
 </div>
 </div>
 
 <!-- ============================================================ -->
-<!-- Opgave 3 — machtsregel en herleiden                           -->
+<!-- Opgave 3 — wortelfunctie (14 punten)                          -->
 <!-- ============================================================ -->
 <div class="card" id="card-3">
-<h2><span class="opgave-num">3</span>Differentiëren met machtsregel — §6.2</h2>
-<p>Differentieer de volgende functies. Schrijf het antwoord netjes in breukvorm of wortelvorm (geen negatieve of gebroken exponenten).</p>
+<h2><span class="opgave-num">3</span>Wortelfunctie — bereik en loodrechte raaklijn <span class="points-badge">14 pt</span></h2>
+<p>Gegeven is de functie <strong>f(x) = √(20 − 4x) + ½x − 1</strong>.</p>
 
 <div class="deelvraag">
-<div class="deeltitel">a) f(x) = 3/x⁴</div>
-<div class="q"><label>f'(x) =</label><input type="text" id="o3a" placeholder="..."></div>
+<div class="deeltitel">a) Bereken algebraïsch het <strong>bereik</strong> van f. <span class="deelpunten">(6 pt)</span></div>
+<p style="font-size:0.92rem; color:var(--text-soft);">Stap 1: bepaal het domein. Stap 2: bereken f'(x). Stap 3: los f'(x) = 0 op. Stap 4: bepaal of het een maximum of minimum is en geef het bereik in een ongelijkheid.</p>
+<div class="q"><label>domein x ≤</label><input type="text" id="o3a-dom" placeholder="..."></div>
+<div class="q"><label>f'(x) =</label><input type="text" id="o3a-fp" placeholder="..."></div>
+<div class="q"><label>x-waarde van de top:</label><input type="text" id="o3a-x" placeholder="..."></div>
+<div class="q"><label>maximale waarde f(...) =</label><input type="text" id="o3a-y" placeholder="..."></div>
+<div class="q"><label>bereik (vul in: f(x) ≤ ...):</label><input type="text" id="o3a-ber" placeholder="..."></div>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">b) g(x) = (8x² − 2x)/√x</div>
-<div class="q"><label>g'(x) =</label><input type="text" id="o3b" placeholder="..."></div>
-</div>
-
-<div class="deelvraag">
-<div class="deeltitel">c) h(x) = (x + 2√x)²</div>
-<div class="q"><label>h'(x) =</label><input type="text" id="o3c" placeholder="..."></div>
+<div class="deeltitel">b) De lijn k raakt f in A met x<sub>A</sub> = 4 en snijdt de y-as in B. De lijn l gaat door B, staat <strong>loodrecht</strong> op k, en snijdt de x-as in C. Bereken exact de x-coördinaat van C. <span class="deelpunten">(8 pt)</span></div>
+<div class="q"><label>y<sub>A</sub> = f(4) =</label><input type="text" id="o3b-y" placeholder="..."></div>
+<div class="q"><label>helling van k: f'(4) =</label><input type="text" id="o3b-h" placeholder="..."></div>
+<div class="q"><label>y-coördinaat van B:</label><input type="text" id="o3b-yb" placeholder="..."></div>
+<div class="q"><label>helling van l:</label><input type="text" id="o3b-hl" placeholder="..."></div>
+<div class="q"><label>x-coördinaat van C:</label><input type="text" id="o3b-xc" placeholder="..."></div>
 </div>
 
 <button class="btn-show" data-target="ans-3" onclick="toggleAnswer('ans-3')">Toon uitwerking</button>
 <div class="answer-block" id="ans-3">
 <h5>Uitwerking</h5>
-<p><strong>a)</strong> Schrijf f(x) = 3x<sup>−4</sup>.</p>
-<div class="formula-line">f'(x) = 3 · (−4) · x<sup>−5</sup> = −12x<sup>−5</sup> = <strong>−12/x⁵</strong></div>
 
-<p><strong>b)</strong> Herschrijf eerst:</p>
-<div class="formula-line">g(x) = 8x²/√x − 2x/√x = 8x<sup>3/2</sup> − 2x<sup>1/2</sup></div>
-<div class="formula-line">g'(x) = 8·(3/2)x<sup>1/2</sup> − 2·(1/2)x<sup>−1/2</sup></div>
-<div class="formula-line">g'(x) = 12x<sup>1/2</sup> − x<sup>−1/2</sup> = <strong>12√x − 1/√x</strong></div>
+<p><strong>a)</strong> <em>Domein</em>: 20 − 4x ≥ 0 → <strong>x ≤ 5</strong>.</p>
+<p>Schrijf f(x) = (20 − 4x)<sup>1/2</sup> + ½x − 1. Met de kettingregel:</p>
+<div class="formula-line">f'(x) = ½·(20 − 4x)<sup>−1/2</sup>·(−4) + ½ = −2/√(20 − 4x) + ½</div>
+<p>Stel f'(x) = 0:</p>
+<div class="formula-line">2/√(20 − 4x) = ½  →  √(20 − 4x) = 4</div>
+<div class="formula-line">20 − 4x = 16  →  x = 1</div>
+<div class="formula-line">f(1) = √16 + ½ − 1 = 4 − ½ = <strong>7/2</strong></div>
+<p>Bij x → −∞ gaat de term ½x naar −∞ harder dan de wortelterm groeit, dus f → −∞. De top x = 1 is dus een <strong>maximum</strong>.</p>
+<div class="formula-line"><strong>Bereik: f(x) ≤ 7/2</strong></div>
 
-<p><strong>c)</strong> Werk de haakjes eerst uit:</p>
-<div class="formula-line">h(x) = x² + 2·x·2√x + (2√x)² = x² + 4x√x + 4x</div>
-<div class="formula-line">h(x) = x² + 4x<sup>3/2</sup> + 4x</div>
-<div class="formula-line">h'(x) = 2x + 4·(3/2)x<sup>1/2</sup> + 4 = <strong>2x + 6√x + 4</strong></div>
+<p><strong>b)</strong></p>
+<div class="formula-line">f(4) = √(20 − 16) + 2 − 1 = √4 + 1 = 2 + 1 = <strong>3</strong></div>
+<div class="formula-line">f'(4) = −2/√4 + ½ = −1 + ½ = <strong>−1/2</strong></div>
+<p>Lijn k: y = −½x + b, door A(4, 3): b = 3 + 2 = 5. Dus k: y = −½x + 5. <strong>B(0, 5).</strong></p>
+<p>Lijn l ⊥ k door B: rc<sub>l</sub> · rc<sub>k</sub> = −1, dus rc<sub>l</sub> = <strong>2</strong>.</p>
+<div class="formula-line">l: y = 2x + 5</div>
+<p>Snijpunt met x-as: 0 = 2x + 5 → x = −5/2.</p>
+<div class="formula-line"><strong>C(−5/2, 0).</strong></div>
 </div>
 </div>
 
 <!-- ============================================================ -->
-<!-- Opgave 4 — kettingregel                                       -->
+<!-- Opgave 4 — optimaliseren oppervlakte (8 punten)               -->
 <!-- ============================================================ -->
 <div class="card" id="card-4">
-<h2><span class="opgave-num">4</span>Kettingregel — §6.3</h2>
-<p>Differentieer met de kettingregel. Vergeet de <strong>binnenste afgeleide</strong> (·a) niet.</p>
+<h2><span class="opgave-num">4</span>Optimaliseren — oppervlakte driehoek PQR <span class="points-badge">8 pt</span></h2>
+<p>Gegeven is de parabool <strong>y = −x² + 8x</strong>. Op de parabool ligt het punt P(p, y<sub>P</sub>) met 0 &lt; p &lt; 8. Op de x-as ligt het punt Q(p, 0). Het punt R(8, 0) is vast.</p>
 
-<div class="deelvraag">
-<div class="deeltitel">a) f(x) = (6x − 1)⁵</div>
-<div class="q"><label>f'(x) =</label><input type="text" id="o4a" placeholder="..."></div>
+<div class="figure-box">
+<img src="img/fig-opg4.png" alt="Parabool y = min x kwadraat plus 8 x. Driehoek PQR is geel gevuld. P ligt op de parabool, Q ligt op de x-as recht onder P, R is het rechter nulpunt van de parabool op (8, 0).">
+<figcaption><strong>Figuur 2.</strong> Driehoek ΔPQR met P op de parabool, Q op de x-as recht onder P, en R(8, 0).</figcaption>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">b) g(x) = 5/(2x − 3)⁴</div>
-<div class="q"><label>g'(x) =</label><input type="text" id="o4b" placeholder="..."></div>
+<div class="deeltitel">a) Toon aan dat A(p) = ½·p·(8 − p)². <span class="deelpunten">(2 pt)</span></div>
+<div class="q"><label>basis QR =</label><input type="text" id="o4a-basis" placeholder="..."></div>
+<div class="q"><label>hoogte PQ =</label><input type="text" id="o4a-hoogte" placeholder="..."></div>
 </div>
 
 <div class="deelvraag">
-<div class="deeltitel">c) h(x) = √(3x − 4) + x²</div>
-<div class="q"><label>h'(x) =</label><input type="text" id="o4c" placeholder="..."></div>
+<div class="deeltitel">b) Bereken algebraïsch A'(p) en de waarde van p waarvoor de oppervlakte maximaal is. <span class="deelpunten">(4 pt)</span></div>
+<div class="q"><label>A'(p) =</label><input type="text" id="o4b-fp" placeholder="..."></div>
+<div class="q"><label>p =</label><input type="text" id="o4b-p" placeholder="..."></div>
+</div>
+
+<div class="deelvraag">
+<div class="deeltitel">c) Bereken exact de maximale oppervlakte. <span class="deelpunten">(2 pt)</span></div>
+<div class="q"><label>A<sub>max</sub> =</label><input type="text" id="o4c" placeholder="..."></div>
 </div>
 
 <button class="btn-show" data-target="ans-4" onclick="toggleAnswer('ans-4')">Toon uitwerking</button>
 <div class="answer-block" id="ans-4">
 <h5>Uitwerking</h5>
-<p><strong>a)</strong> Macht naar voren, exponent één lager, binnenste afgeleide ·6:</p>
-<div class="formula-line">f'(x) = 5·(6x − 1)⁴·6 = <strong>30(6x − 1)⁴</strong></div>
 
-<p><strong>b)</strong> Schrijf g(x) = 5·(2x − 3)<sup>−4</sup>:</p>
-<div class="formula-line">g'(x) = 5 · (−4) · (2x − 3)<sup>−5</sup> · 2 = −40(2x − 3)<sup>−5</sup></div>
-<div class="formula-line">g'(x) = <strong>−40/(2x − 3)⁵</strong></div>
+<p><strong>a)</strong> De hoek in Q is recht (PQ verticaal, QR horizontaal).</p>
+<div class="formula-line">basis QR = 8 − p</div>
+<div class="formula-line">hoogte PQ = y<sub>P</sub> = −p² + 8p = p(8 − p)</div>
+<div class="formula-line">A(p) = ½ · (8 − p) · p(8 − p) = <strong>½·p·(8 − p)²</strong> ✓</div>
 
-<p><strong>c)</strong> Schrijf √(3x − 4) = (3x − 4)<sup>1/2</sup>:</p>
-<div class="formula-line">h'(x) = ½·(3x − 4)<sup>−1/2</sup>·3 + 2x</div>
-<div class="formula-line">h'(x) = <strong>3/(2√(3x − 4)) + 2x</strong></div>
-</div>
-</div>
-
-<!-- ============================================================ -->
-<!-- Opgave 5 — kettingregel + raaklijn                            -->
-<!-- ============================================================ -->
-<div class="card" id="card-5">
-<h2><span class="opgave-num">5</span>Wortelfunctie — maximum en raaklijn — §6.3</h2>
-<p>Gegeven is de functie <strong>f(x) = √(3x + 15) − ½x</strong>.</p>
-
-<div class="figure-box">
-<img src="img/fig-opg5.png" alt="Grafiek van f(x) = wortel van (3x + 15) - 1/2 x met een maximum links en een raaklijn k die de grafiek in punt A raakt en daarna de x-as snijdt.">
-<figcaption><strong>Figuur 2.</strong> Grafiek van f met het maximum en raaklijn k in punt A.</figcaption>
-</div>
-
-<div class="deelvraag">
-<div class="deeltitel">a) Bereken exact het maximum van f.</div>
-<div class="q"><label>f'(x) =</label><input type="text" id="o5a-fp" placeholder="..."></div>
-<div class="q"><label>x-waarde van het maximum:</label><input type="text" id="o5a-x" placeholder="..."></div>
-<div class="q"><label>maximale waarde f(...) =</label><input type="text" id="o5a-y" placeholder="..."></div>
-</div>
-
-<div class="deelvraag">
-<div class="deeltitel">b) De lijn k raakt f in A met x<sub>A</sub> = 7 en snijdt de x-as in B. Bereken exact de x-coördinaat van B.</div>
-<div class="q"><label>y<sub>A</sub> = f(7) =</label><input type="text" id="o5b-y" placeholder="..."></div>
-<div class="q"><label>helling van k: f'(7) =</label><input type="text" id="o5b-h" placeholder="..."></div>
-<div class="q"><label>x-coördinaat van B:</label><input type="text" id="o5b-xb" placeholder="..."></div>
-</div>
-
-<button class="btn-show" data-target="ans-5" onclick="toggleAnswer('ans-5')">Toon uitwerking</button>
-<div class="answer-block" id="ans-5">
-<h5>Uitwerking</h5>
-<p><strong>a)</strong> Schrijf f(x) = (3x + 15)<sup>1/2</sup> − ½x.</p>
-<div class="formula-line">f'(x) = ½·(3x + 15)<sup>−1/2</sup>·3 − ½ = 3/(2√(3x + 15)) − ½</div>
-<p>Stel f'(x) = 0:</p>
-<div class="formula-line">3/(2√(3x + 15)) = ½</div>
-<div class="formula-line">2√(3x + 15) = 6  →  √(3x + 15) = 3</div>
-<div class="formula-line">3x + 15 = 9  →  x = −2</div>
-<div class="formula-line">f(−2) = √9 − (−1) = 3 + 1 = <strong>4</strong></div>
-<p><strong>max f(−2) = 4.</strong></p>
-
-<p><strong>b)</strong></p>
-<div class="formula-line">f(7) = √(21 + 15) − 7/2 = √36 − 7/2 = 6 − 7/2 = 5/2</div>
-<div class="formula-line">f'(7) = 3/(2·6) − ½ = ¼ − ½ = −¼</div>
-<p>Lijn k: y = −¼x + b. Vul A(7, 5/2) in:</p>
-<div class="formula-line">5/2 = −¼·7 + b  →  b = 5/2 + 7/4 = 10/4 + 7/4 = 17/4</div>
-<p>k: y = −¼x + 17/4. Snijpunt met x-as: y = 0:</p>
-<div class="formula-line">0 = −¼x + 17/4  →  ¼x = 17/4  →  x = <strong>17</strong></div>
-<p><strong>B(17, 0).</strong></p>
-</div>
-</div>
-
-<!-- ============================================================ -->
-<!-- Opgave 6 — optimaliseren                                      -->
-<!-- ============================================================ -->
-<div class="card" id="card-6">
-<h2><span class="opgave-num">6</span>Optimaliseren — oppervlakte driehoek — §6.4</h2>
-<p>Gegeven is de parabool <strong>y = 16 − x²</strong>. Op de parabool ligt het punt P(p, y<sub>P</sub>) met 0 &lt; p &lt; 4. Op de x-as ligt het punt Q(p, 0). De driehoek heeft hoekpunten O(0, 0), P en Q.</p>
-
-<div class="figure-box">
-<img src="img/fig-opg6.png" alt="Parabool y = 16 - x kwadraat met een driehoek OPQ. O is de oorsprong, P ligt op de parabool, Q ligt op de x-as recht onder P. De driehoek is gevuld met geel.">
-<figcaption><strong>Figuur 3.</strong> Driehoek ΔOPQ onder de parabool y = 16 − x².</figcaption>
-</div>
-
-<div class="deelvraag">
-<div class="deeltitel">a) Stel de formule op voor de oppervlakte A van ΔOPQ als functie van p.</div>
-<div class="q"><label>A(p) =</label><input type="text" id="o6a" placeholder="..."></div>
-</div>
-
-<div class="deelvraag">
-<div class="deeltitel">b) Bereken algebraïsch de afgeleide A'(p) en de waarde van p waarvoor de oppervlakte maximaal is.</div>
-<div class="q"><label>A'(p) =</label><input type="text" id="o6b-fp" placeholder="..."></div>
-<div class="q"><label>p =</label><input type="text" id="o6b-p" placeholder="..."></div>
-</div>
-
-<div class="deelvraag">
-<div class="deeltitel">c) Bereken de maximale oppervlakte. Rond af op twee decimalen.</div>
-<div class="q"><label>A<sub>max</sub> ≈</label><input type="text" id="o6c" placeholder="..."></div>
-</div>
-
-<button class="btn-show" data-target="ans-6" onclick="toggleAnswer('ans-6')">Toon uitwerking</button>
-<div class="answer-block" id="ans-6">
-<h5>Uitwerking</h5>
-<p><strong>a)</strong> Driehoek ΔOPQ: basis OQ = p (op x-as), hoogte = y<sub>P</sub> = 16 − p².</p>
-<div class="formula-line">A(p) = ½ · p · (16 − p²) = <strong>8p − ½p³</strong></div>
-
-<p><strong>b)</strong></p>
-<div class="formula-line">A'(p) = 8 − (3/2)p² = 8 − 1½p²</div>
+<p><strong>b)</strong> Werk eerst uit:</p>
+<div class="formula-line">A(p) = ½·p·(64 − 16p + p²) = 32p − 8p² + ½p³</div>
+<div class="formula-line">A'(p) = 32 − 16p + (3/2)p²</div>
+<p>Sneller via productregel-aanpak (of: factor (8 − p) uit):</p>
+<div class="formula-line">A'(p) = ½(8 − p)[(8 − p) − 2p] = ½(8 − p)(8 − 3p)</div>
 <p>Stel A'(p) = 0:</p>
-<div class="formula-line">8 − (3/2)p² = 0  →  p² = 16/3  →  p = 4/√3 = (4√3)/3 ≈ 2,31</div>
-<p>(Negatieve waarde valt af omdat 0 &lt; p &lt; 4.)</p>
+<div class="formula-line">8 − p = 0  →  p = 8  (rand, valt af)</div>
+<div class="formula-line">8 − 3p = 0  →  <strong>p = 8/3</strong></div>
 
-<p><strong>c)</strong> Bereken A bij p = 4/√3:</p>
-<div class="formula-line">A = 8·(4/√3) − ½·(4/√3)³ = 32/√3 − ½·64/(3√3)</div>
-<div class="formula-line">A = 32/√3 − 32/(3√3) = (96 − 32)/(3√3) = 64/(3√3) = 64√3/9</div>
-<div class="formula-line">A ≈ <strong>12,32</strong></div>
+<p><strong>c)</strong> Bereken A(8/3):</p>
+<div class="formula-line">8 − 8/3 = 16/3</div>
+<div class="formula-line">A(8/3) = ½ · (8/3) · (16/3)² = (4/3) · (256/9) = <strong>1024/27</strong></div>
+<p>(Decimaal: ongeveer 37,93.)</p>
 </div>
 </div>
 
@@ -719,6 +702,8 @@ footer a { color: var(--primary); text-decoration: none; }
 
 <div class="score-card" id="score-card">
 <div style="font-size:1rem; opacity:0.95;">Je score</div>
+<div id="score-points" style="font-size:1.4rem; font-weight:700; margin-top:0.4rem;">—</div>
+<div class="cijfer" id="score-cijfer">—</div>
 <div class="pct" id="score-pct">—</div>
 <div id="score-detail" style="opacity:0.9;"></div>
 <div class="msg" id="score-msg"></div>
@@ -744,11 +729,11 @@ footer a { color: var(--primary); text-decoration: none; }
 
 <!-- Sticky timer rechtsonder -->
 <div class="timer" id="timer">
-<span id="timer-text">⏱ 60:00</span>
+<span id="timer-text">⏱ 50:00</span>
 <button id="timer-toggle" onclick="toggleTimer()">▶ Start</button>
 </div>
 
-<!-- Chat-widget (chat-fab links onder zodat hij niet onder de timer komt) -->
+<!-- Chat-widget -->
 <button class="chat-fab" onclick="openChat()">💬 Tutor</button>
 
 <div class="chat-panel" id="chatPanel">
@@ -779,57 +764,120 @@ const WORKER_BASE = window.__WORKER_BASE__ || "https://kasper-tutor.ralph-wagter
 const PAGE_SLUG = "oefentoets";
 
 // ============================================================
-// Antwoord-keys per veld
-// Elk veld krijgt een set geaccepteerde antwoorden (al genormaliseerd).
-// Voor numerieke velden: numeric: { target, tol }.
+// Punten-mapping
+// Elke deelvraag heeft een puntenwaarde. We delen die gelijk
+// over de invulvelden binnen die deelvraag.
+// Totaal: 39 punten.
 // ============================================================
-const KEY = {
-  // Opgave 1
-  "o1a-y":  { numeric: { target: 41/3, tol: 0.01 }, accept: ["41/3","13,67","13.67","13⅔","13 2/3"] },
-  "o1a-fp": { accept: ["x²+x+4","x^2+x+4","x*x+x+4","xx+x+4","4+x+x²","4+x+x^2"] },
-  "o1a-h":  { numeric: { target: 10, tol: 0.001 } },
-  "o1a-yb": { numeric: { target: -19/3, tol: 0.01 }, accept: ["-19/3","-6,33","-6.33","-6⅓","-6 1/3"] },
+const POINTS_PER_FIELD = {
+  // Opgave 1 — 7 pt: 1a (2), 1b (3), 1c (2). Eén veld per deelvraag.
+  "o1a": 2,
+  "o1b": 3,
+  "o1c": 2,
 
-  "o1b-xc": { numeric: { target: 0, tol: 0.001 }, accept: ["0"] },
-  "o1b-yc": { numeric: { target: 1, tol: 0.001 } },
-  "o1b-xd": { numeric: { target: -1, tol: 0.001 } },
-  "o1b-yd": { numeric: { target: -17/6, tol: 0.01 }, accept: ["-17/6","-2,83","-2.83","-2⅚"] },
+  // Opgave 2 — 10 pt: 2a (3), 2b (4), 2c (3)
+  // 2a: 4 velden -> 3 pt totaal -> 0.75 per veld
+  "o2a-y":  0.75, "o2a-fp": 0.75, "o2a-h":  0.75, "o2a-yb": 0.75,
+  // 2b: 4 velden -> 4 pt totaal -> 1 per veld
+  "o2b-xc": 1, "o2b-yc": 1, "o2b-xd": 1, "o2b-yd": 1,
+  // 2c: 4 velden -> 3 pt totaal -> 0.75 per veld
+  "o2c-min": 0.75, "o2c-max": 0.75, "o2c-pmin": 0.75, "o2c-pmax": 0.75,
 
-  // Opgave 2
-  "o2-fp":  { accept: ["3x²-6x","3x^2-6x","3x(x-2)","-6x+3x²","-6x+3x^2"] },
-  "o2-x1":  { numeric: { target: 0, tol: 0.001 } },
-  "o2-x2":  { numeric: { target: 2, tol: 0.001 } },
-  "o2-max": { numeric: { target: 2, tol: 0.001 } },
-  "o2-min": { numeric: { target: -2, tol: 0.001 } },
+  // Opgave 3 — 14 pt: 3a (6), 3b (8)
+  // 3a: 5 velden -> 6 pt totaal -> 1.2 per veld
+  "o3a-dom": 1.2, "o3a-fp": 1.2, "o3a-x": 1.2, "o3a-y": 1.2, "o3a-ber": 1.2,
+  // 3b: 5 velden -> 8 pt totaal -> 1.6 per veld
+  "o3b-y": 1.6, "o3b-h": 1.6, "o3b-yb": 1.6, "o3b-hl": 1.6, "o3b-xc": 1.6,
 
-  // Opgave 3
-  "o3a": { accept: ["-12/x⁵","-12/x^5","-12x^-5","-12*x^-5"] },
-  "o3b": { accept: ["12√x-1/√x","12sqrt(x)-1/sqrt(x)","12wortelx-1/wortelx","12x^(1/2)-x^(-1/2)","12x^0,5-x^-0,5","12x^1/2-x^-1/2"] },
-  "o3c": { accept: ["2x+6√x+4","2x+6sqrt(x)+4","2x+6wortelx+4","4+6√x+2x","4+2x+6√x"] },
-
-  // Opgave 4
-  "o4a": { accept: ["30(6x-1)⁴","30(6x-1)^4","30*(6x-1)^4","30(6x-1)(6x-1)(6x-1)(6x-1)"] },
-  "o4b": { accept: ["-40/(2x-3)⁵","-40/(2x-3)^5","-40(2x-3)^-5","-40*(2x-3)^-5"] },
-  "o4c": { accept: ["3/(2√(3x-4))+2x","3/(2sqrt(3x-4))+2x","2x+3/(2√(3x-4))","2x+3/(2sqrt(3x-4))"] },
-
-  // Opgave 5
-  "o5a-fp": { accept: ["3/(2√(3x+15))-½","3/(2√(3x+15))-1/2","3/(2sqrt(3x+15))-1/2","-1/2+3/(2√(3x+15))","-½+3/(2√(3x+15))"] },
-  "o5a-x":  { numeric: { target: -2, tol: 0.001 } },
-  "o5a-y":  { numeric: { target: 4, tol: 0.001 } },
-
-  "o5b-y":  { numeric: { target: 2.5, tol: 0.001 }, accept: ["5/2","2½","2,5","2.5"] },
-  "o5b-h":  { numeric: { target: -0.25, tol: 0.001 }, accept: ["-1/4","-¼","-0,25","-0.25"] },
-  "o5b-xb": { numeric: { target: 17, tol: 0.001 } },
-
-  // Opgave 6
-  "o6a":    { accept: ["8p-½p³","8p-1/2p³","8p-0,5p³","8p-0.5p^3","8p-½p^3","½p(16-p²)","1/2p(16-p²)","½*p*(16-p²)"] },
-  "o6b-fp": { accept: ["8-3/2p²","8-1½p²","8-1,5p²","8-1.5p^2","8-3/2*p^2","8-3p²/2"] },
-  "o6b-p":  { numeric: { target: 4/Math.sqrt(3), tol: 0.02 }, accept: ["4/√3","4/sqrt(3)","4√3/3","(4√3)/3","2,31","2.31"] },
-  "o6c":    { numeric: { target: 12.32, tol: 0.02 }, accept: ["12,32","12.32","64√3/9"] }
+  // Opgave 4 — 8 pt: 4a (2), 4b (4), 4c (2)
+  // 4a: 2 velden -> 2 pt totaal -> 1 per veld
+  "o4a-basis": 1, "o4a-hoogte": 1,
+  // 4b: 2 velden -> 4 pt totaal -> 2 per veld
+  "o4b-fp": 2, "o4b-p": 2,
+  // 4c: 1 veld -> 2 pt
+  "o4c": 2
 };
 
 // ============================================================
-// Normalisering (tolerant voor breuken, eenheden, formatting)
+// Antwoord-keys per veld
+// ============================================================
+const KEY = {
+  // Opgave 1
+  "o1a": { accept: [
+    "-21x²+32x-24","-21x^2+32x-24","-21*x^2+32*x-24","-21xx+32x-24",
+    "32x-24-21x²","32x-24-21x^2","-24+32x-21x²","-24+32x-21x^2"
+  ]},
+  "o1b": { accept: [
+    "8(x²+1)/(3³√x)","8(x^2+1)/(3*cbrt(x))","8(x^2+1)/(3 cbrt(x))",
+    "(8x²+8)/(3³√x)","(8x^2+8)/(3*cbrt(x))",
+    "8/3*x^(5/3)+8/3*x^(-1/3)","8/3x^(5/3)+8/3x^(-1/3)",
+    "(8/3)x^(5/3)+(8/3)x^(-1/3)",
+    "8/3·x²·³√x²+8/(3·³√x)","8/3 x² ³√x² + 8/(3 ³√x)",
+    "(8x²·³√x²)/3+8/(3·³√x)",
+    "8(x²+1)/(3·³√x)","8*(x²+1)/(3*³√x)","8(x^2+1)/(3*cbrt(x))"
+  ]},
+  "o1c": { accept: [
+    "-15/(2(5x-2)√(5x-2))","-15/(2(5x-2)sqrt(5x-2))",
+    "-15/(2*(5x-2)*sqrt(5x-2))","-15/(2*(5x-2)*√(5x-2))",
+    "-15/2*(5x-2)^(-3/2)","-15/2(5x-2)^(-3/2)",
+    "(-15/2)(5x-2)^(-3/2)","(-15/2)*(5x-2)^(-3/2)",
+    "-15(5x-2)^(-3/2)/2","-7.5(5x-2)^(-3/2)","-7,5(5x-2)^(-3/2)",
+    "-15/(2(5x-2)^(3/2))","-15/(2*(5x-2)^(3/2))","-15/(2(5x-2)^1.5)"
+  ]},
+
+  // Opgave 2
+  "o2a-y":  { numeric: { target: 6, tol: 0.001 } },
+  "o2a-fp": { accept: ["3x²-12x+9","3x^2-12x+9","3(x-1)(x-3)","3*x^2-12*x+9","9-12x+3x²","9-12x+3x^2"] },
+  "o2a-h":  { numeric: { target: 9, tol: 0.001 } },
+  "o2a-yb": { numeric: { target: -30, tol: 0.001 } },
+
+  "o2b-xc": { numeric: { target: -1, tol: 0.001 } },
+  "o2b-yc": { numeric: { target: -14, tol: 0.001 } },
+  "o2b-xd": { numeric: { target: 5, tol: 0.001 } },
+  "o2b-yd": { numeric: { target: 22, tol: 0.001 } },
+
+  "o2c-min": { numeric: { target: 2, tol: 0.001 } },
+  "o2c-max": { numeric: { target: 6, tol: 0.001 } },
+  "o2c-pmin": { numeric: { target: 2, tol: 0.001 } },
+  "o2c-pmax": { numeric: { target: 6, tol: 0.001 } },
+
+  // Opgave 3
+  "o3a-dom": { numeric: { target: 5, tol: 0.001 } },
+  "o3a-fp":  { accept: [
+    "-2/√(20-4x)+½","-2/sqrt(20-4x)+1/2","-2/√(20-4x)+1/2","-2/sqrt(20-4x)+0.5",
+    "½-2/√(20-4x)","1/2-2/sqrt(20-4x)","0.5-2/sqrt(20-4x)",
+    "-4/(2√(20-4x))+½","-4/(2sqrt(20-4x))+1/2"
+  ]},
+  "o3a-x":  { numeric: { target: 1, tol: 0.001 } },
+  "o3a-y":  { numeric: { target: 3.5, tol: 0.001 }, accept: ["7/2","3½","3,5","3.5"] },
+  "o3a-ber": { accept: [
+    "7/2","3½","3,5","3.5","f(x)≤7/2","f(x)<=7/2","y≤7/2","y<=7/2",
+    "(-∞,7/2]","(-oo,7/2]","≤7/2","<=7/2"
+  ]},
+
+  "o3b-y":  { numeric: { target: 3, tol: 0.001 } },
+  "o3b-h":  { numeric: { target: -0.5, tol: 0.001 }, accept: ["-1/2","-½","-0,5","-0.5"] },
+  "o3b-yb": { numeric: { target: 5, tol: 0.001 } },
+  "o3b-hl": { numeric: { target: 2, tol: 0.001 } },
+  "o3b-xc": { numeric: { target: -2.5, tol: 0.001 }, accept: ["-5/2","-2½","-2,5","-2.5"] },
+
+  // Opgave 4
+  "o4a-basis":  { accept: ["8-p","(8-p)","-p+8"] },
+  "o4a-hoogte": { accept: [
+    "-p²+8p","-p^2+8p","8p-p²","8p-p^2","p(8-p)","(8-p)p","p*(8-p)"
+  ]},
+  "o4b-fp": { accept: [
+    "½(8-p)(8-3p)","1/2(8-p)(8-3p)","0.5(8-p)(8-3p)","(8-p)(8-3p)/2",
+    "32-16p+3/2p²","32-16p+1.5p²","32-16p+1,5p²","32-16p+(3/2)p^2",
+    "3/2p²-16p+32","1.5p²-16p+32","(3/2)p^2-16p+32",
+    "½p²·3-16p+32"
+  ]},
+  "o4b-p":  { numeric: { target: 8/3, tol: 0.02 }, accept: ["8/3","2⅔","2,67","2.67","2,667","2.667"] },
+  "o4c":    { numeric: { target: 1024/27, tol: 0.05 }, accept: ["1024/27","37,93","37.93","37,9","37.9","37 25/27"] }
+};
+
+// ============================================================
+// Normalisering
 // ============================================================
 function normalize(s) {
   return (s || "")
@@ -845,6 +893,7 @@ function normalize(s) {
     .replace(/⁵/g, "^5")
     .replace(/–/g, "-")
     .replace(/−/g, "-")
+    .replace(/³√/g, "cbrt")
     .replace(/√/g, "sqrt")
     .replace(/wortel/g, "sqrt");
 }
@@ -854,27 +903,22 @@ const FRAC_MAP = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1/3, "⅔": 2/3, "�
 function tryParseNumeric(raw) {
   const clean = (raw || "").toString().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-").replace(/–/g, "-");
   if (clean === "") return NaN;
-  // simpele decimaal of integer
   if (/^-?\d+(\.\d+)?$/.test(clean)) return parseFloat(clean);
-  // simpele breuk a/b
   if (/^-?\d+\/\d+$/.test(clean)) {
     const [a, b] = clean.split("/").map(Number);
     return a / b;
   }
-  // gemengd zoals 13 2/3 -> 13.667 (na spatie-strip is dat 132/3, niet bruikbaar; herken patroon vóór strip)
   const mixed = (raw || "").toString().toLowerCase().replace(/,/g, ".").replace(/−/g, "-").match(/^(-?)(\d+)\s+(\d+)\/(\d+)$/);
   if (mixed) {
     const sign = mixed[1] ? -1 : 1;
     return sign * (parseInt(mixed[2], 10) + parseInt(mixed[3], 10) / parseInt(mixed[4], 10));
   }
-  // unicode-breuk met geheel deel: 13⅔ of -6⅓
   const u = (raw || "").toString().match(/^(-?)(\d*)([½¼¾⅓⅔⅕⅙⅚⅛])$/);
   if (u) {
     const sign = u[1] ? -1 : 1;
     const whole = u[2] ? parseInt(u[2], 10) : 0;
     return sign * (whole + FRAC_MAP[u[3]]);
   }
-  // pure unicode-breuk: ½
   if (FRAC_MAP[clean]) return FRAC_MAP[clean];
   return NaN;
 }
@@ -903,21 +947,27 @@ function checkOne(id, key) {
 }
 
 function checkAll() {
-  let total = 0, correct = 0;
+  let totalPoints = 0, gainedPoints = 0;
+  let totalFields = 0, correctFields = 0;
   const perCard = {};
   Object.keys(KEY).forEach(id => {
     const m = id.match(/^o(\d+)/);
     const cardId = m ? "card-" + m[1] : null;
     const ok = checkOne(id, KEY[id]);
-    total++;
-    if (ok) correct++;
+    const pts = POINTS_PER_FIELD[id] || 0;
+    totalPoints += pts;
+    totalFields++;
+    if (ok) {
+      gainedPoints += pts;
+      correctFields++;
+    }
     if (cardId) {
       if (!perCard[cardId]) perCard[cardId] = { total: 0, correct: 0 };
       perCard[cardId].total++;
       if (ok) perCard[cardId].correct++;
     }
   });
-  // kaart-styling
+  // Kaart-styling
   Object.keys(perCard).forEach(cardId => {
     const card = document.getElementById(cardId);
     if (!card) return;
@@ -927,21 +977,26 @@ function checkAll() {
     else if (pc.correct === 0) card.classList.add("scored-incorrect");
     else card.classList.add("scored-partial");
   });
-  // uitwerkingsknoppen tonen
+  // Uitwerkingsknoppen tonen
   document.querySelectorAll(".btn-show").forEach(b => b.classList.add("show"));
-  // score-kaart
-  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  // Score-kaart
+  const pointsRounded = Math.round(gainedPoints * 4) / 4;  // afronden op kwart
+  const cijfer = (pointsRounded / 39) * 9 + 1;
+  const cijferRounded = Math.round(cijfer * 10) / 10;
+  document.getElementById("score-points").textContent = pointsRounded + " / 39 punten";
+  document.getElementById("score-cijfer").textContent = "Cijfer: " + cijferRounded.toFixed(1).replace(".", ",");
+  const pct = totalPoints > 0 ? Math.round(gainedPoints / totalPoints * 100) : 0;
   document.getElementById("score-pct").textContent = pct + "%";
-  document.getElementById("score-detail").textContent = correct + " van " + total + " onderdelen goed";
+  document.getElementById("score-detail").textContent = correctFields + " van " + totalFields + " invulvelden goed";
   let msg = "";
-  if (pct >= 85) msg = "Klaar voor de toets! Sterk werk.";
-  else if (pct >= 70) msg = "Op de goede weg. Kijk nog je foute opgaven na.";
-  else if (pct >= 50) msg = "Belangrijke basis is er. Een ronde extra is nuttig.";
+  if (cijferRounded >= 8) msg = "Klaar voor de toets. Sterk werk.";
+  else if (cijferRounded >= 7) msg = "Goed niveau. Kijk je foute opgaven na.";
+  else if (cijferRounded >= 5.5) msg = "Voldoende, maar nog werk aan de winkel.";
+  else if (cijferRounded >= 4) msg = "Belangrijke basis is er. Een ronde extra is nuttig.";
   else msg = "We pakken het samen opnieuw door. Niet erg — daar is dit voor.";
   document.getElementById("score-msg").textContent = msg;
   const sc = document.getElementById("score-card");
   sc.classList.add("show");
-  // timer stop
   stopTimer();
   sc.scrollIntoView({ behavior: "smooth", block: "center" });
 }
@@ -967,7 +1022,7 @@ function resetAll() {
 }
 
 // ============================================================
-// localStorage per veld — overleeft tab-refresh
+// localStorage per veld
 // ============================================================
 function setupPersistence() {
   Object.keys(KEY).forEach(id => {
@@ -983,9 +1038,9 @@ function setupPersistence() {
 }
 
 // ============================================================
-// Timer — 60 min, geel <10 min, rood <2 min. Pauze-knop.
+// Timer — 50 min, geel <10 min, rood <2 min
 // ============================================================
-const TOTAL_SECONDS = 60 * 60;
+const TOTAL_SECONDS = 50 * 60;
 let secondsLeft = TOTAL_SECONDS;
 let timerInt = null;
 
@@ -1011,7 +1066,6 @@ function tick() {
     clearInterval(timerInt);
     timerInt = null;
     document.getElementById("timer-toggle").textContent = "⏹";
-    // automatisch score berekenen
     checkAll();
   }
 }

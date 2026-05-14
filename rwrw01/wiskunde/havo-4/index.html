@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wiskunde HAVO 4 — Interactieve lesstof</title>
+    <script>
+    // Token-bootstrap: vang ?t=... uit URL en bewaar in localStorage zodat
+    // onderliggende pagina's hem terugvinden via getToken().
+    (function() {
+      var t = new URLSearchParams(location.search).get('t');
+      if (t) localStorage.setItem('kasper-token', t);
+    })();
+    </script>
     <style>
         :root { --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
         * { margin:0; padding:0; box-sizing:border-box; }

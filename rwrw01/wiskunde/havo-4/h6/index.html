@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>H6 De afgeleide functie — Wiskunde HAVO 4 — Voor Kasper</title>
+<script>
+// Token-bootstrap: vang ?t=... uit URL en bewaar in localStorage zodat
+// onderliggende pagina's hem terugvinden via getToken().
+(function() {
+  var t = new URLSearchParams(location.search).get('t');
+  if (t) localStorage.setItem('kasper-token', t);
+})();
+</script>
 <style>
 :root {
   --primary:#0f766e;

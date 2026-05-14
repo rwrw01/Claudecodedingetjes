@@ -32,13 +32,27 @@ plt.rcParams.update(
 )
 
 
+def _nice_step(span):
+    """Kies een leesbare tick-stap (1, 2, 5, 10) op basis van het bereik. Geen 0.5-stappen."""
+    if span <= 6:
+        return 1
+    if span <= 14:
+        return 2
+    if span <= 30:
+        return 5
+    return 10
+
+
 def style_axes(ax, x_range, y_range):
+    from matplotlib.ticker import MultipleLocator
     ax.axhline(0, color="#94a3b8", lw=1)
     ax.axvline(0, color="#94a3b8", lw=1)
     ax.set_xlim(*x_range)
     ax.set_ylim(*y_range)
     ax.set_xlabel("x")
     ax.set_ylabel("y")
+    ax.xaxis.set_major_locator(MultipleLocator(_nice_step(x_range[1] - x_range[0])))
+    ax.yaxis.set_major_locator(MultipleLocator(_nice_step(y_range[1] - y_range[0])))
 
 
 # --------------------------------------------------------------------------

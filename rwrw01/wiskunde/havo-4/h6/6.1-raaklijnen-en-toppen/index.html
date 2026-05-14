@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>§6.1 Raaklijnen en toppen — Wiskunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#0f766e;
+  --primary-soft:#ccfbf1;
+  --primary-dark:#134e4a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: 0.01em; }
+header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li {
+  padding: 0.4rem 0 0.4rem 1.6rem;
+  position: relative;
+}
+.intro li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.tutor-cta {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+.tutor-cta strong { color: #92400e; font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+.tutor-cta p { color: #78350f; margin-bottom: 1rem; }
+.btn-tutor {
+  background: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-tutor:hover { background: #c2410c; }
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9;
+  border-left: 4px solid #475569;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+figure {
+  margin: 1.25rem 0;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: var(--primary-soft); }
+.toggle-content { display: none; margin-top: 0.8rem; }
+.toggle-content.open { display: block; }
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 {
+  color: #0c4a6e;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.try-it p { margin: 0.5rem 0; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label {
+  flex: 1 1 220px;
+  font-size: 0.98rem;
+}
+.q-row input[type=text],
+.q-row input[type=number] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 130px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist label:last-child { border-bottom: none; }
+.checklist input[type=checkbox] {
+  margin-top: 0.3rem;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.nav-bottom {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.nav-bottom a {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+}
+.nav-bottom a:hover { background: var(--primary-soft); border-color: var(--primary); }
+.nav-bottom .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  background: white;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--primary); text-decoration: none; }
+
+/* Chat widget */
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  z-index: 50;
+  font-family: inherit;
+}
+.chat-fab:hover { background: var(--primary-dark); }
+.chat-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 80vh;
+  max-height: 720px;
+  background: white;
+  border-top-left-radius: 16px;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--primary-dark);
+  color: white;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 16px;
+}
+.chat-header h3 { font-size: 1.05rem; }
+.chat-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fafaf9;
+}
+.msg {
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  max-width: 88%;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.msg.user { background: var(--primary-soft); color: var(--primary-dark); margin-left: auto; }
+.msg.assistant { background: white; border: 1px solid var(--border); }
+.msg.assistant strong { color: var(--primary-dark); }
+.msg.system { background: #fef3c7; color: #78350f; font-size: 0.9rem; text-align: center; max-width: 100%; }
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+}
+.chat-input:focus { outline: none; border-color: var(--primary); }
+.chat-send {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chat-send:disabled { opacity: 0.5; cursor: wait; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>§6.1 Raaklijnen en toppen</h1>
+<p>Helling, raaklijn, top — stap voor stap</p>
+</header>
+
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../../">Ralph</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H6 Afgeleide functie</a> &rsaquo; §6.1</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>Wat ga je leren?</h2>
+<ul>
+<li>De helling van een raaklijn aflezen en berekenen</li>
+<li>Differentiëren met de somregel en machtsregel</li>
+<li>Een raaklijn opstellen in een gegeven punt</li>
+<li>Een raakpunt vinden bij een gegeven helling</li>
+<li>Toppen vinden met de afgeleide</li>
+<li>Bewijzen dat een functie een top heeft</li>
+</ul>
+</div>
+
+<div class="tutor-cta">
+<strong>Hoi Kasper — klaar om te beginnen?</strong>
+<p>Klik op de knop hieronder en je tutor begeleidt je stap voor stap door deze paragraaf. Werk in je eigen tempo. Een fout antwoord is geen probleem — daar leer je juist van.</p>
+<button class="btn-tutor" onclick="openChat()">Praat met je tutor</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. Ontdek: wat is helling?                                    -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>1. Helling — wat is dat eigenlijk?</h2>
+
+<p>Je kent <strong>helling</strong> al van rechte lijnen. Bij een lijn <span class="formula-line" style="display:inline; padding:0.1rem 0.4rem;">y = ax + b</span> is <strong>a</strong> de helling.</p>
+
+<p>Maar wat doe je bij een <strong>kromme</strong> lijn, zoals een parabool?</p>
+
+<p>Dan teken je een <strong>raaklijn</strong>. Dat is een rechte lijn die de grafiek in één punt raakt en verder niet kruist. De helling van die raaklijn is de helling van de grafiek in dat punt.</p>
+
+<figure>
+<img src="img/fig1-helling-ontdekken.png" alt="Grafiek van y = x kwadraat met drie raaklijnen op de punten A(1, 1), B(2, 4) en C(3, 9). De hellingen zelf staan niet in het plaatje — die moet je zelf aflezen.">
+<figcaption><strong>Figuur 1.</strong> De grafiek van y = x² met drie raaklijnen.</figcaption>
+</figure>
+
+<p>Pak je geodriehoek erbij of stel je voor dat je hem op de raaklijnen legt.</p>
+<p>Lees voor elk van de drie punten A, B en C de helling af.</p>
+<p>Wat zie je gebeuren met de helling als x groter wordt? Praat erover met je tutor.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL</span>
+Voor <strong>y = x²</strong> is de helling op elk punt:
+<div class="formula-line center">helling = 2x</div>
+</div>
+
+<p>Dat is een patroon. Dezelfde regel werkt ook voor andere machten, zoals x³ en x⁴.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL</span>
+Voor <strong>y = x<sup>n</sup></strong> is de helling:
+<div class="formula-line center">helling = n · x<sup>n−1</sup></div>
+</div>
+
+<p>De helling-functie noemen we de <strong>afgeleide</strong>. We schrijven die als <strong>f'(x)</strong> (lees: f-accent van x).</p>
+
+<p>Het uitrekenen van de afgeleide heet <strong>differentiëren</strong>.</p>
+
+<p>De grafiek van de afgeleide heet de <strong>hellinggrafiek</strong>. Die zegt voor elke x hoe steil de oorspronkelijke grafiek daar is.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. Sommenregel en machtsregel                                 -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>2. Differentiëren — de regels op een rij</h2>
+
+<p>Je hoeft niet meer met een geodriehoek te meten. Je rekent de helling uit met deze regels:</p>
+
+<div class="formula-line">f(x) = c geeft f'(x) = 0</div>
+<div class="formula-line">f(x) = c · x geeft f'(x) = c</div>
+<div class="formula-line">f(x) = c · x<sup>n</sup> geeft f'(x) = c · n · x<sup>n−1</sup></div>
+
+<p>Een som van termen differentieer je <strong>term voor term</strong>:</p>
+
+<div class="formula-line">(f + g)'(x) = f'(x) + g'(x)</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = 4x³ − 7x² + 5x + 8</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p>Pak elke term apart:</p>
+<ul>
+<li>4x³ wordt 4 · 3 · x² = 12x²</li>
+<li>−7x² wordt −7 · 2 · x = −14x</li>
+<li>5x wordt 5</li>
+<li>8 (een getal) wordt 0</li>
+</ul>
+<div class="formula-line">f'(x) = 12x² − 14x + 5</div>
+</div>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>g(x) = (3x² − 1)²</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p>Eerst de haakjes wegwerken:</p>
+<div class="formula-line">g(x) = (3x² − 1)² = 9x⁴ − 6x² + 1</div>
+<p>Dan term voor term:</p>
+<div class="formula-line">g'(x) = 36x³ − 12x</div>
+<p>(In §6.3 leer je de kettingregel — dan kun je dit ook zonder haakjes wegwerken.)</p>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — differentiëren</h4>
+
+<div class="q-row">
+<label>Differentieer <strong>f(x) = 3x² + 5x − 7</strong>. Wat is f'(x)?</label>
+<input type="text" id="q-diff1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-diff1',['6x+5','5+6x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-diff1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-diff1"></div>
+<div class="detail-steps" id="s-diff1">
+<h5>Stappenplan</h5>
+<ol>
+<li>3x² → 3 · 2 · x = 6x</li>
+<li>5x → 5</li>
+<li>−7 (een getal) → 0</li>
+<li>f'(x) = 6x + 5</li>
+</ol>
+</div>
+
+<div class="q-row">
+<label>Differentieer <strong>g(x) = (2x − 1)²</strong>. Wat is g'(x)?</label>
+<input type="text" id="q-diff2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-diff2',['8x-4','-4+8x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-diff2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-diff2"></div>
+<div class="detail-steps" id="s-diff2">
+<h5>Stappenplan</h5>
+<ol>
+<li>Eerst de haakjes uitwerken: (2x − 1)² = 4x² − 4x + 1</li>
+<li>4x² → 4 · 2 · x = 8x</li>
+<li>−4x → −4</li>
+<li>+1 (een getal) → 0</li>
+<li>g'(x) = 8x − 4</li>
+</ol>
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. Theorie A: raaklijn opstellen                              -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>3. Een raaklijn opstellen</h2>
+
+<p>Je weet nu hoe je f'(x) berekent. En je weet dat f'(x) de helling van de grafiek in punt x geeft.</p>
+
+<p>Die helling is ook de <strong>helling van de raaklijn</strong> in dat punt. Met andere woorden: f'(x) is precies wat je nodig hebt om de raaklijn op te stellen.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL</span>
+<strong>f'(x<sub>A</sub>)</strong> is de helling van de raaklijn aan de grafiek van f in het punt A(x<sub>A</sub>, f(x<sub>A</sub>)).
+</div>
+
+<figure>
+<img src="img/fig2-raaklijn-in-A.png" alt="Grafiek van f(x) = -1/2 x kwadraat + 2x + 2 met raaklijn k in punt A(3, 3,5). De raaklijn heeft formule y = -x + 6,5.">
+<figcaption><strong>Figuur 2.</strong> Raaklijn k in punt A op de grafiek van f.</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Stel de raaklijn k op aan de grafiek van <strong>f(x) = −½x² + 2x + 2</strong> in punt A met x<sub>A</sub> = 3.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Bereken y<sub>A</sub> door x<sub>A</sub> = 3 in f in te vullen:</p>
+<div class="formula-line">f(3) = −½ · 9 + 2 · 3 + 2 = −4½ + 6 + 2 = 3½</div>
+<p>Dus A(3, 3½).</p>
+
+<p><strong>Stap 2.</strong> Bereken de helling van f in x = 3:</p>
+<div class="formula-line">f'(x) = −x + 2</div>
+<div class="formula-line">f'(3) = −3 + 2 = −1</div>
+
+<p><strong>Stap 3.</strong> De raaklijn k heeft de vorm y = −x + b. Bereken b door A in te vullen:</p>
+<div class="formula-line">3½ = −1 · 3 + b</div>
+<div class="formula-line">3½ = −3 + b</div>
+<div class="formula-line">b = 6½</div>
+
+<p><strong>Antwoord:</strong></p>
+<div class="formula-line">k: y = −x + 6½</div>
+</div>
+</div>
+
+<div class="regel" style="background:#fee2e2; border-color:#dc2626;">
+<span class="regel-label" style="background:#dc2626;">LET OP</span>
+Vergeet <strong>nooit</strong> Stap 1: eerst <strong>y<sub>A</sub></strong> berekenen door x<sub>A</sub> in <strong>f</strong> in te vullen — niet in <strong>f'</strong>!<br>
+Zonder y<sub>A</sub> heb je geen punt om de raaklijn doorheen te trekken en kun je <strong>b</strong> niet uitrekenen.
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — raaklijn opstellen</h4>
+<p>Stel de raaklijn k op aan de grafiek van <strong>f(x) = x² − 4x + 5</strong> in het punt A met x<sub>A</sub> = 1. Vul stap voor stap in.</p>
+
+<div class="q-row">
+<label><strong>Stap 1.</strong> Wat is y<sub>A</sub> = f(1)?</label>
+<input type="text" id="q-rl1a" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-rl1a', 2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-rl1a"></div>
+
+<div class="q-row">
+<label><strong>Stap 2.</strong> Wat is f'(x)?</label>
+<input type="text" id="q-rl1b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-rl1b',['2x-4','-4+2x'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-rl1b"></div>
+
+<div class="q-row">
+<label><strong>Stap 3.</strong> Wat is f'(1)?</label>
+<input type="text" id="q-rl1c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-rl1c', -2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-rl1c"></div>
+
+<div class="q-row">
+<label><strong>Stap 4.</strong> Formule van k?</label>
+<input type="text" id="q-rl1d" placeholder="y = ...">
+<button class="btn-check" onclick="checkText('q-rl1d',['y=-2x+4','-2x+4','y=4-2x','4-2x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-rl1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-rl1d"></div>
+
+<div class="detail-steps" id="s-rl1">
+<h5>Stappenplan</h5>
+<ol>
+<li>f(1) = 1 − 4 + 5 = 2, dus A(1, 2)</li>
+<li>f'(x) = 2x − 4</li>
+<li>f'(1) = 2 · 1 − 4 = −2 — dat is de helling van de raaklijn</li>
+<li>k: y = −2x + b. Door A(1, 2): 2 = −2 + b, dus b = 4</li>
+<li>k: y = −2x + 4</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. Theorie B: raaklijn met gegeven helling                    -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>4. Raakpunt vinden bij een gegeven helling</h2>
+
+<p>Nu het andere geval. Je krijgt een helling, en je moet het <strong>raakpunt</strong> vinden.</p>
+
+<p>Dan los je op: <strong>f'(x) = (gegeven helling)</strong>.</p>
+
+<figure>
+<img src="img/fig3-raaklijn-rc-gegeven.png" alt="Grafiek van f(x) = x kwadraat - 3x + 1 met de raaklijn met helling 2 in punt B(2,5, -0,25).">
+<figcaption><strong>Figuur 3.</strong> Op de grafiek van f is precies één punt waar de helling 2 is: punt B.</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Op de grafiek van <strong>f(x) = x² − 3x + 1</strong> is een punt B waar de helling 2 is. Bereken de coördinaten van B.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Bereken f'(x):</p>
+<div class="formula-line">f'(x) = 2x − 3</div>
+
+<p><strong>Stap 2.</strong> Los op f'(x) = 2:</p>
+<div class="formula-line">2x − 3 = 2</div>
+<div class="formula-line">2x = 5</div>
+<div class="formula-line">x = 2½</div>
+
+<p><strong>Stap 3.</strong> Bereken y door x = 2½ in f in te vullen:</p>
+<div class="formula-line">f(2½) = (2½)² − 3 · 2½ + 1 = 6¼ − 7½ + 1 = −¼</div>
+
+<p><strong>Antwoord:</strong> B(2½, −¼).</p>
+</div>
+</div>
+
+<p>Bij een hoger-graads functie kunnen er <strong>meerdere</strong> punten zijn met dezelfde helling.</p>
+
+<figure>
+<img src="img/fig6-twee-raakpunten.png" alt="Grafiek van f(x) = x derdemacht - 3x kwadraat - 6x + 15 met twee raaklijnen die allebei helling 3 hebben, in de punten A(-1, 17) en B(3, -3).">
+<figcaption><strong>Figuur 6.</strong> Twee verschillende raakpunten met dezelfde helling.</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Op de grafiek van <strong>f(x) = x³ − 3x² − 6x + 15</strong> zijn punten waar de helling 3 is. Bereken exact de coördinaten van deze punten.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Bereken f'(x):</p>
+<div class="formula-line">f'(x) = 3x² − 6x − 6</div>
+
+<p><strong>Stap 2.</strong> Los op f'(x) = 3:</p>
+<div class="formula-line">3x² − 6x − 6 = 3</div>
+<div class="formula-line">3x² − 6x − 9 = 0</div>
+<div class="formula-line">x² − 2x − 3 = 0</div>
+<div class="formula-line">(x + 1)(x − 3) = 0</div>
+<div class="formula-line">x = −1 ∨ x = 3</div>
+
+<p><strong>Stap 3.</strong> Bereken y voor elk gevonden x:</p>
+<div class="formula-line">f(−1) = −1 − 3 + 6 + 15 = 17</div>
+<div class="formula-line">f(3) = 27 − 27 − 18 + 15 = −3</div>
+
+<p><strong>Antwoord:</strong> A(−1, 17) en B(3, −3).</p>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — raakpunt vinden</h4>
+
+<p><strong>1.</strong> Op de grafiek van <strong>f(x) = x² − 6x + 1</strong> is een raakpunt waar de helling 4 is. Bereken de coördinaten.</p>
+<div class="q-row">
+<label>x-coördinaat:</label>
+<input type="text" id="q-rp1x" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-rp1x', 5)">Check</button>
+</div>
+<div class="feedback" id="fb-q-rp1x"></div>
+<div class="q-row">
+<label>y-coördinaat:</label>
+<input type="text" id="q-rp1y" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-rp1y', -4)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-rp1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-rp1y"></div>
+<div class="detail-steps" id="s-rp1">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 2x − 6</li>
+<li>2x − 6 = 4 geeft 2x = 10, dus x = 5</li>
+<li>f(5) = 25 − 30 + 1 = −4</li>
+<li>Raakpunt: (5, −4)</li>
+</ol>
+</div>
+
+<p style="margin-top:1.25rem;"><strong>2.</strong> Op de grafiek van <strong>f(x) = x³ − 12x</strong> zijn raakpunten met helling 0. Hoeveel zijn dat er? En wat zijn de coördinaten?</p>
+<div class="q-row">
+<label>Aantal raakpunten:</label>
+<input type="text" id="q-rp2a" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-rp2a', 2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-rp2a"></div>
+<div class="q-row">
+<label>Eerste raakpunt (x, y):</label>
+<input type="text" id="q-rp2b" placeholder="(.., ..)">
+<button class="btn-check" onclick="checkText('q-rp2b',['(-2,16)','(2,-16)','-2,16','2,-16'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-rp2b"></div>
+<div class="q-row">
+<label>Tweede raakpunt (x, y):</label>
+<input type="text" id="q-rp2c" placeholder="(.., ..)">
+<button class="btn-check" onclick="checkText('q-rp2c',['(-2,16)','(2,-16)','-2,16','2,-16'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-rp2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-rp2c"></div>
+<div class="detail-steps" id="s-rp2">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 3x² − 12</li>
+<li>3x² − 12 = 0 geeft x² = 4, dus x = −2 ∨ x = 2</li>
+<li>f(−2) = −8 + 24 = 16, dus (−2, 16)</li>
+<li>f(2) = 8 − 24 = −16, dus (2, −16)</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. Theorie C: extreme waarden                                 -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>5. Toppen en extreme waarden</h2>
+
+<p>Een <strong>top</strong> van een grafiek is een hoogste punt (maximum) of een laagste punt (minimum).</p>
+
+<p>Bij een top loopt de grafiek even <strong>vlak</strong>. Dat betekent: de helling is daar nul.</p>
+
+<p>Met andere woorden: in een top geldt <strong>f'(x) = 0</strong>.</p>
+
+<figure>
+<img src="img/fig4-toppen-horizontaal.png" alt="Grafiek van f(x) = x derdemacht - 6x kwadraat + 9x + 2 met een maximum bij (1, 6) en een minimum bij (3, 2). In beide toppen is de raaklijn horizontaal.">
+<figcaption><strong>Figuur 4.</strong> In de toppen is de raaklijn horizontaal — helling = 0.</figcaption>
+</figure>
+
+<div class="werkschema">
+<h4>Werkschema: extreme waarden berekenen</h4>
+<ol>
+<li>Bereken f'(x).</li>
+<li>Los op f'(x) = 0.</li>
+<li>Kijk naar de grafiek of het een maximum of minimum is.</li>
+<li>Bereken de y-coördinaat van elke top.</li>
+</ol>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Bereken exact de extreme waarden van <strong>f(x) = x³ − 6x² + 9x + 2</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Bereken f'(x):</p>
+<div class="formula-line">f'(x) = 3x² − 12x + 9</div>
+
+<p><strong>Stap 2.</strong> Los op f'(x) = 0:</p>
+<div class="formula-line">3x² − 12x + 9 = 0</div>
+<div class="formula-line">x² − 4x + 3 = 0</div>
+<div class="formula-line">(x − 1)(x − 3) = 0</div>
+<div class="formula-line">x = 1 ∨ x = 3</div>
+
+<p><strong>Stap 3.</strong> Kijk naar figuur 4: bij x = 1 ligt een maximum, bij x = 3 ligt een minimum.</p>
+
+<p><strong>Stap 4.</strong> Bereken de y-coördinaten:</p>
+<div class="formula-line">f(1) = 1 − 6 + 9 + 2 = 6</div>
+<div class="formula-line">f(3) = 27 − 54 + 27 + 2 = 2</div>
+
+<p><strong>Antwoord:</strong> max f(1) = 6 en min f(3) = 2.</p>
+</div>
+</div>
+
+<div class="regel">
+<span class="regel-label">LET OP</span>
+"<strong>Bereken</strong>" mag met de grafische rekenmachine.<br>
+"<strong>Bereken exact</strong>" moet algebraïsch, zonder afronden — breuken en wortels in het antwoord.
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — extreme waarden</h4>
+
+<p>Bereken exact de extreme waarden van <strong>f(x) = x² − 8x + 7</strong>.</p>
+<div class="q-row">
+<label>Bij welke x ligt de top?</label>
+<input type="text" id="q-ev1x" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-ev1x', 4)">Check</button>
+</div>
+<div class="feedback" id="fb-q-ev1x"></div>
+<div class="q-row">
+<label>Is het een maximum of minimum?</label>
+<input type="text" id="q-ev1t" placeholder="max of min">
+<button class="btn-check" onclick="checkText('q-ev1t',['min','minimum'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-ev1t"></div>
+<div class="q-row">
+<label>Wat is de extreme waarde?</label>
+<input type="text" id="q-ev1y" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-ev1y', -9)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-ev1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-ev1y"></div>
+<div class="detail-steps" id="s-ev1">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 2x − 8</li>
+<li>2x − 8 = 0 geeft x = 4</li>
+<li>Het is een parabool die opent naar boven, dus de top is een <strong>minimum</strong></li>
+<li>f(4) = 16 − 32 + 7 = −9</li>
+<li>Antwoord: min f(4) = −9</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. Theorie D: aantonen                                        -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>6. Aantonen of bewijzen dat er een top is</h2>
+
+<p>Soms krijg je de vraag: "<strong>Toon aan</strong> dat f een top heeft bij x = a." Of: "<strong>Bewijs</strong> dat f een top heeft bij x = a."</p>
+
+<p>Je moet dan twee dingen laten zien.</p>
+
+<div class="werkschema">
+<h4>Werkschema: top aantonen bij x = a</h4>
+<ol>
+<li>Bereken f'(x).</li>
+<li>Laat met een berekening zien dat f'(a) = 0.</li>
+<li>Laat zien dat de grafiek een top heeft bij x = a (verwijs naar de grafiek van f).</li>
+</ol>
+</div>
+
+<p>Verschil tussen <strong>aantonen</strong> en <strong>bewijzen</strong>:</p>
+
+<ul>
+<li><strong>Aantonen</strong> — redenering en/of berekening waaruit blijkt dat het klopt. Voorbeelden geven alleen is niet genoeg.</li>
+<li><strong>Bewijzen</strong> — redenering en/of <strong>exacte</strong> berekening. Alle stappen moeten kloppen.</li>
+</ul>
+
+<figure>
+<img src="img/fig5-aantonen-top.png" alt="Grafiek van f(x) = x vierdemacht + 2x derdemacht - 2x + 3, met een top bij x = 1/2.">
+<figcaption><strong>Figuur 5.</strong> De grafiek toont een top bij x = ½.</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Bewijs dat <strong>f(x) = x⁴ + 2x³ − 2x + 3</strong> een extreme waarde heeft bij x = ½.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Bereken f'(x):</p>
+<div class="formula-line">f'(x) = 4x³ + 6x² − 2</div>
+
+<p><strong>Stap 2.</strong> Vul x = ½ in:</p>
+<div class="formula-line">f'(½) = 4 · ⅛ + 6 · ¼ − 2</div>
+<div class="formula-line">f'(½) = ½ + 1½ − 2 = 0</div>
+
+<p><strong>Stap 3.</strong> In figuur 5 zie je dat de grafiek bij x = ½ een top heeft.</p>
+
+<p><strong>Conclusie:</strong> f heeft een extreme waarde bij x = ½.</p>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — top aantonen</h4>
+<p>Toon aan dat <strong>f(x) = x³ − 12x + 5</strong> een extreme waarde heeft bij x = 2.</p>
+
+<div class="q-row">
+<label>Wat is f'(x)?</label>
+<input type="text" id="q-aa1a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-aa1a',['3x²-12','3x^2-12','3xx-12'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-aa1a"></div>
+
+<div class="q-row">
+<label>Wat is f'(2)?</label>
+<input type="text" id="q-aa1b" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-aa1b', 0)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-aa1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-aa1b"></div>
+
+<div class="detail-steps" id="s-aa1">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 3x² − 12</li>
+<li>f'(2) = 3 · 4 − 12 = 0</li>
+<li>Verwijs naar de grafiek van f: die toont een top bij x = 2</li>
+<li>Conclusie: f heeft een extreme waarde bij x = 2 ✓</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 7. Toetsstijl oefenopgaven                                    -->
+<!-- ============================================================ -->
+<div class="section" id="oefen-toets">
+<h2>7. Toetsstijl-oefeningen</h2>
+
+<p>Op de toets krijg je opgaven met meerdere deelvragen die op elkaar bouwen. Hier oefen je dat — een opgave is pas af als alle deelvragen kloppen.</p>
+
+<h3>Opgave 1 — raaklijn opstellen (uit het boek, Opg. 1)</h3>
+<p>Gegeven is de functie <strong>f(x) = x³ − x² + 2x − 4</strong>. De lijn k raakt de grafiek van f in het punt A met x<sub>A</sub> = 1.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Bereken y<sub>A</sub>.</label>
+<input type="text" id="q-o1a" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o1a', -2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o1a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken f'(x).</label>
+<input type="text" id="q-o1b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o1b',['3x²-2x+2','3x^2-2x+2'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o1b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Bereken de helling van f in A.</label>
+<input type="text" id="q-o1c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o1c', 3)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o1c"></div>
+
+<div class="q-row">
+<label><strong>d)</strong> Stel de formule van k op.</label>
+<input type="text" id="q-o1d" placeholder="y = ...">
+<button class="btn-check" onclick="checkText('q-o1d',['y=3x-5','3x-5','y=-5+3x','-5+3x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o1d"></div>
+
+<div class="detail-steps" id="s-o1">
+<h5>Stappenplan</h5>
+<ol>
+<li>a) f(1) = 1 − 1 + 2 − 4 = −2, dus A(1, −2)</li>
+<li>b) f'(x) = 3x² − 2x + 2</li>
+<li>c) f'(1) = 3 − 2 + 2 = 3</li>
+<li>d) k: y = 3x + b. Door A(1, −2): −2 = 3 + b, dus b = −5. k: y = 3x − 5.</li>
+</ol>
+</div>
+
+<h3>Opgave 2 — raakpunt bij gegeven helling (uit het boek, Opg. 7)</h3>
+<p>Gegeven is de functie <strong>h(x) = −x² + 5x − 4</strong>. De lijn k heeft helling 2 en raakt de grafiek van h in punt A.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Toon aan dat h'(x) = −2x + 5. Wat is h'(x)?</label>
+<input type="text" id="q-o2a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o2a',['-2x+5','5-2x'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken x<sub>A</sub> exact.</label>
+<input type="text" id="q-o2b" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o2b', 1.5)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Bereken y<sub>A</sub> exact.</label>
+<input type="text" id="q-o2c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o2c', 1.25)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o2c"></div>
+
+<div class="detail-steps" id="s-o2">
+<h5>Stappenplan</h5>
+<ol>
+<li>h'(x) = −2x + 5</li>
+<li>h'(x) = 2 geeft −2x + 5 = 2, dus −2x = −3, x = 1½</li>
+<li>h(1½) = −(1½)² + 5 · 1½ − 4 = −2¼ + 7½ − 4 = 1¼</li>
+<li>A(1½, 1¼)</li>
+</ol>
+</div>
+
+<h3>Opgave 3 — extreme waarden bewijzen</h3>
+<p>Gegeven is de functie <strong>f(x) = x³ − 12x + 10</strong>. Bereken exact de extreme waarden van f.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Wat is f'(x)?</label>
+<input type="text" id="q-o3a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o3a',['3x²-12','3x^2-12'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Voor welke waarden van x is f'(x) = 0? Geef twee getallen.</label>
+<input type="text" id="q-o3b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o3b',['-2,2','2,-2','-2en2','2en-2','x=-2vx=2','x=-2ofx=2','x=2vx=-2','x=2ofx=-2'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Wat is het maximum f(−2)?</label>
+<input type="text" id="q-o3c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o3c', 26)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3c"></div>
+
+<div class="q-row">
+<label><strong>d)</strong> Wat is het minimum f(2)?</label>
+<input type="text" id="q-o3d" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o3d', -6)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o3')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o3d"></div>
+
+<div class="detail-steps" id="s-o3">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 3x² − 12</li>
+<li>3x² − 12 = 0 geeft x² = 4, dus x = −2 ∨ x = 2</li>
+<li>f(−2) = −8 + 24 + 10 = 26 — kubische functie loopt eerst op, dus dit is een <strong>maximum</strong></li>
+<li>f(2) = 8 − 24 + 10 = −6 — dit is een <strong>minimum</strong></li>
+<li>Antwoord: max f(−2) = 26 en min f(2) = −6</li>
+</ol>
+</div>
+
+<div class="tutor-cta" style="margin-top:1.5rem;">
+<strong>Vastgelopen op een opgave?</strong>
+<p>Klik op de tutor-knop rechtsonder. Vertel welke opgave en deelvraag, en bij welke stap je vastloopt.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Checklist                                                     -->
+<!-- ============================================================ -->
+<div class="checklist">
+<h2>Kan ik dit nu?</h2>
+<label><input type="checkbox" data-key="6.1-c1"> Ik kan f'(x) berekenen met de machtsregel en somregel.</label>
+<label><input type="checkbox" data-key="6.1-c2"> Ik kan een raaklijn opstellen als ik het x-coördinaat van het raakpunt krijg.</label>
+<label><input type="checkbox" data-key="6.1-c3"> Ik kan het raakpunt vinden als ik de helling van de raaklijn krijg.</label>
+<label><input type="checkbox" data-key="6.1-c4"> Ik kan de toppen van een grafiek vinden met f'(x) = 0.</label>
+<label><input type="checkbox" data-key="6.1-c5"> Ik weet het verschil tussen "Bereken" en "Bereken exact".</label>
+<label><input type="checkbox" data-key="6.1-c6"> Ik kan een top aantonen of bewijzen volgens het werkschema.</label>
+</div>
+
+<div class="nav-bottom">
+<a href="../">&larr; Terug naar H6</a>
+<a href="../6.2-machtsfuncties/">§6.2 Machtsfuncties &rarr;</a>
+</div>
+
+</div>
+
+<!-- Chat-widget — opent vanuit FAB of tutor-CTA -->
+<button class="chat-fab" onclick="openChat()">💬 Tutor</button>
+
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header">
+<h3>Wiskunde-tutor</h3>
+<button class="chat-close" onclick="closeChat()">×</button>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-row">
+<textarea class="chat-input" id="chatInput" placeholder="Typ hier..." rows="1"></textarea>
+<button class="chat-send" id="chatSend" onclick="sendMessage()">Stuur</button>
+</div>
+</div>
+
+<footer>
+<p>Gemaakt door <strong>Ralph Wagter</strong> voor <strong>Kasper</strong>, met <a href="https://claude.ai/code">Claude Code</a>.</p>
+<p style="margin-top:0.5rem; font-size:0.85rem;">
+  Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+  <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================
+// Configuratie — pas WORKER_BASE aan na deployment van de Worker
+// ============================================================
+const WORKER_BASE = window.__WORKER_BASE__ || "https://kasper-tutor.ralph-wagter.workers.dev";
+const PAGE_SLUG = "6.1-raaklijnen-en-toppen";
+
+// ============================================================
+// Checklist — localStorage persist
+// ============================================================
+document.querySelectorAll(".checklist input[type=checkbox]").forEach((cb) => {
+  const key = "kasper-" + cb.dataset.key;
+  if (localStorage.getItem(key) === "1") cb.checked = true;
+  cb.addEventListener("change", () => {
+    localStorage.setItem(key, cb.checked ? "1" : "0");
+  });
+});
+
+// ============================================================
+// Toggle uitwerkingen
+// ============================================================
+function toggle(btn) {
+  const next = btn.nextElementSibling;
+  const isOpen = next.classList.toggle("open");
+  btn.textContent = isOpen ? "Verberg uitwerking" : "Toon uitwerking";
+}
+
+// ============================================================
+// Antwoord-validatie voor try-it en oefenopgaven
+// ============================================================
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/,/g, ".")
+    .replace(/×/g, "*")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3")
+    .replace(/⁴/g, "^4")
+    .replace(/–/g, "-")
+    .replace(/−/g, "-");
+}
+function setFeedback(id, ok) {
+  const el = document.getElementById(id);
+  const fb = document.getElementById("fb-" + id);
+  if (!el || !fb) return;
+  el.classList.remove("correct", "incorrect");
+  el.classList.add(ok ? "correct" : "incorrect");
+  fb.classList.remove("correct", "incorrect");
+  fb.classList.add("show", ok ? "correct" : "incorrect");
+  fb.textContent = ok ? "✓ Goed!" : "✗ Nog niet — kijk eens naar het stappenplan.";
+}
+function checkText(id, accepted) {
+  const norm = normalize(document.getElementById(id).value);
+  const ok = accepted.some((a) => normalize(a) === norm);
+  setFeedback(id, ok);
+}
+function checkNumeric(id, target, tol) {
+  const raw = document.getElementById(id).value;
+  const norm = normalize(raw).replace(/\^/g, "**"); // niet relevant voor pure getallen
+  // Probeer als getal of breuk
+  let val = NaN;
+  if (/^-?\d+(\.\d+)?$/.test(norm)) {
+    val = parseFloat(norm);
+  } else if (/^-?\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else if (/^-?\d+\.\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else {
+    // Probeer 1½ = 1.5, ⅓ = 0.333..., enz.
+    const fracMap = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅕": 0.2, "⅙": 1 / 6 };
+    let cleaned = raw.toString().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    for (const [k, v] of Object.entries(fracMap)) {
+      if (cleaned.includes(k)) {
+        const m = cleaned.match(/^(-)?(\d*)([½¼¾⅓⅔⅕⅙])$/);
+        if (m) {
+          const sign = m[1] ? -1 : 1;
+          const whole = m[2] ? parseInt(m[2], 10) : 0;
+          val = sign * (whole + fracMap[m[3]]);
+          break;
+        }
+      }
+    }
+  }
+  const eps = typeof tol === "number" ? tol : 0.01;
+  const ok = isFinite(val) && Math.abs(val - target) < eps;
+  setFeedback(id, ok);
+}
+function toggleSteps(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+
+// ============================================================
+// Token uit URL halen en in localStorage opslaan
+// ============================================================
+function getToken() {
+  const fromUrl = new URLSearchParams(window.location.search).get("t");
+  if (fromUrl) {
+    localStorage.setItem("kasper-token", fromUrl);
+    return fromUrl;
+  }
+  return localStorage.getItem("kasper-token");
+}
+
+// ============================================================
+// Chat-panel
+// ============================================================
+const chatPanel = document.getElementById("chatPanel");
+const chatMessages = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+
+const HISTORY_KEY = "kasper-history-" + PAGE_SLUG;
+
+function loadHistory() {
+  const raw = localStorage.getItem(HISTORY_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+function saveHistory(history) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20)));
+}
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  chatMessages.innerHTML = "";
+}
+
+function renderMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return div;
+}
+
+function renderSystemMessage(text) {
+  const div = document.createElement("div");
+  div.className = "msg system";
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function openChat() {
+  chatPanel.classList.add("open");
+  const history = loadHistory();
+  if (history.length === 0) {
+    if (!WORKER_BASE) {
+      renderSystemMessage("De tutor is nog niet online. Vraag Ralph om de Worker te deployen.");
+    } else if (!getToken()) {
+      renderSystemMessage("Geen toegangs-token gevonden. Vraag Ralph om de juiste URL met ?t=...");
+    } else {
+      // Trigger eerste assistant-bericht via lege user-message
+      sendInitial();
+    }
+  } else {
+    history.forEach((m) => renderMessage(m.role, m.content));
+  }
+  chatInput.focus();
+}
+
+function closeChat() {
+  chatPanel.classList.remove("open");
+}
+
+async function sendInitial() {
+  await streamReply([{ role: "user", content: "Hoi, ik open de pagina nu. Begin met de eerste vraag." }]);
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = "";
+
+  const history = loadHistory();
+  history.push({ role: "user", content: text });
+  renderMessage("user", text);
+  saveHistory(history);
+
+  if (!WORKER_BASE) {
+    renderSystemMessage("Worker URL ontbreekt — bericht niet verstuurd.");
+    return;
+  }
+  if (!getToken()) {
+    renderSystemMessage("Geen toegangs-token — bericht niet verstuurd.");
+    return;
+  }
+
+  await streamReply(history);
+}
+
+async function streamReply(messages) {
+  const token = getToken();
+  chatSend.disabled = true;
+  const assistantDiv = renderMessage("assistant", "");
+  let assistantText = "";
+
+  try {
+    const res = await fetch(`${WORKER_BASE}/api/chat?t=${encodeURIComponent(token)}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pageSlug: PAGE_SLUG, messages }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Onbekende fout" }));
+      assistantDiv.remove();
+      renderSystemMessage("Fout: " + (err.error || res.status));
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === "content_block_delta" && evt.delta?.type === "text_delta") {
+            assistantText += evt.delta.text;
+            assistantDiv.textContent = assistantText;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        } catch {}
+      }
+    }
+    const history = loadHistory();
+    history.push({ role: "assistant", content: assistantText });
+    saveHistory(history);
+  } catch (e) {
+    assistantDiv.remove();
+    renderSystemMessage("Netwerkfout: " + e.message);
+  } finally {
+    chatSend.disabled = false;
+  }
+}
+
+chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>

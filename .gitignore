@@ -7,3 +7,9 @@ test-results/
 Kapser/
 ~$*.docx
 .~lock.*
+
+# Lokale secrets en wrangler dev vars
+secrets/
+.dev.vars
+.env.local
+*.env.local

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiskunde HAVO 4 — Ralph — Interactieve lesstof</title>
+    <title>Wiskunde HAVO 4 — Interactieve lesstof</title>
     <style>
         :root { --bg:#f8fafc; --card:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0; --radius:12px; }
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -15,6 +15,8 @@
         .breadcrumb a { color:#2563eb; text-decoration:none; }
         .breadcrumb a:hover { text-decoration:underline; }
         .container { max-width:700px; margin:0 auto; padding:1rem 1rem 2.5rem; flex:1; }
+        .section-title { font-size:0.78rem; font-weight:700; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase; margin:1.75rem 0 0.75rem; }
+        .section-title:first-child { margin-top:0; }
         .card { display:flex; align-items:center; gap:1.25rem; background:var(--card); border:1px solid var(--border); border-radius:var(--radius); box-shadow:0 1px 3px rgba(0,0,0,0.08); padding:1.5rem; margin-bottom:1.25rem; text-decoration:none; color:var(--text); transition:transform 0.15s,box-shadow 0.15s; }
         .card:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,0.1); }
         .card-icon { width:56px; height:56px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.3rem; color:white; flex-shrink:0; }
@@ -26,11 +28,19 @@
 </head>
 <body>
 <header>
-    <h1>Wiskunde HAVO 4 — Ralph</h1>
+    <h1>Wiskunde HAVO 4</h1>
     <p>Interactieve lesstof</p>
 </header>
 <nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../">Ralph</a> &rsaquo; <a href="../">Wiskunde</a> &rsaquo; HAVO 4</nav>
 <div class="container">
+    <div class="section-title">Voor Kapser</div>
+    <a href="h6/" class="card">
+        <div class="card-icon" style="background:linear-gradient(135deg,#134e4a,#0f766e);">H6</div>
+        <div>
+            <h2 style="color:#0f766e;">Hoofdstuk 6 — De afgeleide functie</h2>
+            <p>4 paragrafen + synthese + oefentoets — met chat-tutor</p>
+        </div>
+    </a>
     <a href="exponenten-dag1-standaardgrafiek/" class="card">
         <div class="card-icon" style="background:linear-gradient(135deg,#7c3aed,#a855f7);">D1</div>
         <div>
@@ -66,12 +76,13 @@
             <p>30 min, 5 opgaven, eigen score — gebaseerd op kennis-vaardighedencheck</p>
         </div>
     </a>
+    <div class="section-title">Voor Ralph</div>
     <a href="machten-met-negatieve-exponenten/" class="card">
         <div class="card-icon" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">Wi</div>
         <div>
             <h2 style="color:#2563eb;">Machten met negatieve exponenten</h2>
             <p>Issue #33</p>
-            
+
         </div>
     </a>
     <a href="oefensommen-kwadratische-ongelijkheden/" class="card">

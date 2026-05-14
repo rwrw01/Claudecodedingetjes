@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>§6.2 De afgeleide van machtsfuncties — Wiskunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#0f766e;
+  --primary-soft:#ccfbf1;
+  --primary-dark:#134e4a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: 0.01em; }
+header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li {
+  padding: 0.4rem 0 0.4rem 1.6rem;
+  position: relative;
+}
+.intro li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.tutor-cta {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+.tutor-cta strong { color: #92400e; font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+.tutor-cta p { color: #78350f; margin-bottom: 1rem; }
+.btn-tutor {
+  background: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-tutor:hover { background: #c2410c; }
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9;
+  border-left: 4px solid #475569;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+figure {
+  margin: 1.25rem 0;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: var(--primary-soft); }
+.toggle-content { display: none; margin-top: 0.8rem; }
+.toggle-content.open { display: block; }
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 {
+  color: #0c4a6e;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.try-it p { margin: 0.5rem 0; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label {
+  flex: 1 1 220px;
+  font-size: 0.98rem;
+}
+.q-row input[type=text],
+.q-row input[type=number] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 150px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.herhaling {
+  background: #ede9fe;
+  border: 2px solid #8b5cf6;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.herhaling-label {
+  display: inline-block;
+  background: #6d28d9;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist label:last-child { border-bottom: none; }
+.checklist input[type=checkbox] {
+  margin-top: 0.3rem;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.nav-bottom {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.nav-bottom a {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+}
+.nav-bottom a:hover { background: var(--primary-soft); border-color: var(--primary); }
+.nav-bottom .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  background: white;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--primary); text-decoration: none; }
+
+/* Chat widget */
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  z-index: 50;
+  font-family: inherit;
+}
+.chat-fab:hover { background: var(--primary-dark); }
+.chat-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 80vh;
+  max-height: 720px;
+  background: white;
+  border-top-left-radius: 16px;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--primary-dark);
+  color: white;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 16px;
+}
+.chat-header h3 { font-size: 1.05rem; }
+.chat-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fafaf9;
+}
+.msg {
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  max-width: 88%;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.msg.user { background: var(--primary-soft); color: var(--primary-dark); margin-left: auto; }
+.msg.assistant { background: white; border: 1px solid var(--border); }
+.msg.assistant strong { color: var(--primary-dark); }
+.msg.system { background: #fef3c7; color: #78350f; font-size: 0.9rem; text-align: center; max-width: 100%; }
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+}
+.chat-input:focus { outline: none; border-color: var(--primary); }
+.chat-send {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chat-send:disabled { opacity: 0.5; cursor: wait; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>§6.2 De afgeleide van machtsfuncties</h1>
+<p>Negatieve exponenten, wortels en herleiden</p>
+</header>
+
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../../">Ralph</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H6 Afgeleide functie</a> &rsaquo; §6.2</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>Wat ga je leren?</h2>
+<ul>
+<li>Differentiëren van f(x) = x<sup>n</sup> met <strong>negatieve gehele</strong> exponent</li>
+<li>Differentiëren van f(x) = x<sup>n</sup> met <strong>gebroken</strong> exponent (wortels)</li>
+<li>Een breuk of wortel <strong>herleiden naar standaardvorm</strong> vóór differentiëren</li>
+<li>Antwoord netjes opschrijven: breuk- of wortelvorm, geen negatieve exponenten</li>
+</ul>
+</div>
+
+<div class="tutor-cta">
+<strong>Hoi Kasper — klaar om te beginnen?</strong>
+<p>Klik op de knop hieronder en je tutor begeleidt je stap voor stap door deze paragraaf. Werk in je eigen tempo. Een fout antwoord is geen probleem — daar leer je juist van.</p>
+<button class="btn-tutor" onclick="openChat()">Praat met je tutor</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. Intro / concept: helling-functies met breuken en wortels  -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>1. Helling-functies met breuken en wortels — kan dat?</h2>
+
+<p>In <strong>§6.1</strong> heb je geleerd hoe je f'(x) berekent voor functies als x², x³ en sommen daarvan.</p>
+
+<p>De regel was:</p>
+
+<div class="formula-line center">f(x) = x<sup>n</sup>  geeft  f'(x) = n · x<sup>n−1</sup></div>
+
+<p>Maar wat doe je bij <strong>1/x²</strong>? Of bij <strong>√x</strong>?</p>
+
+<p>Het mooie: de regel werkt nog steeds. Je moet alleen eerst de functie <strong>herschrijven</strong> in de vorm x<sup>n</sup>.</p>
+
+<p>Daarvoor heb je iets nodig wat je in <strong>H5</strong> bij exponenten hebt gezien. Een korte opfris:</p>
+
+<div class="herhaling">
+<span class="herhaling-label">UIT H5 — EXPONENTEN</span>
+<p style="margin-top:0.3rem;">Een <strong>negatieve exponent</strong> betekent een breuk:</p>
+<div class="formula-line center">x<sup>−n</sup> = 1/x<sup>n</sup></div>
+<p>Een <strong>gebroken exponent</strong> betekent een wortel:</p>
+<div class="formula-line center">x<sup>1/n</sup> = <sup>n</sup>√x</div>
+<p>Speciaal geval: x<sup>1/2</sup> = √x.</p>
+</div>
+
+<p>Vul dit eerst zelf even in. Geen rekenmachine — denk terug aan H5.</p>
+
+<div class="try-it">
+<h4>Probeer zelf — herschrijven met exponenten</h4>
+
+<div class="q-row">
+<label>Schrijf <strong>1/x³</strong> als x met een exponent.</label>
+<input type="text" id="q-hs1" placeholder="x^...">
+<button class="btn-check" onclick="checkText('q-hs1',['x^-3','x^(-3)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-hs1"></div>
+
+<div class="q-row">
+<label>Schrijf <strong>√x</strong> als x met een exponent.</label>
+<input type="text" id="q-hs2" placeholder="x^...">
+<button class="btn-check" onclick="checkText('q-hs2',['x^1/2','x^(1/2)','x^0.5','x^(0,5)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-hs2"></div>
+
+<div class="q-row">
+<label>Schrijf <strong>1/√x</strong> als x met een exponent.</label>
+<input type="text" id="q-hs3" placeholder="x^...">
+<button class="btn-check" onclick="checkText('q-hs3',['x^-1/2','x^(-1/2)','x^-0.5','x^(-0,5)'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-hs')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-hs3"></div>
+
+<div class="detail-steps" id="s-hs">
+<h5>Stappenplan</h5>
+<ol>
+<li>1/x³ = x<sup>−3</sup> (negatieve exponent = breuk)</li>
+<li>√x = x<sup>1/2</sup> (gebroken exponent = wortel)</li>
+<li>1/√x = 1/x<sup>1/2</sup> = x<sup>−1/2</sup> (combineer beide regels)</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. Theorie A — negatieve gehele exponenten                   -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>2. Theorie A — negatieve gehele exponenten</h2>
+
+<p>De machtsregel uit §6.1 werkt ook als <strong>n een negatief geheel getal</strong> is. Dus voor n = −1, −2, −3, …</p>
+
+<div class="regel">
+<span class="regel-label">REGEL</span>
+Voor elk negatief geheel getal <strong>n</strong> geldt:
+<div class="formula-line center">f(x) = x<sup>n</sup>  geeft  f'(x) = n · x<sup>n−1</sup></div>
+</div>
+
+<figure>
+<img src="img/fig1-omgekeerd-kwadraat.png" alt="Grafiek van f(x) = 1 gedeeld door x kwadraat in blauw, met daarnaast de afgeleide f-accent(x) = min 2 gedeeld door x derdemacht in rood en gestippeld. Beide bestaan uit twee takken; de asymptoot is de y-as.">
+<figcaption><strong>Figuur 1.</strong> De functie f(x) = 1/x² (blauw) en de afgeleide f'(x) = −2/x³ (rood, gestippeld).</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>g(x) = 1/x²</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Schrijf in de vorm x<sup>n</sup>:</p>
+<div class="formula-line">g(x) = 1/x² = x<sup>−2</sup></div>
+
+<p><strong>Stap 2.</strong> Pas de regel toe — exponent voor de x, en doe er 1 af:</p>
+<div class="formula-line">g'(x) = −2 · x<sup>−2−1</sup> = −2x<sup>−3</sup></div>
+
+<p><strong>Stap 3.</strong> De functie zelf was met een breuk gegeven (1/x²), dus schrijf het antwoord ook met een breuk terug:</p>
+<div class="formula-line center">g'(x) = −2/x³</div>
+</div>
+</div>
+
+<div class="regel" style="background:#fee2e2; border-color:#dc2626;">
+<span class="regel-label" style="background:#dc2626;">LET OP — afspraak</span>
+Laat een negatieve exponent in je antwoord <strong>alleen</strong> staan als de functie zelf met negatieve exponenten gegeven was.<br>
+In alle andere gevallen: schrijf het terug als <strong>breuk</strong>.
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = 6/x³</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Herschrijf:</p>
+<div class="formula-line">f(x) = 6/x³ = 6x<sup>−3</sup></div>
+
+<p><strong>Stap 2.</strong> Pas de regel toe (constante blijft staan):</p>
+<div class="formula-line">f'(x) = 6 · (−3) · x<sup>−4</sup> = −18x<sup>−4</sup></div>
+
+<p><strong>Stap 3.</strong> Terug naar breuk:</p>
+<div class="formula-line center">f'(x) = −18/x⁴</div>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — negatieve exponenten</h4>
+
+<div class="q-row">
+<label>Differentieer <strong>f(x) = 5/x³</strong>. Wat is f'(x)?</label>
+<input type="text" id="q-na1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-na1',['-15/x^4','-15/x⁴','-15x^-4','-15x^(-4)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-na1"></div>
+
+<div class="q-row">
+<label>Differentieer <strong>g(x) = 3/x²</strong>. Wat is g'(x)?</label>
+<input type="text" id="q-na2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-na2',['-6/x^3','-6/x³','-6x^-3','-6x^(-3)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-na2"></div>
+
+<div class="q-row">
+<label>Differentieer <strong>h(x) = (x²+1)/x³</strong>. Wat is h'(x)?</label>
+<input type="text" id="q-na3" placeholder="...">
+<button class="btn-check" onclick="checkText('q-na3',['-1/x^2-3/x^4','-1/x²-3/x⁴','-3/x^4-1/x^2','-3/x⁴-1/x²','-x^-2-3x^-4'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-na')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-na3"></div>
+
+<div class="detail-steps" id="s-na">
+<h5>Stappenplan</h5>
+<ol>
+<li>f(x) = 5/x³ = 5x<sup>−3</sup>. f'(x) = 5 · (−3) · x<sup>−4</sup> = −15x<sup>−4</sup> = −15/x⁴</li>
+<li>g(x) = 3/x² = 3x<sup>−2</sup>. g'(x) = 3 · (−2) · x<sup>−3</sup> = −6x<sup>−3</sup> = −6/x³</li>
+<li>h(x) = (x²+1)/x³. Eerst splitsen: h(x) = x²/x³ + 1/x³ = x<sup>−1</sup> + x<sup>−3</sup></li>
+<li>h'(x) = −1·x<sup>−2</sup> + (−3)·x<sup>−4</sup> = −x<sup>−2</sup> − 3x<sup>−4</sup> = −1/x² − 3/x⁴</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. Theorie B — gebroken exponenten (wortels)                 -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>3. Theorie B — gebroken exponenten (wortels)</h2>
+
+<p>De regel werkt ook als <strong>n een gebroken getal</strong> is, zoals ½, ⅓, 3/2.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL</span>
+Voor elk getal <strong>n</strong> (geheel, breuk of negatief) geldt:
+<div class="formula-line center">f(x) = x<sup>n</sup>  geeft  f'(x) = n · x<sup>n−1</sup></div>
+</div>
+
+<figure>
+<img src="img/fig2-wortel-raaklijn.png" alt="Grafiek van f(x) = wortel x in blauw, vanaf de oorsprong stijgend en steeds vlakker wordend. In het punt A(4, 2) staat een rode raaklijn met de formule y = een kwart x plus 1.">
+<figcaption><strong>Figuur 2.</strong> De grafiek van f(x) = √x met de raaklijn in A(4, 2).</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = √x</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Schrijf de wortel als exponent:</p>
+<div class="formula-line">f(x) = √x = x<sup>1/2</sup></div>
+
+<p><strong>Stap 2.</strong> Pas de regel toe — exponent voor de x, en doe er 1 af:</p>
+<div class="formula-line">f'(x) = ½ · x<sup>1/2 − 1</sup> = ½ · x<sup>−1/2</sup></div>
+
+<p><strong>Stap 3.</strong> De functie was met een wortel gegeven, dus schrijf het antwoord ook met een wortel terug:</p>
+<div class="formula-line">f'(x) = ½ · 1/x<sup>1/2</sup> = 1/(2√x)</div>
+
+<p><strong>Controle op figuur 2:</strong> in x = 4 is f'(4) = 1/(2·2) = ¼. De raaklijn heeft helling ¼ — klopt met de figuur.</p>
+</div>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>g(x) = x · √x</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Combineer tot één macht van x:</p>
+<div class="formula-line">g(x) = x · √x = x<sup>1</sup> · x<sup>1/2</sup> = x<sup>3/2</sup></div>
+
+<p>(Onthoud uit H5: bij vermenigvuldigen van zelfde grondtal tel je de exponenten op. 1 + ½ = 3/2.)</p>
+
+<p><strong>Stap 2.</strong> Pas de regel toe:</p>
+<div class="formula-line">g'(x) = (3/2) · x<sup>1/2</sup></div>
+
+<p><strong>Stap 3.</strong> Terug naar wortelvorm:</p>
+<div class="formula-line center">g'(x) = (3/2) · √x = 1½√x</div>
+</div>
+</div>
+
+<div class="regel" style="background:#fee2e2; border-color:#dc2626;">
+<span class="regel-label" style="background:#dc2626;">LET OP — afspraak</span>
+Laat een gebroken exponent in je antwoord <strong>alleen</strong> staan als de functie zelf met gebroken exponenten gegeven was.<br>
+In alle andere gevallen: schrijf het terug als <strong>wortel</strong>.
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — wortels differentiëren</h4>
+
+<p>Vul alle drie de antwoorden in als <strong>wortel of breuk</strong> (geen exponent), want de functies zijn met wortels gegeven.</p>
+
+<div class="q-row">
+<label>Differentieer <strong>f(x) = √x</strong>. Wat is f'(x)?</label>
+<input type="text" id="q-wo1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-wo1',['1/(2√x)','1/(2wortel(x))','1/2√x','0.5/√x'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-wo1"></div>
+
+<div class="q-row">
+<label>Differentieer <strong>g(x) = x²·√x</strong>. Wat is g'(x)?</label>
+<input type="text" id="q-wo2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-wo2',['2½x√x','2.5x√x','5/2x√x','(5/2)x√x','2½xwortel(x)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-wo2"></div>
+
+<div class="q-row">
+<label>Differentieer <strong>h(x) = 1/√x</strong>. Wat is h'(x)?</label>
+<input type="text" id="q-wo3" placeholder="...">
+<button class="btn-check" onclick="checkText('q-wo3',['-1/(2x√x)','-1/(2x·√x)','-0.5/(x√x)'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-wo')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-wo3"></div>
+
+<div class="detail-steps" id="s-wo">
+<h5>Stappenplan</h5>
+<ol>
+<li>f(x) = √x = x<sup>1/2</sup>. f'(x) = ½ · x<sup>−1/2</sup> = 1/(2√x)</li>
+<li>g(x) = x² · √x = x² · x<sup>1/2</sup> = x<sup>5/2</sup>. g'(x) = (5/2) · x<sup>3/2</sup> = (5/2) · x · √x = 2½x√x</li>
+<li>h(x) = 1/√x = 1/x<sup>1/2</sup> = x<sup>−1/2</sup>. h'(x) = −½ · x<sup>−3/2</sup> = −1/(2 · x<sup>3/2</sup>) = −1/(2x√x)</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. Herleiden naar standaardvorm                              -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>4. Herleiden naar standaardvorm</h2>
+
+<p>Heel vaak krijg je een functie die er nog niet uitziet als x<sup>n</sup>. Bijvoorbeeld een breuk met meerdere termen in de teller, of een breuk met een wortel onderin.</p>
+
+<p>Dan moet je <strong>eerst herleiden</strong> vóór je differentieert.</p>
+
+<div class="werkschema">
+<h4>Werkschema: herleiden vóór differentiëren</h4>
+<ol>
+<li>Schrijf elke term van de teller boven de noemer (splits de breuk).</li>
+<li>Schrijf elke term in de vorm c · x<sup>n</sup>.</li>
+<li>Differentieer term voor term met de machtsregel.</li>
+<li>Schrijf het antwoord terug in de oorspronkelijke vorm (breuk of wortel).</li>
+</ol>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = (4x + 1)/√x</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Splits de breuk:</p>
+<div class="formula-line">f(x) = 4x/√x + 1/√x</div>
+
+<p><strong>Stap 2.</strong> Schrijf elke term met een exponent. Gebruik x/√x = x<sup>1</sup>/x<sup>1/2</sup> = x<sup>1/2</sup>:</p>
+<div class="formula-line">f(x) = 4 · x<sup>1/2</sup> + x<sup>−1/2</sup></div>
+
+<p><strong>Stap 3.</strong> Differentieer term voor term:</p>
+<div class="formula-line">f'(x) = 4 · ½ · x<sup>−1/2</sup> + (−½) · x<sup>−3/2</sup></div>
+<div class="formula-line">f'(x) = 2x<sup>−1/2</sup> − ½ · x<sup>−3/2</sup></div>
+
+<p><strong>Stap 4.</strong> Schrijf terug met wortels (functie was met wortel gegeven):</p>
+<div class="formula-line center">f'(x) = 2/√x − 1/(2x√x)</div>
+</div>
+</div>
+
+<figure>
+<img src="img/fig3-twee-takken.png" alt="Grafiek van f(x) = (x kwadraat plus 16) gedeeld door (4 x). De grafiek bestaat uit twee takken. De linker tak heeft een hoogste punt op (min 4, min 2). De rechter tak heeft een laagste punt op (4, 2). Het maximum is dus kleiner dan het minimum.">
+<figcaption><strong>Figuur 3.</strong> f(x) = (x²+16)/(4x) — twee aparte takken. <strong>Let op:</strong> de maximum-waarde (−2) is hier <strong>kleiner</strong> dan de minimum-waarde (2).</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Bereken exact de extreme waarden van <strong>f(x) = (x²+16)/(4x)</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Herleid:</p>
+<div class="formula-line">f(x) = x²/(4x) + 16/(4x) = ¼x + 4/x = ¼x + 4x<sup>−1</sup></div>
+
+<p><strong>Stap 2.</strong> Differentieer:</p>
+<div class="formula-line">f'(x) = ¼ + 4 · (−1) · x<sup>−2</sup> = ¼ − 4/x²</div>
+
+<p><strong>Stap 3.</strong> Los op f'(x) = 0:</p>
+<div class="formula-line">¼ − 4/x² = 0</div>
+<div class="formula-line">4/x² = ¼</div>
+<div class="formula-line">x² = 16</div>
+<div class="formula-line">x = −4  ∨  x = 4</div>
+
+<p><strong>Stap 4.</strong> Bereken de y-waarden:</p>
+<div class="formula-line">f(−4) = (16+16)/(−16) = −2  → maximum op linker tak</div>
+<div class="formula-line">f(4) = (16+16)/(16) = 2  → minimum op rechter tak</div>
+
+<p><strong>Antwoord:</strong> max f(−4) = −2 en min f(4) = 2.</p>
+<p>(Maximum is hier kleiner dan minimum omdat de grafiek uit twee losse takken bestaat — zie figuur 3.)</p>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — herleiden en differentiëren</h4>
+
+<p><strong>1.</strong> Differentieer <strong>f(x) = (2x² − 3)/x²</strong>. Tip: splits de breuk.</p>
+<div class="q-row">
+<label>f'(x) =</label>
+<input type="text" id="q-hd1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-hd1',['6/x^3','6/x³','6x^-3','6x^(-3)'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-hd1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-hd1"></div>
+<div class="detail-steps" id="s-hd1">
+<h5>Stappenplan</h5>
+<ol>
+<li>f(x) = 2x²/x² − 3/x² = 2 − 3x<sup>−2</sup></li>
+<li>De 2 is een getal, dus die afgeleide is 0.</li>
+<li>f'(x) = 0 − 3 · (−2) · x<sup>−3</sup> = 6x<sup>−3</sup> = 6/x³</li>
+</ol>
+</div>
+
+<p style="margin-top:1.25rem;"><strong>2.</strong> Differentieer <strong>g(x) = √x / x²</strong>. Tip: schrijf eerst alles als één macht van x.</p>
+<div class="q-row">
+<label>g'(x) =</label>
+<input type="text" id="q-hd2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-hd2',['-3/(2x²√x)','-3/(2x^2√x)','-3/(2x²·√x)','-1.5/(x²√x)'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-hd2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-hd2"></div>
+<div class="detail-steps" id="s-hd2">
+<h5>Stappenplan</h5>
+<ol>
+<li>g(x) = √x / x² = x<sup>1/2</sup> / x<sup>2</sup> = x<sup>1/2 − 2</sup> = x<sup>−3/2</sup></li>
+<li>g'(x) = (−3/2) · x<sup>−5/2</sup></li>
+<li>x<sup>−5/2</sup> = 1/x<sup>5/2</sup> = 1/(x² · √x)</li>
+<li>g'(x) = −3/(2x²·√x)</li>
+</ol>
+</div>
+
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. Toetsstijl-oefeningen                                     -->
+<!-- ============================================================ -->
+<div class="section" id="oefen-toets">
+<h2>5. Toetsstijl-oefeningen</h2>
+
+<p>Op de toets krijg je opgaven met meerdere deelvragen die op elkaar bouwen. Een opgave is pas af als alle deelvragen kloppen.</p>
+
+<h3>Opgave A — machtsregel met breuk (uit de V-test, C5)</h3>
+<p>Gegeven is de functie <strong>f(x) = 2/x⁴</strong>.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Schrijf f(x) eerst in de vorm c · x<sup>n</sup>.</label>
+<input type="text" id="q-oA-a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oA-a',['2x^-4','2x^(-4)','2·x^-4'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken f'(x). Geef het antwoord als breuk.</label>
+<input type="text" id="q-oA-b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oA-b',['-8/x^5','-8/x⁵','-8x^-5','-8x^(-5)'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oA')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oA-b"></div>
+
+<div class="detail-steps" id="s-oA">
+<h5>Stappenplan</h5>
+<ol>
+<li>f(x) = 2/x⁴ = 2x<sup>−4</sup></li>
+<li>f'(x) = 2 · (−4) · x<sup>−5</sup> = −8x<sup>−5</sup></li>
+<li>De functie was met een breuk gegeven, dus schrijf terug als breuk: f'(x) = −8/x⁵</li>
+</ol>
+</div>
+
+<h3>Opgave B — raaklijn opstellen (uit het boek, Opg. 26)</h3>
+<p>Gegeven is de functie <strong>f(x) = (3x + 3)/x</strong>. Het punt A is het snijpunt van de grafiek van f met de x-as. De raaklijn k aan de grafiek van f in punt A snijdt de y-as in punt B.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Bereken het snijpunt A van f met de x-as. Geef de x-coördinaat.</label>
+<input type="text" id="q-oB-a" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oB-a', -1)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Wat is f'(x)? Geef het antwoord als breuk.</label>
+<input type="text" id="q-oB-b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oB-b',['-3/x^2','-3/x²','-3x^-2','-3x^(-2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Bereken de helling van k (dus f'(−1)).</label>
+<input type="text" id="q-oB-c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oB-c', -3)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-c"></div>
+
+<div class="q-row">
+<label><strong>d)</strong> Stel de formule van k op.</label>
+<input type="text" id="q-oB-d" placeholder="y = ...">
+<button class="btn-check" onclick="checkText('q-oB-d',['y=-3x-3','-3x-3','y=-3-3x','-3-3x'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-d"></div>
+
+<div class="q-row">
+<label><strong>e)</strong> Wat zijn de coördinaten van B (snijpunt van k met y-as)?</label>
+<input type="text" id="q-oB-e" placeholder="(.., ..)">
+<button class="btn-check" onclick="checkText('q-oB-e',['(0,-3)','0,-3'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oB')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oB-e"></div>
+
+<div class="detail-steps" id="s-oB">
+<h5>Stappenplan</h5>
+<ol>
+<li>a) Snijpunt x-as: y = 0 ⇒ (3x+3)/x = 0 ⇒ 3x+3 = 0 ⇒ x = −1. Dus A(−1, 0).</li>
+<li>b) Herleid f: f(x) = 3 + 3/x = 3 + 3x<sup>−1</sup>. f'(x) = −3x<sup>−2</sup> = −3/x²</li>
+<li>c) f'(−1) = −3/(−1)² = −3/1 = −3</li>
+<li>d) k: y = −3x + b. Door A(−1, 0): 0 = −3 · (−1) + b = 3 + b, dus b = −3. k: y = −3x − 3.</li>
+<li>e) Snijpunt y-as: x = 0 ⇒ y = −3. Dus B(0, −3).</li>
+</ol>
+</div>
+
+<h3>Opgave C — synthese (link met exponenten H5)</h3>
+<p>Gegeven is de functie <strong>f(x) = (x² + 1)/(x · √x)</strong>.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Herschrijf f(x) als som van twee machten van x.</label>
+<input type="text" id="q-oC-a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oC-a',['x^1/2+x^-3/2','x^(1/2)+x^(-3/2)','x^0.5+x^-1.5','x^(1/2)+x^(-1.5)','x^1/2+x^(-3/2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken f'(x). Geef het antwoord met wortels en breuken.</label>
+<input type="text" id="q-oC-b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oC-b',['1/(2√x)-3/(2x²√x)','1/(2√x)-3/(2x^2√x)','1/(2wortel(x))-3/(2x²wortel(x))'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Bereken de helling van f in x = 1.</label>
+<input type="text" id="q-oC-c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oC-c', -1)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oC')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oC-c"></div>
+
+<div class="detail-steps" id="s-oC">
+<h5>Stappenplan</h5>
+<ol>
+<li>a) Schrijf x · √x = x<sup>1</sup> · x<sup>1/2</sup> = x<sup>3/2</sup>. Dan: f(x) = (x²+1)/x<sup>3/2</sup> = x²/x<sup>3/2</sup> + 1/x<sup>3/2</sup> = x<sup>1/2</sup> + x<sup>−3/2</sup></li>
+<li>b) f'(x) = ½ · x<sup>−1/2</sup> + (−3/2) · x<sup>−5/2</sup> = 1/(2√x) − 3/(2x²√x)</li>
+<li>c) f'(1) = ½ − 3/2 = −1</li>
+<li>(Zie figuur 5 voor controle: de raaklijn op x = 1 daalt — helling negatief.)</li>
+</ol>
+</div>
+
+<figure>
+<img src="img/fig5-synthese-opgave-c.png" alt="Grafiek van f(x) = (x kwadraat plus 1) gedeeld door (x maal wortel x). De grafiek daalt scherp tot een minimum dichtbij x is 1, en stijgt daarna langzaam. In het punt A(1, 2) staat een rode raaklijn met de formule y = min x plus 3, die helling min 1 heeft.">
+<figcaption><strong>Figuur 5.</strong> De grafiek van f(x) = (x²+1)/(x·√x) met de raaklijn op x = 1.</figcaption>
+</figure>
+
+<div class="tutor-cta" style="margin-top:1.5rem;">
+<strong>Vastgelopen op een opgave?</strong>
+<p>Klik op de tutor-knop rechtsonder. Vertel welke opgave en deelvraag, en bij welke stap je vastloopt.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Checklist                                                     -->
+<!-- ============================================================ -->
+<div class="checklist">
+<h2>Kan ik dit nu?</h2>
+<label><input type="checkbox" data-key="6.2-c1"> Ik kan 1/x<sup>n</sup> schrijven als x<sup>−n</sup>.</label>
+<label><input type="checkbox" data-key="6.2-c2"> Ik kan √x schrijven als x<sup>1/2</sup>, en 1/√x als x<sup>−1/2</sup>.</label>
+<label><input type="checkbox" data-key="6.2-c3"> Ik kan f'(x) berekenen bij negatieve gehele exponenten.</label>
+<label><input type="checkbox" data-key="6.2-c4"> Ik kan f'(x) berekenen bij gebroken exponenten (wortels).</label>
+<label><input type="checkbox" data-key="6.2-c5"> Ik kan een breuk eerst splitsen vóór ik differentieer.</label>
+<label><input type="checkbox" data-key="6.2-c6"> Ik schrijf mijn antwoord terug als breuk of wortel — niet met negatieve of gebroken exponenten (tenzij de functie zelf zo gegeven was).</label>
+</div>
+
+<div class="nav-bottom">
+<a href="../6.1-raaklijnen-en-toppen/">&larr; §6.1 Raaklijnen en toppen</a>
+<a href="../6.3-kettingregel/">§6.3 Kettingregel &rarr;</a>
+</div>
+
+</div>
+
+<!-- Chat-widget — opent vanuit FAB of tutor-CTA -->
+<button class="chat-fab" onclick="openChat()">💬 Tutor</button>
+
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header">
+<h3>Wiskunde-tutor</h3>
+<button class="chat-close" onclick="closeChat()">×</button>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-row">
+<textarea class="chat-input" id="chatInput" placeholder="Typ hier..." rows="1"></textarea>
+<button class="chat-send" id="chatSend" onclick="sendMessage()">Stuur</button>
+</div>
+</div>
+
+<footer>
+<p>Gemaakt door <strong>Ralph Wagter</strong> voor <strong>Kasper</strong>, met <a href="https://claude.ai/code">Claude Code</a>.</p>
+<p style="margin-top:0.5rem; font-size:0.85rem;">
+  Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+  <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================
+// Configuratie — pas WORKER_BASE aan na deployment van de Worker
+// ============================================================
+const WORKER_BASE = window.__WORKER_BASE__ || "https://kasper-tutor.ralph-wagter.workers.dev";
+const PAGE_SLUG = "6.2-machtsfuncties";
+
+// ============================================================
+// Checklist — localStorage persist
+// ============================================================
+document.querySelectorAll(".checklist input[type=checkbox]").forEach((cb) => {
+  const key = "kasper-" + cb.dataset.key;
+  if (localStorage.getItem(key) === "1") cb.checked = true;
+  cb.addEventListener("change", () => {
+    localStorage.setItem(key, cb.checked ? "1" : "0");
+  });
+});
+
+// ============================================================
+// Toggle uitwerkingen
+// ============================================================
+function toggle(btn) {
+  const next = btn.nextElementSibling;
+  const isOpen = next.classList.toggle("open");
+  btn.textContent = isOpen ? "Verberg uitwerking" : "Toon uitwerking";
+}
+
+// ============================================================
+// Antwoord-validatie voor try-it en oefenopgaven
+// ============================================================
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/,/g, ".")
+    .replace(/×/g, "*")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3")
+    .replace(/⁴/g, "^4")
+    .replace(/⁵/g, "^5")
+    .replace(/–/g, "-")
+    .replace(/−/g, "-");
+}
+function setFeedback(id, ok) {
+  const el = document.getElementById(id);
+  const fb = document.getElementById("fb-" + id);
+  if (!el || !fb) return;
+  el.classList.remove("correct", "incorrect");
+  el.classList.add(ok ? "correct" : "incorrect");
+  fb.classList.remove("correct", "incorrect");
+  fb.classList.add("show", ok ? "correct" : "incorrect");
+  fb.textContent = ok ? "✓ Goed!" : "✗ Nog niet — kijk eens naar het stappenplan.";
+}
+function checkText(id, accepted) {
+  const norm = normalize(document.getElementById(id).value);
+  const ok = accepted.some((a) => normalize(a) === norm);
+  setFeedback(id, ok);
+}
+function checkNumeric(id, target, tol) {
+  const raw = document.getElementById(id).value;
+  const norm = normalize(raw).replace(/\^/g, "**");
+  let val = NaN;
+  if (/^-?\d+(\.\d+)?$/.test(norm)) {
+    val = parseFloat(norm);
+  } else if (/^-?\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else if (/^-?\d+\.\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else {
+    const fracMap = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅕": 0.2, "⅙": 1 / 6 };
+    let cleaned = raw.toString().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    for (const [k, v] of Object.entries(fracMap)) {
+      if (cleaned.includes(k)) {
+        const m = cleaned.match(/^(-)?(\d*)([½¼¾⅓⅔⅕⅙])$/);
+        if (m) {
+          const sign = m[1] ? -1 : 1;
+          const whole = m[2] ? parseInt(m[2], 10) : 0;
+          val = sign * (whole + fracMap[m[3]]);
+          break;
+        }
+      }
+    }
+  }
+  const eps = typeof tol === "number" ? tol : 0.01;
+  const ok = isFinite(val) && Math.abs(val - target) < eps;
+  setFeedback(id, ok);
+}
+function toggleSteps(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+
+// ============================================================
+// Token uit URL halen en in localStorage opslaan
+// ============================================================
+function getToken() {
+  const fromUrl = new URLSearchParams(window.location.search).get("t");
+  if (fromUrl) {
+    localStorage.setItem("kasper-token", fromUrl);
+    return fromUrl;
+  }
+  return localStorage.getItem("kasper-token");
+}
+
+// ============================================================
+// Chat-panel
+// ============================================================
+const chatPanel = document.getElementById("chatPanel");
+const chatMessages = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+
+const HISTORY_KEY = "kasper-history-" + PAGE_SLUG;
+
+function loadHistory() {
+  const raw = localStorage.getItem(HISTORY_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+function saveHistory(history) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20)));
+}
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  chatMessages.innerHTML = "";
+}
+
+function renderMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return div;
+}
+
+function renderSystemMessage(text) {
+  const div = document.createElement("div");
+  div.className = "msg system";
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function openChat() {
+  chatPanel.classList.add("open");
+  const history = loadHistory();
+  if (history.length === 0) {
+    if (!WORKER_BASE) {
+      renderSystemMessage("De tutor is nog niet online. Vraag Ralph om de Worker te deployen.");
+    } else if (!getToken()) {
+      renderSystemMessage("Geen toegangs-token gevonden. Vraag Ralph om de juiste URL met ?t=...");
+    } else {
+      sendInitial();
+    }
+  } else {
+    history.forEach((m) => renderMessage(m.role, m.content));
+  }
+  chatInput.focus();
+}
+
+function closeChat() {
+  chatPanel.classList.remove("open");
+}
+
+async function sendInitial() {
+  await streamReply([{ role: "user", content: "Hoi, ik open de pagina nu. Begin met de eerste vraag." }]);
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = "";
+
+  const history = loadHistory();
+  history.push({ role: "user", content: text });
+  renderMessage("user", text);
+  saveHistory(history);
+
+  if (!WORKER_BASE) {
+    renderSystemMessage("Worker URL ontbreekt — bericht niet verstuurd.");
+    return;
+  }
+  if (!getToken()) {
+    renderSystemMessage("Geen toegangs-token — bericht niet verstuurd.");
+    return;
+  }
+
+  await streamReply(history);
+}
+
+async function streamReply(messages) {
+  const token = getToken();
+  chatSend.disabled = true;
+  const assistantDiv = renderMessage("assistant", "");
+  let assistantText = "";
+
+  try {
+    const res = await fetch(`${WORKER_BASE}/api/chat?t=${encodeURIComponent(token)}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pageSlug: PAGE_SLUG, messages }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Onbekende fout" }));
+      assistantDiv.remove();
+      renderSystemMessage("Fout: " + (err.error || res.status));
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === "content_block_delta" && evt.delta?.type === "text_delta") {
+            assistantText += evt.delta.text;
+            assistantDiv.textContent = assistantText;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        } catch {}
+      }
+    }
+    const history = loadHistory();
+    history.push({ role: "assistant", content: assistantText });
+    saveHistory(history);
+  } catch (e) {
+    assistantDiv.remove();
+    renderSystemMessage("Netwerkfout: " + e.message);
+  } finally {
+    chatSend.disabled = false;
+  }
+}
+
+chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>

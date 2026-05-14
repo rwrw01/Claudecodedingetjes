@@ -1,0 +1,24 @@
+name = "kasper-tutor"
+main = "src/index.ts"
+compatibility_date = "2025-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+[[kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "4cb5a5e225434332af5041107953eea4"
+preview_id = "33853f8a2a4d4ca5ac234a188e3a7cb4"
+
+[vars]
+ALLOWED_ORIGINS = "https://rwrw01.github.io,http://localhost:8000,http://127.0.0.1:8000"
+MODEL = "claude-sonnet-4-6"
+MAX_OUTPUT_TOKENS = "1500"
+DAILY_MESSAGE_LIMIT = "100"
+
+# Secrets — niet hier. Via:
+#   wrangler secret put ANTHROPIC_API_KEY
+#   wrangler secret put TOKEN_KSP
+#   wrangler secret put TOKEN_JSM
+# Lokaal: zet ze in .dev.vars (gitignored)

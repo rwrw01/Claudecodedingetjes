@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>§6.4 Toepassingen van de afgeleide — Wiskunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#0f766e;
+  --primary-soft:#ccfbf1;
+  --primary-dark:#134e4a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: 0.01em; }
+header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li {
+  padding: 0.4rem 0 0.4rem 1.6rem;
+  position: relative;
+}
+.intro li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.tutor-cta {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+.tutor-cta strong { color: #92400e; font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+.tutor-cta p { color: #78350f; margin-bottom: 1rem; }
+.btn-tutor {
+  background: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-tutor:hover { background: #c2410c; }
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9;
+  border-left: 4px solid #475569;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+.checklist-pre {
+  background: #ecfeff;
+  border: 2px solid #06b6d4;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.checklist-pre h4 { color: #155e75; margin-bottom: 0.5rem; font-size: 1rem; }
+.checklist-pre ol { margin: 0.4rem 0 0 1.4rem; }
+.checklist-pre li { margin: 0.3rem 0; }
+table.disc-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.97rem;
+}
+table.disc-tabel th, table.disc-tabel td {
+  border: 1px solid var(--border);
+  padding: 0.6rem 0.8rem;
+  vertical-align: top;
+  text-align: left;
+}
+table.disc-tabel th {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+table.disc-tabel td.term { font-weight: 600; white-space: nowrap; }
+figure {
+  margin: 1.25rem 0;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: var(--primary-soft); }
+.toggle-content { display: none; margin-top: 0.8rem; }
+.toggle-content.open { display: block; }
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 {
+  color: #0c4a6e;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.try-it p { margin: 0.5rem 0; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label {
+  flex: 1 1 220px;
+  font-size: 0.98rem;
+}
+.q-row input[type=text],
+.q-row input[type=number] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 150px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist label:last-child { border-bottom: none; }
+.checklist input[type=checkbox] {
+  margin-top: 0.3rem;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.nav-bottom {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.nav-bottom a {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+}
+.nav-bottom a:hover { background: var(--primary-soft); border-color: var(--primary); }
+.nav-bottom .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  background: white;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--primary); text-decoration: none; }
+
+/* Chat widget */
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  z-index: 50;
+  font-family: inherit;
+}
+.chat-fab:hover { background: var(--primary-dark); }
+.chat-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 80vh;
+  max-height: 720px;
+  background: white;
+  border-top-left-radius: 16px;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--primary-dark);
+  color: white;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 16px;
+}
+.chat-header h3 { font-size: 1.05rem; }
+.chat-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fafaf9;
+}
+.msg {
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  max-width: 88%;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.msg.user { background: var(--primary-soft); color: var(--primary-dark); margin-left: auto; }
+.msg.assistant { background: white; border: 1px solid var(--border); }
+.msg.assistant strong { color: var(--primary-dark); }
+.msg.system { background: #fef3c7; color: #78350f; font-size: 0.9rem; text-align: center; max-width: 100%; }
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+}
+.chat-input:focus { outline: none; border-color: var(--primary); }
+.chat-send {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chat-send:disabled { opacity: 0.5; cursor: wait; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>§6.4 Toepassingen van de afgeleide</h1>
+<p>Loodrechte lijnen, optimaliseren van oppervlakte en afstand</p>
+</header>
+
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../../">Ralph</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H6 Afgeleide functie</a> &rsaquo; §6.4</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>Wat ga je leren?</h2>
+<ul>
+<li>Een lijn opstellen door een gegeven punt die loodrecht staat op een gegeven lijn</li>
+<li>De vier notaties voor de afgeleide herkennen: f'(x), y', dy/dx, df(x)/dx</li>
+<li>Optimaliseren: maximale oppervlakte vinden bij een grafiek</li>
+<li>Optimaliseren: maximale verticale afstand tussen twee grafieken vinden</li>
+<li>Weten wat je precies mag bij "Bereken", "Bereken met de afgeleide", "Bereken algebraïsch" en "Bereken exact"</li>
+</ul>
+</div>
+
+<div class="tutor-cta">
+<strong>Hoi Kasper — klaar om te beginnen?</strong>
+<p>Klik op de knop hieronder en je tutor begeleidt je stap voor stap door deze paragraaf. Werk in je eigen tempo. Een fout antwoord is geen probleem — daar leer je juist van.</p>
+<button class="btn-tutor" onclick="openChat()">Praat met je tutor</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. Ontdek: loodrechte lijnen                                  -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>1. Twee lijnen die loodrecht op elkaar staan — wat geldt er?</h2>
+
+<p>Je kent de helling van een rechte lijn al. Bij <strong>y = ax + b</strong> is <strong>a</strong> de helling.</p>
+
+<p>Stel je hebt twee lijnen, k en l. Wanneer staan ze loodrecht op elkaar?</p>
+
+<figure>
+<img src="img/fig1-loodrechte-lijnen.png" alt="Twee rechte lijnen in één grafiek. Lijn k is y = 2x - 2, dus stijgt steil. Lijn l is y = -1/2 x + 3, dus daalt licht. De twee lijnen snijden elkaar in het punt (2, 2) en staan loodrecht op elkaar.">
+<figcaption><strong>Figuur 1.</strong> Twee loodrechte lijnen: k: y = 2x − 2 en l: y = −½x + 3.</figcaption>
+</figure>
+
+<p>Kijk naar de hellingen. De helling van k is <strong>2</strong>. De helling van l is <strong>−½</strong>.</p>
+
+<p>Vermenigvuldig die twee hellingen met elkaar:</p>
+
+<div class="formula-line center">2 · (−½) = −1</div>
+
+<p>Dat is geen toeval. Praat erover met je tutor.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. Theorie A — loodrechte lijnen                              -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>2. Theorie A — Loodrechte lijnen</h2>
+
+<div class="regel">
+<span class="regel-label">REGEL</span>
+Voor twee lijnen k en l met helling ongelijk aan 0 geldt:
+<div class="formula-line center">helling van k · helling van l = −1  ⇔  k staat loodrecht op l</div>
+</div>
+
+<p>Dus als je de helling van de ene lijn weet, weet je ook de helling van elke lijn die loodrecht erop staat.</p>
+
+<p>Voorbeelden van helling-paren waarbij het product −1 is:</p>
+
+<ul>
+<li>helling 2  ↔  helling −½</li>
+<li>helling 3  ↔  helling −⅓</li>
+<li>helling ¼  ↔  helling −4</li>
+<li>helling −5  ↔  helling ⅕</li>
+</ul>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Lijn l heeft formule <strong>y = 4x − 1</strong>. Lijn k staat loodrecht op l en gaat door punt P(8, 3). Stel de formule van k op.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> De helling van l is 4. Dus de helling van k is:</p>
+<div class="formula-line">helling k = −1 / 4 = −¼</div>
+
+<p><strong>Stap 2.</strong> k heeft de vorm y = −¼x + b. Vul punt P(8, 3) in:</p>
+<div class="formula-line">3 = −¼ · 8 + b</div>
+<div class="formula-line">3 = −2 + b</div>
+<div class="formula-line">b = 5</div>
+
+<p><strong>Antwoord:</strong></p>
+<div class="formula-line">k: y = −¼x + 5</div>
+</div>
+</div>
+
+<figure>
+<img src="img/fig5-loodrecht-door-punt.png" alt="Twee lijnen: de gegeven lijn l: y = 3x - 2 stijgt steil, en de lijn k: y = -1/3 x + 9 die daarop loodrecht staat, gaat door het punt A op coördinaten (6, 7).">
+<figcaption><strong>Figuur 2.</strong> Een ander voorbeeld: k loodrecht op l: y = 3x − 2, door A(6, 7).</figcaption>
+</figure>
+
+<div class="try-it">
+<h4>Probeer zelf — loodrechte lijn opstellen</h4>
+<p>Lijn l heeft formule <strong>y = ½x + 4</strong>. Lijn k staat loodrecht op l en gaat door punt P(1, 6). Stel de formule van k op.</p>
+
+<div class="q-row">
+<label><strong>Stap 1.</strong> Wat is de helling van k?</label>
+<input type="text" id="q-lr1a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-lr1a',['-2'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-lr1a"></div>
+
+<div class="q-row">
+<label><strong>Stap 2.</strong> Bereken b door P(1, 6) in te vullen. Wat is b?</label>
+<input type="text" id="q-lr1b" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-lr1b', 8)">Check</button>
+</div>
+<div class="feedback" id="fb-q-lr1b"></div>
+
+<div class="q-row">
+<label><strong>Stap 3.</strong> Wat is de formule van k?</label>
+<input type="text" id="q-lr1c" placeholder="y = ...">
+<button class="btn-check" onclick="checkText('q-lr1c',['y=-2x+8','-2x+8','y=8-2x','8-2x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-lr1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-lr1c"></div>
+
+<div class="detail-steps" id="s-lr1">
+<h5>Stappenplan</h5>
+<ol>
+<li>helling l = ½, dus helling k = −1 / (½) = −2</li>
+<li>k: y = −2x + b. Door P(1, 6): 6 = −2 · 1 + b, dus b = 8</li>
+<li>k: y = −2x + 8</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. Theorie B — optimaliseren oppervlakte                      -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>3. Theorie B — Optimaliseren van oppervlakte</h2>
+
+<p>Bij dit soort opgaven krijg je een grafiek. Onder of bij die grafiek ligt een rechthoek of een driehoek. Eén hoekpunt ligt op de grafiek en hangt af van een variabele <strong>p</strong>.</p>
+
+<p>De vraag: <strong>voor welke p is de oppervlakte zo groot mogelijk?</strong></p>
+
+<figure>
+<img src="img/fig2-rechthoek-onder-parabool.png" alt="Grafiek van de parabool y = 4 - x kwadraat. Onder de top ligt een rechthoek met hoekpunten op de oorsprong, op P(p, 0) op de x-as, op Q(p, 4 - p kwadraat) op de grafiek, en op R(0, 4 - p kwadraat) op de y-as. De rechthoek is gekleurd.">
+<figcaption><strong>Figuur 3.</strong> Een rechthoek onder de parabool y = 4 − x². De oppervlakte hangt af van p.</figcaption>
+</figure>
+
+<div class="werkschema">
+<h4>Werkschema: optimaliseren in 5 stappen</h4>
+<ol>
+<li>Schrijf de oppervlakte-formule op in <strong>p</strong>: A(p) = ...</li>
+<li>Bereken de afgeleide dA/dp.</li>
+<li>Los op dA/dp = 0.</li>
+<li>Controleer of de gevonden p een <strong>maximum</strong> geeft (kijk naar de grafiek of redeneer).</li>
+<li>Bereken de maximale oppervlakte A(p).</li>
+</ol>
+</div>
+
+<div class="checklist-pre">
+<h4>Checklist vóór je gaat rekenen</h4>
+<ol>
+<li><strong>Wat zie ik?</strong> Welke grafiek? Welke vorm (rechthoek, driehoek)?</li>
+<li><strong>Wat moet ik berekenen?</strong> Maximale oppervlakte? Of bij welke p?</li>
+<li><strong>Welke formule moet ik opstellen?</strong> A(p) als functie van p — alleen p, geen x of y meer.</li>
+</ol>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Onder de parabool <strong>y = 9 − x²</strong> ligt een rechthoek met hoekpunten O(0, 0), P(p, 0), Q(p, 9 − p²) en R(0, 9 − p²), met 0 &lt; p &lt; 3. Bereken voor welke p de oppervlakte van de rechthoek maximaal is.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Stel de oppervlakte-formule op. De breedte is p, de hoogte is 9 − p²:</p>
+<div class="formula-line">A(p) = p · (9 − p²) = 9p − p³</div>
+
+<p><strong>Stap 2.</strong> Bereken de afgeleide:</p>
+<div class="formula-line">dA/dp = 9 − 3p²</div>
+
+<p><strong>Stap 3.</strong> Los op dA/dp = 0:</p>
+<div class="formula-line">9 − 3p² = 0</div>
+<div class="formula-line">p² = 3</div>
+<div class="formula-line">p = √3   (alleen positieve oplossing, want p &gt; 0)</div>
+
+<p><strong>Stap 4.</strong> Bij p = 0 en p = 3 is de rechthoek plat. Daartussen moet wel een maximum liggen. Dus p = √3 geeft een maximum.</p>
+
+<p><strong>Stap 5.</strong> Bereken A(√3):</p>
+<div class="formula-line">A(√3) = √3 · (9 − 3) = 6√3</div>
+
+<p><strong>Antwoord:</strong> bij p = √3 is de oppervlakte maximaal, namelijk 6√3.</p>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — rechthoek onder y = 4 − x²</h4>
+<p>Bekijk figuur 3. Onder de parabool <strong>y = 4 − x²</strong> ligt de rechthoek met hoekpunten O(0, 0), P(p, 0), Q(p, 4 − p²) en R(0, 4 − p²), met 0 &lt; p &lt; 2. Voor welke p is de oppervlakte maximaal?</p>
+
+<div class="q-row">
+<label><strong>Stap 1.</strong> Schrijf A(p) op als functie in p.</label>
+<input type="text" id="q-opp1a" placeholder="A(p) = ...">
+<button class="btn-check" onclick="checkText('q-opp1a',['4p-p^3','4p-p³','-p^3+4p','-p³+4p','p(4-p^2)','p(4-p²)','p*(4-p^2)','p*(4-p²)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-opp1a"></div>
+
+<div class="q-row">
+<label><strong>Stap 2.</strong> Bereken dA/dp.</label>
+<input type="text" id="q-opp1b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-opp1b',['4-3p^2','4-3p²','-3p^2+4','-3p²+4'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-opp1b"></div>
+
+<div class="q-row">
+<label><strong>Stap 3.</strong> Los op dA/dp = 0. Wat is p² (exact)?</label>
+<input type="text" id="q-opp1c" placeholder="...">
+<button class="btn-check" onclick="checkText('q-opp1c',['4/3','1⅓','11/3','1.333','1,333'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-opp1c"></div>
+
+<div class="q-row">
+<label><strong>Stap 4.</strong> Wat is p (alleen de positieve waarde, in decimalen op 2 cijfers)?</label>
+<input type="text" id="q-opp1d" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-opp1d', 1.155, 0.01)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-opp1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-opp1d"></div>
+
+<div class="detail-steps" id="s-opp1">
+<h5>Stappenplan</h5>
+<ol>
+<li>A(p) = p · (4 − p²) = 4p − p³</li>
+<li>dA/dp = 4 − 3p²</li>
+<li>4 − 3p² = 0 geeft 3p² = 4, dus p² = 4/3</li>
+<li>p = √(4/3) = 2/√3 ≈ 1,15 (alleen positief, want p &gt; 0)</li>
+<li>Tussen p = 0 en p = 2 hoort één maximum, dus dit is het maximum.</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. Theorie C — verticale afstanden                            -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>4. Theorie C — Verticale afstand tussen twee grafieken</h2>
+
+<p>Soms heb je twee grafieken: <strong>f</strong> en <strong>g</strong>. Op een verticale lijn x = p ligt een punt op f en een punt op g. De afstand daartussen is een lijnstuk.</p>
+
+<p>Als f boven g ligt op die x-waarde, dan is de lengte:</p>
+
+<div class="formula-line center">L(p) = f(p) − g(p)</div>
+
+<p>De vraag: <strong>voor welke p is L maximaal (of minimaal)?</strong></p>
+
+<figure>
+<img src="img/fig4-verticale-afstand.png" alt="Twee grafieken in één assenstelsel. De grafiek van f(x) = x kwadraat + 4 is een parabool die door (0, 4) gaat en omhoog opent. De grafiek van g(x) = x maal wortel x ligt eronder en stijgt vanaf de oorsprong. Op de verticale lijn x = p zijn de punten A op f en B op g aangegeven, met daartussen het lijnstuk AB.">
+<figcaption><strong>Figuur 4.</strong> De verticale afstand L tussen de grafieken van f en g.</figcaption>
+</figure>
+
+<div class="werkschema">
+<h4>Werkschema: maximale/minimale afstand</h4>
+<ol>
+<li>Schrijf L(p) op: L(p) = f(p) − g(p) (de bovenste min de onderste).</li>
+<li>Bereken de afgeleide dL/dp.</li>
+<li>Los op dL/dp = 0.</li>
+<li>Controleer of het een maximum of minimum is.</li>
+<li>Bereken L(p) voor die p.</li>
+</ol>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Gegeven zijn <strong>f(x) = 6x − x²</strong> en <strong>g(x) = x</strong>. Op de verticale lijn x = p (met 0 &lt; p &lt; 5) ligt A op f en B op g. Bereken voor welke p de lengte van het lijnstuk AB maximaal is.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> f ligt boven g op dit gebied. Schrijf L op:</p>
+<div class="formula-line">L(p) = (6p − p²) − p = 5p − p²</div>
+
+<p><strong>Stap 2.</strong> Bereken de afgeleide:</p>
+<div class="formula-line">dL/dp = 5 − 2p</div>
+
+<p><strong>Stap 3.</strong> Los op dL/dp = 0:</p>
+<div class="formula-line">5 − 2p = 0</div>
+<div class="formula-line">p = 2½</div>
+
+<p><strong>Stap 4.</strong> L is een bergparabool (de leidende term is −p²), dus dit is een maximum.</p>
+
+<p><strong>Stap 5.</strong> Bereken L(2½):</p>
+<div class="formula-line">L(2½) = 5 · 2½ − (2½)² = 12½ − 6¼ = 6¼</div>
+
+<p><strong>Antwoord:</strong> bij p = 2½ is L maximaal, namelijk 6¼.</p>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — verticale afstand</h4>
+<p>Gegeven zijn <strong>f(x) = −x² + 8x</strong> en <strong>g(x) = 2x</strong>. Op de lijn x = p (met 0 &lt; p &lt; 6) ligt A op f en B op g. Bereken voor welke p de lengte van AB maximaal is.</p>
+
+<div class="q-row">
+<label><strong>Stap 1.</strong> Schrijf L(p) op (vereenvoudig).</label>
+<input type="text" id="q-vert1a" placeholder="L(p) = ...">
+<button class="btn-check" onclick="checkText('q-vert1a',['6p-p^2','6p-p²','-p^2+6p','-p²+6p'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-vert1a"></div>
+
+<div class="q-row">
+<label><strong>Stap 2.</strong> Bereken dL/dp.</label>
+<input type="text" id="q-vert1b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-vert1b',['6-2p','-2p+6'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-vert1b"></div>
+
+<div class="q-row">
+<label><strong>Stap 3.</strong> Voor welke p is dL/dp = 0?</label>
+<input type="text" id="q-vert1c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-vert1c', 3)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-vert1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-vert1c"></div>
+
+<div class="detail-steps" id="s-vert1">
+<h5>Stappenplan</h5>
+<ol>
+<li>L(p) = f(p) − g(p) = (−p² + 8p) − 2p = −p² + 6p</li>
+<li>dL/dp = −2p + 6</li>
+<li>−2p + 6 = 0 geeft p = 3</li>
+<li>L(3) = −9 + 18 = 9</li>
+</ol>
+</div>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. Vraagstellings-discipline + notaties                       -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>5. Vraagstellingen en notaties — verplichte stof</h2>
+
+<p>Dit komt op je toets. Niet als losse vraag, maar als <strong>regel</strong> waar je je aan moet houden.</p>
+
+<h3>De vier vraagstellingen</h3>
+
+<table class="disc-tabel">
+<thead>
+<tr><th>Vraagstelling</th><th>Wat mag en moet</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="term">Bereken</td>
+<td>Vrij in werkwijze. Grafische rekenmachine mag. Toelichting vereist. Antwoord in het aantal decimalen dat de vraag noemt.</td>
+</tr>
+<tr>
+<td class="term">Bereken met de afgeleide</td>
+<td>De formule van de afgeleide moet zichtbaar zijn. De vergelijking f'(x) = 0 mag je grafisch-numeriek oplossen met de GR.</td>
+</tr>
+<tr>
+<td class="term">Bereken algebraïsch</td>
+<td>Stap voor stap met de hand. Geen GR-grafiek en geen GR-solver. Decimalen mogen aan het einde.</td>
+</tr>
+<tr>
+<td class="term">Bereken exact</td>
+<td>Algebraïsch én zonder afronden. Het eindantwoord bevat breuken of wortels — geen decimalen.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="regel">
+<span class="regel-label">EZELSBRUGGETJE</span>
+"<strong>Exact</strong>" = breuken en wortels in het antwoord. "<strong>Algebraïsch</strong>" = met de hand, eindantwoord mag decimaal.
+</div>
+
+<h3>De notaties voor de afgeleide</h3>
+
+<p>De afgeleide van f mag je op verschillende manieren noteren. Ze betekenen allemaal hetzelfde:</p>
+
+<div class="formula-line">f'(x)</div>
+<div class="formula-line">y'</div>
+<div class="formula-line">dy/dx</div>
+<div class="formula-line">df(x)/dx</div>
+<div class="formula-line">d/dx · f(x)</div>
+
+<p>Op de toets kan elke notatie staan. Schrik er niet van. Het is steeds gewoon "de afgeleide".</p>
+
+<div class="regel">
+<span class="regel-label">LET OP</span>
+Bij optimaliseringsopgaven met variabele <strong>p</strong> schrijf je vaak <strong>dA/dp</strong> of <strong>dL/dp</strong>. De letter p is dan de variabele waarnaar je differentieert.
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. Toetsstijl-oefeningen                                      -->
+<!-- ============================================================ -->
+<div class="section" id="oefen-toets">
+<h2>6. Toetsstijl-oefeningen</h2>
+
+<p>Op de toets krijg je opgaven met meerdere deelvragen die op elkaar bouwen. Hier oefen je dat — een opgave is pas af als alle deelvragen kloppen.</p>
+
+<h3>Opgave A — loodrechte lijn opstellen (uit het boek, Opg. 57)</h3>
+<p>Gegeven is de lijn <strong>l: y = 3x − 2</strong>. Stel de formule op van de lijn <strong>k</strong> die door <strong>A(6, 7)</strong> gaat en loodrecht op l staat.</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Wat is de helling van k?</label>
+<input type="text" id="q-oA-a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oA-a',['-1/3','-⅓','-0.333','-0,333'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken b door A(6, 7) in te vullen. Wat is b?</label>
+<input type="text" id="q-oA-b" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oA-b', 9)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Wat is de formule van k?</label>
+<input type="text" id="q-oA-c" placeholder="y = ...">
+<button class="btn-check" onclick="checkText('q-oA-c',['y=-1/3x+9','-1/3x+9','y=-⅓x+9','-⅓x+9','y=9-1/3x','9-1/3x','y=9-⅓x','9-⅓x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oA')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oA-c"></div>
+
+<div class="detail-steps" id="s-oA">
+<h5>Stappenplan</h5>
+<ol>
+<li>helling l = 3, dus helling k = −1/3</li>
+<li>k: y = −⅓x + b. Door A(6, 7): 7 = −⅓ · 6 + b = −2 + b, dus b = 9</li>
+<li>k: y = −⅓x + 9</li>
+</ol>
+</div>
+
+<h3>Opgave B — driehoek met maximale oppervlakte (uit boek, C10)</h3>
+<p>Gegeven is de functie <strong>y = −x² + 2x + 15</strong>. Op de grafiek ligt het punt <strong>P(p, y<sub>P</sub>)</strong>, en op de x-as ligt het punt <strong>Q(p, 0)</strong>. Hierbij is 0 &lt; p &lt; 5.</p>
+
+<p>Bereken voor welke p de oppervlakte van driehoek ΔOPQ maximaal is.</p>
+
+<figure>
+<img src="img/fig3-driehoek-OPQ.png" alt="Grafiek van y = -x kwadraat + 2x + 15. In het gebied tussen x = 0 en x = 5 ligt een driehoek met hoekpunten O op de oorsprong, Q op (p, 0) op de x-as, en P op de grafiek op (p, -p kwadraat + 2p + 15). De driehoek is gekleurd.">
+<figcaption><strong>Figuur 5.</strong> Driehoek ΔOPQ — oppervlakte hangt af van p.</figcaption>
+</figure>
+
+<div class="q-row">
+<label><strong>a)</strong> Schrijf A(p) op (oppervlakte ΔOPQ). Werk uit zodat er alleen p's in staan.</label>
+<input type="text" id="q-oB-a" placeholder="A(p) = ...">
+<button class="btn-check" onclick="checkText('q-oB-a',['1/2p(-p^2+2p+15)','1/2*p*(-p^2+2p+15)','-1/2p^3+p^2+71/2p','-1/2p^3+p^2+7.5p','½p(-p²+2p+15)','-½p³+p²+7½p','0.5p(-p^2+2p+15)','0,5p(-p²+2p+15)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken dA/dp.</label>
+<input type="text" id="q-oB-b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oB-b',['-3/2p^2+2p+71/2','-3/2p²+2p+7½','-1.5p^2+2p+7.5','-1,5p²+2p+7,5','-1½p^2+2p+7½','-1½p²+2p+7½'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Voor welke p (alleen positieve waarde) is dA/dp = 0?</label>
+<input type="text" id="q-oB-c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oB-c', 3)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oB')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oB-c"></div>
+
+<div class="detail-steps" id="s-oB">
+<h5>Stappenplan</h5>
+<ol>
+<li>OQ = p, QP = y<sub>P</sub> = −p² + 2p + 15</li>
+<li>A(p) = ½ · OQ · QP = ½ · p · (−p² + 2p + 15) = −½p³ + p² + 7½p</li>
+<li>dA/dp = −1½p² + 2p + 7½</li>
+<li>Los op −1½p² + 2p + 7½ = 0. Vermenigvuldig beide kanten met −2: 3p² − 4p − 15 = 0</li>
+<li>Discriminant: 16 + 4 · 3 · 15 = 196. Wortel: √196 = 14</li>
+<li>p = (4 + 14) / 6 = 3 (positief) of p = (4 − 14) / 6 = −5/3 (negatief, valt af)</li>
+<li>Antwoord: p = 3</li>
+</ol>
+</div>
+
+<h3>Opgave C — minimale verticale afstand (synthese, uit boek Opg. 11)</h3>
+<p>Gegeven zijn <strong>f(x) = x² + 4</strong> en <strong>g(x) = x · √x</strong>. De lijn <strong>x = p</strong> met p &gt; 0 snijdt de grafiek van f in punt A en de grafiek van g in punt B.</p>
+
+<p>Bereken voor welke waarde van p de lengte van het lijnstuk AB minimaal is.</p>
+
+<p><strong>Tip:</strong> reken eerst even na voor p = 1 welke grafiek bovenaan ligt. Dan weet je f(p) − g(p) of g(p) − f(p).</p>
+
+<div class="q-row">
+<label><strong>a)</strong> Welke functie ligt boven? Vul "f" of "g" in.</label>
+<input type="text" id="q-oC-a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oC-a',['f'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Schrijf L(p) op (gebruik p<sup>3/2</sup> of p·√p).</label>
+<input type="text" id="q-oC-b" placeholder="L(p) = ...">
+<button class="btn-check" onclick="checkText('q-oC-b',['p^2+4-p^(3/2)','p²+4-p^(3/2)','p^2+4-p*sqrt(p)','p²+4-p·√p','p^2-p^(3/2)+4','p²-p^(3/2)+4','p^2-p*sqrt(p)+4','p²-p·√p+4'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-b"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Bereken dL/dp.</label>
+<input type="text" id="q-oC-c" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oC-c',['2p-3/2p^(1/2)','2p-3/2p^(½)','2p-3/2*sqrt(p)','2p-1½√p','2p-1.5*sqrt(p)','2p-1,5√p','2p-1½p^(1/2)','2p-1.5p^(1/2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-c"></div>
+
+<div class="q-row">
+<label><strong>d)</strong> Voor welke p is dL/dp = 0? Geef p als breuk.</label>
+<input type="text" id="q-oC-d" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oC-d', 0.5625, 0.005)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oC')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oC-d"></div>
+
+<div class="detail-steps" id="s-oC">
+<h5>Stappenplan</h5>
+<ol>
+<li>Check p = 1: f(1) = 5, g(1) = 1 · 1 = 1. Dus f ligt boven g. ✓</li>
+<li>L(p) = f(p) − g(p) = p² + 4 − p<sup>3/2</sup></li>
+<li>Differentieer: 2p − (3/2) · p<sup>1/2</sup> = 0</li>
+<li>Haal p<sup>1/2</sup> buiten haakjes: p<sup>1/2</sup> · (2 · p<sup>1/2</sup> − 3/2) = 0</li>
+<li>p<sup>1/2</sup> = 0 valt af (want p &gt; 0). Dus: 2 · p<sup>1/2</sup> = 3/2, p<sup>1/2</sup> = 3/4</li>
+<li>Kwadrateer: p = (3/4)² = 9/16</li>
+<li>Controle minimum: de tweede afgeleide is 2 − (3/4) · p<sup>−1/2</sup> = 2 − (3/4) · (4/3) = 1 &gt; 0 → minimum ✓</li>
+<li>L(9/16) = 81/256 + 4 − 27/64 = 997/256 ≈ 3,89</li>
+</ol>
+</div>
+
+<div class="tutor-cta" style="margin-top:1.5rem;">
+<strong>Vastgelopen op een opgave?</strong>
+<p>Klik op de tutor-knop rechtsonder. Vertel welke opgave en welke stap je niet snapt.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Checklist                                                     -->
+<!-- ============================================================ -->
+<div class="checklist">
+<h2>Kan ik dit nu?</h2>
+<label><input type="checkbox" data-key="6.4-c1"> Ik weet dat twee lijnen loodrecht staan als hun hellingen vermenigvuldigd −1 geven.</label>
+<label><input type="checkbox" data-key="6.4-c2"> Ik kan een lijn opstellen door een gegeven punt die loodrecht staat op een gegeven lijn.</label>
+<label><input type="checkbox" data-key="6.4-c3"> Ik kan een oppervlakte-formule A(p) opstellen bij een rechthoek of driehoek met hoekpunt op een grafiek.</label>
+<label><input type="checkbox" data-key="6.4-c4"> Ik kan dA/dp = 0 oplossen en de maximale oppervlakte berekenen.</label>
+<label><input type="checkbox" data-key="6.4-c5"> Ik kan een formule L(p) opstellen voor de verticale afstand tussen twee grafieken.</label>
+<label><input type="checkbox" data-key="6.4-c6"> Ik ken het verschil tussen "Bereken", "Bereken met de afgeleide", "Bereken algebraïsch" en "Bereken exact".</label>
+<label><input type="checkbox" data-key="6.4-c7"> Ik herken de notaties f'(x), y', dy/dx, df(x)/dx en d/dx · f(x).</label>
+</div>
+
+<div class="nav-bottom">
+<a href="../6.3-kettingregel/">&larr; §6.3 Kettingregel</a>
+<a href="../synthese/">Synthese &rarr;</a>
+</div>
+
+</div>
+
+<!-- Chat-widget — opent vanuit FAB of tutor-CTA -->
+<button class="chat-fab" onclick="openChat()">💬 Tutor</button>
+
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header">
+<h3>Wiskunde-tutor</h3>
+<button class="chat-close" onclick="closeChat()">×</button>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-row">
+<textarea class="chat-input" id="chatInput" placeholder="Typ hier..." rows="1"></textarea>
+<button class="chat-send" id="chatSend" onclick="sendMessage()">Stuur</button>
+</div>
+</div>
+
+<footer>
+<p>Gemaakt door <strong>Ralph Wagter</strong> voor <strong>Kasper</strong>, met <a href="https://claude.ai/code">Claude Code</a>.</p>
+<p style="margin-top:0.5rem; font-size:0.85rem;">
+  Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+  <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================
+// Configuratie — pas WORKER_BASE aan na deployment van de Worker
+// ============================================================
+const WORKER_BASE = window.__WORKER_BASE__ || "https://kasper-tutor.ralph-wagter.workers.dev";
+const PAGE_SLUG = "6.4-toepassingen";
+
+// ============================================================
+// Checklist — localStorage persist
+// ============================================================
+document.querySelectorAll(".checklist input[type=checkbox]").forEach((cb) => {
+  const key = "kasper-" + cb.dataset.key;
+  if (localStorage.getItem(key) === "1") cb.checked = true;
+  cb.addEventListener("change", () => {
+    localStorage.setItem(key, cb.checked ? "1" : "0");
+  });
+});
+
+// ============================================================
+// Toggle uitwerkingen
+// ============================================================
+function toggle(btn) {
+  const next = btn.nextElementSibling;
+  const isOpen = next.classList.toggle("open");
+  btn.textContent = isOpen ? "Verberg uitwerking" : "Toon uitwerking";
+}
+
+// ============================================================
+// Antwoord-validatie voor try-it en oefenopgaven
+// ============================================================
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/,/g, ".")
+    .replace(/×/g, "*")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3")
+    .replace(/⁴/g, "^4")
+    .replace(/–/g, "-")
+    .replace(/−/g, "-");
+}
+function setFeedback(id, ok) {
+  const el = document.getElementById(id);
+  const fb = document.getElementById("fb-" + id);
+  if (!el || !fb) return;
+  el.classList.remove("correct", "incorrect");
+  el.classList.add(ok ? "correct" : "incorrect");
+  fb.classList.remove("correct", "incorrect");
+  fb.classList.add("show", ok ? "correct" : "incorrect");
+  fb.textContent = ok ? "✓ Goed!" : "✗ Nog niet — kijk eens naar het stappenplan.";
+}
+function checkText(id, accepted) {
+  const norm = normalize(document.getElementById(id).value);
+  const ok = accepted.some((a) => normalize(a) === norm);
+  setFeedback(id, ok);
+}
+function checkNumeric(id, target, tol) {
+  const raw = document.getElementById(id).value;
+  const norm = normalize(raw).replace(/\^/g, "**"); // niet relevant voor pure getallen
+  // Probeer als getal of breuk
+  let val = NaN;
+  if (/^-?\d+(\.\d+)?$/.test(norm)) {
+    val = parseFloat(norm);
+  } else if (/^-?\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else if (/^-?\d+\.\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else {
+    // Probeer 1½ = 1.5, ⅓ = 0.333..., enz.
+    const fracMap = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅕": 0.2, "⅙": 1 / 6 };
+    let cleaned = raw.toString().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    for (const [k, v] of Object.entries(fracMap)) {
+      if (cleaned.includes(k)) {
+        const m = cleaned.match(/^(-)?(\d*)([½¼¾⅓⅔⅕⅙])$/);
+        if (m) {
+          const sign = m[1] ? -1 : 1;
+          const whole = m[2] ? parseInt(m[2], 10) : 0;
+          val = sign * (whole + fracMap[m[3]]);
+          break;
+        }
+      }
+    }
+  }
+  const eps = typeof tol === "number" ? tol : 0.01;
+  const ok = isFinite(val) && Math.abs(val - target) < eps;
+  setFeedback(id, ok);
+}
+function toggleSteps(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+
+// ============================================================
+// Token uit URL halen en in localStorage opslaan
+// ============================================================
+function getToken() {
+  const fromUrl = new URLSearchParams(window.location.search).get("t");
+  if (fromUrl) {
+    localStorage.setItem("kasper-token", fromUrl);
+    return fromUrl;
+  }
+  return localStorage.getItem("kasper-token");
+}
+
+// ============================================================
+// Chat-panel
+// ============================================================
+const chatPanel = document.getElementById("chatPanel");
+const chatMessages = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+
+const HISTORY_KEY = "kasper-history-" + PAGE_SLUG;
+
+function loadHistory() {
+  const raw = localStorage.getItem(HISTORY_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+function saveHistory(history) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20)));
+}
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  chatMessages.innerHTML = "";
+}
+
+function renderMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return div;
+}
+
+function renderSystemMessage(text) {
+  const div = document.createElement("div");
+  div.className = "msg system";
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function openChat() {
+  chatPanel.classList.add("open");
+  const history = loadHistory();
+  if (history.length === 0) {
+    if (!WORKER_BASE) {
+      renderSystemMessage("De tutor is nog niet online. Vraag Ralph om de Worker te deployen.");
+    } else if (!getToken()) {
+      renderSystemMessage("Geen toegangs-token gevonden. Vraag Ralph om de juiste URL met ?t=...");
+    } else {
+      // Trigger eerste assistant-bericht via lege user-message
+      sendInitial();
+    }
+  } else {
+    history.forEach((m) => renderMessage(m.role, m.content));
+  }
+  chatInput.focus();
+}
+
+function closeChat() {
+  chatPanel.classList.remove("open");
+}
+
+async function sendInitial() {
+  await streamReply([{ role: "user", content: "Hoi, ik open de pagina nu. Begin met de eerste vraag." }]);
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = "";
+
+  const history = loadHistory();
+  history.push({ role: "user", content: text });
+  renderMessage("user", text);
+  saveHistory(history);
+
+  if (!WORKER_BASE) {
+    renderSystemMessage("Worker URL ontbreekt — bericht niet verstuurd.");
+    return;
+  }
+  if (!getToken()) {
+    renderSystemMessage("Geen toegangs-token — bericht niet verstuurd.");
+    return;
+  }
+
+  await streamReply(history);
+}
+
+async function streamReply(messages) {
+  const token = getToken();
+  chatSend.disabled = true;
+  const assistantDiv = renderMessage("assistant", "");
+  let assistantText = "";
+
+  try {
+    const res = await fetch(`${WORKER_BASE}/api/chat?t=${encodeURIComponent(token)}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pageSlug: PAGE_SLUG, messages }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Onbekende fout" }));
+      assistantDiv.remove();
+      renderSystemMessage("Fout: " + (err.error || res.status));
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === "content_block_delta" && evt.delta?.type === "text_delta") {
+            assistantText += evt.delta.text;
+            assistantDiv.textContent = assistantText;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        } catch {}
+      }
+    }
+    const history = loadHistory();
+    history.push({ role: "assistant", content: assistantText });
+    saveHistory(history);
+  } catch (e) {
+    assistantDiv.remove();
+    renderSystemMessage("Netwerkfout: " + e.message);
+  } finally {
+    chatSend.disabled = false;
+  }
+}
+
+chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synthese — gemengde opgaven H6 — Wiskunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#7c2d12;
+  --primary-soft:#fde6d3;
+  --primary-dark:#581c0a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: 0.01em; }
+header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro p { margin: 0.6rem 0; }
+.tutor-cta {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+.tutor-cta strong { color: #92400e; font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+.tutor-cta p { color: #78350f; margin-bottom: 1rem; }
+.btn-tutor {
+  background: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-tutor:hover { background: #c2410c; }
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section h4 { font-size: 1.02rem; color: var(--primary-dark); margin: 1.1rem 0 0.5rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9;
+  border-left: 4px solid #475569;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+figure {
+  margin: 1.25rem 0;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: var(--primary-soft); }
+.toggle-content { display: none; margin-top: 0.8rem; }
+.toggle-content.open { display: block; }
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 {
+  color: #0c4a6e;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.try-it p { margin: 0.5rem 0; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label {
+  flex: 1 1 220px;
+  font-size: 0.98rem;
+}
+.q-row input[type=text],
+.q-row input[type=number] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 130px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+
+/* Strategie-checklist (eigen stijl — paars/primary) */
+.strategie-box {
+  background: linear-gradient(135deg, #fde6d3, #fdba74);
+  border: 3px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.strategie-box h2 {
+  color: var(--primary-dark);
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+  border: none;
+  padding: 0;
+}
+.strategie-box p { margin: 0.5rem 0; color: #4a1407; }
+.strategie-box ol {
+  background: white;
+  border-radius: 10px;
+  padding: 1rem 1rem 1rem 2.4rem;
+  margin-top: 0.8rem;
+}
+.strategie-box ol li {
+  margin: 0.5rem 0;
+  font-size: 1.02rem;
+}
+.strategie-box ol li strong { color: var(--primary-dark); }
+
+/* Walkthrough-stijl: zichtbare uitwerking */
+.walkthrough {
+  background: #fff7ed;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0;
+}
+.walkthrough h3 {
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+}
+.walkthrough .stap {
+  background: white;
+  border-left: 4px solid var(--primary);
+  padding: 0.8rem 1rem;
+  margin: 0.7rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.walkthrough .stap-titel {
+  font-weight: 700;
+  color: var(--primary-dark);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.walkthrough .waarom {
+  font-style: normal;
+  background: #fef3c7;
+  border: 1px dashed #f59e0b;
+  padding: 0.5rem 0.8rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  font-size: 0.94rem;
+  color: #78350f;
+}
+.walkthrough .waarom strong { color: #92400e; }
+
+.eindtip {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  border: 2px solid #16a34a;
+  border-radius: var(--radius);
+  padding: 1.3rem 1.5rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+.eindtip strong {
+  color: #14532d;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.eindtip p { color: #166534; }
+
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist label:last-child { border-bottom: none; }
+.checklist input[type=checkbox] {
+  margin-top: 0.3rem;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.nav-bottom {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.nav-bottom a {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+}
+.nav-bottom a:hover { background: var(--primary-soft); border-color: var(--primary); }
+.nav-bottom .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  background: white;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--primary); text-decoration: none; }
+
+/* Chat widget */
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  z-index: 50;
+  font-family: inherit;
+}
+.chat-fab:hover { background: var(--primary-dark); }
+.chat-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 80vh;
+  max-height: 720px;
+  background: white;
+  border-top-left-radius: 16px;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--primary-dark);
+  color: white;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 16px;
+}
+.chat-header h3 { font-size: 1.05rem; }
+.chat-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fafaf9;
+}
+.msg {
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  max-width: 88%;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.msg.user { background: var(--primary-soft); color: var(--primary-dark); margin-left: auto; }
+.msg.assistant { background: white; border: 1px solid var(--border); }
+.msg.assistant strong { color: var(--primary-dark); }
+.msg.system { background: #fef3c7; color: #78350f; font-size: 0.9rem; text-align: center; max-width: 100%; }
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+}
+.chat-input:focus { outline: none; border-color: var(--primary); }
+.chat-send {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chat-send:disabled { opacity: 0.5; cursor: wait; }
+</style>
+</head>
+<body>
+
+<header>
+<h1>Synthese — gemengde opgaven combineren</h1>
+<p>Strategie kiezen voordat je gaat rekenen</p>
+</header>
+
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../../">Ralph</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H6 Afgeleide functie</a> &rsaquo; Synthese</nav>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- Intro                                                         -->
+<!-- ============================================================ -->
+<div class="intro">
+<h2>Waarom deze pagina?</h2>
+<p>Op de toets krijg je <strong>gemengde opgaven</strong>. Dat zijn opgaven waar je §6.1, §6.2, §6.3 en §6.4 in <strong>één opgave</strong> moet combineren.</p>
+<p>Vorige toets (exponenten — 3,8) ging mis op precies dit punt: <strong>welke strategie kies je?</strong> en <strong>welke tussenstappen schrijf je op?</strong></p>
+<p>Op deze pagina trainen we dat. Eerst de strategie-checklist. Dan een volledig uitgewerkt voorbeeld. Daarna oefen je zelf met vier opgaven uit de gemengde opgaven van §6.</p>
+</div>
+
+<div class="tutor-cta">
+<strong>Hoi Kasper — klaar voor synthese?</strong>
+<p>Klik op de knop hieronder. Je tutor neemt eerst de strategie-vragen met je door, voordat je gaat rekenen.</p>
+<button class="btn-tutor" onclick="openChat()">Praat met je tutor</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. Strategie-checklist                                        -->
+<!-- ============================================================ -->
+<div class="strategie-box">
+<h2>De 6 strategie-vragen</h2>
+<p>Stel jezelf <strong>elke synthese-opgave</strong> deze zes vragen <strong>voordat</strong> je begint met rekenen.</p>
+<ol>
+<li><strong>Wat zie ik?</strong> — Welk type functie? Machtsfunctie? Wortel? Breuk? Kettingregel nodig?</li>
+<li><strong>Wat moet ik?</strong> — Raaklijn opstellen? Extreme waarde? Loodrechte lijn? Optimaliseren?</li>
+<li><strong>Welke regels heb ik nodig?</strong> — Somregel? Machtsregel? Kettingregel? Loodrecht-regel (helling · helling = -1)?</li>
+<li><strong>Welke afspraken gelden?</strong> — Staat er "Bereken" of "Bereken exact"? Bij exact: geen rekenmachine, breuken en wortels in het antwoord.</li>
+<li><strong>Wat is mijn eerste stap?</strong> — Meestal: f'(x) berekenen. Of: eerst herleiden, dan differentiëren.</li>
+<li><strong>Wat moet ik opschrijven?</strong> — <strong>Alle</strong> tussenstappen. Ook stappen die voor de hand liggen.</li>
+</ol>
+<p style="margin-top:0.8rem;"><strong>Belangrijk:</strong> dit is geen lijst om snel af te vinken. Dit is de manier om <strong>strategie</strong> te kiezen voordat je gaat rekenen.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. Walkthrough Opgave 1                                       -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>Walkthrough — Opgave 1 stap voor stap</h2>
+
+<p>We gaan <strong>Opgave 1</strong> samen uitwerken. Niet om het antwoord te leren, maar om te zien <strong>hoe</strong> je de strategie-checklist toepast.</p>
+
+<p>Onder elke stap staat een geel "Waarom?"-blokje. Dat is de redenering. Dat is wat een goede toets-uitwerking onderscheidt van een onvoldoende.</p>
+
+<div class="formula-line center">f(x) = ⅓x³ − ½x² − 2x + 1</div>
+<p><strong>a)</strong> Lijn k raakt de grafiek van f in punt A met x<sub>A</sub> = 4. Lijn l gaat door A, staat loodrecht op k, en snijdt de y-as in B. Bereken exact de coördinaten van B.</p>
+
+<figure>
+<img src="img/fig1-opg1-raaklijn-loodrecht.png" alt="Grafiek van f(x) = 1/3 x^3 - 1/2 x^2 - 2x + 1. In punt A(4, 19/3) staat raaklijn k met helling 10, en loodrechte lijn l met helling -1/10 die de y-as snijdt in B(0, 101/15).">
+<figcaption><strong>Figuur 1.</strong> De grafiek van f, raaklijn k in A en loodrechte lijn l door A.</figcaption>
+</figure>
+
+<div class="walkthrough">
+<h3>Strategie eerst — pas dan rekenen</h3>
+
+<div class="stap">
+<span class="stap-titel">Vraag 1 — Wat zie ik?</span>
+<p>Een derdegraads functie: f(x) = ⅓x³ − ½x² − 2x + 1.</p>
+<p>Twee lijnen: k (raaklijn) en l (loodrecht op k).</p>
+<div class="waarom"><strong>Waarom dit eerst?</strong> Type functie bepaalt welke regels je nodig hebt. Hier: gewone machtsfunctie, dus somregel + machtsregel. Geen kettingregel.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Vraag 2 — Wat moet ik?</span>
+<p>Coördinaten van punt B vinden. B ligt op de y-as <strong>en</strong> op lijn l.</p>
+<div class="waarom"><strong>Waarom dit?</strong> Zonder duidelijk doel reken je doelloos. B is op y-as: dat betekent x = 0. Ik moet dus de formule van l vinden, en dan x = 0 invullen.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Vraag 3 — Welke regels heb ik nodig?</span>
+<p>Machtsregel voor f'(x). Loodrecht-regel: helling van k · helling van l = -1.</p>
+<div class="waarom"><strong>Waarom dit?</strong> De loodrecht-regel is de sleutel — zonder die regel kom ik niet aan de helling van l.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Vraag 4 — Welke afspraken gelden?</span>
+<p>"<strong>Bereken exact</strong>" — dus geen rekenmachine, breuken laten staan.</p>
+<div class="waarom"><strong>Waarom dit?</strong> Als ik 19/3 ga afronden naar 6,33 verlies ik punten. Breuken moet ik door alle stappen heen behouden.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Vraag 5 — Wat is mijn eerste stap?</span>
+<p>f'(x) berekenen.</p>
+<div class="waarom"><strong>Waarom dit?</strong> Ik heb f'(4) nodig voor de helling van k. Pas als ik die heb, kan ik via -1/(helling k) de helling van l vinden.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Vraag 6 — Wat moet ik opschrijven?</span>
+<p>Alle stappen: f'(x), f'(4), y<sub>A</sub>, helling l, formule l, B.</p>
+<div class="waarom"><strong>Waarom dit?</strong> Bij synthese verlies ik punten als ik stappen oversla. Ook al lijkt het overbodig — schrijf het op.</div>
+</div>
+
+</div>
+
+<div class="walkthrough">
+<h3>Nu rekenen — alle stappen zichtbaar</h3>
+
+<div class="stap">
+<span class="stap-titel">Stap 1. Bereken f'(x)</span>
+<div class="formula-line">f(x) = ⅓x³ − ½x² − 2x + 1</div>
+<div class="formula-line">f'(x) = ⅓ · 3 · x² − ½ · 2 · x − 2</div>
+<div class="formula-line">f'(x) = x² − x − 2</div>
+<div class="waarom"><strong>Waarom?</strong> Machtsregel per term. ⅓ · 3 = 1 (mooi), ½ · 2 = 1 (mooi). De +1 is een getal, dus afgeleide = 0.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Stap 2. Bereken helling van k: f'(4)</span>
+<div class="formula-line">f'(4) = 4² − 4 − 2 = 16 − 4 − 2 = 10</div>
+<p>Dus de helling van raaklijn k is <strong>10</strong>.</p>
+<div class="waarom"><strong>Waarom?</strong> f'(x<sub>A</sub>) is altijd de helling van de raaklijn in het punt A.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Stap 3. Bereken y<sub>A</sub> = f(4)</span>
+<div class="formula-line">f(4) = ⅓ · 64 − ½ · 16 − 2 · 4 + 1</div>
+<div class="formula-line">f(4) = 64/3 − 8 − 8 + 1 = 64/3 − 15</div>
+<div class="formula-line">f(4) = 64/3 − 45/3 = 19/3</div>
+<p>Dus A(4, 19/3).</p>
+<div class="waarom"><strong>Waarom?</strong> Voor de formule van l heb ik een punt nodig waar l doorheen gaat — dat is A. Belangrijk: y<sub>A</sub> = f(4), <strong>niet</strong> f'(4)! Veelgemaakte fout.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Stap 4. Bereken helling van l</span>
+<p>Lijn l staat loodrecht op k. Dus:</p>
+<div class="formula-line">helling k · helling l = -1</div>
+<div class="formula-line">10 · helling l = -1</div>
+<div class="formula-line">helling l = -1/10 = -0,1</div>
+<div class="waarom"><strong>Waarom?</strong> Dat is de loodrecht-regel. Helling van l is dus de negatieve omgekeerde van helling k.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Stap 5. Stel formule van l op</span>
+<p>l: y = -0,1 · x + b. Vul A(4, 19/3) in om b te vinden:</p>
+<div class="formula-line">19/3 = -0,1 · 4 + b</div>
+<div class="formula-line">19/3 = -0,4 + b</div>
+<div class="formula-line">b = 19/3 + 0,4 = 19/3 + 2/5</div>
+<p>Werk uit met gelijke noemer (15):</p>
+<div class="formula-line">b = 95/15 + 6/15 = 101/15</div>
+<div class="waarom"><strong>Waarom met breuken doorgaan?</strong> Vraag zegt "bereken exact". 0,4 = 2/5 omzetten en daarna gelijke noemer maken houdt het exact.</div>
+</div>
+
+<div class="stap">
+<span class="stap-titel">Stap 6. Bereken B (snijpunt l met y-as)</span>
+<p>Op de y-as is x = 0:</p>
+<div class="formula-line">y = -0,1 · 0 + 101/15 = 101/15</div>
+<p><strong>Antwoord:</strong> B(0, 101/15).</p>
+<div class="waarom"><strong>Waarom dit ook opschrijven?</strong> Lijkt triviaal — x = 0 invullen — maar zonder die regel mist de uitwerking de afronding. Eindpunt B expliciet noteren.</div>
+</div>
+
+</div>
+
+<div class="regel">
+<span class="regel-label">LET OP</span>
+Bij synthese-opgaven is de <strong>strategie</strong> de helft van het werk. Het rekenen is de andere helft. Als je strategie klopt, komen de stappen vanzelf. Als je strategie niet klopt, raak je verdwaald — ook al kun je perfect rekenen.
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. Opgave 2 — Machtsfunctie + bereik                          -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>Opgave 2 — machtsfunctie + bereik</h2>
+
+<p>Gegeven is de functie:</p>
+<div class="formula-line center">f(x) = (x² − 3x + 4) / x</div>
+
+<figure>
+<img src="img/fig2-opg2-geen-oplossing.png" alt="Grafiek van f(x) = (x^2 - 3x + 4)/x met asymptoot bij x = 0, een lokaal minimum in (2, 1) en een lokaal maximum in (-2, -7). Het gele bereik tussen y = -7 en y = 1 markeert de p-waarden waarvoor f(x) = p geen oplossing heeft.">
+<figcaption><strong>Figuur 2.</strong> Grafiek van f met twee toppen. Het gele bereik is "geen oplossing".</figcaption>
+</figure>
+
+<p><strong>a)</strong> Bereken exact voor welke waarden van p de vergelijking f(x) = p <strong>geen</strong> oplossing heeft.</p>
+<p><strong>Hint:</strong> herleid f naar standaardvorm met negatieve exponent voordat je differentieert.</p>
+
+<div class="q-row">
+<label>Herleide vorm van f(x):</label>
+<input type="text" id="q-o2-h" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o2-h',['x-3+4x^-1','x-3+4/x','x-3+4x^(-1)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2-h"></div>
+
+<div class="q-row">
+<label>f'(x):</label>
+<input type="text" id="q-o2-df" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o2-df',['1-4x^-2','1-4/x^2','1-4x^(-2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2-df"></div>
+
+<div class="q-row">
+<label>x-coördinaten van de toppen (twee getallen):</label>
+<input type="text" id="q-o2-x" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o2-x',['-2,2','2,-2','-2en2','2en-2','x=-2vx=2','x=-2ofx=2','x=2vx=-2','x=2ofx=-2'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2-x"></div>
+
+<div class="q-row">
+<label>y-waarde lokaal maximum (bij x = −2):</label>
+<input type="text" id="q-o2-ymax" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o2-ymax', -7)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2-ymax"></div>
+
+<div class="q-row">
+<label>y-waarde lokaal minimum (bij x = 2):</label>
+<input type="text" id="q-o2-ymin" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o2-ymin', 1)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2-ymin"></div>
+
+<div class="q-row">
+<label>Voor welke p geen oplossing? (bv. a &lt; p &lt; b)</label>
+<input type="text" id="q-o2-p" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o2-p',['-7<p<1','-7<p<1)','-7&lt;p&lt;1'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o2-p"></div>
+
+<div class="detail-steps" id="s-o2">
+<h5>Stappenplan</h5>
+<ol>
+<li>Herleiden: f(x) = (x² − 3x + 4) / x = x − 3 + 4/x = x − 3 + 4x⁻¹</li>
+<li>Differentiëren met machtsregel: f'(x) = 1 − 4x⁻² = 1 − 4/x²</li>
+<li>f'(x) = 0 geeft 4/x² = 1, dus x² = 4, dus x = −2 ∨ x = 2</li>
+<li>f(2) = 2 − 3 + 4/2 = 2 − 3 + 2 = <strong>1</strong> (lokaal minimum)</li>
+<li>f(−2) = −2 − 3 + 4/−2 = −2 − 3 − 2 = <strong>−7</strong> (lokaal maximum)</li>
+<li>De grafiek heeft twee takken (vanwege asymptoot x = 0). Rechter tak: y ≥ 1. Linker tak: y ≤ −7.</li>
+<li>Dus voor <strong>−7 &lt; p &lt; 1</strong> is er geen oplossing.</li>
+</ol>
+</div>
+
+<p style="margin-top:1.25rem;"><strong>b)</strong> Toon aan dat de grafiek van f geen raaklijn heeft met helling groter dan 1.</p>
+
+<div class="q-row">
+<label>Welke formule voor f'(x) gebruik je?</label>
+<input type="text" id="q-o2b-df" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o2b-df',['1-4x^-2','1-4/x^2','1-4x^(-2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o2b-df"></div>
+
+<div class="q-row">
+<label>Is 4/x² altijd positief, negatief of beide?</label>
+<input type="text" id="q-o2b-teken" placeholder="positief / negatief / beide">
+<button class="btn-check" onclick="checkText('q-o2b-teken',['positief','altijdpositief','positiefvoorallex'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o2b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o2b-teken"></div>
+
+<div class="detail-steps" id="s-o2b">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 1 − 4/x²</li>
+<li>Voor alle x ≠ 0 geldt: x² &gt; 0, dus 4/x² &gt; 0</li>
+<li>Dan geldt: 1 − 4/x² &lt; 1</li>
+<li>Dus f'(x) &lt; 1 voor alle x in het domein</li>
+<li>Conclusie: er is geen punt waar de raaklijn helling groter dan 1 heeft ✓</li>
+</ol>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. Opgave 3 — Kettingregel + wortels + extreme waarde         -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>Opgave 3 — kettingregel met wortel + extreme waarde</h2>
+
+<p>Gegeven is de functie:</p>
+<div class="formula-line center">f(x) = √(8x + 12 − x²)</div>
+
+<figure>
+<img src="img/fig3-opg3-wortel-top.png" alt="Grafiek van f(x) = wortel uit 8x + 12 - x kwadraat. De grafiek is een halve ellips boven de x-as. Top bij x = 4 met waarde 2 wortel 7. Domein loopt van 4 - 2 wortel 7 tot 4 + 2 wortel 7.">
+<figcaption><strong>Figuur 3.</strong> Wortelfunctie met top bij x = 4 en domein [4−2√7, 4+2√7].</figcaption>
+</figure>
+
+<p><strong>a)</strong> Bewijs dat f een extreme waarde heeft bij x = 4.</p>
+
+<div class="q-row">
+<label>Welke regel heb je nodig voor f'(x)?</label>
+<input type="text" id="q-o3a-r" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o3a-r',['kettingregel','ketting'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3a-r"></div>
+
+<div class="q-row">
+<label>Binnenste afgeleide van 8x + 12 − x²:</label>
+<input type="text" id="q-o3a-bin" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o3a-bin',['8-2x','-2x+8'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3a-bin"></div>
+
+<div class="q-row">
+<label>Wat is 8 − 2 · 4?</label>
+<input type="text" id="q-o3a-eval" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o3a-eval', 0)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o3a')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o3a-eval"></div>
+
+<div class="detail-steps" id="s-o3a">
+<h5>Stappenplan</h5>
+<ol>
+<li>Schrijf f(x) = (8x + 12 − x²)<sup>½</sup></li>
+<li>Kettingregel: f'(x) = ½ · (8x + 12 − x²)<sup>−½</sup> · (8 − 2x)</li>
+<li>Of geschreven als breuk: f'(x) = (8 − 2x) / (2 · √(8x + 12 − x²))</li>
+<li>Vul x = 4 in: teller = 8 − 2 · 4 = 0</li>
+<li>Dus f'(4) = 0</li>
+<li>Verwijs naar figuur 3: de grafiek heeft een top bij x = 4 ✓</li>
+<li>Conclusie: f heeft een extreme waarde bij x = 4</li>
+</ol>
+</div>
+
+<p style="margin-top:1.25rem;"><strong>b)</strong> Bepaal het domein van f en bereken exact de extreme waarde.</p>
+
+<div class="q-row">
+<label>Voorwaarde voor de wortel (vul aan: 8x + 12 − x² ...):</label>
+<input type="text" id="q-o3b-vw" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o3b-vw',['>=0','>0orgelijk','>=nul','groterofgelijk0','≥0'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3b-vw"></div>
+
+<div class="q-row">
+<label>Linker domein-rand:</label>
+<input type="text" id="q-o3b-l" placeholder="bv. 4 - 2√7">
+<button class="btn-check" onclick="checkText('q-o3b-l',['4-2√7','4-2wortel7','4-2sqrt7','4-2*sqrt(7)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3b-l"></div>
+
+<div class="q-row">
+<label>Rechter domein-rand:</label>
+<input type="text" id="q-o3b-r" placeholder="bv. 4 + 2√7">
+<button class="btn-check" onclick="checkText('q-o3b-r',['4+2√7','4+2wortel7','4+2sqrt7','4+2*sqrt(7)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o3b-r"></div>
+
+<div class="q-row">
+<label>Maximale waarde f(4):</label>
+<input type="text" id="q-o3b-max" placeholder="bv. 2√7">
+<button class="btn-check" onclick="checkText('q-o3b-max',['2√7','2wortel7','2sqrt7','2*sqrt(7)','√28','sqrt28','wortel28'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o3b')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o3b-max"></div>
+
+<div class="detail-steps" id="s-o3b">
+<h5>Stappenplan</h5>
+<ol>
+<li>Voorwaarde voor wortel: 8x + 12 − x² ≥ 0</li>
+<li>Herschrijf: −x² + 8x + 12 ≥ 0, of x² − 8x − 12 ≤ 0</li>
+<li>Nulpunten: x = (8 ± √(64 + 48)) / 2 = (8 ± √112) / 2 = (8 ± 4√7) / 2 = 4 ± 2√7</li>
+<li>Domein: [4 − 2√7, 4 + 2√7]</li>
+<li>Maximum bij x = 4: f(4) = √(32 + 12 − 16) = √28 = √(4 · 7) = 2√7</li>
+<li>Antwoord: max f(4) = 2√7</li>
+</ol>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. Opgave 4 — Wortel + evenwijdig + raaklijn                  -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>Opgave 4 — wortel + raaklijn evenwijdig met gegeven lijn</h2>
+
+<p>Gegeven zijn:</p>
+<div class="formula-line center">f(x) = √(6 − 2x)</div>
+<div class="formula-line center">k: y = −2x + 8</div>
+<div class="formula-line center">l: y = −½x + 1½</div>
+
+<p>De lijn m raakt de grafiek van f, is evenwijdig met k, en snijdt de x-as in A. Bereken exact x<sub>A</sub>.</p>
+
+<div class="q-row">
+<label>Helling waar je f'(x) aan gelijk stelt:</label>
+<input type="text" id="q-o4-rc" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o4-rc', -2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4-rc"></div>
+
+<div class="q-row">
+<label>f'(x) =</label>
+<input type="text" id="q-o4-df" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o4-df',['-1/√(6-2x)','-1/sqrt(6-2x)','-1/wortel(6-2x)','-(6-2x)^-0.5','-1/(6-2x)^(1/2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4-df"></div>
+
+<div class="q-row">
+<label>x-coördinaat van het raakpunt (waar f'(x) = -2):</label>
+<input type="text" id="q-o4-x" placeholder="bv. 23/8">
+<button class="btn-check" onclick="checkNumeric('q-o4-x', 2.875)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4-x"></div>
+
+<div class="q-row">
+<label>y-coördinaat van het raakpunt:</label>
+<input type="text" id="q-o4-y" placeholder="bv. 1/2">
+<button class="btn-check" onclick="checkNumeric('q-o4-y', 0.5)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4-y"></div>
+
+<div class="q-row">
+<label>b in formule m: y = -2x + b:</label>
+<input type="text" id="q-o4-b" placeholder="bv. 25/4">
+<button class="btn-check" onclick="checkNumeric('q-o4-b', 6.25)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4-b"></div>
+
+<div class="q-row">
+<label>x<sub>A</sub> (snijpunt m met x-as):</label>
+<input type="text" id="q-o4-xa" placeholder="bv. 25/8">
+<button class="btn-check" onclick="checkNumeric('q-o4-xa', 3.125)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o4')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o4-xa"></div>
+
+<div class="detail-steps" id="s-o4">
+<h5>Stappenplan</h5>
+<ol>
+<li>m is evenwijdig met k: helling m = helling k = <strong>−2</strong></li>
+<li>Kettingregel: f(x) = (6 − 2x)<sup>½</sup>, dus f'(x) = ½ · (6 − 2x)<sup>−½</sup> · (−2) = −1 / √(6 − 2x)</li>
+<li>f'(x) = −2 geeft: −1 / √(6 − 2x) = −2, dus √(6 − 2x) = ½</li>
+<li>Kwadrateer: 6 − 2x = ¼, dus 2x = 6 − ¼ = 23/4, dus x = 23/8</li>
+<li>f(23/8) = √(6 − 23/4) = √(24/4 − 23/4) = √(¼) = ½. Raakpunt: (23/8, ½)</li>
+<li>m: y = −2x + b. Door (23/8, ½): ½ = −2 · 23/8 + b = −23/4 + b, dus b = ½ + 23/4 = 2/4 + 23/4 = 25/4</li>
+<li>m: y = −2x + 25/4</li>
+<li>Snijpunt x-as: y = 0, dus 0 = −2x + 25/4, dus x = 25/8</li>
+<li><strong>A(25/8, 0)</strong></li>
+</ol>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. Opgave 5 — Kubisch + parameter                             -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>Opgave 5 — kubische functie + één oplossing</h2>
+
+<p>Gegeven is:</p>
+<div class="formula-line center">f(x) = x³ + 12x² + 45x + 47</div>
+
+<p>Bereken exact voor welke waarden van p de vergelijking f(x) = p <strong>één</strong> oplossing heeft.</p>
+
+<div class="q-row">
+<label>f'(x):</label>
+<input type="text" id="q-o5-df" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o5-df',['3x²+24x+45','3x^2+24x+45','3xx+24x+45'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o5-df"></div>
+
+<div class="q-row">
+<label>x-coördinaten waar f'(x) = 0 (twee getallen):</label>
+<input type="text" id="q-o5-x" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o5-x',['-3,-5','-5,-3','x=-3vx=-5','x=-5vx=-3','x=-3ofx=-5','x=-5ofx=-3','-3en-5','-5en-3'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o5-x"></div>
+
+<div class="q-row">
+<label>f(−5):</label>
+<input type="text" id="q-o5-fmax" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o5-fmax', -3)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o5-fmax"></div>
+
+<div class="q-row">
+<label>f(−3):</label>
+<input type="text" id="q-o5-fmin" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o5-fmin', -7)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o5-fmin"></div>
+
+<div class="q-row">
+<label>Voor welke p één oplossing? (bv. p &lt; ... ∨ p &gt; ...)</label>
+<input type="text" id="q-o5-p" placeholder="...">
+<button class="btn-check" onclick="checkText('q-o5-p',['p<-7vp>-3','p<-7ofp>-3','p<-7vp>-3)','p>-3vp<-7','p>-3ofp<-7'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o5')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o5-p"></div>
+
+<div class="detail-steps" id="s-o5">
+<h5>Stappenplan</h5>
+<ol>
+<li>f'(x) = 3x² + 24x + 45</li>
+<li>Buiten haakjes: f'(x) = 3(x² + 8x + 15) = 3(x + 3)(x + 5)</li>
+<li>f'(x) = 0 geeft x = −3 ∨ x = −5</li>
+<li>f(−5) = −125 + 300 − 225 + 47 = <strong>−3</strong> — dit is een lokaal maximum</li>
+<li>f(−3) = −27 + 108 − 135 + 47 = <strong>−7</strong> — dit is een lokaal minimum</li>
+<li>De kubische functie loopt eerst op (tot max −3), dan dalend (tot min −7), dan stijgend</li>
+<li>f(x) = p heeft één oplossing als p boven het maximum of onder het minimum ligt</li>
+<li>Antwoord: <strong>p &lt; −7 ∨ p &gt; −3</strong></li>
+</ol>
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- Eindtip                                                       -->
+<!-- ============================================================ -->
+<div class="eindtip">
+<strong>Eerste reflex bij synthese</strong>
+<p>Niet rekenen. Eerst de 6 strategie-vragen. Dan pas beginnen.</p>
+<p style="margin-top:0.4rem;">Strategie kiezen kost dertig seconden. Tussenstappen vergeten kost punten.</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- Checklist                                                     -->
+<!-- ============================================================ -->
+<div class="checklist">
+<h2>Kan ik dit nu?</h2>
+<label><input type="checkbox" data-key="synthese-c1"> Ik stel mezelf de 6 strategie-vragen vóór ik begin met rekenen.</label>
+<label><input type="checkbox" data-key="synthese-c2"> Ik herken welke regels nodig zijn (somregel / machtsregel / kettingregel) per opgave.</label>
+<label><input type="checkbox" data-key="synthese-c3"> Ik kan een raaklijn én een loodrechte lijn opstellen door hetzelfde punt.</label>
+<label><input type="checkbox" data-key="synthese-c4"> Ik kan bij een breukfunctie eerst herleiden naar standaardvorm vóór ik differentieer.</label>
+<label><input type="checkbox" data-key="synthese-c5"> Ik kan een wortelfunctie differentiëren met de kettingregel.</label>
+<label><input type="checkbox" data-key="synthese-c6"> Ik herken "bereken exact" en houd dan breuken en wortels in mijn antwoord.</label>
+<label><input type="checkbox" data-key="synthese-c7"> Ik schrijf álle tussenstappen op — ook de stappen die voor de hand liggen.</label>
+<label><input type="checkbox" data-key="synthese-c8"> Ik kan een bereik en een aantal oplossingen aflezen aan de toppen van een grafiek.</label>
+</div>
+
+<div class="nav-bottom">
+<a href="../6.4-toepassingen/">&larr; §6.4 Toepassingen</a>
+<a href="../">Terug naar H6 &rarr;</a>
+</div>
+
+</div>
+
+<!-- Chat-widget — opent vanuit FAB of tutor-CTA -->
+<button class="chat-fab" onclick="openChat()">💬 Tutor</button>
+
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header">
+<h3>Wiskunde-tutor</h3>
+<button class="chat-close" onclick="closeChat()">×</button>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-row">
+<textarea class="chat-input" id="chatInput" placeholder="Typ hier..." rows="1"></textarea>
+<button class="chat-send" id="chatSend" onclick="sendMessage()">Stuur</button>
+</div>
+</div>
+
+<footer>
+<p>Gemaakt door <strong>Ralph Wagter</strong> voor <strong>Kasper</strong>, met <a href="https://claude.ai/code">Claude Code</a>.</p>
+<p style="margin-top:0.5rem; font-size:0.85rem;">
+  Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+  <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================
+// Configuratie — pas WORKER_BASE aan na deployment van de Worker
+// ============================================================
+const WORKER_BASE = window.__WORKER_BASE__ || "https://kasper-tutor.ralph-wagter.workers.dev";
+const PAGE_SLUG = "synthese";
+
+// ============================================================
+// Checklist — localStorage persist
+// ============================================================
+document.querySelectorAll(".checklist input[type=checkbox]").forEach((cb) => {
+  const key = "kasper-" + cb.dataset.key;
+  if (localStorage.getItem(key) === "1") cb.checked = true;
+  cb.addEventListener("change", () => {
+    localStorage.setItem(key, cb.checked ? "1" : "0");
+  });
+});
+
+// ============================================================
+// Toggle uitwerkingen
+// ============================================================
+function toggle(btn) {
+  const next = btn.nextElementSibling;
+  const isOpen = next.classList.toggle("open");
+  btn.textContent = isOpen ? "Verberg uitwerking" : "Toon uitwerking";
+}
+
+// ============================================================
+// Antwoord-validatie voor try-it en oefenopgaven
+// ============================================================
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/,/g, ".")
+    .replace(/×/g, "*")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3")
+    .replace(/⁴/g, "^4")
+    .replace(/–/g, "-")
+    .replace(/−/g, "-");
+}
+function normalizeKeepComma(s) {
+  return (s || "")
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/×/g, "*")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3")
+    .replace(/⁴/g, "^4")
+    .replace(/–/g, "-")
+    .replace(/−/g, "-");
+}
+function setFeedback(id, ok) {
+  const el = document.getElementById(id);
+  const fb = document.getElementById("fb-" + id);
+  if (!el || !fb) return;
+  el.classList.remove("correct", "incorrect");
+  el.classList.add(ok ? "correct" : "incorrect");
+  fb.classList.remove("correct", "incorrect");
+  fb.classList.add("show", ok ? "correct" : "incorrect");
+  fb.textContent = ok ? "✓ Goed!" : "✗ Nog niet — kijk eens naar het stappenplan.";
+}
+function checkText(id, accepted) {
+  // Voor antwoorden die komma's bevatten (bv. "-2,2"), gebruik comma-preserving normalize
+  const raw = document.getElementById(id).value;
+  const hasComma = accepted.some(a => a.includes(","));
+  const norm = hasComma ? normalizeKeepComma(raw) : normalize(raw);
+  const ok = accepted.some((a) => {
+    const an = hasComma ? normalizeKeepComma(a) : normalize(a);
+    return an === norm;
+  });
+  setFeedback(id, ok);
+}
+function checkNumeric(id, target, tol) {
+  const raw = document.getElementById(id).value;
+  const norm = normalize(raw).replace(/\^/g, "**");
+  let val = NaN;
+  if (/^-?\d+(\.\d+)?$/.test(norm)) {
+    val = parseFloat(norm);
+  } else if (/^-?\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else if (/^-?\d+\.\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else {
+    const fracMap = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅕": 0.2, "⅙": 1 / 6 };
+    let cleaned = raw.toString().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    for (const [k, v] of Object.entries(fracMap)) {
+      if (cleaned.includes(k)) {
+        const m = cleaned.match(/^(-)?(\d*)([½¼¾⅓⅔⅕⅙])$/);
+        if (m) {
+          const sign = m[1] ? -1 : 1;
+          const whole = m[2] ? parseInt(m[2], 10) : 0;
+          val = sign * (whole + fracMap[m[3]]);
+          break;
+        }
+      }
+    }
+  }
+  const eps = typeof tol === "number" ? tol : 0.01;
+  const ok = isFinite(val) && Math.abs(val - target) < eps;
+  setFeedback(id, ok);
+}
+function toggleSteps(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+
+// ============================================================
+// Token uit URL halen en in localStorage opslaan
+// ============================================================
+function getToken() {
+  const fromUrl = new URLSearchParams(window.location.search).get("t");
+  if (fromUrl) {
+    localStorage.setItem("kasper-token", fromUrl);
+    return fromUrl;
+  }
+  return localStorage.getItem("kasper-token");
+}
+
+// ============================================================
+// Chat-panel
+// ============================================================
+const chatPanel = document.getElementById("chatPanel");
+const chatMessages = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+
+const HISTORY_KEY = "kasper-history-" + PAGE_SLUG;
+
+function loadHistory() {
+  const raw = localStorage.getItem(HISTORY_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+function saveHistory(history) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20)));
+}
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  chatMessages.innerHTML = "";
+}
+
+function renderMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return div;
+}
+
+function renderSystemMessage(text) {
+  const div = document.createElement("div");
+  div.className = "msg system";
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function openChat() {
+  chatPanel.classList.add("open");
+  const history = loadHistory();
+  if (history.length === 0) {
+    if (!WORKER_BASE) {
+      renderSystemMessage("De tutor is nog niet online. Vraag Ralph om de Worker te deployen.");
+    } else if (!getToken()) {
+      renderSystemMessage("Geen toegangs-token gevonden. Vraag Ralph om de juiste URL met ?t=...");
+    } else {
+      sendInitial();
+    }
+  } else {
+    history.forEach((m) => renderMessage(m.role, m.content));
+  }
+  chatInput.focus();
+}
+
+function closeChat() {
+  chatPanel.classList.remove("open");
+}
+
+async function sendInitial() {
+  await streamReply([{ role: "user", content: "Hoi, ik open de pagina nu. Begin met de eerste vraag." }]);
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = "";
+
+  const history = loadHistory();
+  history.push({ role: "user", content: text });
+  renderMessage("user", text);
+  saveHistory(history);
+
+  if (!WORKER_BASE) {
+    renderSystemMessage("Worker URL ontbreekt — bericht niet verstuurd.");
+    return;
+  }
+  if (!getToken()) {
+    renderSystemMessage("Geen toegangs-token — bericht niet verstuurd.");
+    return;
+  }
+
+  await streamReply(history);
+}
+
+async function streamReply(messages) {
+  const token = getToken();
+  chatSend.disabled = true;
+  const assistantDiv = renderMessage("assistant", "");
+  let assistantText = "";
+
+  try {
+    const res = await fetch(`${WORKER_BASE}/api/chat?t=${encodeURIComponent(token)}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pageSlug: PAGE_SLUG, messages }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Onbekende fout" }));
+      assistantDiv.remove();
+      renderSystemMessage("Fout: " + (err.error || res.status));
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === "content_block_delta" && evt.delta?.type === "text_delta") {
+            assistantText += evt.delta.text;
+            assistantDiv.textContent = assistantText;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        } catch {}
+      }
+    }
+    const history = loadHistory();
+    history.push({ role: "assistant", content: assistantText });
+    saveHistory(history);
+  } catch (e) {
+    assistantDiv.remove();
+    renderSystemMessage("Netwerkfout: " + e.message);
+  } finally {
+    chatSend.disabled = false;
+  }
+}
+
+chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>

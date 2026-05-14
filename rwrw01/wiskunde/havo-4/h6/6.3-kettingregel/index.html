@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>§6.3 De kettingregel — Wiskunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#0f766e;
+  --primary-soft:#ccfbf1;
+  --primary-dark:#134e4a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; letter-spacing: 0.01em; }
+header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li {
+  padding: 0.4rem 0 0.4rem 1.6rem;
+  position: relative;
+}
+.intro li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.tutor-cta {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+.tutor-cta strong { color: #92400e; font-size: 1.1rem; display: block; margin-bottom: 0.4rem; }
+.tutor-cta p { color: #78350f; margin-bottom: 1rem; }
+.btn-tutor {
+  background: #ea580c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-tutor:hover { background: #c2410c; }
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9;
+  border-left: 4px solid #475569;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+figure {
+  margin: 1.25rem 0;
+  text-align: center;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.92rem;
+  color: var(--text-soft);
+}
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: var(--primary-soft); }
+.toggle-content { display: none; margin-top: 0.8rem; }
+.toggle-content.open { display: block; }
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 {
+  color: #0c4a6e;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.try-it p { margin: 0.5rem 0; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label {
+  flex: 1 1 220px;
+  font-size: 0.98rem;
+}
+.q-row input[type=text],
+.q-row input[type=number] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 130px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+.checklist label:last-child { border-bottom: none; }
+.checklist input[type=checkbox] {
+  margin-top: 0.3rem;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+.nav-bottom {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.nav-bottom a {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  text-align: center;
+  font-weight: 600;
+}
+.nav-bottom a:hover { background: var(--primary-soft); border-color: var(--primary); }
+.nav-bottom .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+  background: white;
+  border-top: 1px solid var(--border);
+}
+footer a { color: var(--primary); text-decoration: none; }
+
+/* Chat widget */
+.chat-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  z-index: 50;
+  font-family: inherit;
+}
+.chat-fab:hover { background: var(--primary-dark); }
+.chat-panel {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  max-width: 440px;
+  height: 80vh;
+  max-height: 720px;
+  background: white;
+  border-top-left-radius: 16px;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  display: none;
+  flex-direction: column;
+  z-index: 100;
+}
+.chat-panel.open { display: flex; }
+.chat-header {
+  background: var(--primary-dark);
+  color: white;
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 16px;
+}
+.chat-header h3 { font-size: 1.05rem; }
+.chat-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: #fafaf9;
+}
+.msg {
+  padding: 0.7rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  max-width: 88%;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+.msg.user { background: var(--primary-soft); color: var(--primary-dark); margin-left: auto; }
+.msg.assistant { background: white; border: 1px solid var(--border); }
+.msg.assistant strong { color: var(--primary-dark); }
+.msg.system { background: #fef3c7; color: #78350f; font-size: 0.9rem; text-align: center; max-width: 100%; }
+.chat-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid var(--border);
+  background: white;
+}
+.chat-input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 1rem;
+  font-family: inherit;
+  resize: none;
+  min-height: 44px;
+  max-height: 120px;
+}
+.chat-input:focus { outline: none; border-color: var(--primary); }
+.chat-send {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.chat-send:disabled { opacity: 0.5; cursor: wait; }
+
+/* Twee-kolommen vergelijking goed/fout */
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+.compare-grid > div {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  font-size: 0.97rem;
+}
+.compare-goed { background: #f0fdf4; border: 2px solid #16a34a; }
+.compare-fout { background: #fff1f2; border: 2px solid #dc2626; }
+.compare-grid h5 { font-size: 0.95rem; margin-bottom: 0.4rem; }
+.compare-goed h5 { color: #166534; }
+.compare-fout h5 { color: #991b1b; }
+@media (max-width: 560px) {
+  .compare-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>§6.3 De kettingregel</h1>
+<p>Differentiëren met haakjes en wortels — stap voor stap</p>
+</header>
+
+<nav class="breadcrumb"><a href="https://rwrw01.github.io/Claudecodedingetjes/">Home</a> &rsaquo; <a href="../../../../">Ralph</a> &rsaquo; <a href="../../../">Wiskunde</a> &rsaquo; <a href="../../">HAVO 4</a> &rsaquo; <a href="../">H6 Afgeleide functie</a> &rsaquo; §6.3</nav>
+
+<div class="container">
+
+<div class="intro">
+<h2>Wat ga je leren?</h2>
+<ul>
+<li>De afgeleide van f(x) = c·(ax+b)<sup>n</sup> berekenen voor n geheel</li>
+<li>Dezelfde regel toepassen voor n als breuk (wortels)</li>
+<li>De binnenste afgeleide ·a niet vergeten</li>
+<li>De kettingregel gebruiken in toetsstijl-opgaven met raaklijnen en extreme waarden</li>
+</ul>
+</div>
+
+<div class="tutor-cta">
+<strong>Hoi Kasper — klaar om te beginnen?</strong>
+<p>Klik op de knop hieronder en je tutor begeleidt je stap voor stap door deze paragraaf. Werk in je eigen tempo. Een fout antwoord is geen probleem — daar leer je juist van.</p>
+<button class="btn-tutor" onclick="openChat()">Praat met je tutor</button>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. Ontdek: hoe differentieer je (3x+1)^2?                     -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>1. Hoe differentieer je (3x + 1)²?</h2>
+
+<p>Bekijk de functie:</p>
+
+<div class="formula-line center">y = (3x + 1)²</div>
+
+<p>Je kunt deze op <strong>twee manieren</strong> differentiëren. Probeer eerst de manier die je al kent.</p>
+
+<figure>
+<img src="img/fig1-drie-x-plus-1-kwadraat.png" alt="Grafiek van y is (3x plus 1) tot de macht 2. Het is een parabool die op het laagste punt de x-as raakt bij x is min een derde.">
+<figcaption><strong>Figuur 1.</strong> De grafiek van y = (3x + 1)².</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">AANPAK 1 — haakjes uitwerken</span>
+<p>Werk eerst de haakjes weg, dan term voor term differentiëren.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p>Eerst uitwerken:</p>
+<div class="formula-line">(3x + 1)² = 9x² + 6x + 1</div>
+<p>Dan term voor term:</p>
+<div class="formula-line">y' = 18x + 6</div>
+</div>
+</div>
+
+<p>Dat lukt hier, omdat de macht 2 is. Maar wat als de macht 7 is — (3x + 1)<sup>7</sup>? Dan wordt uitwerken een ramp.</p>
+
+<p>Daarom is er een snellere manier: de <strong>kettingregel</strong>.</p>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">AANPAK 2 — kettingregel</span>
+<p>Differentieer in <strong>drie stukken</strong>:</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Macht naar voren halen (machtsregel toepassen op de hele haak):</p>
+<div class="formula-line">y' = 2 · (3x + 1)<sup>1</sup> · ...</div>
+
+<p><strong>Stap 2.</strong> De inhoud van de haak overschrijven, met één lager exponent:</p>
+<div class="formula-line">y' = 2 · (3x + 1) · ...</div>
+
+<p><strong>Stap 3.</strong> Vermenigvuldigen met de afgeleide van wat in de haak staat. De afgeleide van 3x + 1 is gewoon <strong>3</strong>:</p>
+<div class="formula-line">y' = 2 · (3x + 1) · <strong>3</strong></div>
+
+<p>Even netjes opschrijven:</p>
+<div class="formula-line">y' = 6(3x + 1) = 18x + 6</div>
+
+<p>Zelfde antwoord. Beide aanpakken kloppen.</p>
+</div>
+</div>
+
+<p>De <strong>·3</strong> aan het eind is wat we de <strong>binnenste afgeleide</strong> noemen. Dat is de afgeleide van wat er <strong>in de haak</strong> staat.</p>
+
+<div class="regel" style="background:#fee2e2; border-color:#dc2626;">
+<span class="regel-label" style="background:#dc2626;">LET OP</span>
+Als je de <strong>binnenste afgeleide</strong> vergeet, klopt je antwoord niet. Dat is de fout waar leerlingen het vaakst op zakken.
+</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. Theorie A — n geheel                                        -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>2. De kettingregel voor n geheel</h2>
+
+<p>De regel die je net hebt ontdekt geldt voor elke gehele macht n.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL — kettingregel (n geheel)</span>
+Voor <strong>f(x) = c · (ax + b)<sup>n</sup></strong> geldt:
+<div class="formula-line center">f'(x) = c · n · (ax + b)<sup>n−1</sup> · <strong>a</strong></div>
+De factor <strong>·a</strong> aan het eind is de <strong>binnenste afgeleide</strong>.
+</div>
+
+<div class="werkschema">
+<h4>Werkschema — kettingregel</h4>
+<ol>
+<li>Macht naar voren halen (n vóór).</li>
+<li>Haakje overschrijven, exponent één lager.</li>
+<li>Vermenigvuldigen met de binnenste afgeleide (de afgeleide van wat in de haak staat).</li>
+</ol>
+</div>
+
+<h3>Waar gaat het mis?</h3>
+
+<p>Bekijk g(x) = 3(4x − 1)². Hieronder zie je twee uitwerkingen — eentje klopt, eentje niet.</p>
+
+<figure>
+<img src="img/fig2-kettingregel-goed-fout.png" alt="Twee rechte lijnen die de afgeleide van g van x is 3 keer haakje 4x min 1 kwadraat moeten zijn. De groene lijn is 96x min 24, dat is goed. De rode stippellijn is 24x min 6, dat is fout omdat de factor maal 4 vergeten is.">
+<figcaption><strong>Figuur 2.</strong> Twee mogelijke antwoorden voor g'(x). Alleen de groene lijn klopt.</figcaption>
+</figure>
+
+<div class="compare-grid">
+<div class="compare-goed">
+<h5>GOED — ·4 meegenomen</h5>
+<div class="formula-line">g'(x) = 3 · 2 · (4x − 1) · <strong>4</strong></div>
+<div class="formula-line">g'(x) = 24(4x − 1)</div>
+<div class="formula-line">g'(x) = 96x − 24</div>
+</div>
+<div class="compare-fout">
+<h5>FOUT — ·4 vergeten</h5>
+<div class="formula-line">g'(x) = 3 · 2 · (4x − 1)</div>
+<div class="formula-line">g'(x) = 6(4x − 1)</div>
+<div class="formula-line">g'(x) = 24x − 6</div>
+</div>
+</div>
+
+<p>Controleren door haakjes uit te werken:</p>
+<div class="formula-line">g(x) = 3(16x² − 8x + 1) = 48x² − 24x + 3</div>
+<div class="formula-line">g'(x) = 96x − 24 ✓</div>
+
+<p>Het <strong>goede</strong> antwoord klopt met de uitgewerkte versie. Het <strong>foute</strong> antwoord klopt niet. Conclusie: de <strong>·a</strong> mag je nooit vergeten.</p>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = x² − (3x − 1)⁴</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p>De eerste term gewoon met de machtsregel:</p>
+<div class="formula-line">(x²)' = 2x</div>
+
+<p>De tweede term met de kettingregel. Hier is c = −1, n = 4, a = 3.</p>
+<div class="formula-line">(−(3x − 1)⁴)' = −1 · 4 · (3x − 1)³ · <strong>3</strong></div>
+<div class="formula-line">= −12(3x − 1)³</div>
+
+<p>Samen:</p>
+<div class="formula-line">f'(x) = 2x − 12(3x − 1)³</div>
+</div>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>g(x) = 4x + 10/(2x − 1)</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p>Eerst herschrijven met een negatieve exponent zodat je de regel kunt gebruiken:</p>
+<div class="formula-line">g(x) = 4x + 10(2x − 1)<sup>−1</sup></div>
+
+<p>Term voor term. De eerste term:</p>
+<div class="formula-line">(4x)' = 4</div>
+
+<p>Tweede term met de kettingregel. Hier is c = 10, n = −1, a = 2.</p>
+<div class="formula-line">(10(2x − 1)<sup>−1</sup>)' = 10 · (−1) · (2x − 1)<sup>−2</sup> · <strong>2</strong></div>
+<div class="formula-line">= −20(2x − 1)<sup>−2</sup></div>
+<div class="formula-line">= −20 / (2x − 1)²</div>
+
+<p>Samen:</p>
+<div class="formula-line">g'(x) = 4 − 20 / (2x − 1)²</div>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — kettingregel met gehele machten</h4>
+<p>Vergeet de <strong>binnenste afgeleide</strong> niet.</p>
+
+<div class="q-row">
+<label>Differentieer <strong>f(x) = (4x + 3)³</strong>. Wat is f'(x)?</label>
+<input type="text" id="q-k1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-k1',['12(4x+3)^2','12(4x+3)²','3*4(4x+3)^2','3·4(4x+3)²'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-k1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-k1"></div>
+<div class="detail-steps" id="s-k1">
+<h5>Stappenplan</h5>
+<ol>
+<li>c = 1, n = 3, a = 4</li>
+<li>Macht naar voren: 3 · (4x + 3)²</li>
+<li>Binnenste afgeleide: 3 · (4x + 3)² · <strong>4</strong></li>
+<li>f'(x) = 12(4x + 3)²</li>
+</ol>
+</div>
+
+<div class="q-row">
+<label>Differentieer <strong>g(x) = (5x − 2)⁷</strong>. Wat is g'(x)?</label>
+<input type="text" id="q-k2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-k2',['35(5x-2)^6','35(5x-2)⁶','7*5(5x-2)^6','7·5(5x-2)⁶'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-k2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-k2"></div>
+<div class="detail-steps" id="s-k2">
+<h5>Stappenplan</h5>
+<ol>
+<li>c = 1, n = 7, a = 5</li>
+<li>Macht naar voren: 7 · (5x − 2)⁶</li>
+<li>Binnenste afgeleide: 7 · (5x − 2)⁶ · <strong>5</strong></li>
+<li>g'(x) = 35(5x − 2)⁶</li>
+</ol>
+</div>
+
+<div class="q-row">
+<label>Differentieer <strong>h(x) = 6(½x − 4)⁵</strong>. Wat is h'(x)?</label>
+<input type="text" id="q-k3" placeholder="...">
+<button class="btn-check" onclick="checkText('q-k3',['15(0.5x-4)^4','15(½x-4)^4','15(½x-4)⁴','6*5*0.5(0.5x-4)^4','6·5·½(½x-4)⁴'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-k3')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-k3"></div>
+<div class="detail-steps" id="s-k3">
+<h5>Stappenplan</h5>
+<ol>
+<li>c = 6, n = 5, a = ½</li>
+<li>Macht naar voren: 6 · 5 · (½x − 4)⁴ = 30(½x − 4)⁴</li>
+<li>Binnenste afgeleide: 30(½x − 4)⁴ · <strong>½</strong></li>
+<li>h'(x) = 15(½x − 4)⁴</li>
+</ol>
+</div>
+
+<div class="regel" style="background:#fef9c3; border-color:#facc15;">
+<span class="regel-label">CHECK</span>
+Heb je bij elk antwoord de <strong>·a</strong> meegenomen? Bij q1: ·4. Bij q2: ·5. Bij q3: ·½. Zonder die factor klopt het niet.
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. Theorie B — n in R (wortels)                                -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>3. De kettingregel voor wortels</h2>
+
+<p>De kettingregel werkt ook als n een <strong>breuk</strong> is. Dat heb je nodig bij wortels.</p>
+
+<p>Trucje: schrijf de wortel als een macht.</p>
+
+<div class="formula-line center">√(ax + b) = (ax + b)<sup>½</sup></div>
+
+<p>Dan kun je gewoon de regel toepassen.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL — kettingregel (n in ℝ)</span>
+Voor <strong>f(x) = c · (ax + b)<sup>n</sup></strong> geldt:
+<div class="formula-line center">f'(x) = c · n · (ax + b)<sup>n−1</sup> · <strong>a</strong></div>
+voor elke n in ℝ — geheel, breuk of negatief.
+</div>
+
+<figure>
+<img src="img/fig4-wortel-6x-min-1.png" alt="Grafiek van f van x is wortel uit 6x min 1. De curve begint op de x-as bij x is een zesde en stijgt vandaar af, eerst snel daarna langzamer.">
+<figcaption><strong>Figuur 3.</strong> De grafiek van f(x) = √(6x − 1). Domein: x ≥ ⅙.</figcaption>
+</figure>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = √(6x − 1)</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Herschrijf als macht:</p>
+<div class="formula-line">f(x) = (6x − 1)<sup>½</sup></div>
+
+<p><strong>Stap 2.</strong> Pas de regel toe. Hier is c = 1, n = ½, a = 6.</p>
+<div class="formula-line">f'(x) = ½ · (6x − 1)<sup>−½</sup> · <strong>6</strong></div>
+
+<p><strong>Stap 3.</strong> Vereenvoudig. ½ · 6 = 3, en (...)<sup>−½</sup> = 1/√(...).</p>
+<div class="formula-line">f'(x) = 3 · (6x − 1)<sup>−½</sup></div>
+<div class="formula-line">f'(x) = 3 / √(6x − 1)</div>
+</div>
+</div>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>g(x) = x² − √(6x − 1)</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p>Term voor term. Eerste term:</p>
+<div class="formula-line">(x²)' = 2x</div>
+
+<p>Tweede term, kettingregel met c = −1, n = ½, a = 6:</p>
+<div class="formula-line">(−(6x − 1)<sup>½</sup>)' = −½ · (6x − 1)<sup>−½</sup> · <strong>6</strong></div>
+<div class="formula-line">= −3 / √(6x − 1)</div>
+
+<p>Samen:</p>
+<div class="formula-line">g'(x) = 2x − 3 / √(6x − 1)</div>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — kettingregel met wortels</h4>
+<p>Schrijf de wortel eerst om naar een macht, en pas dan de regel toe.</p>
+
+<div class="q-row">
+<label>Differentieer <strong>f(x) = √(2x + 1)</strong>. Wat is f'(x)?</label>
+<input type="text" id="q-w1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-w1',['1/√(2x+1)','1/sqrt(2x+1)','1/wortel(2x+1)','(2x+1)^(-0.5)','(2x+1)^-½'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-w1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-w1"></div>
+<div class="detail-steps" id="s-w1">
+<h5>Stappenplan</h5>
+<ol>
+<li>Herschrijf: f(x) = (2x + 1)<sup>½</sup></li>
+<li>c = 1, n = ½, a = 2</li>
+<li>f'(x) = ½ · (2x + 1)<sup>−½</sup> · <strong>2</strong></li>
+<li>½ · 2 = 1</li>
+<li>f'(x) = 1 / √(2x + 1)</li>
+</ol>
+</div>
+
+<div class="q-row">
+<label>Differentieer <strong>g(x) = (2x − 5)<sup>½</sup></strong>. Wat is g'(x)?</label>
+<input type="text" id="q-w2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-w2',['1/√(2x-5)','1/sqrt(2x-5)','(2x-5)^(-0.5)','(2x-5)^-½','1/wortel(2x-5)'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-w2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-w2"></div>
+<div class="detail-steps" id="s-w2">
+<h5>Stappenplan</h5>
+<ol>
+<li>c = 1, n = ½, a = 2</li>
+<li>g'(x) = ½ · (2x − 5)<sup>−½</sup> · <strong>2</strong></li>
+<li>½ · 2 = 1</li>
+<li>g'(x) = 1 / √(2x − 5)</li>
+</ol>
+</div>
+
+<div class="q-row">
+<label>Differentieer <strong>h(x) = 6 / √(2x − 5)</strong>. Wat is h'(x)?</label>
+<input type="text" id="q-w3" placeholder="...">
+<button class="btn-check" onclick="checkText('q-w3',['-6/(2x-5)^(3/2)','-6/(2x-5)^1.5','-6(2x-5)^(-3/2)','-6/((2x-5)√(2x-5))','-6/((2x-5)*sqrt(2x-5))'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-w3')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-w3"></div>
+<div class="detail-steps" id="s-w3">
+<h5>Stappenplan</h5>
+<ol>
+<li>Herschrijf: h(x) = 6 · (2x − 5)<sup>−½</sup></li>
+<li>c = 6, n = −½, a = 2</li>
+<li>h'(x) = 6 · (−½) · (2x − 5)<sup>−3/2</sup> · <strong>2</strong></li>
+<li>6 · (−½) · 2 = −6</li>
+<li>h'(x) = −6 · (2x − 5)<sup>−3/2</sup> = −6 / (2x − 5)<sup>3/2</sup></li>
+<li>Of: h'(x) = −6 / ((2x − 5) · √(2x − 5))</li>
+</ol>
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. Informatief: de algemene kettingregel                       -->
+<!-- ============================================================ -->
+<div class="section">
+<h2>4. Informatief — de algemene kettingregel</h2>
+
+<p>Een functie als <strong>f(x) = (3x + 1)²</strong> is een <strong>samengestelde functie</strong>. Eerst doe je 3x + 1, daarna kwadrateren.</p>
+
+<p>Algemener:</p>
+
+<div class="formula-line center">f(x) = g(h(x))</div>
+
+<p>Hier is g de <strong>buitenste</strong> functie en h de <strong>binnenste</strong>. Bijvoorbeeld bij (3x + 1)²: g(u) = u², h(x) = 3x + 1.</p>
+
+<div class="regel">
+<span class="regel-label">REGEL — algemene kettingregel</span>
+Voor een <strong>samengestelde functie</strong> f(x) = g(h(x)) geldt:
+<div class="formula-line center">f'(x) = g'(h(x)) · h'(x)</div>
+"Afgeleide buitenste maal afgeleide binnenste."
+</div>
+
+<p>Bij f(x) = c · (ax + b)<sup>n</sup> is h(x) = ax + b, dus h'(x) = a. Dat is dezelfde <strong>·a</strong> als hiervoor.</p>
+
+<p>Maar nu kun je ook iets ingewikkelders aanpakken, zoals √(x² + 4). Daar is de binnenste functie x² + 4, dus de binnenste afgeleide is 2x.</p>
+
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD</span>
+<p>Differentieer <strong>f(x) = √(x² + 4)</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Herschrijf:</p>
+<div class="formula-line">f(x) = (x² + 4)<sup>½</sup></div>
+
+<p><strong>Stap 2.</strong> Buitenste: u<sup>½</sup>, afgeleide ½ · u<sup>−½</sup>. Binnenste: x² + 4, afgeleide <strong>2x</strong>.</p>
+<div class="formula-line">f'(x) = ½ · (x² + 4)<sup>−½</sup> · <strong>2x</strong></div>
+
+<p><strong>Stap 3.</strong> Vereenvoudig. ½ · 2x = x.</p>
+<div class="formula-line">f'(x) = x / √(x² + 4)</div>
+</div>
+</div>
+
+<div class="try-it">
+<h4>Probeer zelf — algemene kettingregel</h4>
+
+<div class="q-row">
+<label>Differentieer <strong>f(x) = (x² − 3)⁵</strong>. Wat is f'(x)?</label>
+<input type="text" id="q-a1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-a1',['10x(x²-3)^4','10x(x^2-3)^4','5(x²-3)^4*2x','5(x^2-3)^4·2x'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-a1')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-a1"></div>
+<div class="detail-steps" id="s-a1">
+<h5>Stappenplan</h5>
+<ol>
+<li>Buitenste: u⁵, afgeleide 5u⁴</li>
+<li>Binnenste: x² − 3, afgeleide <strong>2x</strong></li>
+<li>f'(x) = 5(x² − 3)⁴ · 2x = 10x(x² − 3)⁴</li>
+</ol>
+</div>
+
+<div class="q-row">
+<label>Differentieer <strong>g(x) = √(x² + 9)</strong>. Wat is g'(x)?</label>
+<input type="text" id="q-a2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-a2',['x/√(x²+9)','x/sqrt(x²+9)','x/sqrt(x^2+9)','x(x²+9)^(-1/2)','x(x^2+9)^-½'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-a2')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-a2"></div>
+<div class="detail-steps" id="s-a2">
+<h5>Stappenplan</h5>
+<ol>
+<li>Herschrijf: g(x) = (x² + 9)<sup>½</sup></li>
+<li>Buitenste afgeleide: ½ · (x² + 9)<sup>−½</sup></li>
+<li>Binnenste afgeleide: <strong>2x</strong></li>
+<li>g'(x) = ½ · (x² + 9)<sup>−½</sup> · 2x = x / √(x² + 9)</li>
+</ol>
+</div>
+
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. Toetsstijl oefenopgaven                                    -->
+<!-- ============================================================ -->
+<div class="section" id="oefen-toets">
+<h2>5. Toetsstijl-oefeningen</h2>
+
+<p>Op de toets krijg je opgaven met meerdere deelvragen die op elkaar bouwen. Hier oefen je dat — een opgave is pas af als alle deelvragen kloppen.</p>
+
+<h3>Opgave A — kettingregel + raaklijn op breuk</h3>
+<p>Gegeven:</p>
+<div class="formula-line">f(x) = 10(½x − 3)⁴</div>
+<div class="formula-line">g(x) = 3x² − 6/(2x + 1)</div>
+<div class="formula-line">h(x) = 2 / (½x − 3)²</div>
+
+<div class="q-row">
+<label><strong>a)</strong> Bereken f'(x).</label>
+<input type="text" id="q-oA-a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oA-a',['20(½x-3)^3','20(0.5x-3)^3','20(½x-3)³','10*4*½(½x-3)^3'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Bereken g'(x).</label>
+<input type="text" id="q-oA-b" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oA-b',['6x+12/(2x+1)^2','6x+12/(2x+1)²','12/(2x+1)^2+6x'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-b"></div>
+
+<p style="margin-top:1rem;">De lijn k raakt de grafiek van h in punt A met x<sub>A</sub> = 4 en snijdt de x-as in B.</p>
+
+<figure>
+<img src="img/fig3-breuk-kwadraat.png" alt="Grafiek van h van x is 2 gedeeld door haakje een half x min 3 kwadraat. De grafiek heeft een verticale asymptoot op x is 6 en bestaat uit twee takken. Op de linkertak ligt punt A op coördinaten 4 en 2. De raaklijn k in A is een rechte lijn die de x-as kruist in punt B op coördinaten 3 en 0.">
+<figcaption><strong>Figuur 4.</strong> Raaklijn k aan h in A(4, 2) snijdt de x-as in B.</figcaption>
+</figure>
+
+<div class="q-row">
+<label><strong>c1)</strong> Bereken y<sub>A</sub> = h(4).</label>
+<input type="text" id="q-oA-c1" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oA-c1', 2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-c1"></div>
+
+<div class="q-row">
+<label><strong>c2)</strong> Bereken h'(x).</label>
+<input type="text" id="q-oA-c2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oA-c2',['-2/(½x-3)^3','-2/(0.5x-3)^3','-2(½x-3)^(-3)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-c2"></div>
+
+<div class="q-row">
+<label><strong>c3)</strong> Bereken de helling van k = h'(4).</label>
+<input type="text" id="q-oA-c3" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oA-c3', 2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oA-c3"></div>
+
+<div class="q-row">
+<label><strong>c4)</strong> Bereken x<sub>B</sub>.</label>
+<input type="text" id="q-oA-c4" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oA-c4', 3)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oA')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oA-c4"></div>
+
+<div class="detail-steps" id="s-oA">
+<h5>Stappenplan</h5>
+<ol>
+<li>a) c = 10, n = 4, a = ½. f'(x) = 10 · 4 · (½x − 3)³ · ½ = 20(½x − 3)³</li>
+<li>b) Eerste term: 6x. Tweede term: −6(2x + 1)<sup>−1</sup>, afgeleide is −6 · (−1)(2x + 1)<sup>−2</sup> · 2 = 12/(2x + 1)². Samen: g'(x) = 6x + 12/(2x + 1)².</li>
+<li>c1) h(4) = 2/(½·4 − 3)² = 2/(−1)² = 2. Dus A(4, 2).</li>
+<li>c2) h(x) = 2(½x − 3)<sup>−2</sup>. h'(x) = 2 · (−2)(½x − 3)<sup>−3</sup> · ½ = −2/(½x − 3)³.</li>
+<li>c3) h'(4) = −2/(−1)³ = −2/−1 = 2.</li>
+<li>c4) k: y = 2x + b. Door A(4, 2): 2 = 8 + b, dus b = −6. k: y = 2x − 6. Snijpunt x-as: 0 = 2x − 6, x = 3. Dus x<sub>B</sub> = 3.</li>
+</ol>
+</div>
+
+<h3>Opgave B — kettingregel + extreme waarden</h3>
+<p>Gegeven:</p>
+<div class="formula-line">f(x) = (½x − 3)³ − 1½x + 10</div>
+
+<div class="q-row">
+<label><strong>a)</strong> Toon aan dat f'(x) = 1½(½x − 3)² − 1½. Wat is f'(x)?</label>
+<input type="text" id="q-oB-a" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oB-a',['1½(½x-3)^2-1½','1.5(0.5x-3)^2-1.5','3/2(½x-3)²-3/2','1½(½x-3)²-1½'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-a"></div>
+
+<div class="q-row">
+<label><strong>b)</strong> Los op f'(x) = 0. Eerste oplossing voor ½x − 3:</label>
+<input type="text" id="q-oB-b1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oB-b1',['1','-1','+1'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-b1"></div>
+
+<div class="q-row">
+<label>Tweede oplossing voor ½x − 3:</label>
+<input type="text" id="q-oB-b2" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oB-b2',['1','-1','+1'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-b2"></div>
+
+<div class="q-row">
+<label><strong>c1)</strong> Bij welke twee x-waarden ligt een top? (x<sub>1</sub>, x<sub>2</sub> met x<sub>1</sub> &lt; x<sub>2</sub>)</label>
+<input type="text" id="q-oB-c1" placeholder="..., ...">
+<button class="btn-check" onclick="checkText('q-oB-c1',['4,8','8,4','4en8','x=4,x=8'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-c1"></div>
+
+<div class="q-row">
+<label><strong>c2)</strong> f(4) = ... ?</label>
+<input type="text" id="q-oB-c2" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oB-c2', 3)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oB-c2"></div>
+
+<div class="q-row">
+<label><strong>c3)</strong> f(8) = ... ?</label>
+<input type="text" id="q-oB-c3" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oB-c3', -1)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oB')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oB-c3"></div>
+
+<div class="detail-steps" id="s-oB">
+<h5>Stappenplan</h5>
+<ol>
+<li>a) Eerste term met de kettingregel: ((½x − 3)³)' = 3(½x − 3)² · ½ = 1½(½x − 3)². Tweede term: (−1½x)' = −1½. De +10 valt weg. Dus f'(x) = 1½(½x − 3)² − 1½.</li>
+<li>b) f'(x) = 0 geeft 1½(½x − 3)² = 1½, dus (½x − 3)² = 1. Dat geeft ½x − 3 = 1 ∨ ½x − 3 = −1.</li>
+<li>c1) ½x − 3 = 1 → x = 8. ½x − 3 = −1 → x = 4. Dus x<sub>1</sub> = 4, x<sub>2</sub> = 8.</li>
+<li>c2) f(4) = (−1)³ − 6 + 10 = −1 + 4 = 3.</li>
+<li>c3) f(8) = 1³ − 12 + 10 = 1 − 2 = −1.</li>
+<li>Antwoord: max f(4) = 3 en min f(8) = −1.</li>
+</ol>
+</div>
+
+<h3>Opgave C — kettingregel + raaklijn aan wortel (synthese)</h3>
+<p>Gegeven:</p>
+<div class="formula-line">f(x) = √(3x + 1)</div>
+<p>De lijn k raakt de grafiek van f in punt A met x<sub>A</sub> = 1.</p>
+
+<figure>
+<img src="img/fig5-wortel-raaklijn.png" alt="Grafiek van f van x is wortel uit 3x plus 1. De curve begint linksonder bij min een derde en stijgt vandaar af. De raaklijn k in punt A op coördinaten 1 en 2 is een rechte lijn met helling drie kwart.">
+<figcaption><strong>Figuur 5.</strong> Raaklijn k aan f(x) = √(3x + 1) in A(1, 2).</figcaption>
+</figure>
+
+<div class="q-row">
+<label><strong>a)</strong> Bereken exact y<sub>A</sub>.</label>
+<input type="text" id="q-oC-a" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oC-a', 2)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-a"></div>
+
+<div class="q-row">
+<label><strong>b1)</strong> Bereken f'(x).</label>
+<input type="text" id="q-oC-b1" placeholder="...">
+<button class="btn-check" onclick="checkText('q-oC-b1',['3/(2√(3x+1))','3/(2*sqrt(3x+1))','3/(2sqrt(3x+1))','1.5/√(3x+1)','1½/√(3x+1)','3/2*(3x+1)^(-1/2)'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-b1"></div>
+
+<div class="q-row">
+<label><strong>b2)</strong> Bereken exact de helling van f in A, dus f'(1).</label>
+<input type="text" id="q-oC-b2" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-oC-b2', 0.75)">Check</button>
+</div>
+<div class="feedback" id="fb-q-oC-b2"></div>
+
+<div class="q-row">
+<label><strong>c)</strong> Stel exact de formule van k op.</label>
+<input type="text" id="q-oC-c" placeholder="y = ...">
+<button class="btn-check" onclick="checkText('q-oC-c',['y=¾x+1¼','y=0.75x+1.25','y=3/4x+5/4','¾x+1¼','0.75x+1.25','3/4x+5/4'])">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-oC')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-oC-c"></div>
+
+<div class="detail-steps" id="s-oC">
+<h5>Stappenplan</h5>
+<ol>
+<li>a) y<sub>A</sub> = f(1) = √(3 + 1) = √4 = 2. Dus A(1, 2).</li>
+<li>b1) f(x) = (3x + 1)<sup>½</sup>. Kettingregel met c = 1, n = ½, a = 3: f'(x) = ½ · (3x + 1)<sup>−½</sup> · 3 = 3 / (2√(3x + 1)).</li>
+<li>b2) f'(1) = 3 / (2 · √4) = 3 / (2 · 2) = ¾.</li>
+<li>c) k: y = ¾x + b. Door A(1, 2): 2 = ¾ + b, dus b = 1¼. k: y = ¾x + 1¼.</li>
+</ol>
+</div>
+
+<div class="tutor-cta" style="margin-top:1.5rem;">
+<strong>Vastgelopen op een opgave?</strong>
+<p>Klik op de tutor-knop rechtsonder. Vertel welke opgave en deelvraag, en bij welke stap je vastloopt.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- Checklist                                                     -->
+<!-- ============================================================ -->
+<div class="checklist">
+<h2>Kan ik dit nu?</h2>
+<label><input type="checkbox" data-key="6.3-c1"> Ik kan f'(x) bepalen van c·(ax + b)<sup>n</sup> met n geheel.</label>
+<label><input type="checkbox" data-key="6.3-c2"> Ik vergeet de <strong>binnenste afgeleide ·a</strong> niet.</label>
+<label><input type="checkbox" data-key="6.3-c3"> Ik kan een wortel √(ax + b) schrijven als macht (ax + b)<sup>½</sup>.</label>
+<label><input type="checkbox" data-key="6.3-c4"> Ik kan f'(x) bepalen van een wortelfunctie.</label>
+<label><input type="checkbox" data-key="6.3-c5"> Ik herken een samengestelde functie f(x) = g(h(x)).</label>
+<label><input type="checkbox" data-key="6.3-c6"> Ik kan de kettingregel combineren met raaklijn-opgaven en extreme waarden.</label>
+</div>
+
+<div class="nav-bottom">
+<a href="../6.2-machtsfuncties/">&larr; §6.2 Machtsfuncties</a>
+<a href="../6.4-toepassingen/">§6.4 Toepassingen &rarr;</a>
+</div>
+
+</div>
+
+<!-- Chat-widget — opent vanuit FAB of tutor-CTA -->
+<button class="chat-fab" onclick="openChat()">💬 Tutor</button>
+
+<div class="chat-panel" id="chatPanel">
+<div class="chat-header">
+<h3>Wiskunde-tutor</h3>
+<button class="chat-close" onclick="closeChat()">×</button>
+</div>
+<div class="chat-messages" id="chatMessages"></div>
+<div class="chat-input-row">
+<textarea class="chat-input" id="chatInput" placeholder="Typ hier..." rows="1"></textarea>
+<button class="chat-send" id="chatSend" onclick="sendMessage()">Stuur</button>
+</div>
+</div>
+
+<footer>
+<p>Gemaakt door <strong>Ralph Wagter</strong> voor <strong>Kasper</strong>, met <a href="https://claude.ai/code">Claude Code</a>.</p>
+<p style="margin-top:0.5rem; font-size:0.85rem;">
+  Vrij hergebruik onder <a href="https://eupl.eu/">EUPL-1.2</a>.
+  <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub</a>
+</p>
+</footer>
+
+<script>
+// ============================================================
+// Configuratie — pas WORKER_BASE aan na deployment van de Worker
+// ============================================================
+const WORKER_BASE = window.__WORKER_BASE__ || "https://kasper-tutor.ralph-wagter.workers.dev";
+const PAGE_SLUG = "6.3-kettingregel";
+
+// ============================================================
+// Checklist — localStorage persist
+// ============================================================
+document.querySelectorAll(".checklist input[type=checkbox]").forEach((cb) => {
+  const key = "kasper-" + cb.dataset.key;
+  if (localStorage.getItem(key) === "1") cb.checked = true;
+  cb.addEventListener("change", () => {
+    localStorage.setItem(key, cb.checked ? "1" : "0");
+  });
+});
+
+// ============================================================
+// Toggle uitwerkingen
+// ============================================================
+function toggle(btn) {
+  const next = btn.nextElementSibling;
+  const isOpen = next.classList.toggle("open");
+  btn.textContent = isOpen ? "Verberg uitwerking" : "Toon uitwerking";
+}
+
+// ============================================================
+// Antwoord-validatie voor try-it en oefenopgaven
+// ============================================================
+function normalize(s) {
+  return (s || "")
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/,/g, ".")
+    .replace(/×/g, "*")
+    .replace(/·/g, "*")
+    .replace(/²/g, "^2")
+    .replace(/³/g, "^3")
+    .replace(/⁴/g, "^4")
+    .replace(/⁵/g, "^5")
+    .replace(/⁶/g, "^6")
+    .replace(/⁷/g, "^7")
+    .replace(/–/g, "-")
+    .replace(/−/g, "-")
+    .replace(/½/g, "0.5")
+    .replace(/¼/g, "0.25")
+    .replace(/¾/g, "0.75")
+    .replace(/⅓/g, "(1/3)")
+    .replace(/⅔/g, "(2/3)");
+}
+function setFeedback(id, ok) {
+  const el = document.getElementById(id);
+  const fb = document.getElementById("fb-" + id);
+  if (!el || !fb) return;
+  el.classList.remove("correct", "incorrect");
+  el.classList.add(ok ? "correct" : "incorrect");
+  fb.classList.remove("correct", "incorrect");
+  fb.classList.add("show", ok ? "correct" : "incorrect");
+  fb.textContent = ok ? "✓ Goed!" : "✗ Nog niet — kijk eens naar het stappenplan. Vergat je de ·a niet?";
+}
+function checkText(id, accepted) {
+  const norm = normalize(document.getElementById(id).value);
+  const ok = accepted.some((a) => normalize(a) === norm);
+  setFeedback(id, ok);
+}
+function checkNumeric(id, target, tol) {
+  const raw = document.getElementById(id).value;
+  const norm = normalize(raw).replace(/\^/g, "**");
+  let val = NaN;
+  if (/^-?\d+(\.\d+)?$/.test(norm)) {
+    val = parseFloat(norm);
+  } else if (/^-?\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else if (/^-?\d+\.\d+\/\d+$/.test(norm)) {
+    const [a, b] = norm.split("/").map(parseFloat);
+    val = a / b;
+  } else {
+    const fracMap = { "½": 0.5, "¼": 0.25, "¾": 0.75, "⅓": 1 / 3, "⅔": 2 / 3, "⅕": 0.2, "⅙": 1 / 6 };
+    let cleaned = raw.toString().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+    for (const [k, v] of Object.entries(fracMap)) {
+      if (cleaned.includes(k)) {
+        const m = cleaned.match(/^(-)?(\d*)([½¼¾⅓⅔⅕⅙])$/);
+        if (m) {
+          const sign = m[1] ? -1 : 1;
+          const whole = m[2] ? parseInt(m[2], 10) : 0;
+          val = sign * (whole + fracMap[m[3]]);
+          break;
+        }
+      }
+    }
+  }
+  const eps = typeof tol === "number" ? tol : 0.01;
+  const ok = isFinite(val) && Math.abs(val - target) < eps;
+  setFeedback(id, ok);
+}
+function toggleSteps(id) {
+  document.getElementById(id).classList.toggle("show");
+}
+
+// ============================================================
+// Token uit URL halen en in localStorage opslaan
+// ============================================================
+function getToken() {
+  const fromUrl = new URLSearchParams(window.location.search).get("t");
+  if (fromUrl) {
+    localStorage.setItem("kasper-token", fromUrl);
+    return fromUrl;
+  }
+  return localStorage.getItem("kasper-token");
+}
+
+// ============================================================
+// Chat-panel
+// ============================================================
+const chatPanel = document.getElementById("chatPanel");
+const chatMessages = document.getElementById("chatMessages");
+const chatInput = document.getElementById("chatInput");
+const chatSend = document.getElementById("chatSend");
+
+const HISTORY_KEY = "kasper-history-" + PAGE_SLUG;
+
+function loadHistory() {
+  const raw = localStorage.getItem(HISTORY_KEY);
+  if (!raw) return [];
+  try { return JSON.parse(raw); } catch { return []; }
+}
+function saveHistory(history) {
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-20)));
+}
+function clearHistory() {
+  localStorage.removeItem(HISTORY_KEY);
+  chatMessages.innerHTML = "";
+}
+
+function renderMessage(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+  return div;
+}
+
+function renderSystemMessage(text) {
+  const div = document.createElement("div");
+  div.className = "msg system";
+  div.textContent = text;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function openChat() {
+  chatPanel.classList.add("open");
+  const history = loadHistory();
+  if (history.length === 0) {
+    if (!WORKER_BASE) {
+      renderSystemMessage("De tutor is nog niet online. Vraag Ralph om de Worker te deployen.");
+    } else if (!getToken()) {
+      renderSystemMessage("Geen toegangs-token gevonden. Vraag Ralph om de juiste URL met ?t=...");
+    } else {
+      sendInitial();
+    }
+  } else {
+    history.forEach((m) => renderMessage(m.role, m.content));
+  }
+  chatInput.focus();
+}
+
+function closeChat() {
+  chatPanel.classList.remove("open");
+}
+
+async function sendInitial() {
+  await streamReply([{ role: "user", content: "Hoi, ik open de pagina nu. Begin met de eerste vraag." }]);
+}
+
+async function sendMessage() {
+  const text = chatInput.value.trim();
+  if (!text) return;
+  chatInput.value = "";
+
+  const history = loadHistory();
+  history.push({ role: "user", content: text });
+  renderMessage("user", text);
+  saveHistory(history);
+
+  if (!WORKER_BASE) {
+    renderSystemMessage("Worker URL ontbreekt — bericht niet verstuurd.");
+    return;
+  }
+  if (!getToken()) {
+    renderSystemMessage("Geen toegangs-token — bericht niet verstuurd.");
+    return;
+  }
+
+  await streamReply(history);
+}
+
+async function streamReply(messages) {
+  const token = getToken();
+  chatSend.disabled = true;
+  const assistantDiv = renderMessage("assistant", "");
+  let assistantText = "";
+
+  try {
+    const res = await fetch(`${WORKER_BASE}/api/chat?t=${encodeURIComponent(token)}`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ pageSlug: PAGE_SLUG, messages }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: "Onbekende fout" }));
+      assistantDiv.remove();
+      renderSystemMessage("Fout: " + (err.error || res.status));
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.startsWith("data: ")) continue;
+        const data = line.slice(6).trim();
+        if (!data || data === "[DONE]") continue;
+        try {
+          const evt = JSON.parse(data);
+          if (evt.type === "content_block_delta" && evt.delta?.type === "text_delta") {
+            assistantText += evt.delta.text;
+            assistantDiv.textContent = assistantText;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+          }
+        } catch {}
+      }
+    }
+    const history = loadHistory();
+    history.push({ role: "assistant", content: assistantText });
+    saveHistory(history);
+  } catch (e) {
+    assistantDiv.remove();
+    renderSystemMessage("Netwerkfout: " + e.message);
+  } finally {
+    chatSend.disabled = false;
+  }
+}
+
+chatInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+</script>
+
+</body>
+</html>

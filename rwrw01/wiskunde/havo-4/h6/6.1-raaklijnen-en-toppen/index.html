@@ -1113,6 +1113,79 @@ Zonder y<sub>A</sub> heb je geen punt om de raaklijn doorheen te trekken en kun 
 </ol>
 </div>
 
+<h3>Opgave 4 — toppen en raakpunten combineren (synthese)</h3>
+<p>Gegeven is de functie <strong>f(x) = x³ − 3x² − 9x + 5</strong>.</p>
+<p>Deze opgave combineert drie dingen die je in deze paragraaf hebt geleerd. Werk de delen <strong>op volgorde</strong> af — deel b en c bouwen op deel a.</p>
+
+<p style="margin-top:1rem;"><strong>a)</strong> Bereken exact de extreme waarden van f.</p>
+
+<div class="q-row">
+<label>x-coördinaat van het maximum:</label>
+<input type="text" id="q-o4a1" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o4a1', -1)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4a1"></div>
+
+<div class="q-row">
+<label>Maximum f(...) =</label>
+<input type="text" id="q-o4a2" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o4a2', 10)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4a2"></div>
+
+<div class="q-row">
+<label>x-coördinaat van het minimum:</label>
+<input type="text" id="q-o4a3" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o4a3', 3)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4a3"></div>
+
+<div class="q-row">
+<label>Minimum f(...) =</label>
+<input type="text" id="q-o4a4" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o4a4', -22)">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4a4"></div>
+
+<p style="margin-top:1rem;"><strong>b)</strong> Op de grafiek liggen twee punten waar de helling gelijk is aan 15. Bereken exact de coördinaten van die punten.</p>
+
+<div class="q-row">
+<label>Eerste raakpunt (x, y):</label>
+<input type="text" id="q-o4b1" placeholder="(.., ..)">
+<button class="btn-check" onclick="checkText('q-o4b1',['(-2,3)','(4,-15)','-2,3','4,-15'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4b1"></div>
+
+<div class="q-row">
+<label>Tweede raakpunt (x, y):</label>
+<input type="text" id="q-o4b2" placeholder="(.., ..)">
+<button class="btn-check" onclick="checkText('q-o4b2',['(-2,3)','(4,-15)','-2,3','4,-15'])">Check</button>
+</div>
+<div class="feedback" id="fb-q-o4b2"></div>
+
+<p style="margin-top:1rem;"><strong>c)</strong> Door de twee toppen uit deel a loopt een lijn m. Bereken exact de helling van m.</p>
+
+<div class="q-row">
+<label>Helling van m:</label>
+<input type="text" id="q-o4c" placeholder="...">
+<button class="btn-check" onclick="checkNumeric('q-o4c', -8)">Check</button>
+<button class="btn-step" onclick="toggleSteps('s-o4')">Stappenplan</button>
+</div>
+<div class="feedback" id="fb-q-o4c"></div>
+
+<div class="detail-steps" id="s-o4">
+<h5>Stappenplan</h5>
+<ol>
+<li><strong>a)</strong> f'(x) = 3x² − 6x − 9 = 3(x − 3)(x + 1). f'(x) = 0 geeft x = −1 ∨ x = 3.</li>
+<li>f(−1) = −1 − 3 + 9 + 5 = 10 — kubische loopt eerst op, dus <strong>maximum</strong>.</li>
+<li>f(3) = 27 − 27 − 27 + 5 = −22 — daarna omlaag, dus <strong>minimum</strong>.</li>
+<li>Toppen: A(−1, 10) en B(3, −22).</li>
+<li><strong>b)</strong> Helling = 15 geeft 3x² − 6x − 9 = 15, dus 3x² − 6x − 24 = 0, dus x² − 2x − 8 = 0, dus (x − 4)(x + 2) = 0. Oplossingen x = 4 ∨ x = −2.</li>
+<li>f(4) = 64 − 48 − 36 + 5 = −15 en f(−2) = −8 − 12 + 18 + 5 = 3. Raakpunten: (−2, 3) en (4, −15).</li>
+<li><strong>c)</strong> Lijn door A(−1, 10) en B(3, −22). Helling = (−22 − 10) / (3 − (−1)) = −32 / 4 = <strong>−8</strong>.</li>
+</ol>
+</div>
+
 <div class="tutor-cta" style="margin-top:1.5rem;">
 <strong>Vastgelopen op een opgave?</strong>
 <p>Klik op de tutor-knop rechtsonder. Vertel welke opgave en deelvraag, en bij welke stap je vastloopt.</p>

@@ -875,6 +875,32 @@ In alle andere gevallen: schrijf het terug als <strong>wortel</strong>.
 
 </div>
 
+<div class="voorbeeld">
+<span class="voorbeeld-label">VOORBEELD — met een letterparameter</span>
+<p>Soms staat er in een functie een <strong>letter</strong> die geen variabele is, zoals <strong>a</strong> of <strong>b</strong>. Die behandel je als een gewoon getal — hij gaat gewoon mee in de afgeleide.</p>
+<p>Differentieer <strong>f(x) = a/(3x⁴) + 2x³/a</strong>.</p>
+<button class="toggle-btn" onclick="toggle(this)">Toon uitwerking</button>
+<div class="toggle-content">
+<p><strong>Stap 1.</strong> Herleiden naar standaardvorm. Schrijf elke term als <em>(getal) · x<sup>n</sup></em> — let op waar <strong>a</strong> in komt:</p>
+<div class="formula-line">a/(3x⁴) = (a/3) · x<sup>−4</sup></div>
+<div class="formula-line">2x³/a = (2/a) · x³</div>
+<div class="formula-line">f(x) = (a/3)·x<sup>−4</sup> + (2/a)·x³</div>
+
+<p><strong>Stap 2.</strong> Differentieer term voor term. De letter blijft staan als constante:</p>
+<div class="formula-line">f'(x) = (a/3) · (−4) · x<sup>−5</sup> + (2/a) · 3 · x²</div>
+<div class="formula-line">f'(x) = −(4a/3) · x<sup>−5</sup> + (6/a) · x²</div>
+
+<p><strong>Stap 3.</strong> Schrijf terug zonder negatieve exponenten:</p>
+<div class="formula-line">f'(x) = −4a/(3x⁵) + 6x²/a</div>
+</div>
+</div>
+
+<div class="regel" style="background:#fef3c7; border-color:#fcd34d;">
+<span class="regel-label" style="background:#ca8a04;">LET OP</span>
+Een <strong>letterparameter</strong> (zoals <strong>a</strong> of <strong>b</strong>) is geen variabele — die telt mee als getal. Alleen <strong>x</strong> wordt gedifferentieerd.<br>
+Bij <strong>a</strong> in de <em>noemer</em>: schrijf de term als (2/a)·x³, niet als 2·x³/a in de afgeleide. Houd a in de breuk.
+</div>
+
 </div>
 
 <!-- ============================================================ -->

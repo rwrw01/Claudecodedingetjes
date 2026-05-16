@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oefentoets H7 Zuren — Klaar voor 29 mei? — Voor Kasper</title>
+<style>
+:root {
+  --primary:#7c3aed;
+  --primary-soft:#ede9fe;
+  --primary-dark:#5b21b6;
+  --accent:#0891b2;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header.page-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; }
+header.page-header p { font-size: 1.1rem; opacity: 0.92; }
+header.page-header .toetsinfo {
+  margin-top: 1rem;
+  display: inline-block;
+  background: rgba(255,255,255,0.15);
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 8rem; }
+
+.timer {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: var(--primary);
+  color: white;
+  padding: 0.85rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  z-index: 100;
+  font-variant-numeric: tabular-nums;
+}
+.timer.warning { background: #f59e0b; }
+.timer.danger { background: #dc2626; animation: pulse 1s infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.toets-info-box {
+  background: linear-gradient(135deg, var(--primary-soft), #ddd6fe);
+  border: 2px solid #c4b5fd;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.toets-info-box h2 { color: var(--primary-dark); margin-bottom: 0.8rem; font-size: 1.2rem; }
+.toets-info-box ul { list-style: none; padding: 0; }
+.toets-info-box li { padding: 0.3rem 0 0.3rem 1.6rem; position: relative; font-size: 0.96rem; }
+.toets-info-box li:before { content: "•"; position: absolute; left: 0.6rem; color: var(--primary); font-weight: 700; }
+.btn-start {
+  background: var(--primary); color: white;
+  border: none; border-radius: 10px;
+  padding: 1rem 2rem; font-size: 1.1rem;
+  font-weight: 700; cursor: pointer;
+  margin-top: 1rem; font-family: inherit;
+}
+.btn-start:hover { background: var(--primary-dark); }
+
+.opgave {
+  background: var(--card); border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.opg-header {
+  display: flex; align-items: baseline; gap: 0.8rem;
+  margin-bottom: 0.8rem; flex-wrap: wrap;
+}
+.opg-num {
+  background: var(--primary); color: white;
+  font-size: 1.05rem; font-weight: 700;
+  padding: 0.35rem 0.9rem; border-radius: 5px;
+}
+.opg-titel { color: var(--primary-dark); font-size: 1.2rem; font-weight: 700; flex: 1; }
+.opg-pt-totaal {
+  background: #f3f4f6; color: var(--text-soft);
+  padding: 0.2rem 0.7rem; border-radius: 4px;
+  font-size: 0.85rem; font-weight: 600;
+}
+.deelvraag {
+  margin: 1.2rem 0;
+  border-left: 3px solid #ddd6fe;
+  padding-left: 1.1rem;
+}
+.deelvraag-label {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 0.4rem; flex-wrap: wrap;
+}
+.deelvraag-label .vraag {
+  font-weight: 600; flex: 1 1 70%;
+}
+.deelvraag-label .punten {
+  background: var(--primary-soft); color: var(--primary-dark);
+  font-size: 0.78rem; padding: 0.15rem 0.6rem;
+  border-radius: 4px; font-weight: 700;
+}
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.1rem; background: #f5f5f4;
+  border-left: 4px solid var(--primary);
+  padding: 0.6rem 1rem; margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+input[type=text].toets-input {
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.5rem 0.8rem; font-size: 1rem;
+  width: 220px; font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+input[type=text].toets-input:focus { outline: none; border-color: var(--primary); }
+input[type=text].toets-input.correct { border-color: #16a34a; background: #f0fdf4; }
+input[type=text].toets-input.incorrect { border-color: #dc2626; background: #fff1f2; }
+textarea.toets-textarea {
+  width: 100%; font-size: 1rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.6rem; font-family: inherit; resize: vertical;
+}
+
+.score-bar {
+  position: sticky; bottom: 0;
+  background: var(--card); border-top: 2px solid var(--primary);
+  padding: 1.2rem 1.5rem;
+  margin: 2rem -1rem 0;
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  justify-content: center; align-items: center;
+  z-index: 50;
+}
+.btn-score {
+  background: var(--primary); color: white;
+  border: none; border-radius: 10px;
+  padding: 0.85rem 1.8rem; font-size: 1.05rem;
+  font-weight: 700; cursor: pointer;
+  font-family: inherit;
+}
+.btn-score:hover { background: var(--primary-dark); }
+.btn-reset {
+  background: white; color: var(--primary-dark);
+  border: 2px solid var(--primary); border-radius: 10px;
+  padding: 0.85rem 1.5rem; font-size: 1rem;
+  font-weight: 600; cursor: pointer; font-family: inherit;
+}
+.btn-reset:hover { background: var(--primary-soft); }
+
+.cijfer-formule {
+  text-align: center; padding: 1rem;
+  background: #f3f4f6; border-radius: 8px;
+  font-size: 0.95rem; color: var(--text-soft);
+  margin-top: 1.5rem; font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+
+.score-result {
+  display: none;
+  background: linear-gradient(135deg, var(--primary-soft), #ddd6fe);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 2rem 0;
+  text-align: center;
+}
+.score-result.show { display: block; }
+.score-result h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.score-result .punten {
+  font-size: 2.5rem; font-weight: 700;
+  color: var(--primary-dark);
+  margin: 0.5rem 0;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.score-result .cijfer {
+  font-size: 4rem; font-weight: 700;
+  color: var(--primary);
+  margin: 0.5rem 0;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.score-result .message {
+  font-size: 1.1rem; margin-top: 1rem;
+  color: var(--primary-dark);
+}
+
+.uitwerkingen {
+  display: none;
+  margin-top: 2rem;
+}
+.uitwerkingen.show { display: block; }
+.uitwerking {
+  background: #f0fdf4; border: 2px solid #86efac;
+  border-radius: 10px; padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.uitwerking h3 {
+  color: #15803d; margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+}
+.uitwerking ol { margin: 0.4rem 0 0 1.4rem; }
+.uitwerking li { margin: 0.4rem 0; font-size: 0.96rem; }
+.uitwerking .pt-detail {
+  background: white; padding: 0.5rem 0.9rem;
+  margin: 0.4rem 0; border-radius: 6px;
+  border-left: 3px solid #86efac;
+  font-size: 0.93rem;
+}
+
+footer {
+  text-align: center; padding: 2rem 1rem 5rem;
+  font-size: 0.85rem; color: var(--text-soft);
+  border-top: 1px solid var(--border); margin-top: 2rem;
+}
+footer a { color: var(--primary); }
+sub { font-size: 0.75em; vertical-align: sub; }
+sup { font-size: 0.75em; vertical-align: super; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Oefentoets H7 Zuren</h1>
+  <p>Simuleer de toetssituatie. Zelfde format als Math with Menno: 50 min, 4 opgaven, 40 punten.</p>
+  <span class="toetsinfo">Klaar voor 29 mei 2026?</span>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a> &rsaquo;
+  <a href="../../index.html">Scheikunde</a> &rsaquo;
+  <a href="../../havo-4/index.html">HAVO 4</a> &rsaquo;
+  <a href="../index.html">H7 Zuren</a> &rsaquo;
+  Oefentoets
+</div>
+
+<div class="container">
+
+  <div class="toets-info-box" id="toets-intro">
+    <h2>Voor je begint</h2>
+    <ul>
+      <li><strong>Duur:</strong> 50 minuten (timer rechtsonder, kleur verandert bij &lt;10 min)</li>
+      <li><strong>Aantal opgaven:</strong> 4 met deelvragen, totaal 40 punten</li>
+      <li><strong>Toegestaan:</strong> rekenmachine, Binas (52A indicatoren, 99 atoommassa's, 104 molecuulmassa's, 37I formules)</li>
+      <li><strong>Significantie:</strong> let op het aantal sign cijfers in je antwoord — je verliest punten als je dit fout doet</li>
+      <li><strong>Tussenstappen opschrijven</strong> — punten komen ook van je berekening, niet alleen van het eindgetal</li>
+      <li>Je antwoorden worden bewaard als je de pagina ververst (timer reset wel)</li>
+    </ul>
+    <button class="btn-start" onclick="startToets()">Start toets &rarr;</button>
+  </div>
+
+  <div id="timer" class="timer" style="display:none;">50:00</div>
+
+  <!-- OPGAVE 1 -->
+  <div class="opgave">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 1</span>
+      <span class="opg-titel">Cyaanwaterstofzuur</span>
+      <span class="opg-pt-totaal">8 punten</span>
+    </div>
+
+    <p>Cyaanwaterstof (HCN) is een vloeibaar zuur dat in pruimen- en abrikozenpitten voorkomt. Een laborant lost 0,540 g HCN op in water tot een totaal volume van 200 mL. M(HCN) = 27,0 g mol<sup>−1</sup>.</p>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>a.</strong> Geef de reactievergelijking met toestandsaanduidingen voor het oplossen van HCN in water. HCN staat één H<sup>+</sup>-ion af.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <textarea id="t1a" class="toets-textarea" rows="2"></textarea>
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>b.</strong> Welk soort binding wordt in deze reactie verbroken?</span>
+        <span class="punten">1 pt</span>
+      </div>
+      <input type="text" id="t1b" class="toets-input">
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>c.</strong> Wat is de formule van de zuurrest van HCN?</span>
+        <span class="punten">1 pt</span>
+      </div>
+      <input type="text" id="t1c" class="toets-input">
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>d.</strong> Bereken het aantal mol HCN in de oplossing.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t1d" class="toets-input"> mol
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>e.</strong> Bereken de molariteit van HCN.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t1e" class="toets-input"> mol L<sup>−1</sup>
+    </div>
+  </div>
+
+  <!-- OPGAVE 2 -->
+  <div class="opgave">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 2</span>
+      <span class="opg-titel">WC-ontkalker met zwavelzuur</span>
+      <span class="opg-pt-totaal">12 punten</span>
+    </div>
+
+    <p>Op een fles WC-ontkalker staat: 4,90 g zwavelzuur per 100 mL oplossing. M(H<sub>2</sub>SO<sub>4</sub>) = 98,1 g mol<sup>−1</sup>. Neem aan dat beide H-atomen in water reageren.</p>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>a.</strong> Geef de reactievergelijking van zwavelzuur in water met toestandsaanduidingen.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <textarea id="t2a" class="toets-textarea" rows="2"></textarea>
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>b.</strong> Bereken de molariteit van H<sub>2</sub>SO<sub>4</sub> in de fles (mol L<sup>−1</sup>).</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t2b" class="toets-input"> M
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>c.</strong> Bereken [H<sup>+</sup>] in de fles (M).</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t2c" class="toets-input"> M
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>d.</strong> Bereken de pH van de oplossing in de fles (let op significantie).</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t2d" class="toets-input">
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>e.</strong> 50 mL van de ontkalker wordt verdund tot 500 mL. Bereken de pH van deze verdunde oplossing.</span>
+        <span class="punten">3 pt</span>
+      </div>
+      <input type="text" id="t2e" class="toets-input">
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>f.</strong> Een huishouden gebruikt de onverdunde ontkalker. Op de verpakking staat een waarschuwing voor huidcontact. Leg in één zin uit waarom dit gevaarlijk is op basis van je pH-resultaat.</span>
+        <span class="punten">1 pt</span>
+      </div>
+      <textarea id="t2f" class="toets-textarea" rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- OPGAVE 3 -->
+  <div class="opgave">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 3</span>
+      <span class="opg-titel">Mineraalwater — calcium en sulfaat</span>
+      <span class="opg-pt-totaal">10 punten</span>
+    </div>
+
+    <p>Op het etiket van een mineraalwater staat:</p>
+    <ul style="margin-left:1.6rem;">
+      <li>Calcium-ionen: 240 mg L<sup>−1</sup></li>
+      <li>Sulfaat-ionen: 480 mg L<sup>−1</sup></li>
+    </ul>
+    <p>Een chemicus beweert: <em>"Het calcium en sulfaat in dit water komt volledig uit opgelost calciumsulfaat (CaSO<sub>4</sub>)."</em></p>
+    <p>M(Ca) = 40,1 g mol<sup>−1</sup>, M(SO<sub>4</sub>) = 96,1 g mol<sup>−1</sup>, M(CaSO<sub>4</sub>) = 136,1 g mol<sup>−1</sup>.</p>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>a.</strong> Bereken het aantal mol Ca<sup>2+</sup>-ionen per liter.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t3a" class="toets-input"> mol L<sup>−1</sup>
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>b.</strong> Bereken het aantal mol SO<sub>4</sub><sup>2−</sup>-ionen per liter.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t3b" class="toets-input"> mol L<sup>−1</sup>
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>c.</strong> Toon door middel van een berekening aan of de bewering van de chemicus klopt. Geef expliciet een conclusie-zin.</span>
+        <span class="punten">4 pt</span>
+      </div>
+      <textarea id="t3c" class="toets-textarea" rows="4"></textarea>
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>d.</strong> Welke andere mogelijke verbinding levert overschietend sulfaat of overschietend calcium? Noem één voorbeeld dat zinvol is in mineraalwater.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <textarea id="t3d" class="toets-textarea" rows="2"></textarea>
+    </div>
+  </div>
+
+  <!-- OPGAVE 4 -->
+  <div class="opgave">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 4</span>
+      <span class="opg-titel">Nitraat in slootwater — ijklijn + indicator</span>
+      <span class="opg-pt-totaal">10 punten</span>
+    </div>
+
+    <p>Een student onderzoekt het nitraatgehalte van slootwater met een fotometrische methode. Hij neemt 4,00 mL slootwater, verdunt met gedestilleerd water tot 20,00 mL en meet de absorbantie. Op de ijklijn leest hij af: 1,8 mg L<sup>−1</sup> nitraat-ionen (in het verdunde monster). De norm voor zwemwater is maximaal 10 mg L<sup>−1</sup> nitraat.</p>
+
+    <p>Daarnaast meet hij de pH met een pH-meter: pH = 8,2.</p>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>a.</strong> Bereken de verdunningsfactor.</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t4a" class="toets-input">
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>b.</strong> Bereken het oorspronkelijke nitraatgehalte in mg L<sup>−1</sup>. Toon door middel van een berekening aan of het slootwater aan de norm voldoet.</span>
+        <span class="punten">3 pt</span>
+      </div>
+      <textarea id="t4b" class="toets-textarea" rows="3"></textarea>
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>c.</strong> Bereken [H<sup>+</sup>] uit pH = 8,2 (in de juiste significantie).</span>
+        <span class="punten">2 pt</span>
+      </div>
+      <input type="text" id="t4c" class="toets-input"> M
+    </div>
+
+    <div class="deelvraag">
+      <div class="deelvraag-label">
+        <span class="vraag"><strong>d.</strong> De student wil met één indicator van Binas-tabel 52A snel laten zien dat de pH van het slootwater <em>boven</em> 7 ligt. Welke indicator kiest hij, en welke kleur ziet hij?</span>
+        <span class="punten">3 pt</span>
+      </div>
+      <textarea id="t4d" class="toets-textarea" rows="3"></textarea>
+    </div>
+  </div>
+
+  <!-- Score bar -->
+  <div class="cijfer-formule">
+    <strong>Cijferformule:</strong> cijfer = (punten / 40) &times; 9 + 1
+  </div>
+
+  <div class="score-bar">
+    <button class="btn-score" onclick="berekenScore()">Score berekenen</button>
+    <button class="btn-reset" onclick="resetToets()">Reset toets</button>
+  </div>
+
+  <div class="score-result" id="score-result">
+    <h2>Resultaat</h2>
+    <div class="punten" id="punten-tekst">0 / 40 punten</div>
+    <div class="cijfer" id="cijfer-tekst">1,0</div>
+    <div class="message" id="score-message"></div>
+  </div>
+
+  <div class="uitwerkingen" id="uitwerkingen">
+    <h2 style="color:var(--primary-dark); margin: 2rem 0 1rem;">Uitwerkingen</h2>
+
+    <div class="uitwerking">
+      <h3>Opgave 1 — Cyaanwaterstofzuur</h3>
+      <ol>
+        <li><strong>1a (2pt):</strong> HCN (l) → H<sup>+</sup> (aq) + CN<sup>−</sup> (aq)
+          <div class="pt-detail">1 pt vergelijking met pijl + producten; 1 pt correcte toestandsaanduidingen overal.</div>
+        </li>
+        <li><strong>1b (1pt):</strong> atoombinding</li>
+        <li><strong>1c (1pt):</strong> CN<sup>−</sup> (cyanide-ion)</li>
+        <li><strong>1d (2pt):</strong> mol HCN = 0,540 / 27,0 = 0,0200 mol
+          <div class="pt-detail">1 pt formule mol=gram/M-molair; 1 pt correct getal met sign cijfers.</div>
+        </li>
+        <li><strong>1e (2pt):</strong> molariteit = 0,0200 / 0,200 = 0,100 mol L<sup>−1</sup>
+          <div class="pt-detail">1 pt formule M=mol/V (V in L); 1 pt correct getal.</div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="uitwerking">
+      <h3>Opgave 2 — WC-ontkalker</h3>
+      <ol>
+        <li><strong>2a (2pt):</strong> H<sub>2</sub>SO<sub>4</sub> (l) → 2 H<sup>+</sup> (aq) + SO<sub>4</sub><sup>2−</sup> (aq)
+          <div class="pt-detail">1 pt factor 2 in de vergelijking; 1 pt toestandsaanduidingen.</div>
+        </li>
+        <li><strong>2b (2pt):</strong> mol H<sub>2</sub>SO<sub>4</sub> = 4,90 / 98,1 = 0,0500 mol per 100 mL. M = 0,0500 / 0,100 = 0,500 M (3 sign cijfers).
+          <div class="pt-detail">1 pt mol-berekening; 1 pt M-berekening.</div>
+        </li>
+        <li><strong>2c (2pt):</strong> [H<sup>+</sup>] = 2 × 0,500 = 1,00 M
+          <div class="pt-detail">1 pt factor 2 toegepast; 1 pt getal.</div>
+        </li>
+        <li><strong>2d (2pt):</strong> pH = &minus;log (1,00) = 0,000 → 3 sign cijfers in [H<sup>+</sup>] → 3 decimalen → pH = 0,000 (of pH = 0)
+          <div class="pt-detail">1 pt &minus;log toegepast; 1 pt significantie.</div>
+        </li>
+        <li><strong>2e (3pt):</strong> 50 mL verdund tot 500 mL = factor 10 verdund. Nieuwe [H<sup>+</sup>] = 1,00 / 10 = 0,100 M. pH = &minus;log (0,100) = 1,00 (3 sign cijfers in [H<sup>+</sup>] → 2 decimalen, mathematisch: 0,100 heeft 3 sign → pH 2 dec. Daarom pH = 1,00).
+          <div class="pt-detail">1 pt verdunningsfactor; 1 pt [H<sup>+</sup>] nieuw; 1 pt pH correct.</div>
+        </li>
+        <li><strong>2f (1pt):</strong> pH 0 (of zelfs negatief) betekent enorme H<sup>+</sup>-concentratie — sterk corrosief, geeft chemische brandwonden bij huidcontact.</li>
+      </ol>
+    </div>
+
+    <div class="uitwerking">
+      <h3>Opgave 3 — Mineraalwater</h3>
+      <ol>
+        <li><strong>3a (2pt):</strong> mol Ca<sup>2+</sup> = 240·10<sup>−3</sup> / 40,1 = 5,99·10<sup>−3</sup> ≈ 6,0·10<sup>−3</sup> mol L<sup>−1</sup>
+          <div class="pt-detail">1 pt omrekening mg→g→mol; 1 pt correct getal.</div>
+        </li>
+        <li><strong>3b (2pt):</strong> mol SO<sub>4</sub><sup>2−</sup> = 480·10<sup>−3</sup> / 96,1 = 4,99·10<sup>−3</sup> ≈ 5,0·10<sup>−3</sup> mol L<sup>−1</sup>
+          <div class="pt-detail">Idem.</div>
+        </li>
+        <li><strong>3c (4pt):</strong> In CaSO<sub>4</sub> is de verhouding Ca:SO<sub>4</sub> = 1:1. In het water: Ca = 6,0·10<sup>−3</sup> en SO<sub>4</sub> = 5,0·10<sup>−3</sup>. Verhouding ≈ 6:5, niet 1:1. Er is meer Ca dan SO<sub>4</sub>. <strong>Conclusie: de bewering klopt niet</strong>; het overschot calcium moet uit een ander zout komen.
+          <div class="pt-detail">1 pt verhouding 1:1 voor CaSO<sub>4</sub> noemen; 1 pt mol-verhouding berekenen (6:5 of ratio); 1 pt vergelijking met 1:1; 1 pt conclusie-zin.</div>
+        </li>
+        <li><strong>3d (2pt):</strong> Voorbeelden van mogelijke extra calcium-zouten: calciumcarbonaat (CaCO<sub>3</sub>) of calciumwaterstofcarbonaat (Ca(HCO<sub>3</sub>)<sub>2</sub>, gewone hardheid). Of in geval van overschot sulfaat: natriumsulfaat. Eén voorbeeld benoemen met argument.</li>
+      </ol>
+    </div>
+
+    <div class="uitwerking">
+      <h3>Opgave 4 — Slootwater nitraat + pH</h3>
+      <ol>
+        <li><strong>4a (2pt):</strong> verdunningsfactor = 20,00 / 4,00 = 5,00</li>
+        <li><strong>4b (3pt):</strong> oorspronkelijk = 1,8 × 5 = 9,0 mg L<sup>−1</sup>. Norm = 10 mg L<sup>−1</sup>. 9,0 &lt; 10 → <strong>voldoet aan de norm.</strong>
+          <div class="pt-detail">1 pt vermenigvuldiging; 1 pt vergelijking met norm; 1 pt conclusie.</div>
+        </li>
+        <li><strong>4c (2pt):</strong> [H<sup>+</sup>] = 10<sup>−8,2</sup> = 6 · 10<sup>−9</sup> M (1 decimaal in pH → 1 sign cijfer)
+          <div class="pt-detail">1 pt formule [H<sup>+</sup>] = 10<sup>−pH</sup>; 1 pt sign cijfers correct.</div>
+        </li>
+        <li><strong>4d (3pt):</strong> Goede keuze: <strong>fenolftaleïne</strong> (omslag 8,3-10,0). Bij pH 8,2 ligt het net onder het traject → bijna kleurloos / heel zwak roze. Beter: <strong>fenolrood</strong> (6,8-8,4): bij pH 8,2 ligt het in het traject → oranje-rood/rode kleur. Of expliciet boven 7 aantonen met: <strong>broomthymolblauw</strong> (6,0-7,6) → pH 8,2 ligt boven → blauwe kleur (toont aan dat pH ≥ 7,6, dus boven 7). Goed antwoord (3 pt): broomthymolblauw → blauw, of methylrood (4,4-6,2) → bij pH 8,2 ver boven traject → geel, toont aan dat pH boven 6,2.
+          <div class="pt-detail">1 pt indicator-keuze; 1 pt traject; 1 pt kleur + uitleg waarom pH &gt; 7.</div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <footer>
+    <p>Gemaakt door Ralph Wagter met Claude Code. Vrij hergebruik onder <a href="https://eupl.eu/1.2/nl/">EUPL-1.2</a>. &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub repo</a></p>
+  </footer>
+</div>
+
+<script>
+// ---- Timer ----
+const TIMER_DURATION = 50 * 60; // seconden
+let timerSeconds = TIMER_DURATION;
+let timerInterval = null;
+const timerEl = document.getElementById('timer');
+
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+}
+
+function updateTimer() {
+  timerEl.textContent = formatTime(timerSeconds);
+  timerEl.classList.remove('warning','danger');
+  if (timerSeconds <= 120) timerEl.classList.add('danger');
+  else if (timerSeconds <= 600) timerEl.classList.add('warning');
+}
+
+function tick() {
+  if (timerSeconds > 0) {
+    timerSeconds--;
+    updateTimer();
+  } else {
+    clearInterval(timerInterval);
+    alert('De tijd is op! Klik op "Score berekenen" om je werk in te leveren.');
+  }
+}
+
+function startToets() {
+  document.getElementById('toets-intro').style.display = 'none';
+  timerEl.style.display = 'block';
+  updateTimer();
+  timerInterval = setInterval(tick, 1000);
+}
+
+// ---- Antwoorden persistent ----
+const FIELDS = ['t1a','t1b','t1c','t1d','t1e',
+                't2a','t2b','t2c','t2d','t2e','t2f',
+                't3a','t3b','t3c','t3d',
+                't4a','t4b','t4c','t4d'];
+const STORAGE_KEY = 'h7-oefentoets-answers';
+
+function saveAnswers() {
+  const data = {};
+  FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) data[id] = el.value;
+  });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadAnswers() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    FIELDS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && data[id]) el.value = data[id];
+    });
+  } catch(e) {}
+}
+
+FIELDS.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', saveAnswers);
+});
+loadAnswers();
+
+// ---- Score berekenen ----
+function normalize(s) {
+  return (s || '').toString().toLowerCase()
+    .replace(/\^/g, '').replace(/_/g, '')
+    .replace(/\s+/g, ' ').replace(/,/g, '.').trim();
+}
+function stripSpaces(s) { return s.replace(/\s/g, ''); }
+function matchText(value, accepts) {
+  const user = normalize(value);
+  if (!user) return false;
+  const userStripped = stripSpaces(user);
+  return accepts.some(a => {
+    const aa = normalize(a);
+    if (!aa) return false;
+    if (user === aa) return true;
+    return stripSpaces(aa) === userStripped;
+  });
+}
+function parseNumber(s) {
+  if (!s) return NaN;
+  const norm = s.toString().toLowerCase()
+    .replace(/,/g, '.').replace(/\s/g, '')
+    .replace(/·/g, '*').replace(/×/g, '*').replace(/−/g, '-');
+  const sci = norm.match(/^([\-\+]?\d*\.?\d*)\*?10\^?([\-\+]?\d+)$/);
+  if (sci) {
+    const cs = sci[1];
+    const c = (cs === '' || cs === '+' || cs === '-') ? parseFloat(cs + '1') : parseFloat(cs);
+    return c * Math.pow(10, parseFloat(sci[2]));
+  }
+  return parseFloat(norm);
+}
+function matchNumeric(value, target, tol) {
+  const u = parseNumber(value);
+  if (isNaN(u)) return false;
+  return Math.abs(u - target) <= tol;
+}
+// Voor textareas die niet automatisch te beoordelen zijn: 'open' — punten worden niet auto-toegekend; toets ze handmatig met de uitwerking.
+
+const SCORING = [
+  // [veld-id, type, args, maxpt]
+  // Opgave 1 (8 pt)
+  { id:'t1a', type:'manual', max:2 }, // vergelijking
+  { id:'t1b', type:'text', accept:['atoombinding','covalent','covalente binding'], max:1 },
+  { id:'t1c', type:'text', accept:['cn-','cn','cyanide','cyanide-ion'], max:1 },
+  { id:'t1d', type:'num', target:0.0200, tol:0.0005, max:2 },
+  { id:'t1e', type:'num', target:0.100, tol:0.005, max:2 },
+
+  // Opgave 2 (12 pt)
+  { id:'t2a', type:'manual', max:2 },
+  { id:'t2b', type:'num', target:0.500, tol:0.02, max:2 },
+  { id:'t2c', type:'num', target:1.00, tol:0.05, max:2 },
+  { id:'t2d', type:'num', target:0.00, tol:0.05, max:2 },
+  { id:'t2e', type:'num', target:1.00, tol:0.05, max:3 },
+  { id:'t2f', type:'manual', max:1 },
+
+  // Opgave 3 (10 pt)
+  { id:'t3a', type:'num', target:6.0e-3, tol:3e-4, max:2 },
+  { id:'t3b', type:'num', target:5.0e-3, tol:3e-4, max:2 },
+  { id:'t3c', type:'manual', max:4 },
+  { id:'t3d', type:'manual', max:2 },
+
+  // Opgave 4 (10 pt)
+  { id:'t4a', type:'numOrText', target:5.00, tol:0.1, accept:['5','5x','factor 5','vijf','5,0','5.0'], max:2 },
+  { id:'t4b', type:'manual', max:3 },
+  { id:'t4c', type:'num', target:6e-9, tol:1e-9, max:2 },
+  { id:'t4d', type:'manual', max:3 },
+];
+
+function evaluate() {
+  let auto = 0, autoMax = 0;
+  const breakdown = [];
+  SCORING.forEach(item => {
+    const el = document.getElementById(item.id);
+    const val = el ? el.value : '';
+    let pt = null; // null = open / manual; getal = punten
+    if (item.type === 'text') {
+      if (matchText(val, item.accept)) pt = item.max;
+      else pt = 0;
+    } else if (item.type === 'num') {
+      if (matchNumeric(val, item.target, item.tol)) pt = item.max;
+      else pt = 0;
+    } else if (item.type === 'numOrText') {
+      const okNum = matchNumeric(val, item.target, item.tol);
+      const okTxt = matchText(val, item.accept);
+      pt = (okNum || okTxt) ? item.max : 0;
+    } else if (item.type === 'manual') {
+      // niet auto te beoordelen
+      pt = null;
+    }
+    if (pt !== null) {
+      auto += pt;
+      autoMax += item.max;
+    }
+    breakdown.push({id:item.id, pt:pt, max:item.max, manual: (item.type==='manual')});
+  });
+  return {auto, autoMax, breakdown};
+}
+
+function berekenScore() {
+  const { auto, autoMax, breakdown } = evaluate();
+  const totalMax = 40;
+  // Voor manual-velden: deel hetzelfde percentage uit als auto (voorlopige schatting).
+  const autoPct = autoMax > 0 ? auto / autoMax : 0;
+  const manualMax = totalMax - autoMax;
+  const manualEstimate = Math.round(autoPct * manualMax);
+  const totaal = auto + manualEstimate;
+  const cijfer = (totaal / totalMax) * 9 + 1;
+
+  document.getElementById('punten-tekst').textContent =
+    auto + ' / ' + autoMax + ' automatisch + ' + manualEstimate + '/' + manualMax + ' open vragen (schatting)';
+  document.getElementById('cijfer-tekst').textContent = cijfer.toFixed(1).replace('.', ',');
+
+  let msg = '';
+  if (cijfer >= 7.5) msg = 'Sterk gedaan! Klaar voor de toets.';
+  else if (cijfer >= 6.5) msg = 'Voldoende. Bekijk de uitwerkingen en oefen waar het knelde.';
+  else if (cijfer >= 5.5) msg = 'Net voldoende. Bekijk de uitwerkingen aandachtig.';
+  else msg = 'Nog niet veilig. Loop de dagen 1-4 nog eens door en doe de synthese opnieuw.';
+
+  msg += ' Let op: de open vragen (vergelijkingen, conclusies, uitleg) zijn geschat — kijk de uitwerking en geef jezelf eerlijk punten.';
+
+  document.getElementById('score-message').textContent = msg;
+  document.getElementById('score-result').classList.add('show');
+  document.getElementById('uitwerkingen').classList.add('show');
+
+  // Markeer velden visueel
+  breakdown.forEach(b => {
+    const el = document.getElementById(b.id);
+    if (!el) return;
+    if (b.manual) {
+      el.style.borderColor = '#fcd34d';
+      el.style.background = '#fffbeb';
+    } else if (b.pt === b.max) {
+      el.style.borderColor = '#16a34a';
+      el.style.background = '#f0fdf4';
+    } else {
+      el.style.borderColor = '#dc2626';
+      el.style.background = '#fff1f2';
+    }
+  });
+
+  // Stop timer
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+  // Scroll naar resultaat
+  document.getElementById('score-result').scrollIntoView({behavior:'smooth'});
+}
+
+function resetToets() {
+  if (!confirm('Weet je het zeker? Alle antwoorden worden gewist en de timer reset.')) return;
+  FIELDS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.value = '';
+      el.style.borderColor = '';
+      el.style.background = '';
+    }
+  });
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('score-result').classList.remove('show');
+  document.getElementById('uitwerkingen').classList.remove('show');
+  timerSeconds = TIMER_DURATION;
+  if (timerInterval) clearInterval(timerInterval);
+  timerInterval = null;
+  document.getElementById('timer').style.display = 'none';
+  document.getElementById('toets-intro').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>

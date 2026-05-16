@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 1 — Zuren als deeltje + reactievergelijkingen — Scheikunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --primary-dark:#1e3a8a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header.page-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; }
+header.page-header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li {
+  padding: 0.4rem 0 0.4rem 1.6rem;
+  position: relative;
+}
+.intro li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  color: var(--primary);
+  font-weight: 700;
+}
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.tip-box {
+  background: #ecfeff;
+  border: 1px solid #67e8f9;
+  border-left: 4px solid #0891b2;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.tip-box strong { color: #0e7490; }
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.toggle-btn:hover { background: var(--primary-soft); }
+.toggle-content { display: none; margin-top: 0.8rem; }
+.toggle-content.open { display: block; }
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 {
+  color: #0c4a6e;
+  margin-bottom: 0.6rem;
+  font-size: 1.05rem;
+}
+.try-it p { margin: 0.5rem 0; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label {
+  flex: 1 1 220px;
+  font-size: 0.98rem;
+}
+.q-row input[type=text] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 180px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1.5px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.zuur-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.96rem;
+}
+.zuur-tabel th, .zuur-tabel td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}
+.zuur-tabel th {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+.zuur-tabel td.formule {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.05rem;
+}
+.structuur {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.1rem;
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  margin: 0.8rem 0;
+  white-space: pre;
+  line-height: 1.4;
+  overflow-x: auto;
+}
+.toets-sectie {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  border: 2px solid #c4b5fd;
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.toets-sectie h2 { color: #6d28d9; border-bottom-color: #c4b5fd; }
+.toets-sectie .opgave-label {
+  display: inline-block;
+  background: #6d28d9;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label {
+  display: block;
+  padding: 0.45rem 0;
+  cursor: pointer;
+}
+.checklist input { margin-right: 0.6rem; transform: scale(1.2); }
+.nav-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+.nav-bottom a {
+  flex: 1 1 200px;
+  background: var(--card);
+  border: 2px solid var(--primary);
+  color: var(--primary-dark);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+.nav-bottom a:hover { background: var(--primary-soft); }
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+footer a { color: var(--primary); }
+sub { font-size: 0.75em; vertical-align: sub; }
+sup { font-size: 0.75em; vertical-align: super; }
+.math { font-family: 'STIX Two Math','Cambria Math','Georgia',serif; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Dag 1 — Zuren als deeltje + reactievergelijkingen</h1>
+  <p>Wat ís een zuur eigenlijk? Macro en micro. Plus reactievergelijking met (aq)/(l)/(g)/(s).</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a> &rsaquo;
+  <a href="../../index.html">Scheikunde</a> &rsaquo;
+  <a href="../../havo-4/index.html">HAVO 4</a> &rsaquo;
+  <a href="../index.html">H7 Zuren</a> &rsaquo;
+  Dag 1
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Wat je vandaag leert</h2>
+    <ul>
+      <li>Verschil tussen <strong>macroniveau</strong> en <strong>microniveau</strong> bij zuren</li>
+      <li>De definitie: een zuur is een deeltje dat een H<sup>+</sup>-ion kan afstaan</li>
+      <li>Formules van zes belangrijke zuren uit je hoofd kennen</li>
+      <li>Een reactievergelijking opschrijven met de juiste toestandsaanduidingen</li>
+      <li>Hoe carbonzuren werken: alleen de COOH-groep reageert</li>
+      <li>Hoeveel H<sup>+</sup>-ionen een meerwaardig zuur kan afstaan (1, 2 of 3)</li>
+    </ul>
+  </div>
+
+  <!-- SECTIE 1: Macro vs micro -->
+  <section class="section">
+    <h2>1. Wat is een zuur? Twee niveaus.</h2>
+
+    <p>In het boek staan twee definities — eentje voor wat je <em>ziet</em>, en eentje voor wat er <em>echt</em> gebeurt met de deeltjes. Voor de toets moet je ze allebei kennen.</p>
+
+    <h3>Op macroniveau (wat je waarneemt)</h3>
+    <p>Een zuur is een stof die in oplossing de pH verlaagt en het geleidingsvermogen verhoogt.</p>
+
+    <h3>Op microniveau (wat er met de deeltjes gebeurt)</h3>
+    <p>Een zuur is een deeltje dat een H<sup>+</sup>-ion kan afstaan aan water. Daarbij ontstaat een vaak negatief geladen zuurrest.</p>
+
+    <div class="regel">
+      <span class="regel-label">Onthouden</span>
+      Macro = wat je meet (pH, geleiding). Micro = wat er gebeurt (H<sup>+</sup> wordt afgestaan).
+    </div>
+
+    <div class="tip-box">
+      <strong>Waarom geleidt zuur water stroom?</strong> Omdat er na het oplossen <em>ionen</em> in zitten (H<sup>+</sup> en de zuurrest), en ionen kunnen lading verplaatsen. Zuiver azijnzuur (zonder water) geleidt niet — er zijn dan geen vrije ionen.
+    </div>
+  </section>
+
+  <!-- SECTIE 2: Reactievergelijking -->
+  <section class="section">
+    <h2>2. Reactievergelijking — wat gebeurt er als je een zuur in water doet?</h2>
+
+    <p>Voorbeeld waterstofchloride (HCl). HCl is van zichzelf een gas. Als je dat in water doet, gebeurt dit:</p>
+
+    <div class="formula-line center">
+      HCl (g) &rarr; H<sup>+</sup> (aq) + Cl<sup>&minus;</sup> (aq)
+    </div>
+
+    <p>De atoombinding tussen H en Cl breekt. De elektronen blijven bij het Cl-atoom. Daardoor krijg je een positief H<sup>+</sup>-ion en een negatief Cl<sup>−</sup>-ion. Allebei worden door watermoleculen omringd (gehydrateerd) — dat zegt <strong>(aq)</strong>.</p>
+
+    <div class="regel">
+      <span class="regel-label">Toestandsaanduidingen</span>
+      <strong>(s)</strong> = vaste stof (solid) &middot; <strong>(l)</strong> = vloeibaar (liquid) &middot; <strong>(g)</strong> = gas &middot; <strong>(aq)</strong> = opgelost in water (aqueous)
+    </div>
+
+    <div class="tip-box">
+      <strong>Let op:</strong> de toestand <em>vóór</em> oplossen kan (g), (l) of (s) zijn. Na oplossing van een zuur in water krijg je altijd ionen met (aq).
+    </div>
+
+    <div class="regel">
+      <span class="regel-label">Veelgemaakte fout</span>
+      De binding in HCl heet een <strong>atoombinding</strong> (de H en Cl delen samen een elektronenpaar). Géén ionbinding. Pas als de binding breekt in water krijg je ionen — dáár zit de verwarring vaak. Op de toets: als ze vragen welke binding wordt verbroken, dan is het antwoord altijd <em>atoombinding</em>.
+    </div>
+
+    <h3>De oplossing krijgt een eigen naam</h3>
+    <p>Als je HCl-gas in water hebt opgelost, noem je de oplossing <strong>zoutzuur</strong>. De notatie is dan:</p>
+
+    <div class="formula-line center">
+      zoutzuur = H<sup>+</sup> (aq) + Cl<sup>&minus;</sup> (aq)
+    </div>
+
+    <p>Op de toets schrijf je liever de gesplitste vorm: <strong>H<sup>+</sup> (aq) + Cl<sup>−</sup> (aq)</strong>. Dat laat zien dat je begrijpt dát er ionen ontstaan. "HCl (aq)" zie je soms ook staan, maar de gesplitste vorm is beter.</p>
+
+    <div class="try-it">
+      <h4>Probeer zelf — toestandsaanduidingen</h4>
+      <p>Salpeterzuur HNO<sub>3</sub> is een vloeibaar zuur. Als je het in water doet, splitst het in een H<sup>+</sup>-ion en een nitraat-ion (NO<sub>3</sub><sup>−</sup>).</p>
+
+      <div class="q-row">
+        <label>1a. Toestand van HNO<sub>3</sub> vóór oplossen?</label>
+        <input type="text" id="q1a" data-accept="(l)|l|vloeibaar|vloeistof">
+        <button class="btn-check" onclick="checkText('q1a','f1a')">Check</button>
+      </div>
+      <div class="feedback" id="f1a"></div>
+
+      <div class="q-row">
+        <label>1b. Toestand van H<sup>+</sup> ná oplossen?</label>
+        <input type="text" id="q1b" data-accept="(aq)|aq|opgelost in water">
+        <button class="btn-check" onclick="checkText('q1b','f1b')">Check</button>
+      </div>
+      <div class="feedback" id="f1b"></div>
+
+      <div class="q-row">
+        <label>1c. Schrijf de complete reactievergelijking op (gebruik tekst, bv. "HNO3 (l) -> H+ (aq) + NO3- (aq)"):</label>
+      </div>
+      <textarea id="q1c" rows="2" style="width:100%;font-family:'STIX Two Math','Cambria Math','Georgia',serif;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s1c')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s1c">
+        <h5>Uitwerking</h5>
+        <p>HNO<sub>3</sub> (l) &rarr; H<sup>+</sup> (aq) + NO<sub>3</sub><sup>−</sup> (aq)</p>
+        <p>Let op: pijl niet '=', toestandsaanduidingen overal, H<sup>+</sup> en NO<sub>3</sub><sup>−</sup> beide met (aq).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 3: De zes zuren -->
+  <section class="section">
+    <h2>3. Zes zuren die je uit je hoofd moet kennen</h2>
+
+    <p>Op de toets verwachten ze dat je deze formules en namen kent zonder Binas. Leer ze nu vóórdat je verder gaat.</p>
+
+    <table class="zuur-tabel">
+      <thead>
+        <tr><th>Naam</th><th>Formule</th><th>Aantal H<sup>+</sup></th><th>Zuurrest</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>zoutzuur (HCl in water)</td><td class="formule">HCl</td><td>1</td><td class="formule">Cl<sup>−</sup></td></tr>
+        <tr><td>salpeterzuur</td><td class="formule">HNO<sub>3</sub></td><td>1</td><td class="formule">NO<sub>3</sub><sup>−</sup></td></tr>
+        <tr><td>zwavelzuur</td><td class="formule">H<sub>2</sub>SO<sub>4</sub></td><td>2</td><td class="formule">SO<sub>4</sub><sup>2−</sup></td></tr>
+        <tr><td>fosforzuur</td><td class="formule">H<sub>3</sub>PO<sub>4</sub></td><td>3</td><td class="formule">H<sub>2</sub>PO<sub>4</sub><sup>−</sup>, HPO<sub>4</sub><sup>2−</sup>, PO<sub>4</sub><sup>3−</sup></td></tr>
+        <tr><td>koolzuur</td><td class="formule">H<sub>2</sub>CO<sub>3</sub></td><td>2</td><td class="formule">HCO<sub>3</sub><sup>−</sup>, CO<sub>3</sub><sup>2−</sup></td></tr>
+        <tr><td>azijnzuur (ethaanzuur)</td><td class="formule">CH<sub>3</sub>COOH</td><td>1</td><td class="formule">CH<sub>3</sub>COO<sup>−</sup></td></tr>
+      </tbody>
+    </table>
+
+    <div class="tip-box">
+      <strong>Trucje voor de formules:</strong> kijk eerst hoeveel H's vooraan staan — dat is het aantal H<sup>+</sup>'s dat afgegeven kan worden. Bij carbonzuren als CH<sub>3</sub>COOH staat de "echte" H aan het einde (in COOH) — daarover bij sectie 5 meer.
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — naam ↔ formule</h4>
+
+      <div class="q-row">
+        <label>2a. Wat is de formule van salpeterzuur?</label>
+        <input type="text" id="q2a" data-accept="HNO3|H NO3">
+        <button class="btn-check" onclick="checkText('q2a','f2a')">Check</button>
+      </div>
+      <div class="feedback" id="f2a"></div>
+
+      <div class="q-row">
+        <label>2b. Wat is de naam van H<sub>2</sub>SO<sub>4</sub>?</label>
+        <input type="text" id="q2b" data-accept="zwavelzuur">
+        <button class="btn-check" onclick="checkText('q2b','f2b')">Check</button>
+      </div>
+      <div class="feedback" id="f2b"></div>
+
+      <div class="q-row">
+        <label>2c. Wat is de formule van koolzuur?</label>
+        <input type="text" id="q2c" data-accept="H2CO3|H 2 CO3">
+        <button class="btn-check" onclick="checkText('q2c','f2c')">Check</button>
+      </div>
+      <div class="feedback" id="f2c"></div>
+
+      <div class="q-row">
+        <label>2d. Wat is de zuurrest van zoutzuur?</label>
+        <input type="text" id="q2d" data-accept="Cl-|Cl |chloride|chloride-ion">
+        <button class="btn-check" onclick="checkText('q2d','f2d')">Check</button>
+      </div>
+      <div class="feedback" id="f2d"></div>
+    </div>
+  </section>
+
+  <!-- SECTIE 4: Zuurrest + meerdere H+ -->
+  <section class="section">
+    <h2>4. Meerwaardige zuren — 1, 2 of 3 H<sup>+</sup> afstaan</h2>
+
+    <p>Sommige zuren hebben meerdere H<sup>+</sup>'s die ze kunnen afstaan. Per H<sup>+</sup> die wegloopt, krijg je een andere zuurrest. Bij fosforzuur zijn er drie stappen:</p>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld — fosforzuur H<sub>3</sub>PO<sub>4</sub></span>
+      <p><strong>1 H<sup>+</sup> kwijt:</strong> H<sub>3</sub>PO<sub>4</sub> &rarr; H<sup>+</sup> + H<sub>2</sub>PO<sub>4</sub><sup>−</sup></p>
+      <p><strong>2 H<sup>+</sup> kwijt:</strong> H<sub>3</sub>PO<sub>4</sub> &rarr; 2 H<sup>+</sup> + HPO<sub>4</sub><sup>2−</sup></p>
+      <p><strong>3 H<sup>+</sup> kwijt:</strong> H<sub>3</sub>PO<sub>4</sub> &rarr; 3 H<sup>+</sup> + PO<sub>4</sub><sup>3−</sup></p>
+    </div>
+
+    <div class="regel">
+      <span class="regel-label">Lading check</span>
+      Per H<sup>+</sup> dat weggaat krijgt de zuurrest 1 minus extra. Tellen klopt altijd: links totale lading = rechts totale lading.
+    </div>
+
+    <div class="tip-box">
+      <strong>Bij zwavelzuur</strong> (H<sub>2</sub>SO<sub>4</sub>) ga je standaard ervan uit dat <em>beide</em> H<sup>+</sup>'s vrijkomen, dus:
+      <div class="formula-line center" style="margin-top:0.6rem;">
+        H<sub>2</sub>SO<sub>4</sub> (l) &rarr; 2 H<sup>+</sup> (aq) + SO<sub>4</sub><sup>2−</sup> (aq)
+      </div>
+      Die factor 2 wordt bij Dag 2 belangrijk voor de pH-berekening.
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — meerwaardig zuur</h4>
+      <p>Koolzuur H<sub>2</sub>CO<sub>3</sub> kan 1 of 2 H<sup>+</sup> afstaan.</p>
+
+      <div class="q-row">
+        <label>3a. Formule zuurrest na 1 H<sup>+</sup> afstaan?</label>
+        <input type="text" id="q3a" data-accept="HCO3-|HCO3 |waterstofcarbonaat|bicarbonaat">
+        <button class="btn-check" onclick="checkText('q3a','f3a')">Check</button>
+      </div>
+      <div class="feedback" id="f3a"></div>
+
+      <div class="q-row">
+        <label>3b. Formule zuurrest na beide H<sup>+</sup> afstaan?</label>
+        <input type="text" id="q3b" data-accept="CO3 2-|CO3(2-)|CO32-|carbonaat">
+        <button class="btn-check" onclick="checkText('q3b','f3b')">Check</button>
+      </div>
+      <div class="feedback" id="f3b"></div>
+    </div>
+  </section>
+
+  <!-- SECTIE 5: Carbonzuren -->
+  <section class="section">
+    <h2>5. Carbonzuren — alleen de COOH-groep reageert</h2>
+
+    <p>Bij azijnzuur (CH<sub>3</sub>COOH) zou je denken dat de eerste H — die in CH<sub>3</sub> — als H<sup>+</sup> wordt afgestaan. <strong>Maar dat klopt niet.</strong> Alleen de H die aan de COOH-groep (de carboxylgroep) zit, reageert.</p>
+
+    <div class="structuur">     O
+     ‖
+H₃C — C — O — H   ← deze H reageert
+            (in de COOH-groep)
+</div>
+
+    <p>De zuurrest van azijnzuur is dus <strong>CH<sub>3</sub>COO<sup>−</sup></strong> — het acetaat-ion. De rest van het molecuul blijft heel.</p>
+
+    <div class="regel">
+      <span class="regel-label">Carbonzuur-regel</span>
+      In een carbonzuur reageert <em>alleen</em> de H die aan de carboxylgroep (-COOH) zit. Alle andere H-atomen blijven gewoon zitten.
+    </div>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld — mierenzuur (methaanzuur) HCOOH</span>
+      <p>Mierenzuur is het kleinste carbonzuur. Het hééft alleen een COOH-groep — die ene H is dus ook degene die reageert.</p>
+      <div class="structuur">     O
+     ‖
+H — C — O — H   ← deze H reageert
+</div>
+      <p>Reactievergelijking in water:</p>
+      <div class="formula-line center">
+        HCOOH (l) &rarr; H<sup>+</sup> (aq) + HCOO<sup>−</sup> (aq)
+      </div>
+      <p>Zuurrest: HCOO<sup>−</sup> — het methanoaat-ion (of "formiaat").</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — carbonzuur</h4>
+      <p>Salicylzuur (HOC<sub>6</sub>H<sub>4</sub>COOH) is een carbonzuur dat in aspirine zit. De moleculaire structuur heeft één COOH-groep en daarnaast een OH-groep aan de benzeenring. <em>Hint:</em> de OH-groep aan de ring is geen carboxylgroep.</p>
+
+      <div class="q-row">
+        <label>4a. Hoeveel H<sup>+</sup>-ionen geeft salicylzuur af als zuur?</label>
+        <input type="text" id="q4a" data-accept="1|één|een">
+        <button class="btn-check" onclick="checkText('q4a','f4a')">Check</button>
+      </div>
+      <div class="feedback" id="f4a"></div>
+
+      <div class="q-row">
+        <label>4b. Welke groep in het molecuul levert die H<sup>+</sup>?</label>
+        <input type="text" id="q4b" data-accept="COOH|carboxyl|carboxylgroep|-COOH|de carboxylgroep">
+        <button class="btn-check" onclick="checkText('q4b','f4b')">Check</button>
+      </div>
+      <div class="feedback" id="f4b"></div>
+
+      <div class="q-row">
+        <label>4c. Schrijf de zuurrest van salicylzuur (in tekstvorm, bv. HOC6H4COO-):</label>
+        <input type="text" id="q4c" data-accept="HOC6H4COO-|C7H5O3-|HOC6H4COO|salicylaat">
+        <button class="btn-check" onclick="checkText('q4c','f4c')">Check</button>
+      </div>
+      <div class="feedback" id="f4c"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s4')">Uitleg waarom maar 1 H<sup>+</sup></button>
+      </div>
+      <div class="detail-steps" id="s4">
+        <h5>Waarom maar 1 H<sup>+</sup>?</h5>
+        <p>De OH-groep aan de benzeenring is <em>geen</em> COOH-groep. Hij geeft zijn H niet als H<sup>+</sup> af in water op HAVO-niveau. Alleen de H in de COOH-groep reageert. Dus 1 H<sup>+</sup>, en de zuurrest is HOC<sub>6</sub>H<sub>4</sub>COO<sup>−</sup>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 6: Toetsstijl-sectie -->
+  <section class="section toets-sectie">
+    <h2>6. Toetsstijl — combineren zoals op de toets</h2>
+    <p>Op de toets krijg je geen losse vragen "wat is de formule van X?" — je krijgt een verhaaltje met deelvragen (a, b, c, d) die op elkaar bouwen. Hier oefenen we dat.</p>
+
+    <!-- Toets-opgave 1 -->
+    <div style="margin-top:1.25rem;">
+      <span class="opgave-label">Opgave 1 — Salicylzuur</span>
+      <p>Salicylzuur (formule HC<sub>7</sub>H<sub>5</sub>O<sub>3</sub>) is het carbonzuur dat in aspirine voorkomt. Salicylzuur wordt verkocht als witte kristallen in een flesje. Als je salicylzuur in water oplost, gedraagt het zich als een zwak zuur.</p>
+
+      <div class="q-row">
+        <label>1a. Wat is de toestandsaanduiding van salicylzuur in het flesje?</label>
+        <input type="text" id="t1a" data-accept="(s)|s|vast|vaste stof">
+        <button class="btn-check" onclick="checkText('t1a','tf1a')">Check</button>
+      </div>
+      <div class="feedback" id="tf1a"></div>
+
+      <div class="q-row">
+        <label>1b. Welk soort binding wordt verbroken als salicylzuur reageert met water?</label>
+        <input type="text" id="t1b" data-accept="atoombinding|covalent|covalente binding|atoom-binding">
+        <button class="btn-check" onclick="checkText('t1b','tf1b')">Check</button>
+      </div>
+      <div class="feedback" id="tf1b"></div>
+
+      <div class="q-row">
+        <label>1c. Hoeveel H<sup>+</sup>-ionen kan één molecuul salicylzuur afstaan?</label>
+        <input type="text" id="t1c" data-accept="1|één|een">
+        <button class="btn-check" onclick="checkText('t1c','tf1c')">Check</button>
+      </div>
+      <div class="feedback" id="tf1c"></div>
+
+      <div class="q-row">
+        <label>1d. Geef de reactievergelijking met toestandsaanduidingen (tekstvorm):</label>
+      </div>
+      <textarea id="t1d" rows="2" style="width:100%;font-family:'STIX Two Math','Cambria Math','Georgia',serif;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts1')">Stappenplan opgave 1</button>
+      </div>
+      <div class="detail-steps" id="ts1">
+        <h5>Uitwerking opgave 1</h5>
+        <ol>
+          <li>1a: salicylzuur is een vaste stof &rarr; (s)</li>
+          <li>1b: bij contact met water breekt de <strong>atoombinding</strong> tussen de O en de zure H in de COOH-groep. De elektronen blijven bij de O.</li>
+          <li>1c: één — alleen de H in de COOH-groep reageert (carbonzuur-regel). De OH-groep aan de ring telt niet.</li>
+          <li>1d: HC<sub>7</sub>H<sub>5</sub>O<sub>3</sub> (s) &rarr; H<sup>+</sup> (aq) + C<sub>7</sub>H<sub>5</sub>O<sub>3</sub><sup>−</sup> (aq)</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Toets-opgave 2 -->
+    <div style="margin-top:1.75rem;">
+      <span class="opgave-label">Opgave 2 — Accuzuur</span>
+      <p>In een loodaccu zit accuzuur — een oplossing van zwavelzuur (H<sub>2</sub>SO<sub>4</sub>) in water. Zuiver zwavelzuur wordt verkocht in flessen als een kleurloze vloeistof.</p>
+
+      <div class="q-row">
+        <label>2a. Geef de reactievergelijking van zwavelzuur in water (met toestandsaanduidingen). Neem aan dat beide zure H-atomen reageren.</label>
+      </div>
+      <textarea id="t2a" rows="2" style="width:100%;font-family:'STIX Two Math','Cambria Math','Georgia',serif;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div class="q-row" style="margin-top:0.8rem;">
+        <label>2b. Hoeveel mol H<sup>+</sup>-ionen krijg je uit 1 mol zwavelzuur?</label>
+        <input type="text" id="t2b" data-accept="2|twee">
+        <button class="btn-check" onclick="checkText('t2b','tf2b')">Check</button>
+      </div>
+      <div class="feedback" id="tf2b"></div>
+
+      <div class="q-row">
+        <label>2c. Wat is de formule van de zuurrest?</label>
+        <input type="text" id="t2c" data-accept="SO4 2-|SO4(2-)|SO42-|sulfaat">
+        <button class="btn-check" onclick="checkText('t2c','tf2c')">Check</button>
+      </div>
+      <div class="feedback" id="tf2c"></div>
+
+      <div class="q-row">
+        <label>2d. Waarom geleidt accuzuur stroom, maar zuiver zwavelzuur (zonder water) bijna niet?</label>
+      </div>
+      <textarea id="t2d" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts2')">Stappenplan opgave 2</button>
+      </div>
+      <div class="detail-steps" id="ts2">
+        <h5>Uitwerking opgave 2</h5>
+        <ol>
+          <li>2a: H<sub>2</sub>SO<sub>4</sub> (l) &rarr; 2 H<sup>+</sup> (aq) + SO<sub>4</sub><sup>2−</sup> (aq)</li>
+          <li>2b: 1 mol H<sub>2</sub>SO<sub>4</sub> &rarr; 2 mol H<sup>+</sup>. Dat is de "factor 2" die je morgen bij Dag 2 nodig hebt voor de pH-berekening.</li>
+          <li>2c: SO<sub>4</sub><sup>2−</sup> (sulfaat)</li>
+          <li>2d: zuiver zwavelzuur bestaat uit moleculen H<sub>2</sub>SO<sub>4</sub>, geen losse ionen. Pas in contact met water splitsen ze in H<sup>+</sup> en SO<sub>4</sub><sup>2−</sup>. Ionen kunnen stroom geleiden, hele moleculen niet. Dus alleen accuzuur (= met water erin) geleidt.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kennischeck -->
+  <div class="checklist">
+    <h2>Kan ik het?</h2>
+    <label><input type="checkbox" id="c1"> Ik kan een zuur op macro- én microniveau definiëren.</label>
+    <label><input type="checkbox" id="c2"> Ik ken de formules van zoutzuur, salpeterzuur, zwavelzuur, fosforzuur, koolzuur en azijnzuur uit mijn hoofd.</label>
+    <label><input type="checkbox" id="c3"> Ik weet welke zuren 1, 2 of 3 H<sup>+</sup>-ionen kunnen afstaan.</label>
+    <label><input type="checkbox" id="c4"> Ik kan een reactievergelijking opschrijven met (s), (l), (g) of (aq) op de juiste plek.</label>
+    <label><input type="checkbox" id="c5"> Ik snap dat in een carbonzuur alleen de H in COOH reageert.</label>
+    <label><input type="checkbox" id="c6"> Ik kan benoemen dat er een atoombinding wordt verbroken als een zuur in water gaat.</label>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="../index.html">&larr; Terug naar H7 overzicht</a>
+    <a href="../dag2-ph-en-h-plus/index.html">Door naar Dag 2: pH ↔ [H<sup>+</sup>] &rarr;</a>
+  </div>
+
+  <footer>
+    <p>Gemaakt door Ralph Wagter met Claude Code. Vrij hergebruik onder <a href="https://eupl.eu/1.2/nl/">EUPL-1.2</a>. &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub repo</a></p>
+  </footer>
+</div>
+
+<script>
+function normalize(s) {
+  return (s || '')
+    .toString()
+    .toLowerCase()
+    .replace(/\^/g, '')
+    .replace(/_/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/,/g, '.')
+    .trim();
+}
+
+// Strip ONLY spaces — never minus, never plus, never digits. Lading is chemisch wezenlijk.
+function stripSpaces(s) { return s.replace(/\s/g, ''); }
+
+function checkText(inputId, feedbackId) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const accepts = (input.dataset.accept || '').split('|').map(normalize);
+  const user = normalize(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (!user) {
+    feedback.textContent = 'Vul een antwoord in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  const userStripped = stripSpaces(user);
+  const ok = accepts.some(a => {
+    if (!a) return false;
+    if (user === a) return true;
+    return stripSpaces(a) === userStripped;
+  });
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Kijk de uitwerking of probeer opnieuw.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function toggleSteps(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+}
+
+// Persist checkboxes
+const PAGE_KEY = 'h7-dag1';
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(cb => {
+  const key = PAGE_KEY + '-' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+</script>
+</body>
+</html>

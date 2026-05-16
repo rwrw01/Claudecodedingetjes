@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 2 — pH ↔ [H+] met significantie — Scheikunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --primary-dark:#1e3a8a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header.page-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; }
+header.page-header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 8rem;
+}
+.intro {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li { padding: 0.4rem 0 0.4rem 1.6rem; position: relative; }
+.intro li:before {
+  content: "✓"; position: absolute; left: 0; top: 0.4rem;
+  color: var(--primary); font-weight: 700;
+}
+.section {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem;
+  color: var(--primary-dark);
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem;
+  background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem;
+  margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3;
+  border: 2px solid #facc15;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+.regel-label {
+  display: inline-block;
+  background: #ca8a04;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.tip-box {
+  background: #ecfeff;
+  border: 1px solid #67e8f9;
+  border-left: 4px solid #0891b2;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.tip-box strong { color: #0e7490; }
+.warning-box {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-left: 4px solid #dc2626;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.warning-box strong { color: #991b1b; }
+.voorbeeld {
+  background: #f0fdf4;
+  border: 2px solid #86efac;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block;
+  background: #15803d;
+  color: white;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+.toggle-btn {
+  background: white;
+  color: var(--primary-dark);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  font-family: inherit;
+}
+.try-it {
+  background: #f0f9ff;
+  border: 2px dashed #93c5fd;
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 { color: #0c4a6e; margin-bottom: 0.6rem; font-size: 1.05rem; }
+.q-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.7rem 0;
+}
+.q-row label { flex: 1 1 220px; font-size: 0.98rem; }
+.q-row input[type=text], .q-row input[type=number] {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  font-size: 1rem;
+  width: 180px;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7; color: white; border: none;
+  border-radius: 8px; padding: 0.45rem 0.9rem;
+  font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7; color: #92400e;
+  border: 1.5px solid #fcd34d; border-radius: 8px;
+  padding: 0.45rem 0.9rem; font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb;
+  border: 1px solid #fcd34d;
+  border-radius: 8px;
+  padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem;
+  display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.toets-sectie {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  border: 2px solid #c4b5fd;
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+}
+.toets-sectie h2 { color: #6d28d9; border-bottom-color: #c4b5fd; }
+.toets-sectie .opgave-label {
+  display: inline-block; background: #6d28d9; color: white;
+  font-size: 0.78rem; padding: 0.2rem 0.7rem;
+  border-radius: 4px; margin-bottom: 0.5rem; font-weight: 700;
+}
+.ph-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.96rem;
+}
+.ph-tabel th, .ph-tabel td {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.ph-tabel th { background: var(--primary-soft); color: var(--primary-dark); font-weight: 700; }
+.ph-tabel td { font-family: 'STIX Two Math','Cambria Math','Georgia',serif; }
+.calc-widget {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+}
+.calc-widget label { display: block; margin: 0.5rem 0 0.3rem; font-weight: 600; font-size: 0.95rem; }
+.calc-widget input[type=text], .calc-widget input[type=number] {
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.5rem 0.7rem; font-size: 1rem;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  width: 100%;
+}
+.calc-widget .output {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  background: white; border-left: 3px solid var(--primary);
+  padding: 0.7rem 1rem; margin-top: 0.7rem;
+  border-radius: 0 6px 6px 0;
+}
+.checklist {
+  background: var(--card);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label { display: block; padding: 0.45rem 0; cursor: pointer; }
+.checklist input { margin-right: 0.6rem; transform: scale(1.2); }
+.nav-bottom {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin-top: 2rem; flex-wrap: wrap;
+}
+.nav-bottom a {
+  flex: 1 1 200px;
+  background: var(--card);
+  border: 2px solid var(--primary);
+  color: var(--primary-dark);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+}
+.nav-bottom a:hover { background: var(--primary-soft); }
+footer {
+  text-align: center; padding: 2rem 1rem 3rem;
+  font-size: 0.85rem; color: var(--text-soft);
+  border-top: 1px solid var(--border); margin-top: 2rem;
+}
+footer a { color: var(--primary); }
+sub { font-size: 0.75em; vertical-align: sub; }
+sup { font-size: 0.75em; vertical-align: super; }
+.math { font-family: 'STIX Two Math','Cambria Math','Georgia',serif; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Dag 2 — pH ↔ [H<sup>+</sup>] met significantie</h1>
+  <p>Heen en weer rekenen tussen pH en [H<sup>+</sup>]. Met de significantie-discipline waar je punten op verliest als je het mist.</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a> &rsaquo;
+  <a href="../../index.html">Scheikunde</a> &rsaquo;
+  <a href="../../havo-4/index.html">HAVO 4</a> &rsaquo;
+  <a href="../index.html">H7 Zuren</a> &rsaquo;
+  Dag 2
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Wat je vandaag leert</h2>
+    <ul>
+      <li>De formule pH = &minus;log [H<sup>+</sup>] toepassen</li>
+      <li>De formule [H<sup>+</sup>] = 10<sup>&minus;pH</sup> toepassen</li>
+      <li>De significantie-regel: aantal sign. cijfers in [H<sup>+</sup>] = aantal decimalen in pH</li>
+      <li>Bij sterke zuren: factor 1 (HCl), factor 2 (H<sub>2</sub>SO<sub>4</sub>) of factor 3 (H<sub>3</sub>PO<sub>4</sub>) voor [H<sup>+</sup>]</li>
+      <li>De verdunningsdenkfout herkennen (water er bij &ne; pH naar 7)</li>
+    </ul>
+  </div>
+
+  <!-- SECTIE 1: De twee formules -->
+  <section class="section">
+    <h2>1. Twee formules — heen en weer tussen pH en [H<sup>+</sup>]</h2>
+
+    <p>De pH is een kort getal dat de zuurgraad van een oplossing samenvat. Achter de pH zit eigenlijk de concentratie H<sup>+</sup>-ionen, [H<sup>+</sup>], maar die is meestal een vervelend getal (10<sup>−4</sup> of zo). De pH-schaal maakt het leesbaar.</p>
+
+    <div class="formula-line center">
+      pH = &minus;log [H<sup>+</sup>] &nbsp;&nbsp;&middot;&nbsp;&nbsp; [H<sup>+</sup>] = 10<sup>&minus;pH</sup>
+    </div>
+
+    <p>Beide formules staan ook in Binas-tabel 37I. Op de rekenmachine type je <span class="math">log</span> of <span class="math">10<sup>x</sup></span>.</p>
+
+    <div class="regel">
+      <span class="regel-label">pH-schaal</span>
+      pH &lt; 7 = zuur &middot; pH = 7 = neutraal &middot; pH &gt; 7 = basisch. Lagere pH = hogere [H<sup>+</sup>] = sterker zuur.
+    </div>
+
+    <h3>Voorbeeld 1 — [H<sup>+</sup>] → pH</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 1</span>
+      <p>Een citroensapoplossing heeft [H<sup>+</sup>] = 3,5 &middot; 10<sup>−3</sup> M. Bereken de pH.</p>
+      <p>pH = &minus;log [H<sup>+</sup>]<br>
+         pH = &minus;log (3,5 &middot; 10<sup>−3</sup>)<br>
+         pH = 2,46</p>
+      <p>Antwoord: <strong>pH = 2,46</strong></p>
+    </div>
+
+    <h3>Voorbeeld 2 — pH → [H<sup>+</sup>]</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 2</span>
+      <p>Een sportdrank heeft pH = 4,1. Bereken [H<sup>+</sup>].</p>
+      <p>[H<sup>+</sup>] = 10<sup>−pH</sup><br>
+         [H<sup>+</sup>] = 10<sup>−4,1</sup><br>
+         [H<sup>+</sup>] = 8 &middot; 10<sup>−5</sup> M</p>
+      <p>Antwoord: <strong>[H<sup>+</sup>] = 8 &middot; 10<sup>−5</sup> M</strong></p>
+    </div>
+
+    <div class="calc-widget">
+      <p><strong>Speel met de relatie</strong> — vul een van de twee in en zie wat eruit komt:</p>
+      <label for="phin">pH (vul een getal in):</label>
+      <input type="text" id="phin" placeholder="bv. een waarde tussen 0 en 14">
+      <div class="output" id="phout">[H<sup>+</sup>] verschijnt hier</div>
+
+      <label for="hin" style="margin-top:1rem;">[H<sup>+</sup>] (vul mol L<sup>−1</sup> in, bv. 0.001 of 1e-3):</label>
+      <input type="text" id="hin" placeholder="bv. een hele kleine waarde">
+      <div class="output" id="hout">pH verschijnt hier</div>
+    </div>
+  </section>
+
+  <!-- SECTIE 2: Significantie -->
+  <section class="section">
+    <h2>2. Significantie-regel — waar Kasper op de toets punten verliest</h2>
+
+    <div class="regel">
+      <span class="regel-label">Sign. regel pH</span>
+      <strong>Aantal significante cijfers in [H<sup>+</sup>] = aantal decimalen in pH.</strong>
+    </div>
+
+    <p>Dit is geen detail, het is een echte punten-aftrek-regel. Voorbeeld:</p>
+
+    <table class="ph-tabel">
+      <thead>
+        <tr><th>[H<sup>+</sup>] (M)</th><th>Sign. cijfers</th><th>pH</th><th>Aantal decimalen</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>5,0 &middot; 10<sup>−3</sup></td><td>2</td><td>2,30</td><td>2</td></tr>
+        <tr><td>7,2 &middot; 10<sup>−4</sup></td><td>2</td><td>3,14</td><td>2</td></tr>
+        <tr><td>0,008</td><td>1</td><td>2,1</td><td>1</td></tr>
+        <tr><td>2,00 &middot; 10<sup>−5</sup></td><td>3</td><td>4,699</td><td>3</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      <strong>Veelgemaakte fout:</strong> 0,008 M heeft <em>1</em> significant cijfer (de 8). De voorloop-nullen tellen niet mee. Dus pH = 2,1 — niet 2,10 (dat zou 2 sign. cijfers suggereren).
+    </div>
+
+    <h3>Voorbeeld 3 — sign cijfers tellen</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 3</span>
+      <p>[H<sup>+</sup>] = 0,001 M. Bereken de pH.</p>
+      <p>0,001 M = 1 &middot; 10<sup>−3</sup> M &rarr; <strong>1 sign cijfer</strong>.<br>
+         pH = &minus;log (1 &middot; 10<sup>−3</sup>) = 3,00 (calculator)<br>
+         Maar &mdash; afronden op 1 decimaal! Dus: <strong>pH = 3,0</strong></p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Andere richting:</strong> bij pH 5,8 (1 decimaal) krijg je [H<sup>+</sup>] met <em>1</em> sign cijfer. Reken: 10<sup>−5,8</sup> = 1,58... &middot; 10<sup>−6</sup>. Afronden naar 1 sign &rarr; <strong>2 &middot; 10<sup>−6</sup> M</strong>.
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — significantie heen en weer</h4>
+
+      <div class="q-row">
+        <label>1a. [H<sup>+</sup>] = 4,2 &middot; 10<sup>−3</sup> M. Hoeveel sign cijfers?</label>
+        <input type="text" id="q1a" data-accept="2|twee">
+        <button class="btn-check" onclick="checkText('q1a','f1a')">Check</button>
+      </div>
+      <div class="feedback" id="f1a"></div>
+
+      <div class="q-row">
+        <label>1b. En de pH (op het juiste aantal decimalen)?</label>
+        <input type="text" id="q1b" data-accept="2.38|2,38">
+        <button class="btn-check" onclick="checkNumeric('q1b','f1b', 2.38, 0.01)">Check</button>
+      </div>
+      <div class="feedback" id="f1b"></div>
+
+      <div class="q-row">
+        <label>1c. pH = 6,4. Hoeveel decimalen?</label>
+        <input type="text" id="q1c" data-accept="1|één|een">
+        <button class="btn-check" onclick="checkText('q1c','f1c')">Check</button>
+      </div>
+      <div class="feedback" id="f1c"></div>
+
+      <div class="q-row">
+        <label>1d. En [H<sup>+</sup>] op het juiste aantal sign cijfers?</label>
+        <input type="text" id="q1d" data-accept="4e-7|4*10^-7|4 10-7|4 . 10-7|0.0000004">
+        <button class="btn-check" onclick="checkNumeric('q1d','f1d', 4e-7, 5e-8)">Check</button>
+      </div>
+      <div class="feedback" id="f1d"></div>
+    </div>
+  </section>
+
+  <!-- SECTIE 3: Sterke zuren factor 1/2/3 -->
+  <section class="section">
+    <h2>3. Sterke zuren — de factor 1, 2 of 3</h2>
+
+    <p>Bij dag 1 zag je dat zwavelzuur 2 H<sup>+</sup>-ionen kan afstaan en fosforzuur zelfs 3. Voor sterke zuren neem je aan dat <em>alle</em> H<sup>+</sup>'s vrijkomen. Dat betekent:</p>
+
+    <div class="regel">
+      <span class="regel-label">Vuistregel sterke zuren</span>
+      [H<sup>+</sup>] = aantal H<sup>+</sup>-ionen per molecuul &times; molariteit van het zuur
+    </div>
+
+    <h3>Voorbeeld 4 — zwavelzuur (factor 2)</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 4</span>
+      <p>Bereken de pH van 0,005 M zwavelzuur.</p>
+      <p><strong>Stap 1:</strong> reactievergelijking: H<sub>2</sub>SO<sub>4</sub> (l) &rarr; 2 H<sup>+</sup> (aq) + SO<sub>4</sub><sup>2−</sup> (aq)<br>
+         Per molecuul H<sub>2</sub>SO<sub>4</sub> komen er <strong>2</strong> H<sup>+</sup>'s vrij. Factor 2!</p>
+      <p><strong>Stap 2:</strong> [H<sup>+</sup>] = 2 &times; 0,005 = 0,01 M</p>
+      <p><strong>Stap 3:</strong> pH = &minus;log (0,01) = 2,0 (1 sign cijfer in 0,01 = 1 decimaal in pH)</p>
+      <p>Antwoord: <strong>pH = 2,0</strong></p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Klassieke fout:</strong> de factor 2 vergeten en gewoon &minus;log (0,005) = 2,3 invullen. Dat is 0,3 pH-eenheid hoger — en dus FOUT. Op de toets: schrijf altijd eerst de reactievergelijking op om de factor te zien.
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — factor toepassen</h4>
+
+      <div class="q-row">
+        <label>2a. Bereken [H<sup>+</sup>] van 0,02 M HCl (in M):</label>
+        <input type="text" id="q2a" data-accept="0.02|0,02|2e-2|2*10^-2">
+        <button class="btn-check" onclick="checkNumeric('q2a','f2a', 0.02, 0.001)">Check</button>
+      </div>
+      <div class="feedback" id="f2a"></div>
+
+      <div class="q-row">
+        <label>2b. En de pH?</label>
+        <input type="text" id="q2b" data-accept="1.7|1,7">
+        <button class="btn-check" onclick="checkNumeric('q2b','f2b', 1.7, 0.05)">Check</button>
+      </div>
+      <div class="feedback" id="f2b"></div>
+
+      <div class="q-row">
+        <label>2c. Bereken [H<sup>+</sup>] van 0,02 M H<sub>2</sub>SO<sub>4</sub> (in M):</label>
+        <input type="text" id="q2c" data-accept="0.04|0,04|4e-2|4*10^-2">
+        <button class="btn-check" onclick="checkNumeric('q2c','f2c', 0.04, 0.002)">Check</button>
+      </div>
+      <div class="feedback" id="f2c"></div>
+
+      <div class="q-row">
+        <label>2d. En de pH?</label>
+        <input type="text" id="q2d" data-accept="1.4|1,4">
+        <button class="btn-check" onclick="checkNumeric('q2d','f2d', 1.4, 0.05)">Check</button>
+      </div>
+      <div class="feedback" id="f2d"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s2')">Uitwerking 2c en 2d</button>
+      </div>
+      <div class="detail-steps" id="s2">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>2c: H<sub>2</sub>SO<sub>4</sub> levert 2 H<sup>+</sup> per molecuul. [H<sup>+</sup>] = 2 × 0,02 = 0,04 M.</li>
+          <li>2d: pH = −log (0,04) = 1,397... → 1 sign cijfer in [H<sup>+</sup>] (0,04 heeft 1 sign cijfer) → afronden naar 1 decimaal: pH = 1,4.</li>
+          <li>Verschil met 2b: dezelfde zuur-concentratie, maar zwavelzuur geeft een lagere pH door de factor 2.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 4: Verdunning denkfout -->
+  <section class="section">
+    <h2>4. Verdunningsdenkfout — water erbij betekent geen pH 7</h2>
+
+    <p>Een vijver met pH 5,0 wordt voor de helft aangevuld met regenwater van pH 7,0. Wat is de nieuwe pH? Veel leerlingen denken: het gemiddelde — dus pH 6,0. <strong>Dat klopt niet.</strong></p>
+
+    <div class="warning-box">
+      <strong>Reden:</strong> pH is een logaritme van [H<sup>+</sup>]. Je middelt nooit pH'jes. Je moet eerst terug naar [H<sup>+</sup>], dan rekenen met concentraties, dan terug naar pH.
+    </div>
+
+    <h3>Voorbeeld 5 — verdunnen met factor 2</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 5</span>
+      <p>Een oplossing heeft pH = 4,0. Je verdunt met evenveel kraanwater (pH 7,0). Wat is de nieuwe pH?</p>
+      <p><strong>Stap 1:</strong> [H<sup>+</sup>] in de zure oplossing = 10<sup>−4</sup> = 1 · 10<sup>−4</sup> M.<br>
+         [H<sup>+</sup>] in kraanwater = 10<sup>−7</sup> = 1 · 10<sup>−7</sup> M (verwaarloosbaar klein t.o.v. 10<sup>−4</sup>).</p>
+      <p><strong>Stap 2:</strong> verdunnen met evenveel water → volume verdubbelt → [H<sup>+</sup>] halveert.<br>
+         Nieuwe [H<sup>+</sup>] = 0,5 &middot; 10<sup>−4</sup> = 5 · 10<sup>−5</sup> M.</p>
+      <p><strong>Stap 3:</strong> pH = &minus;log (5 · 10<sup>−5</sup>) = 4,3</p>
+      <p>Antwoord: <strong>pH = 4,3</strong> (niet 5,5, niet 6)</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — denkfout herkennen</h4>
+
+      <div class="q-row">
+        <label>3a. Vijver pH 5,0 wordt 10× verdund met water (pH 7,0). Wat wordt [H<sup>+</sup>] na verdunning (M)?</label>
+        <input type="text" id="q3a" data-accept="1e-6|1*10^-6|0.000001|10-6">
+        <button class="btn-check" onclick="checkNumeric('q3a','f3a', 1e-6, 1e-7)">Check</button>
+      </div>
+      <div class="feedback" id="f3a"></div>
+
+      <div class="q-row">
+        <label>3b. Wat is de nieuwe pH?</label>
+        <input type="text" id="q3b" data-accept="6.0|6,0|6">
+        <button class="btn-check" onclick="checkNumeric('q3b','f3b', 6.0, 0.05)">Check</button>
+      </div>
+      <div class="feedback" id="f3b"></div>
+
+      <div class="tip-box" style="margin-top:1rem;">
+        <strong>Vuistregel die je nu kan afleiden:</strong> verdunnen met factor 10 maakt [H<sup>+</sup>] 10× kleiner — en de pH gaat <em>1</em> omhoog. Factor 100 → pH +2. In zure HAVO-context komt de pH bij steeds verder verdunnen dichter bij 7, maar gaat er niet voorbij (water is neutraal).
+      </div>
+
+      <div class="q-row">
+        <label>3c. Klopt de uitspraak: "Als je 1000× verdunt, krijg je pH 8"?</label>
+        <input type="text" id="q3c" data-accept="nee|onjuist|niet|fout">
+        <button class="btn-check" onclick="checkText('q3c','f3c')">Check</button>
+      </div>
+      <div class="feedback" id="f3c"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s3c')">Uitleg 3c</button>
+      </div>
+      <div class="detail-steps" id="s3c">
+        <h5>Waarom niet?</h5>
+        <p>Bij verdunnen blijft de oplossing in principe zuur. Verdunnen kan de pH richting 7 brengen (water), maar nooit voorbij. Een oplossing van pH 5 wordt na 1000× verdunnen niet pH 8 — dat zou basisch zijn, en daar zit geen base in. Bij heel sterke verdunning komt de pH dicht bij 7.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 5: Mol H+ in een volume -->
+  <section class="section">
+    <h2>5. Mol H<sup>+</sup> in een volume — heen en weer met molariteit</h2>
+
+    <p>Soms vragen ze niet alleen de pH, maar ook: <em>"Hoeveel mol H<sup>+</sup>-ionen zit er in 250 mL van deze oplossing?"</em> Dan moet je [H<sup>+</sup>] omzetten naar mol via het volume.</p>
+
+    <div class="formula-line center">
+      mol = molariteit &times; volume in L
+    </div>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 6</span>
+      <p>Een oplossing heeft pH = 3,00. Hoeveel mol H<sup>+</sup>-ionen zitten er in 250 mL?</p>
+      <p><strong>Stap 1:</strong> [H<sup>+</sup>] = 10<sup>−3,00</sup> = 1,0 &middot; 10<sup>−3</sup> M (2 decimalen in pH → 2 sign cijfers in [H<sup>+</sup>])</p>
+      <p><strong>Stap 2:</strong> volume = 250 mL = 0,250 L</p>
+      <p><strong>Stap 3:</strong> mol H<sup>+</sup> = 1,0 &middot; 10<sup>−3</sup> × 0,250 = 2,5 &middot; 10<sup>−4</sup> mol</p>
+      <p>Antwoord: <strong>2,5 &middot; 10<sup>−4</sup> mol H<sup>+</sup></strong> (2 sign cijfers — minimum van de twee factoren)</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — mol in een volume</h4>
+      <p>Een oplossing heeft pH = 2,5. Bereken hoeveel mol H<sup>+</sup> er in 100 mL zit.</p>
+
+      <div class="q-row">
+        <label>4a. [H<sup>+</sup>] (M)?</label>
+        <input type="text" id="q4a" data-accept="3e-3|3*10^-3|0.003|3 10-3">
+        <button class="btn-check" onclick="checkNumeric('q4a','f4a', 3e-3, 3e-4)">Check</button>
+      </div>
+      <div class="feedback" id="f4a"></div>
+
+      <div class="q-row">
+        <label>4b. Volume in L?</label>
+        <input type="text" id="q4b" data-accept="0.1|0,1|0.10|1e-1">
+        <button class="btn-check" onclick="checkNumeric('q4b','f4b', 0.1, 0.005)">Check</button>
+      </div>
+      <div class="feedback" id="f4b"></div>
+
+      <div class="q-row">
+        <label>4c. mol H<sup>+</sup>?</label>
+        <input type="text" id="q4c" data-accept="3e-4|3*10^-4|0.0003">
+        <button class="btn-check" onclick="checkNumeric('q4c','f4c', 3e-4, 3e-5)">Check</button>
+      </div>
+      <div class="feedback" id="f4c"></div>
+    </div>
+  </section>
+
+  <!-- SECTIE 6: Toetsstijl-sectie -->
+  <section class="section toets-sectie">
+    <h2>6. Toetsstijl — combineren zoals op de toets</h2>
+
+    <p>Twee opgaven met deelvragen die op elkaar bouwen. Schrijf je tussenstappen op — dat is op de toets verplicht.</p>
+
+    <!-- Toets-opgave 1 -->
+    <div style="margin-top:1.25rem;">
+      <span class="opgave-label">Opgave 1 — Spa Reine vs Spa Rood</span>
+      <p>Spa Reine (water zonder toevoegingen) heeft een pH die je vrijwel als neutraal kunt beschouwen. Spa Rood bevat opgelost CO<sub>2</sub>, dat koolzuur (H<sub>2</sub>CO<sub>3</sub>) vormt. Een meting wijst uit dat Spa Rood een pH heeft van 4,7.</p>
+
+      <div class="q-row">
+        <label>1a. Bereken [H<sup>+</sup>] in Spa Rood (M):</label>
+        <input type="text" id="t1a" data-accept="2e-5|2*10^-5|0.00002|2 10-5">
+        <button class="btn-check" onclick="checkNumeric('t1a','tf1a', 2e-5, 3e-6)">Check</button>
+      </div>
+      <div class="feedback" id="tf1a"></div>
+
+      <div class="q-row">
+        <label>1b. Hoeveel mol H<sup>+</sup> zit in een fles van 0,50 L Spa Rood?</label>
+        <input type="text" id="t1b" data-accept="1e-5|1*10^-5|0.00001|1 10-5">
+        <button class="btn-check" onclick="checkNumeric('t1b','tf1b', 1e-5, 2e-6)">Check</button>
+      </div>
+      <div class="feedback" id="tf1b"></div>
+
+      <div class="q-row">
+        <label>1c. Een leerling beweert: "Als ik Spa Rood meng met evenveel Spa Reine (pH 7,0), wordt de pH het gemiddelde, dus 5,85." Klopt dit? (ja/nee + kort waarom)</label>
+      </div>
+      <textarea id="t1c" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts1')">Stappenplan opgave 1</button>
+      </div>
+      <div class="detail-steps" id="ts1">
+        <h5>Uitwerking opgave 1</h5>
+        <ol>
+          <li>1a: [H<sup>+</sup>] = 10<sup>−4,7</sup> = 1,99... · 10<sup>−5</sup> → 1 decimaal in pH → 1 sign cijfer → <strong>2 · 10<sup>−5</sup> M</strong></li>
+          <li>1b: mol = 2 · 10<sup>−5</sup> × 0,50 = <strong>1 · 10<sup>−5</sup> mol H<sup>+</sup></strong></li>
+          <li>1c: <strong>Nee.</strong> Je middelt nooit pH-waarden — pH is een logaritme. Reken om naar [H<sup>+</sup>]: Spa Rood 2·10<sup>−5</sup> M en Spa Reine 1·10<sup>−7</sup> M. De Spa-Reine-bijdrage is 200× kleiner dan Spa Rood, dus verwaarloosbaar. Bij gelijk volume mengen halveert [H<sup>+</sup>]: ≈ 1·10<sup>−5</sup> M → pH = 5,0. Veel dichter bij de oorspronkelijke 4,7 dan bij het gemiddelde 5,85.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Toets-opgave 2 -->
+    <div style="margin-top:1.75rem;">
+      <span class="opgave-label">Opgave 2 — Toilet-ontkalker</span>
+      <p>Een toilet-ontkalker bevat verdund zwavelzuur. Op de fles staat: 0,15 mol L<sup>−1</sup> H<sub>2</sub>SO<sub>4</sub>. Neem aan dat beide H-atomen reageren in water.</p>
+
+      <div class="q-row">
+        <label>2a. Bereken [H<sup>+</sup>] van deze oplossing (M):</label>
+        <input type="text" id="t2a" data-accept="0.30|0,30|0.3|0,3|3e-1">
+        <button class="btn-check" onclick="checkNumeric('t2a','tf2a', 0.30, 0.01)">Check</button>
+      </div>
+      <div class="feedback" id="tf2a"></div>
+
+      <div class="q-row">
+        <label>2b. Bereken de pH:</label>
+        <input type="text" id="t2b" data-accept="0.52|0,52">
+        <button class="btn-check" onclick="checkNumeric('t2b','tf2b', 0.52, 0.02)">Check</button>
+      </div>
+      <div class="feedback" id="tf2b"></div>
+
+      <div class="q-row">
+        <label>2c. Stel je verdunt 100 mL ontkalker tot 1,00 L (10× verdunnen). Wat wordt de nieuwe [H<sup>+</sup>] (M)?</label>
+        <input type="text" id="t2c" data-accept="0.030|0,030|0.03|0,03|3e-2">
+        <button class="btn-check" onclick="checkNumeric('t2c','tf2c', 0.030, 0.002)">Check</button>
+      </div>
+      <div class="feedback" id="tf2c"></div>
+
+      <div class="q-row">
+        <label>2d. Wat wordt de nieuwe pH? (let op significantie — 2 decimalen)</label>
+        <input type="text" id="t2d" data-accept="1.52|1,52">
+        <button class="btn-check" onclick="checkNumeric('t2d','tf2d', 1.52, 0.02)">Check</button>
+      </div>
+      <div class="feedback" id="tf2d"></div>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts2')">Stappenplan opgave 2</button>
+      </div>
+      <div class="detail-steps" id="ts2">
+        <h5>Uitwerking opgave 2</h5>
+        <ol>
+          <li>2a: factor 2 voor H<sub>2</sub>SO<sub>4</sub>. [H<sup>+</sup>] = 2 × 0,15 = <strong>0,30 M</strong></li>
+          <li>2b: pH = −log (0,30) = 0,523... → 2 sign in 0,30 → 2 decimalen → <strong>pH = 0,52</strong></li>
+          <li>2c: 10× verdunnen → [H<sup>+</sup>] wordt 10× kleiner → 0,30 / 10 = <strong>0,030 M</strong></li>
+          <li>2d: pH = −log (0,030) = 1,52... → 2 sign in 0,030 → 2 decimalen → <strong>pH = 1,52</strong>. Of korter: 10× verdunnen → pH +1 → 0,52 + 1 = 1,52.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kennischeck -->
+  <div class="checklist">
+    <h2>Kan ik het?</h2>
+    <label><input type="checkbox" id="c1"> Ik kan pH uit [H<sup>+</sup>] berekenen met &minus;log.</label>
+    <label><input type="checkbox" id="c2"> Ik kan [H<sup>+</sup>] uit pH berekenen met 10<sup>&minus;pH</sup>.</label>
+    <label><input type="checkbox" id="c3"> Ik weet de significantie-regel: aantal sign cijfers [H<sup>+</sup>] = aantal decimalen pH.</label>
+    <label><input type="checkbox" id="c4"> Ik vergeet niet de factor 2 (zwavelzuur) of 3 (fosforzuur).</label>
+    <label><input type="checkbox" id="c5"> Ik weet dat je nooit pH-waarden middelt — eerst terug naar [H<sup>+</sup>].</label>
+    <label><input type="checkbox" id="c6"> Ik kan mol H<sup>+</sup> in een volume berekenen via mol = M × V.</label>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="../dag1-zuren-als-deeltje/index.html">&larr; Terug naar Dag 1</a>
+    <a href="../dag3-molariteit/index.html">Door naar Dag 3: Molariteit &rarr;</a>
+  </div>
+
+  <footer>
+    <p>Gemaakt door Ralph Wagter met Claude Code. Vrij hergebruik onder <a href="https://eupl.eu/1.2/nl/">EUPL-1.2</a>. &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub repo</a></p>
+  </footer>
+</div>
+
+<script>
+function normalize(s) {
+  return (s || '')
+    .toString()
+    .toLowerCase()
+    .replace(/\^/g, '')
+    .replace(/_/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/,/g, '.')
+    .trim();
+}
+function stripSpaces(s) { return s.replace(/\s/g, ''); }
+
+function checkText(inputId, feedbackId) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const accepts = (input.dataset.accept || '').split('|').map(normalize);
+  const user = normalize(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (!user) {
+    feedback.textContent = 'Vul een antwoord in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  const userStripped = stripSpaces(user);
+  const ok = accepts.some(a => {
+    if (!a) return false;
+    if (user === a) return true;
+    return stripSpaces(a) === userStripped;
+  });
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Kijk de uitwerking of probeer opnieuw.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function parseNumber(s) {
+  if (!s) return NaN;
+  const norm = s.toString().toLowerCase()
+    .replace(/,/g, '.')
+    .replace(/\s/g, '')
+    .replace(/·/g, '*')
+    .replace(/×/g, '*')
+    .replace(/−/g, '-');
+  // Patterns: "3e-5", "3*10^-5", "3*10-5", "10^-5" (no coef), "3.10-5"
+  const sciNotation = norm.match(/^([\-\+]?\d*\.?\d*)\*?10\^?([\-\+]?\d+)$/);
+  if (sciNotation) {
+    const coefStr = sciNotation[1];
+    const coef = (coefStr === '' || coefStr === '+' || coefStr === '-') ? parseFloat(coefStr + '1') : parseFloat(coefStr);
+    return coef * Math.pow(10, parseFloat(sciNotation[2]));
+  }
+  return parseFloat(norm);
+}
+
+function checkNumeric(inputId, feedbackId, target, tol) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const user = parseNumber(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (isNaN(user)) {
+    feedback.textContent = 'Vul een getal in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  // Strict: only absolute tolerance — relatieve 5% maakte pH-velden te ruim.
+  const ok = Math.abs(user - target) <= tol;
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Probeer opnieuw of bekijk de uitwerking.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function toggleSteps(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+}
+
+// pH-calculator widget
+function updateCalc() {
+  const phin = document.getElementById('phin');
+  const phout = document.getElementById('phout');
+  const hin = document.getElementById('hin');
+  const hout = document.getElementById('hout');
+  const ph = parseFloat(phin.value.replace(',', '.'));
+  if (!isNaN(ph) && ph >= -2 && ph <= 16) {
+    const h = Math.pow(10, -ph);
+    phout.innerHTML = '[H<sup>+</sup>] = ' + h.toExponential(2) + ' M';
+  } else {
+    phout.innerHTML = '[H<sup>+</sup>] verschijnt hier';
+  }
+  const h = parseNumber(hin.value);
+  if (!isNaN(h) && h > 0 && h < 100) {
+    const phval = -Math.log10(h);
+    hout.innerHTML = 'pH = ' + phval.toFixed(2);
+  } else {
+    hout.innerHTML = 'pH verschijnt hier';
+  }
+}
+document.getElementById('phin').addEventListener('input', updateCalc);
+document.getElementById('hin').addEventListener('input', updateCalc);
+
+// Persist checkboxes
+const PAGE_KEY = 'h7-dag2';
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(cb => {
+  const key = PAGE_KEY + '-' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 3 — Molariteit + gram-mol-L — Scheikunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --primary-dark:#1e3a8a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header.page-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; }
+header.page-header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 8rem; }
+.intro {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li { padding: 0.4rem 0 0.4rem 1.6rem; position: relative; }
+.intro li:before {
+  content: "✓"; position: absolute; left: 0; top: 0.4rem;
+  color: var(--primary); font-weight: 700;
+}
+.section {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem; color: var(--primary-dark);
+  margin-bottom: 1rem; padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem; background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem; margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3; border: 2px solid #facc15;
+  border-radius: 10px; padding: 1rem 1.25rem;
+  margin: 1rem 0; font-weight: 600;
+}
+.regel-label {
+  display: inline-block; background: #ca8a04;
+  color: white; font-size: 0.78rem;
+  padding: 0.15rem 0.6rem; border-radius: 4px;
+  margin-bottom: 0.5rem; font-weight: 700;
+}
+.tip-box {
+  background: #ecfeff; border: 1px solid #67e8f9;
+  border-left: 4px solid #0891b2;
+  padding: 1rem 1.25rem; margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.tip-box strong { color: #0e7490; }
+.warning-box {
+  background: #fef2f2; border: 1px solid #fca5a5;
+  border-left: 4px solid #dc2626;
+  padding: 1rem 1.25rem; margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.warning-box strong { color: #991b1b; }
+.voorbeeld {
+  background: #f0fdf4; border: 2px solid #86efac;
+  border-radius: 10px; padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block; background: #15803d; color: white;
+  font-size: 0.78rem; padding: 0.15rem 0.6rem;
+  border-radius: 4px; margin-bottom: 0.5rem; font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9;
+  border-left: 4px solid #475569;
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+.toggle-btn {
+  background: white; color: var(--primary-dark);
+  border: 1.5px solid var(--primary); border-radius: 8px;
+  padding: 0.45rem 0.9rem; font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; margin-top: 0.5rem; font-family: inherit;
+}
+.try-it {
+  background: #f0f9ff; border: 2px dashed #93c5fd;
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 { color: #0c4a6e; margin-bottom: 0.6rem; font-size: 1.05rem; }
+.q-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 0.6rem; margin: 0.7rem 0;
+}
+.q-row label { flex: 1 1 220px; font-size: 0.98rem; }
+.q-row input[type=text] {
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.45rem 0.7rem; font-size: 1rem;
+  width: 180px; font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7; color: white; border: none;
+  border-radius: 8px; padding: 0.45rem 0.9rem;
+  font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7; color: #92400e;
+  border: 1.5px solid #fcd34d; border-radius: 8px;
+  padding: 0.45rem 0.9rem; font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem; padding: 0.55rem 0.9rem;
+  border-radius: 8px; font-size: 0.95rem; display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb; border: 1px solid #fcd34d;
+  border-radius: 8px; padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem; display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.toets-sectie {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  border: 2px solid #c4b5fd; border-radius: var(--radius);
+  padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.toets-sectie h2 { color: #6d28d9; border-bottom-color: #c4b5fd; }
+.toets-sectie .opgave-label {
+  display: inline-block; background: #6d28d9; color: white;
+  font-size: 0.78rem; padding: 0.2rem 0.7rem;
+  border-radius: 4px; margin-bottom: 0.5rem; font-weight: 700;
+}
+.driehoek {
+  background: white; border: 2px solid var(--primary);
+  border-radius: 12px;
+  padding: 1.25rem; margin: 1rem 0;
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem; text-align: center;
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.driehoek > div { padding: 0.5rem; }
+.driehoek .top {
+  grid-column: 1 / 4; background: var(--primary-soft);
+  border-radius: 8px; font-weight: 700; font-size: 1.2rem;
+}
+.driehoek .bottom { background: #e0e7ff; border-radius: 8px; font-size: 1.1rem; }
+.checklist {
+  background: var(--card); border: 2px solid var(--primary);
+  border-radius: var(--radius); padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label { display: block; padding: 0.45rem 0; cursor: pointer; }
+.checklist input { margin-right: 0.6rem; transform: scale(1.2); }
+.nav-bottom {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin-top: 2rem; flex-wrap: wrap;
+}
+.nav-bottom a {
+  flex: 1 1 200px; background: var(--card);
+  border: 2px solid var(--primary); color: var(--primary-dark);
+  padding: 1rem 1.25rem; border-radius: var(--radius);
+  text-decoration: none; font-weight: 600; text-align: center;
+}
+.nav-bottom a:hover { background: var(--primary-soft); }
+footer {
+  text-align: center; padding: 2rem 1rem 3rem;
+  font-size: 0.85rem; color: var(--text-soft);
+  border-top: 1px solid var(--border); margin-top: 2rem;
+}
+footer a { color: var(--primary); }
+sub { font-size: 0.75em; vertical-align: sub; }
+sup { font-size: 0.75em; vertical-align: super; }
+.math { font-family: 'STIX Two Math','Cambria Math','Georgia',serif; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Dag 3 — Molariteit + gram &harr; mol &harr; L</h1>
+  <p>De rekendiscipline: van gram naar mol via Binas, dan via molariteit naar volume. En andersom.</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a> &rsaquo;
+  <a href="../../index.html">Scheikunde</a> &rsaquo;
+  <a href="../../havo-4/index.html">HAVO 4</a> &rsaquo;
+  <a href="../index.html">H7 Zuren</a> &rsaquo;
+  Dag 3
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Wat je vandaag leert</h2>
+    <ul>
+      <li>De definitie van molariteit: M = mol &divide; L</li>
+      <li>Omrekenen tussen gram, mol en liter via de molaire massa uit Binas</li>
+      <li>Mol H<sup>+</sup>-ionen uit een reactievergelijking halen (stoichiometrie)</li>
+      <li>Verdunningsformule c<sub>1</sub>V<sub>1</sub> = c<sub>2</sub>V<sub>2</sub></li>
+      <li>Kg-product berekenen via mol-verhouding in een reactievergelijking</li>
+    </ul>
+  </div>
+
+  <!-- SECTIE 1: molariteit definitie -->
+  <section class="section">
+    <h2>1. Wat is molariteit?</h2>
+
+    <p>Bij dag 2 zag je [H<sup>+</sup>] — dat is een concentratie in mol per liter. Die schrijfwijze geldt voor élke opgeloste stof, niet alleen H<sup>+</sup>. Molariteit is de algemene naam.</p>
+
+    <div class="formula-line center">
+      M = mol / L &nbsp;&nbsp;[mol L<sup>−1</sup>]
+    </div>
+
+    <p>Eenheid: mol L<sup>−1</sup> of M (uitspreken als "molair"). Een oplossing van 1,5 M NaCl bevat 1,5 mol NaCl per liter — onafhankelijk van het volume.</p>
+
+    <div class="regel">
+      <span class="regel-label">Drie omkeerbare formules</span>
+      Wil je <strong>mol</strong>? &nbsp;mol = M × V<br>
+      Wil je <strong>M</strong>? &nbsp;M = mol / V<br>
+      Wil je <strong>V</strong>? &nbsp;V = mol / M
+    </div>
+
+    <h3>Voorbeeld 1 — molariteit uit mol en volume</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 1</span>
+      <p>In 500 mL water los je 0,025 mol HCl op. Wat is de molariteit?</p>
+      <p><strong>Stap 1:</strong> volume omrekenen naar liter: 500 mL = 0,500 L</p>
+      <p><strong>Stap 2:</strong> M = mol / V = 0,025 / 0,500 = 0,050 M</p>
+      <p>Antwoord: <strong>0,050 mol L<sup>−1</sup></strong> (2 sign cijfers in beide getallen → 2 sign in antwoord)</p>
+    </div>
+  </section>
+
+  <!-- SECTIE 2: Gram naar mol -->
+  <section class="section">
+    <h2>2. Gram &harr; mol via Binas-tabel 99 of 104</h2>
+
+    <p>Een weegschaal wijst gram aan, geen mol. Je hebt een omrekening nodig. Die zit in de <strong>molaire massa M</strong> (g mol<sup>−1</sup>) — staat in Binas-tabel 99 (per element) of 104 (per molecuul).</p>
+
+    <div class="formula-line center">
+      mol = gram / molaire massa M
+    </div>
+
+    <div class="tip-box">
+      <strong>Geen Binas bij de hand?</strong> Sommige molaire massa's moet je vlot kunnen optellen uit elementen:
+      <ul style="margin-top:0.5rem;">
+        <li>H<sub>2</sub>SO<sub>4</sub>: 2×1,0 + 32 + 4×16 = 98 g mol<sup>−1</sup></li>
+        <li>HCl: 1,0 + 35,5 = 36,5 g mol<sup>−1</sup></li>
+        <li>HNO<sub>3</sub>: 1,0 + 14 + 3×16 = 63 g mol<sup>−1</sup></li>
+        <li>NaOH: 23 + 16 + 1,0 = 40 g mol<sup>−1</sup></li>
+      </ul>
+    </div>
+
+    <h3>Voorbeeld 2 — gram → molariteit</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 2</span>
+      <p>Je lost 7,3 g HCl op in 250 mL water. Bereken de molariteit. M(HCl) = 36,5 g mol<sup>−1</sup>.</p>
+      <p><strong>Stap 1:</strong> mol HCl = 7,3 / 36,5 = 0,20 mol (2 sign cijfers — 7,3 g heeft 2 sign cijfers, dus antwoord ook)</p>
+      <p><strong>Stap 2:</strong> V = 250 mL = 0,250 L</p>
+      <p><strong>Stap 3:</strong> M = 0,20 / 0,250 = 0,80 M</p>
+      <p>Antwoord: <strong>[HCl] = 0,80 mol L<sup>−1</sup></strong></p>
+    </div>
+
+    <h3>Voorbeeld 3 — gram nodig voor een oplossing</h3>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 3</span>
+      <p>Je wilt 100 mL van een 0,150 M HNO<sub>3</sub>-oplossing maken. Hoeveel gram HNO<sub>3</sub> heb je nodig? M(HNO<sub>3</sub>) = 63 g mol<sup>−1</sup>.</p>
+      <p><strong>Stap 1:</strong> mol HNO<sub>3</sub> = 0,150 × 0,100 = 0,0150 mol (driehoek: mol = M × V)</p>
+      <p><strong>Stap 2:</strong> gram = mol × M-molair = 0,0150 × 63 = 0,945 g</p>
+      <p>Antwoord: <strong>0,95 g HNO<sub>3</sub></strong></p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — gram &harr; molariteit</h4>
+
+      <p>Een leerling moet 200 mL 0,250 M NaOH maken. M(NaOH) = 40 g mol<sup>−1</sup>.</p>
+
+      <div class="q-row">
+        <label>1a. Hoeveel mol NaOH?</label>
+        <input type="text" id="q1a" data-accept="0.050|0,050|0.05|0,05|5e-2">
+        <button class="btn-check" onclick="checkNumeric('q1a','f1a', 0.050, 0.002)">Check</button>
+      </div>
+      <div class="feedback" id="f1a"></div>
+
+      <div class="q-row">
+        <label>1b. Hoeveel gram NaOH?</label>
+        <input type="text" id="q1b" data-accept="2.0|2,0|2">
+        <button class="btn-check" onclick="checkNumeric('q1b','f1b', 2.0, 0.1)">Check</button>
+      </div>
+      <div class="feedback" id="f1b"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s1')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s1">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>1a: mol = M × V = 0,250 × 0,200 = 0,0500 mol → afronden naar 2 sign cijfers (op basis van 0,250 en 0,200) → <strong>0,050 mol</strong></li>
+          <li>1b: gram = mol × M-molair = 0,050 × 40 = <strong>2,0 g</strong></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 3: Mol H+ uit reactievergelijking -->
+  <section class="section">
+    <h2>3. Mol H<sup>+</sup> uit een reactievergelijking — stoichiometrie</h2>
+
+    <p>Een veel-gestelde toetsvraag: <em>"Hoeveel mol H<sup>+</sup>-ionen kan dit zuur maximaal leveren?"</em> Daarvoor moet je de reactievergelijking gebruiken en kijken naar de coëfficiënten.</p>
+
+    <div class="werkschema">
+      <h4>Werkschema</h4>
+      <ol>
+        <li>Schrijf de reactievergelijking met (aq)/(l)/(g)/(s)</li>
+        <li>Lees de mol-verhouding af (1 mol zuur → ... mol H<sup>+</sup>)</li>
+        <li>Reken via mol = M × V eerst mol zuur uit</li>
+        <li>Vermenigvuldig met de factor uit stap 2</li>
+      </ol>
+    </div>
+
+    <h3>Voorbeeld 4 — pH-minus voor zwembad</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 4 (gebaseerd op anker-opg 3)</span>
+      <p>In 1,00 L pH-minus zit 51,0 g zwavelzuur. Bereken hoeveel mol H<sup>+</sup>-ionen er maximaal in 1,00 L pH-minus zit. M(H<sub>2</sub>SO<sub>4</sub>) = 98,1 g mol<sup>−1</sup>.</p>
+      <p><strong>Stap 1:</strong> H<sub>2</sub>SO<sub>4</sub> (aq) → 2 H<sup>+</sup> (aq) + SO<sub>4</sub><sup>2−</sup> (aq) → factor 2!</p>
+      <p><strong>Stap 2:</strong> mol H<sub>2</sub>SO<sub>4</sub> = 51,0 / 98,1 = 0,520 mol</p>
+      <p><strong>Stap 3:</strong> mol H<sup>+</sup> = 2 × 0,520 = 1,04 mol</p>
+      <p>Antwoord: <strong>1,04 mol H<sup>+</sup></strong></p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Klassieke fout:</strong> vergeten te vermenigvuldigen met de factor uit de reactievergelijking. Schrijf altijd eerst die vergelijking op.
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — fosforzuur in een sportdrank</h4>
+      <p>Een sportdrank-fabrikant doet 9,8 g fosforzuur (H<sub>3</sub>PO<sub>4</sub>, M = 98 g mol<sup>−1</sup>) in 5,00 L drank. Neem aan dat alle 3 H<sup>+</sup>-ionen vrijkomen.</p>
+
+      <div class="q-row">
+        <label>2a. Hoeveel mol H<sub>3</sub>PO<sub>4</sub>?</label>
+        <input type="text" id="q2a" data-accept="0.10|0,10|0.1|0,1">
+        <button class="btn-check" onclick="checkNumeric('q2a','f2a', 0.10, 0.005)">Check</button>
+      </div>
+      <div class="feedback" id="f2a"></div>
+
+      <div class="q-row">
+        <label>2b. Hoeveel mol H<sup>+</sup>-ionen in totaal?</label>
+        <input type="text" id="q2b" data-accept="0.30|0,30|0.3|0,3">
+        <button class="btn-check" onclick="checkNumeric('q2b','f2b', 0.30, 0.01)">Check</button>
+      </div>
+      <div class="feedback" id="f2b"></div>
+
+      <div class="q-row">
+        <label>2c. Wat is [H<sup>+</sup>] in de sportdrank (M)?</label>
+        <input type="text" id="q2c" data-accept="0.060|0,060|0.06|0,06|6e-2">
+        <button class="btn-check" onclick="checkNumeric('q2c','f2c', 0.060, 0.003)">Check</button>
+      </div>
+      <div class="feedback" id="f2c"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s2')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s2">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>2a: mol H<sub>3</sub>PO<sub>4</sub> = 9,8 / 98 = 0,10 mol</li>
+          <li>2b: factor 3 → 3 × 0,10 = 0,30 mol H<sup>+</sup></li>
+          <li>2c: [H<sup>+</sup>] = 0,30 / 5,00 = 0,060 M</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 4: Verdunning -->
+  <section class="section">
+    <h2>4. Verdunnen — c<sub>1</sub>V<sub>1</sub> = c<sub>2</sub>V<sub>2</sub></h2>
+
+    <p>Als je water bij een oplossing doet, blijft het aantal mol opgeloste stof <strong>gelijk</strong>. Het volume verandert. Dus de molariteit verandert. Dat geeft de verdunningsformule:</p>
+
+    <div class="formula-line center">
+      c<sub>1</sub> &times; V<sub>1</sub> = c<sub>2</sub> &times; V<sub>2</sub>
+    </div>
+
+    <p>Waarbij c<sub>1</sub> en V<sub>1</sub> de uitgangsmolariteit en volume zijn, en c<sub>2</sub> en V<sub>2</sub> na verdunning.</p>
+
+    <h3>Voorbeeld 5 — schoonmaakazijn verdunnen</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 5</span>
+      <p>Je hebt 250 mL van een 1,2 M azijnzuur (CH<sub>3</sub>COOH) en verdunt het tot 1,00 L. Wat is de nieuwe molariteit?</p>
+      <p>c<sub>1</sub> = 1,2 M, V<sub>1</sub> = 0,250 L, V<sub>2</sub> = 1,00 L<br>
+         c<sub>2</sub> = c<sub>1</sub>V<sub>1</sub> / V<sub>2</sub> = 1,2 × 0,250 / 1,00 = 0,30 M</p>
+      <p>Antwoord: <strong>0,30 M</strong></p>
+    </div>
+
+    <div class="tip-box">
+      <strong>Kortere route:</strong> als je het volume met factor x vergroot (water erbij), wordt de molariteit factor x kleiner. Verdunnen van 250 mL → 1000 mL = factor 4 → molariteit ÷ 4. 1,2 / 4 = 0,30 M.
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — verdunning</h4>
+      <p>Je hebt 100 mL van een 6,0 M HCl-oplossing. Je vult aan met water tot 600 mL.</p>
+
+      <div class="q-row">
+        <label>3a. Wat is de verdunningsfactor?</label>
+        <input type="text" id="q3a" data-accept="6|zes|6x|factor 6|6,0|6.0">
+        <button class="btn-check" onclick="checkText('q3a','f3a')">Check</button>
+      </div>
+      <div class="feedback" id="f3a"></div>
+
+      <div class="q-row">
+        <label>3b. Wat is de nieuwe molariteit (M)?</label>
+        <input type="text" id="q3b" data-accept="1.0|1,0|1">
+        <button class="btn-check" onclick="checkNumeric('q3b','f3b', 1.0, 0.05)">Check</button>
+      </div>
+      <div class="feedback" id="f3b"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s3')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s3">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>3a: 100 mL → 600 mL is een verdunning met factor 6 (V<sub>2</sub>/V<sub>1</sub> = 600/100 = 6).</li>
+          <li>3b: c<sub>2</sub> = c<sub>1</sub>V<sub>1</sub>/V<sub>2</sub> = 6,0 × 100/600 = 1,0 M. Of korter: 6,0 / 6 = 1,0 M.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 5: Kg product via stoichio -->
+  <section class="section">
+    <h2>5. Kg-product via een reactievergelijking</h2>
+
+    <p>Bij het anker zit een opgave waarin je uit 13.000 L urine (met 0,040 M fosfaat-ionen) moet berekenen hoeveel kg struviet je kunt maken. Dat is een opeenstapeling van stappen — maar elk apart is gewoon mol = M × V of mol → gram.</p>
+
+    <div class="werkschema">
+      <h4>Werkschema kg-product</h4>
+      <ol>
+        <li>Mol uitgangsstof = M × V</li>
+        <li>Mol-verhouding aflezen uit reactievergelijking</li>
+        <li>Mol product = mol uitgangsstof × verhouding</li>
+        <li>Massa product = mol × molaire massa M</li>
+        <li>Omrekenen naar kg (×10<sup>−3</sup>)</li>
+      </ol>
+    </div>
+
+    <h3>Voorbeeld 6 — kalksteen voor wegenbouw</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 6</span>
+      <p>Een tank van 2,00 L bevat 0,500 M Ca(NO<sub>3</sub>)<sub>2</sub>-oplossing. Daaraan voeg je Na<sub>2</sub>CO<sub>3</sub> toe om CaCO<sub>3</sub> (kalksteen) neer te slaan. Reactie:</p>
+      <div class="formula-line center">
+        Ca<sup>2+</sup> (aq) + CO<sub>3</sub><sup>2−</sup> (aq) → CaCO<sub>3</sub> (s)
+      </div>
+      <p>Bereken de massa CaCO<sub>3</sub> in gram. M(CaCO<sub>3</sub>) = 100,1 g mol<sup>−1</sup>.</p>
+      <p><strong>Stap 1:</strong> mol Ca<sup>2+</sup> = 0,500 × 2,00 = 1,00 mol</p>
+      <p><strong>Stap 2:</strong> verhouding 1:1, dus mol CaCO<sub>3</sub> = 1,00 mol</p>
+      <p><strong>Stap 3:</strong> massa = 1,00 × 100,1 = 100,1 g ≈ <strong>1,00 &middot; 10<sup>2</sup> g CaCO<sub>3</sub></strong> (3 sign cijfers)</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — neutralisatie met verhouding 2:1</h4>
+      <p>Een chemicus wil 25,0 mL van een 0,150 M H<sub>2</sub>SO<sub>4</sub>-oplossing neutraliseren met natronloog. Reactie:</p>
+      <div class="formula-line center">
+        2 NaOH (aq) + H<sub>2</sub>SO<sub>4</sub> (aq) → Na<sub>2</sub>SO<sub>4</sub> (aq) + 2 H<sub>2</sub>O (l)
+      </div>
+      <p>De natronloog is 0,100 M. <em>Let op de verhouding 2 mol NaOH per 1 mol H<sub>2</sub>SO<sub>4</sub>.</em></p>
+
+      <div class="q-row">
+        <label>4a. Hoeveel mol H<sub>2</sub>SO<sub>4</sub>?</label>
+        <input type="text" id="q4a" data-accept="0.00375|0,00375|3.75e-3|3,75e-3">
+        <button class="btn-check" onclick="checkNumeric('q4a','f4a', 0.00375, 0.0001)">Check</button>
+      </div>
+      <div class="feedback" id="f4a"></div>
+
+      <div class="q-row">
+        <label>4b. Hoeveel mol NaOH heb je nodig?</label>
+        <input type="text" id="q4b" data-accept="0.0075|0,0075|7.5e-3|7,5e-3">
+        <button class="btn-check" onclick="checkNumeric('q4b','f4b', 0.0075, 0.0002)">Check</button>
+      </div>
+      <div class="feedback" id="f4b"></div>
+
+      <div class="q-row">
+        <label>4c. Hoeveel mL natronloog heb je nodig?</label>
+        <input type="text" id="q4c" data-accept="75|75.0|75,0">
+        <button class="btn-check" onclick="checkNumeric('q4c','f4c', 75.0, 1.0)">Check</button>
+      </div>
+      <div class="feedback" id="f4c"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s4')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s4">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>4a: mol H<sub>2</sub>SO<sub>4</sub> = M × V = 0,150 × 0,0250 = <strong>0,00375 mol</strong></li>
+          <li>4b: verhouding 2:1 → mol NaOH = 2 × 0,00375 = <strong>0,00750 mol</strong></li>
+          <li>4c: V = mol / M = 0,00750 / 0,100 = 0,0750 L = <strong>75,0 mL</strong></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 6: Toetsstijl-sectie -->
+  <section class="section toets-sectie">
+    <h2>6. Toetsstijl — combineren zoals op de toets</h2>
+    <p>Twee samengestelde opgaven die je echt op een proefwerk verwacht. Hier komt alles van vandaag samen.</p>
+
+    <!-- Toets-opgave 1 - TFMS-stijl -->
+    <div style="margin-top:1.25rem;">
+      <span class="opgave-label">Opgave 1 — Trichloorazijnzuur in laboratorium</span>
+      <p>Een laborant maakt 250 mL van een 0,0800 M trichloorazijnzuuroplossing (CCl<sub>3</sub>COOH, M = 163,4 g mol<sup>−1</sup>). Trichloorazijnzuur (TCA) is een sterk carbonzuur — geef in alle vragen 3 sign cijfers.</p>
+
+      <div class="q-row">
+        <label>1a. Hoeveel mol TCA zit in 250 mL oplossing?</label>
+        <input type="text" id="t1a" data-accept="0.0200|0,0200|0.02|0,02|2e-2">
+        <button class="btn-check" onclick="checkNumeric('t1a','tf1a', 0.0200, 0.0005)">Check</button>
+      </div>
+      <div class="feedback" id="tf1a"></div>
+
+      <div class="q-row">
+        <label>1b. Hoeveel gram TCA heeft de laborant afgewogen?</label>
+        <input type="text" id="t1b" data-accept="3.27|3,27|3.3|3,3">
+        <button class="btn-check" onclick="checkNumeric('t1b','tf1b', 3.27, 0.05)">Check</button>
+      </div>
+      <div class="feedback" id="tf1b"></div>
+
+      <div class="q-row">
+        <label>1c. Hoeveel mol H<sup>+</sup>-ionen kan dit zuur maximaal leveren? (TCA is een carbonzuur)</label>
+        <input type="text" id="t1c" data-accept="0.0200|0,0200|0.02|0,02|2e-2">
+        <button class="btn-check" onclick="checkNumeric('t1c','tf1c', 0.0200, 0.0005)">Check</button>
+      </div>
+      <div class="feedback" id="tf1c"></div>
+
+      <div class="q-row">
+        <label>1d. Wat is [H<sup>+</sup>] in deze oplossing als TCA volledig is geïoniseerd?</label>
+        <input type="text" id="t1d" data-accept="0.0800|0,0800|0.08|0,08|8e-2">
+        <button class="btn-check" onclick="checkNumeric('t1d','tf1d', 0.0800, 0.002)">Check</button>
+      </div>
+      <div class="feedback" id="tf1d"></div>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts1')">Stappenplan opgave 1</button>
+      </div>
+      <div class="detail-steps" id="ts1">
+        <h5>Uitwerking opgave 1</h5>
+        <ol>
+          <li>1a: mol = M × V = 0,0800 × 0,250 = <strong>0,0200 mol</strong></li>
+          <li>1b: gram = mol × M-molair = 0,0200 × 163,4 = <strong>3,27 g</strong></li>
+          <li>1c: TCA is carbonzuur → 1 H<sup>+</sup> per molecuul. mol H<sup>+</sup> = 1 × 0,0200 = <strong>0,0200 mol</strong></li>
+          <li>1d: [H<sup>+</sup>] = mol H<sup>+</sup> / volume = 0,0200 / 0,250 = <strong>0,0800 M</strong> (gelijk aan c<sub>zuur</sub> want factor 1)</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Toets-opgave 2 - struviet stijl -->
+    <div style="margin-top:1.75rem;">
+      <span class="opgave-label">Opgave 2 — Kalk neerslaan uit zwembadwater</span>
+      <p>Een zwembad-onderhoudsbedrijf heeft een tank van 800 L water. In dit water zit Ca<sup>2+</sup>-ionen met een concentratie van 0,0150 M. Om kalk te verwijderen wordt natriumcarbonaat toegevoegd, waardoor calciumcarbonaat (kalk) neerslaat:</p>
+      <div class="formula-line center">
+        Ca<sup>2+</sup> (aq) + CO<sub>3</sub><sup>2−</sup> (aq) → CaCO<sub>3</sub> (s)
+      </div>
+      <p>M(CaCO<sub>3</sub>) = 100,1 g mol<sup>−1</sup>.</p>
+
+      <div class="q-row">
+        <label>2a. Bereken het aantal mol Ca<sup>2+</sup>-ionen in de 800 L water:</label>
+        <input type="text" id="t2a" data-accept="12|12.0|12,0">
+        <button class="btn-check" onclick="checkNumeric('t2a','tf2a', 12.0, 0.3)">Check</button>
+      </div>
+      <div class="feedback" id="tf2a"></div>
+
+      <div class="q-row">
+        <label>2b. Hoeveel mol CaCO<sub>3</sub> kan er maximaal neerslaan?</label>
+        <input type="text" id="t2b" data-accept="12|12.0|12,0">
+        <button class="btn-check" onclick="checkNumeric('t2b','tf2b', 12.0, 0.3)">Check</button>
+      </div>
+      <div class="feedback" id="tf2b"></div>
+
+      <div class="q-row">
+        <label>2c. Bereken de massa CaCO<sub>3</sub> in kg:</label>
+        <input type="text" id="t2c" data-accept="1.20|1,20|1.2|1,2">
+        <button class="btn-check" onclick="checkNumeric('t2c','tf2c', 1.20, 0.02)">Check</button>
+      </div>
+      <div class="feedback" id="tf2c"></div>
+
+      <div class="q-row">
+        <label>2d. Noem één reden waarom het in de praktijk handiger is dit met zwembadwater te doen dan met rivierwater.</label>
+      </div>
+      <textarea id="t2d" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts2')">Stappenplan opgave 2</button>
+      </div>
+      <div class="detail-steps" id="ts2">
+        <h5>Uitwerking opgave 2</h5>
+        <ol>
+          <li>2a: mol Ca<sup>2+</sup> = 0,0150 × 800 = <strong>12,0 mol</strong> (3 sign cijfers)</li>
+          <li>2b: verhouding 1:1 → <strong>12,0 mol CaCO<sub>3</sub></strong></li>
+          <li>2c: massa = 12,0 × 100,1 = 1201 g = <strong>1,20 kg</strong></li>
+          <li>2d: voorbeeld-antwoord: zwembadwater heeft een veel hogere en bekende Ca<sup>2+</sup>-concentratie (kalk-aanslag is een herkenbaar probleem). Rivierwater is veel verdunder met wisselende samenstelling — meer reactor-volume nodig, lagere opbrengst per liter, kostbaarder filtersysteem.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kennischeck -->
+  <div class="checklist">
+    <h2>Kan ik het?</h2>
+    <label><input type="checkbox" id="c1"> Ik kan molariteit M = mol &divide; V berekenen.</label>
+    <label><input type="checkbox" id="c2"> Ik kan met de driehoek mol, M of V uitrekenen.</label>
+    <label><input type="checkbox" id="c3"> Ik kan gram &harr; mol omzetten via de molaire massa uit Binas-tabel 99 of 104.</label>
+    <label><input type="checkbox" id="c4"> Ik vergeet niet de factor 2/3 bij H<sub>2</sub>SO<sub>4</sub> of H<sub>3</sub>PO<sub>4</sub> als ik mol H<sup>+</sup> bereken.</label>
+    <label><input type="checkbox" id="c5"> Ik kan c<sub>1</sub>V<sub>1</sub> = c<sub>2</sub>V<sub>2</sub> toepassen bij verdunning.</label>
+    <label><input type="checkbox" id="c6"> Ik kan kg-product uitrekenen via een reactievergelijking.</label>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="../dag2-ph-en-h-plus/index.html">&larr; Terug naar Dag 2</a>
+    <a href="../dag4-indicatoren-en-toepassen/index.html">Door naar Dag 4: Indicatoren &rarr;</a>
+  </div>
+
+  <footer>
+    <p>Gemaakt door Ralph Wagter met Claude Code. Vrij hergebruik onder <a href="https://eupl.eu/1.2/nl/">EUPL-1.2</a>. &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub repo</a></p>
+  </footer>
+</div>
+
+<script>
+function normalize(s) {
+  return (s || '').toString().toLowerCase()
+    .replace(/\^/g, '').replace(/_/g, '')
+    .replace(/\s+/g, ' ').replace(/,/g, '.').trim();
+}
+function stripSpaces(s) { return s.replace(/\s/g, ''); }
+
+function checkText(inputId, feedbackId) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const accepts = (input.dataset.accept || '').split('|').map(normalize);
+  const user = normalize(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (!user) {
+    feedback.textContent = 'Vul een antwoord in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  const userStripped = stripSpaces(user);
+  const ok = accepts.some(a => {
+    if (!a) return false;
+    if (user === a) return true;
+    return stripSpaces(a) === userStripped;
+  });
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Kijk de uitwerking of probeer opnieuw.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function parseNumber(s) {
+  if (!s) return NaN;
+  const norm = s.toString().toLowerCase()
+    .replace(/,/g, '.').replace(/\s/g, '')
+    .replace(/·/g, '*').replace(/×/g, '*').replace(/−/g, '-');
+  const sciNotation = norm.match(/^([\-\+]?\d*\.?\d*)\*?10\^?([\-\+]?\d+)$/);
+  if (sciNotation) {
+    const coefStr = sciNotation[1];
+    const coef = (coefStr === '' || coefStr === '+' || coefStr === '-')
+      ? parseFloat(coefStr + '1') : parseFloat(coefStr);
+    return coef * Math.pow(10, parseFloat(sciNotation[2]));
+  }
+  return parseFloat(norm);
+}
+
+function checkNumeric(inputId, feedbackId, target, tol) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const user = parseNumber(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (isNaN(user)) {
+    feedback.textContent = 'Vul een getal in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  const ok = Math.abs(user - target) <= tol;
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Probeer opnieuw of bekijk de uitwerking.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function toggleSteps(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+}
+
+const PAGE_KEY = 'h7-dag3';
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(cb => {
+  const key = PAGE_KEY + '-' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+</script>
+</body>
+</html>

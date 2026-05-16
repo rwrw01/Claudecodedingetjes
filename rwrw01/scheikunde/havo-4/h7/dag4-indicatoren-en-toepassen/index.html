@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dag 4 — Indicatoren + Binas 52A + aantonen + ijklijn — Scheikunde HAVO 4 — Voor Kasper</title>
+<style>
+:root {
+  --primary:#1d4ed8;
+  --primary-soft:#dbeafe;
+  --primary-dark:#1e3a8a;
+  --accent:#b45309;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header.page-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; }
+header.page-header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 8rem; }
+.intro {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.intro ul { list-style: none; padding: 0; }
+.intro li { padding: 0.4rem 0 0.4rem 1.6rem; position: relative; }
+.intro li:before {
+  content: "✓"; position: absolute; left: 0; top: 0.4rem;
+  color: var(--primary); font-weight: 700;
+}
+.section {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem; color: var(--primary-dark);
+  margin-bottom: 1rem; padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.section ul, .section ol { margin: 0.6rem 0 0.8rem 1.6rem; }
+.section li { margin: 0.35rem 0; }
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.15rem; background: var(--primary-soft);
+  border-left: 4px solid var(--primary);
+  padding: 0.7rem 1rem; margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.regel {
+  background: #fef9c3; border: 2px solid #facc15;
+  border-radius: 10px; padding: 1rem 1.25rem;
+  margin: 1rem 0; font-weight: 600;
+}
+.regel-label {
+  display: inline-block; background: #ca8a04;
+  color: white; font-size: 0.78rem;
+  padding: 0.15rem 0.6rem; border-radius: 4px;
+  margin-bottom: 0.5rem; font-weight: 700;
+}
+.tip-box {
+  background: #ecfeff; border: 1px solid #67e8f9;
+  border-left: 4px solid #0891b2;
+  padding: 1rem 1.25rem; margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.tip-box strong { color: #0e7490; }
+.warning-box {
+  background: #fef2f2; border: 1px solid #fca5a5;
+  border-left: 4px solid #dc2626;
+  padding: 1rem 1.25rem; margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.warning-box strong { color: #991b1b; }
+.voorbeeld {
+  background: #f0fdf4; border: 2px solid #86efac;
+  border-radius: 10px; padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+.voorbeeld-label {
+  display: inline-block; background: #15803d; color: white;
+  font-size: 0.78rem; padding: 0.15rem 0.6rem;
+  border-radius: 4px; margin-bottom: 0.5rem; font-weight: 700;
+}
+.werkschema {
+  background: #f1f5f9; border-left: 4px solid #475569;
+  padding: 1rem 1.25rem; margin: 1rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.werkschema h4 { color: #334155; margin-bottom: 0.5rem; font-size: 1rem; }
+.werkschema ol { margin: 0.4rem 0 0 1.4rem; }
+.indicator-tabel {
+  width: 100%; border-collapse: collapse;
+  margin: 1rem 0; font-size: 0.95rem;
+}
+.indicator-tabel th, .indicator-tabel td {
+  padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--border);
+  text-align: left; vertical-align: middle;
+}
+.indicator-tabel th {
+  background: var(--primary-soft); color: var(--primary-dark);
+  font-weight: 700;
+}
+.indicator-tabel .ind-name { font-weight: 600; }
+.indicator-tabel .ind-traj {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-variant-numeric: tabular-nums;
+}
+.indicator-tabel .ind-low, .indicator-tabel .ind-high {
+  display: inline-block; padding: 0.15rem 0.6rem;
+  border-radius: 5px; font-size: 0.85rem;
+  border: 1px solid var(--border);
+}
+.ph-strip {
+  background: linear-gradient(to right,
+    #b91c1c 0%, #b91c1c 14%,
+    #ea580c 14%, #ea580c 28%,
+    #f59e0b 28%, #f59e0b 42%,
+    #facc15 42%, #facc15 50%,
+    #84cc16 50%, #84cc16 58%,
+    #22c55e 58%, #22c55e 72%,
+    #06b6d4 72%, #06b6d4 86%,
+    #3b82f6 86%, #3b82f6 100%);
+  height: 24px; border-radius: 4px; margin: 0.8rem 0;
+  position: relative;
+}
+.ph-strip span {
+  position: absolute; top: 28px;
+  font-size: 0.78rem; color: var(--text-soft);
+  transform: translateX(-50%);
+}
+.try-it {
+  background: #f0f9ff; border: 2px dashed #93c5fd;
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+}
+.try-it h4 { color: #0c4a6e; margin-bottom: 0.6rem; font-size: 1.05rem; }
+.q-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 0.6rem; margin: 0.7rem 0;
+}
+.q-row label { flex: 1 1 220px; font-size: 0.98rem; }
+.q-row input[type=text] {
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.45rem 0.7rem; font-size: 1rem;
+  width: 180px; font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7; color: white; border: none;
+  border-radius: 8px; padding: 0.45rem 0.9rem;
+  font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7; color: #92400e;
+  border: 1.5px solid #fcd34d; border-radius: 8px;
+  padding: 0.45rem 0.9rem; font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem; padding: 0.55rem 0.9rem;
+  border-radius: 8px; font-size: 0.95rem; display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb; border: 1px solid #fcd34d;
+  border-radius: 8px; padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem; display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+.toets-sectie {
+  background: linear-gradient(135deg, #faf5ff, #f3e8ff);
+  border: 2px solid #c4b5fd; border-radius: var(--radius);
+  padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.toets-sectie h2 { color: #6d28d9; border-bottom-color: #c4b5fd; }
+.toets-sectie .opgave-label {
+  display: inline-block; background: #6d28d9; color: white;
+  font-size: 0.78rem; padding: 0.2rem 0.7rem;
+  border-radius: 4px; margin-bottom: 0.5rem; font-weight: 700;
+}
+.ijklijn-svg { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 0.6rem; }
+.checklist {
+  background: var(--card); border: 2px solid var(--primary);
+  border-radius: var(--radius); padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label { display: block; padding: 0.45rem 0; cursor: pointer; }
+.checklist input { margin-right: 0.6rem; transform: scale(1.2); }
+.nav-bottom {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin-top: 2rem; flex-wrap: wrap;
+}
+.nav-bottom a {
+  flex: 1 1 200px; background: var(--card);
+  border: 2px solid var(--primary); color: var(--primary-dark);
+  padding: 1rem 1.25rem; border-radius: var(--radius);
+  text-decoration: none; font-weight: 600; text-align: center;
+}
+.nav-bottom a:hover { background: var(--primary-soft); }
+footer {
+  text-align: center; padding: 2rem 1rem 3rem;
+  font-size: 0.85rem; color: var(--text-soft);
+  border-top: 1px solid var(--border); margin-top: 2rem;
+}
+footer a { color: var(--primary); }
+sub { font-size: 0.75em; vertical-align: sub; }
+sup { font-size: 0.75em; vertical-align: super; }
+.math { font-family: 'STIX Two Math','Cambria Math','Georgia',serif; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Dag 4 — Indicatoren, aantonen, ijklijnen</h1>
+  <p>Met Binas-tabel 52A indicator kiezen. Aantonen door berekening. IJklijn aflezen en verdunning verrekenen.</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a> &rsaquo;
+  <a href="../../index.html">Scheikunde</a> &rsaquo;
+  <a href="../../havo-4/index.html">HAVO 4</a> &rsaquo;
+  <a href="../index.html">H7 Zuren</a> &rsaquo;
+  Dag 4
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Wat je vandaag leert</h2>
+    <ul>
+      <li>Wat een indicator is en hoe je hem kiest met Binas-tabel 52A</li>
+      <li>Een omslagtraject lezen en interpreteren</li>
+      <li>"Aantonen door een berekening" — een opgave-type waar je moet rekenen + concluderen</li>
+      <li>Een ijklijn aflezen en een verdunningsfactor verrekenen</li>
+      <li>Zuur/basisch/neutraal beoordelen uit een pH-waarde</li>
+      <li>CO<sub>2</sub>-neutraal redeneren (kringloop)</li>
+    </ul>
+  </div>
+
+  <!-- SECTIE 1: Wat is een indicator -->
+  <section class="section">
+    <h2>1. Wat is een indicator?</h2>
+
+    <p>Een <strong>indicator</strong> is een stof waarvan de kleur afhangt van de pH. Bij lage pH heeft hij kleur A, bij hoge pH kleur B. Tussen die twee zit een <em>overgangsgebied</em>: het <strong>omslagtraject</strong>.</p>
+
+    <div class="regel">
+      <span class="regel-label">Onthouden</span>
+      Binnen het omslagtraject heeft de indicator een mengkleur — daar kun je geen scherpe conclusie trekken. Buiten het traject is de kleur duidelijk &apos;A&apos; of duidelijk &apos;B&apos;.
+    </div>
+
+    <h3>Voorbeeld — broomfenolblauw</h3>
+    <p>Broomfenolblauw heeft een omslagtraject van <strong>3,0 tot 4,6</strong>. Onder pH 3,0 is hij <em>geel</em>, boven pH 4,6 is hij <em>blauw</em>, en daartussen krijg je groene tinten.</p>
+
+    <div class="tip-box">
+      <strong>Voor de toets:</strong> je hoeft de trajecten <em>niet</em> uit je hoofd te kennen. Je gebruikt Binas-tabel 52A. Maar je moet wel snel kunnen oordelen welke indicator past bij welke pH.
+    </div>
+  </section>
+
+  <!-- SECTIE 2: Indicator-tabel (Binas 52A) -->
+  <section class="section">
+    <h2>2. Indicator-overzicht (Binas-tabel 52A)</h2>
+
+    <p>Dit zijn de zeven indicatoren die je het meest tegenkomt. Per indicator staat de pH-grenzen van het omslagtraject, en de kleur voor en na.</p>
+
+    <table class="indicator-tabel">
+      <thead>
+        <tr><th>Indicator</th><th>Omslagtraject</th><th>pH &lt; min</th><th>pH &gt; max</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ind-name">methyloranje</td>
+          <td class="ind-traj">3,1 &ndash; 4,4</td>
+          <td><span class="ind-low" style="background:#fecaca;color:#991b1b;">rood</span></td>
+          <td><span class="ind-high" style="background:#fef08a;color:#854d0e;">geel</span></td>
+        </tr>
+        <tr>
+          <td class="ind-name">broomfenolblauw</td>
+          <td class="ind-traj">3,0 &ndash; 4,6</td>
+          <td><span class="ind-low" style="background:#fef08a;color:#854d0e;">geel</span></td>
+          <td><span class="ind-high" style="background:#bfdbfe;color:#1e3a8a;">blauw</span></td>
+        </tr>
+        <tr>
+          <td class="ind-name">methylrood</td>
+          <td class="ind-traj">4,4 &ndash; 6,2</td>
+          <td><span class="ind-low" style="background:#fecaca;color:#991b1b;">rood</span></td>
+          <td><span class="ind-high" style="background:#fef08a;color:#854d0e;">geel</span></td>
+        </tr>
+        <tr>
+          <td class="ind-name">lakmoes</td>
+          <td class="ind-traj">5,0 &ndash; 8,0</td>
+          <td><span class="ind-low" style="background:#fecaca;color:#991b1b;">rood</span></td>
+          <td><span class="ind-high" style="background:#bfdbfe;color:#1e3a8a;">blauw</span></td>
+        </tr>
+        <tr>
+          <td class="ind-name">broomthymolblauw</td>
+          <td class="ind-traj">6,0 &ndash; 7,6</td>
+          <td><span class="ind-low" style="background:#fef08a;color:#854d0e;">geel</span></td>
+          <td><span class="ind-high" style="background:#bfdbfe;color:#1e3a8a;">blauw</span></td>
+        </tr>
+        <tr>
+          <td class="ind-name">fenolrood</td>
+          <td class="ind-traj">6,8 &ndash; 8,4</td>
+          <td><span class="ind-low" style="background:#fef08a;color:#854d0e;">geel</span></td>
+          <td><span class="ind-high" style="background:#fecaca;color:#991b1b;">rood</span></td>
+        </tr>
+        <tr>
+          <td class="ind-name">fenolftaleïne</td>
+          <td class="ind-traj">8,3 &ndash; 10,0</td>
+          <td><span class="ind-low" style="background:#f5f5f4;color:#57534e;">kleurloos</span></td>
+          <td><span class="ind-high" style="background:#fbcfe8;color:#9f1239;">roze</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ph-strip">
+      <span style="left:0%;">0</span>
+      <span style="left:14.3%;">2</span>
+      <span style="left:28.6%;">4</span>
+      <span style="left:42.9%;">6</span>
+      <span style="left:50%;">7</span>
+      <span style="left:57.1%;">8</span>
+      <span style="left:71.4%;">10</span>
+      <span style="left:85.7%;">12</span>
+      <span style="left:100%;">14</span>
+    </div>
+
+    <div style="height:1rem;"></div>
+
+    <div class="werkschema">
+      <h4>Werkschema indicator-keuze</h4>
+      <ol>
+        <li>Bepaal de pH van de oplossing waar je een uitspraak over wil doen</li>
+        <li>Loop de Binas-tabel langs en zoek een indicator waarvan de pH <strong>buiten</strong> het omslagtraject ligt</li>
+        <li>Lees af welke kleur de indicator dan heeft</li>
+      </ol>
+    </div>
+
+    <h3>Voorbeeld 1 — kies een indicator voor pH 5,5</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 1</span>
+      <p>Een oplossing heeft pH = 5,5. Welke indicator geeft een duidelijke (één-kleurige) waarneming?</p>
+      <p>Kijk welke indicator pH 5,5 <em>buiten</em> het traject heeft:</p>
+      <ul>
+        <li>methyloranje (3,1-4,4) — 5,5 ligt boven → <strong>geel</strong> ✓</li>
+        <li>broomfenolblauw (3,0-4,6) — 5,5 ligt boven → <strong>blauw</strong> ✓</li>
+        <li>methylrood (4,4-6,2) — 5,5 ligt <em>in</em> het traject → mengkleur ✗</li>
+        <li>fenolrood (6,8-8,4) — 5,5 ligt onder → <strong>geel</strong> ✓</li>
+      </ul>
+      <p>Antwoord: methyloranje, broomfenolblauw of fenolrood geven een duidelijke kleur. Methylrood juist <em>niet</em> — die zou een onduidelijke mengkleur geven.</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — indicator-keuze</h4>
+      <p>Een oplossing heeft pH = 9,0.</p>
+
+      <div class="q-row">
+        <label>1a. Welke kleur heeft lakmoes hier?</label>
+        <input type="text" id="q1a" data-accept="blauw|blauwe">
+        <button class="btn-check" onclick="checkText('q1a','f1a')">Check</button>
+      </div>
+      <div class="feedback" id="f1a"></div>
+
+      <div class="q-row">
+        <label>1b. Welke kleur heeft fenolftaleïne hier?</label>
+        <input type="text" id="q1b" data-accept="roze|rood|rose|paars">
+        <button class="btn-check" onclick="checkText('q1b','f1b')">Check</button>
+      </div>
+      <div class="feedback" id="f1b"></div>
+
+      <div class="q-row">
+        <label>1c. Is methylrood geschikt om aan te tonen dat pH = 9,0?</label>
+        <input type="text" id="q1c" data-accept="ja|geschikt|wel">
+        <button class="btn-check" onclick="checkText('q1c','f1c')">Check</button>
+      </div>
+      <div class="feedback" id="f1c"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s1')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s1">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>1a: lakmoes-traject 5,0-8,0; pH 9,0 ligt boven → <strong>blauw</strong>.</li>
+          <li>1b: fenolftaleïne 8,3-10,0; pH 9,0 ligt <em>in</em> het traject → krijgt een mengkleur, vaak licht roze of beginnend roze. Voor de toets is "roze" een goed antwoord, "kleurloos" is fout.</li>
+          <li>1c: ja, methylrood (traject 4,4-6,2) heeft bij pH 9,0 één duidelijke kleur (geel — ver boven traject). Geschikt om aan te tonen dat pH boven 6,2 ligt.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 3: Aantonen door berekening -->
+  <section class="section">
+    <h2>3. "Aantonen door een berekening"</h2>
+
+    <p>Een typische toets-vraag is: <em>"Toon door middel van een berekening aan dat ..."</em>. Dat betekent: doe een rekening die dat ondersteunt of weerlegt, en sluit af met een conclusie-zin.</p>
+
+    <div class="regel">
+      <span class="regel-label">Discipline</span>
+      Aantonen = rekenen <em>plus</em> conclusie. Een berekening zonder conclusie-zin kost punten. De conclusie-zin moet expliciet "ja" of "nee" zeggen met argument.
+    </div>
+
+    <h3>Voorbeeld 2 — sportdrank-zout (geïnspireerd op anker-opg 6c)</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 2</span>
+      <p>Op de verpakking van een sportdrank staat dat 100 mL drank 49 mg natrium-ionen en 36 mg chloride-ionen bevat. Toon door middel van een berekening aan dat natriumchloride niet de enige bron van zout in deze sportdrank kan zijn.</p>
+      <p><strong>Stap 1:</strong> reken om naar mol. M(Na) = 23 g mol<sup>−1</sup>, M(Cl) = 35,5 g mol<sup>−1</sup>.</p>
+      <ul>
+        <li>mol Na<sup>+</sup> = 49·10<sup>−3</sup> / 23 = 2,1·10<sup>−3</sup> mol</li>
+        <li>mol Cl<sup>−</sup> = 36·10<sup>−3</sup> / 35,5 = 1,0·10<sup>−3</sup> mol</li>
+      </ul>
+      <p><strong>Stap 2:</strong> in NaCl is de verhouding Na : Cl = 1 : 1. Hier is de verhouding 2,1 : 1,0 ≈ 2 : 1. Er is dus 2× zoveel natrium als chloride.</p>
+      <p><strong>Conclusie:</strong> als alle natrium uit NaCl zou komen, zou er evenveel mol Cl<sup>−</sup> moeten zijn als Na<sup>+</sup>. Dat is niet zo (Na<sup>+</sup> is ruim 2× zoveel als Cl<sup>−</sup>). Dus moet een ander natrium-bevattend zout (bijv. natriumcitraat) ook bijdragen. Aangetoond.</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — aantonen door berekening</h4>
+      <p>In 1,00 L spoelwater zit 0,40 g calciumchloride (CaCl<sub>2</sub>) opgelost. Een laborant beweert dat het Cl<sup>−</sup>-gehalte dan 0,80 g L<sup>−1</sup> bedraagt. Toon door middel van een berekening aan of dat klopt of niet. M(CaCl<sub>2</sub>) = 111 g mol<sup>−1</sup>, M(Cl) = 35,5 g mol<sup>−1</sup>.</p>
+
+      <div class="q-row">
+        <label>2a. Hoeveel mol CaCl<sub>2</sub> in 1,00 L?</label>
+        <input type="text" id="q2a" data-accept="0.0036|0,0036|3.6e-3|3,6e-3">
+        <button class="btn-check" onclick="checkNumeric('q2a','f2a', 0.0036, 0.0002)">Check</button>
+      </div>
+      <div class="feedback" id="f2a"></div>
+
+      <div class="q-row">
+        <label>2b. Hoeveel mol Cl<sup>−</sup>?</label>
+        <input type="text" id="q2b" data-accept="0.0072|0,0072|7.2e-3|7,2e-3">
+        <button class="btn-check" onclick="checkNumeric('q2b','f2b', 0.0072, 0.0004)">Check</button>
+      </div>
+      <div class="feedback" id="f2b"></div>
+
+      <div class="q-row">
+        <label>2c. Hoeveel gram Cl<sup>−</sup>?</label>
+        <input type="text" id="q2c" data-accept="0.26|0,26|0.256|0,256">
+        <button class="btn-check" onclick="checkNumeric('q2c','f2c', 0.256, 0.02)">Check</button>
+      </div>
+      <div class="feedback" id="f2c"></div>
+
+      <div class="q-row">
+        <label>2d. Klopt de bewering van de laborant? (ja/nee)</label>
+        <input type="text" id="q2d" data-accept="nee|niet|onjuist|fout">
+        <button class="btn-check" onclick="checkText('q2d','f2d')">Check</button>
+      </div>
+      <div class="feedback" id="f2d"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s2')">Uitwerking + conclusie-zin</button>
+      </div>
+      <div class="detail-steps" id="s2">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>2a: mol CaCl<sub>2</sub> = 0,40 / 111 = 3,6 · 10<sup>−3</sup> mol</li>
+          <li>2b: per mol CaCl<sub>2</sub> 2 mol Cl<sup>−</sup> → 2 × 3,6·10<sup>−3</sup> = 7,2 · 10<sup>−3</sup> mol Cl<sup>−</sup></li>
+          <li>2c: massa Cl<sup>−</sup> = 7,2·10<sup>−3</sup> × 35,5 = 0,256 g ≈ 0,26 g</li>
+          <li>2d: <strong>Conclusie:</strong> 0,26 g L<sup>−1</sup> is veel minder dan de beweerde 0,80 g L<sup>−1</sup> — een factor 3 verschil. Bewering klopt <em>niet</em>. (Aangetoond.)</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 4: IJklijn aflezen + verdunning -->
+  <section class="section">
+    <h2>4. IJklijn aflezen + verdunning verrekenen</h2>
+
+    <p>Bij een analyse maak je vaak eerst een ijklijn: oplossingen met bekende concentraties → kleurintensiteit (of absorbantie) meten → grafiek. Daarna meet je je onbekende monster en lees je af.</p>
+
+    <div class="werkschema">
+      <h4>Werkschema ijklijn + verdunning</h4>
+      <ol>
+        <li>Lees de gemeten waarde (kleurintensiteit / absorbantie) af van de y-as</li>
+        <li>Trek horizontaal naar de ijklijn, dan loodrecht omlaag naar de x-as</li>
+        <li>Lees de concentratie af</li>
+        <li><strong>Als het monster verdund was vóór meting:</strong> vermenigvuldig met de verdunningsfactor om de oorspronkelijke concentratie te krijgen</li>
+      </ol>
+    </div>
+
+    <h3>Voorbeeld 3 — bromide-bepaling (geïnspireerd op anker-opg 7d)</h3>
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 3</span>
+      <p>Een onderzoeker bepaalt het bromide-gehalte van grondwater. Hij verdunt 2,00 mL grondwater met 8,00 mL gedestilleerd water tot een totaal volume van 10,00 mL. Hij meet de kleurintensiteit op 180. Uit de ijklijn (zie onder) leest hij af dat dit hoort bij een gehalte van 5,0 massa-ppm. Bereken het oorspronkelijke bromide-gehalte van het grondwater.</p>
+
+      <svg class="ijklijn-svg" viewBox="0 0 400 260" width="100%" style="max-width:400px;">
+        <line x1="50" y1="220" x2="380" y2="220" stroke="#333" stroke-width="1.5"/>
+        <line x1="50" y1="220" x2="50" y2="20" stroke="#333" stroke-width="1.5"/>
+        <!-- X-axis labels -->
+        <text x="50" y="240" font-size="11" text-anchor="middle">0</text>
+        <text x="116" y="240" font-size="11" text-anchor="middle">2</text>
+        <text x="182" y="240" font-size="11" text-anchor="middle">4</text>
+        <text x="248" y="240" font-size="11" text-anchor="middle">6</text>
+        <text x="314" y="240" font-size="11" text-anchor="middle">8</text>
+        <text x="380" y="240" font-size="11" text-anchor="middle">10</text>
+        <text x="215" y="258" font-size="11" text-anchor="middle">bromide-gehalte (massa-ppm)</text>
+        <!-- Y-axis labels -->
+        <text x="42" y="223" font-size="11" text-anchor="end">165</text>
+        <text x="42" y="183" font-size="11" text-anchor="end">170</text>
+        <text x="42" y="143" font-size="11" text-anchor="end">175</text>
+        <text x="42" y="103" font-size="11" text-anchor="end">180</text>
+        <text x="42" y="63" font-size="11" text-anchor="end">185</text>
+        <text x="42" y="23" font-size="11" text-anchor="end">190</text>
+        <text x="20" y="120" font-size="11" text-anchor="middle" transform="rotate(-90 20 120)">kleurintensiteit</text>
+        <!-- Lijn: door (50,40) en (380,166), passeert (215, 103) = (5,0 ppm, intensity 180) -->
+        <line x1="50" y1="40" x2="380" y2="166" stroke="#dc2626" stroke-width="2"/>
+        <!-- Datapunten -->
+        <circle cx="116" cy="65" r="3" fill="#dc2626"/>
+        <circle cx="182" cy="90" r="3" fill="#dc2626"/>
+        <circle cx="248" cy="115" r="3" fill="#dc2626"/>
+        <circle cx="314" cy="141" r="3" fill="#dc2626"/>
+        <!-- Stippellijnen voor aflezen op (215, 103) -->
+        <line x1="50" y1="103" x2="215" y2="103" stroke="#666" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="215" y1="103" x2="215" y2="220" stroke="#666" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="220" y="100" font-size="10" fill="#666">intensiteit 180</text>
+        <text x="220" y="215" font-size="10" fill="#666">5,0 ppm</text>
+      </svg>
+
+      <p><strong>Stap 1:</strong> ijklijn-aflezing: 180 → 5,0 massa-ppm. Dit is het gehalte van het <em>verdunde</em> monster.</p>
+      <p><strong>Stap 2:</strong> verdunningsfactor = totaal volume / monstervolume = 10,00 / 2,00 = 5,0.</p>
+      <p><strong>Stap 3:</strong> oorspronkelijk gehalte = verdund gehalte × verdunningsfactor = 5,0 × 5,0 = <strong>25 massa-ppm</strong>.</p>
+      <p>Antwoord: <strong>25 massa-ppm</strong> (2 sign cijfers, gelijk aan minimum van de factoren).</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — verdunning verrekenen</h4>
+      <p>Een chemicus verdunt 5,00 mL afvalwater met gedestilleerd water tot 50,00 mL. Hij meet de kleurintensiteit en leest op de ijklijn af: 2,4 massa-ppm zware metaal.</p>
+
+      <div class="q-row">
+        <label>3a. Wat is de verdunningsfactor?</label>
+        <input type="text" id="q3a" data-accept="10|10x|tien|factor 10">
+        <button class="btn-check" onclick="checkText('q3a','f3a')">Check</button>
+      </div>
+      <div class="feedback" id="f3a"></div>
+
+      <div class="q-row">
+        <label>3b. Wat is het oorspronkelijke gehalte zware metaal (massa-ppm)?</label>
+        <input type="text" id="q3b" data-accept="24|24.0|24,0">
+        <button class="btn-check" onclick="checkNumeric('q3b','f3b', 24.0, 0.5)">Check</button>
+      </div>
+      <div class="feedback" id="f3b"></div>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s3')">Uitwerking</button>
+      </div>
+      <div class="detail-steps" id="s3">
+        <h5>Uitwerking</h5>
+        <ol>
+          <li>3a: factor = 50,00 / 5,00 = 10</li>
+          <li>3b: oorspronkelijk = 2,4 × 10 = 24 massa-ppm</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 5: Zuur/basisch + CO2-neutraal -->
+  <section class="section">
+    <h2>5. Zuur, basisch, neutraal — uit pH</h2>
+
+    <div class="regel">
+      <span class="regel-label">Drie buckets</span>
+      pH &lt; 7 = zuur &middot; pH = 7 = neutraal &middot; pH &gt; 7 = basisch
+    </div>
+
+    <p>Regenwater is normaal licht zuur (pH ≈ 5,5) door opgelost CO<sub>2</sub>. Pure water (zonder opgelost gas) heeft pH 7. Zeepwater is basisch (pH > 7).</p>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 4</span>
+      <p>Een leerling meet pH = 6,2 voor regenwater uit een regenton. Is het regenwater zuur, basisch of neutraal?</p>
+      <p>pH = 6,2 &lt; 7 → <strong>zuur</strong></p>
+    </div>
+
+    <h3>CO<sub>2</sub>-neutraal — wat betekent dat?</h3>
+    <p>Een proces heet <strong>CO<sub>2</sub>-neutraal</strong> als de CO<sub>2</sub> die je <em>uitstoot</em> ergens anders weer wordt <em>vastgelegd</em> in een gelijke hoeveelheid. Netto: geen extra CO<sub>2</sub> in de atmosfeer.</p>
+
+    <div class="voorbeeld">
+      <span class="voorbeeld-label">Voorbeeld 5 (geïnspireerd op anker-opg 8b)</span>
+      <p>Auto's op mierenzuur (methaanzuur, HCOOH) zijn een idee voor duurzame energie. Bij verbranding ontstaat CO<sub>2</sub>. Toch kunnen mierenzuur-auto's CO<sub>2</sub>-neutraal zijn. Leg uit waarom.</p>
+      <p><strong>Uitleg:</strong> mierenzuur wordt geproduceerd via reactie 1 (boek): CO<sub>2</sub> en H<sub>2</sub> → HCOOH. Voor 1 mol mierenzuur is 1 mol CO<sub>2</sub> nodig. Als die CO<sub>2</sub> uit de atmosfeer (of een industrieel schoorsteenfilter) gehaald wordt, en daarna bij verbranding in de auto weer als 1 mol CO<sub>2</sub> in de atmosfeer komt, is de balans nul.</p>
+      <p><strong>Conclusie:</strong> als bij de productie van het mierenzuur de gelijke hoeveelheid CO<sub>2</sub> wordt vastgelegd, dan stoot het rijden netto geen CO<sub>2</sub> uit. CO<sub>2</sub>-neutraal.</p>
+    </div>
+
+    <div class="try-it">
+      <h4>Probeer zelf — zuur/basisch + CO<sub>2</sub>-neutraal</h4>
+
+      <div class="q-row">
+        <label>4a. Een oplossing heeft pH = 9,8. Zuur, basisch of neutraal?</label>
+        <input type="text" id="q4a" data-accept="basisch|base|basis">
+        <button class="btn-check" onclick="checkText('q4a','f4a')">Check</button>
+      </div>
+      <div class="feedback" id="f4a"></div>
+
+      <div class="q-row">
+        <label>4b. Een oplossing heeft pH = 7,0. Zuur, basisch of neutraal?</label>
+        <input type="text" id="q4b" data-accept="neutraal">
+        <button class="btn-check" onclick="checkText('q4b','f4b')">Check</button>
+      </div>
+      <div class="feedback" id="f4b"></div>
+
+      <div class="q-row">
+        <label>4c. Een biomassa-centrale verbrandt houtsnippers. CO<sub>2</sub>-neutraal? Leg in één zin uit.</label>
+      </div>
+      <textarea id="q4c" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.5rem;">
+        <button class="btn-step" onclick="toggleSteps('s4')">Modelantwoord 4c</button>
+      </div>
+      <div class="detail-steps" id="s4">
+        <h5>Modelantwoord</h5>
+        <p>Ja, mits de bomen die de houtsnippers leveren bij hun groei dezelfde hoeveelheid CO<sub>2</sub> uit de atmosfeer hebben opgenomen via fotosynthese als er bij verbranding vrijkomt. Dan is de netto CO<sub>2</sub>-balans nul.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIE 6: Toetsstijl-sectie -->
+  <section class="section toets-sectie">
+    <h2>6. Toetsstijl — combineren zoals op de toets</h2>
+    <p>Twee samengestelde opgaven die je echt op het proefwerk verwacht. Vraagtypes uit het anker komen hier samen.</p>
+
+    <!-- Toets-opgave 1 - azijn-stijl indicator + molariteit -->
+    <div style="margin-top:1.25rem;">
+      <span class="opgave-label">Opgave 1 — Schoonmaakazijn analyseren</span>
+      <p>Schoonmaakazijn is een oplossing van azijnzuur (CH<sub>3</sub>COOH) in water. Op een fles staat: 8,0 g azijnzuur per 100 mL. Een laborant meet de pH met een pH-meter en krijgt 2,4. M(CH<sub>3</sub>COOH) = 60,0 g mol<sup>−1</sup>.</p>
+
+      <div class="q-row">
+        <label>1a. Bereken de molariteit van het azijnzuur in mol L<sup>−1</sup>:</label>
+        <input type="text" id="t1a" data-accept="1.3|1,3|1.33|1,33">
+        <button class="btn-check" onclick="checkNumeric('t1a','tf1a', 1.33, 0.05)">Check</button>
+      </div>
+      <div class="feedback" id="tf1a"></div>
+
+      <div class="q-row">
+        <label>1b. Bereken [H<sup>+</sup>] vanuit de gemeten pH:</label>
+        <input type="text" id="t1b" data-accept="4e-3|4*10^-3|0.004|0,004">
+        <button class="btn-check" onclick="checkNumeric('t1b','tf1b', 4e-3, 5e-4)">Check</button>
+      </div>
+      <div class="feedback" id="tf1b"></div>
+
+      <div class="q-row">
+        <label>1c. Welke indicator uit Binas-tabel 52A geeft bij deze pH een duidelijke kleur en welke kleur is dat?</label>
+        <input type="text" id="t1c" data-accept="methyloranje rood|methyloranje|broomfenolblauw geel|broomfenolblauw|methylrood rood|methylrood">
+        <button class="btn-check" onclick="checkText('t1c','tf1c')">Check</button>
+      </div>
+      <div class="feedback" id="tf1c"></div>
+
+      <div class="q-row">
+        <label>1d. Vergelijk [H<sup>+</sup>] (1b) met de molariteit (1a). Wat valt op?</label>
+      </div>
+      <textarea id="t1d" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts1')">Stappenplan opgave 1</button>
+      </div>
+      <div class="detail-steps" id="ts1">
+        <h5>Uitwerking opgave 1</h5>
+        <ol>
+          <li>1a: mol = 8,0 / 60,0 = 0,133 mol in 100 mL. Molariteit = 0,133 / 0,100 = <strong>1,33 mol L<sup>−1</sup></strong> (≈ 1,3 M)</li>
+          <li>1b: [H<sup>+</sup>] = 10<sup>−2,4</sup> = 4 · 10<sup>−3</sup> M (1 decimaal → 1 sign cijfer)</li>
+          <li>1c: pH = 2,4 → ligt buiten bv. methyloranje (3,1-4,4 → rood), broomfenolblauw (3,0-4,6 → geel), methylrood (4,4-6,2 → rood). Een correcte combinatie is: <strong>methyloranje → rood</strong>.</li>
+          <li>1d: [H<sup>+</sup>] ≈ 4·10<sup>−3</sup> M is veel kleiner dan de molariteit van het zuur (1,3 M) — een factor 300×. Dat komt omdat azijnzuur een <em>zwak</em> zuur is: maar een klein deel van de moleculen geeft echt H<sup>+</sup> af. Bij een sterk zuur zouden [H<sup>+</sup>] en de molariteit (vrijwel) gelijk zijn.</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Toets-opgave 2 - bromide-stijl ijklijn + aantonen -->
+    <div style="margin-top:1.75rem;">
+      <span class="opgave-label">Opgave 2 — Sulfaat in zwembadwater</span>
+      <p>Een zwembad-medewerker test het sulfaatgehalte van het water. Hij neemt 5,00 mL water en verdunt dit met gedestilleerd water tot 25,00 mL. Hij meet de kleurintensiteit en leest op de ijklijn af: 3,0 massa-ppm sulfaat (in het verdunde monster). De norm voor zwembadwater is maximaal 20 massa-ppm sulfaat.</p>
+
+      <div class="q-row">
+        <label>2a. Wat is de verdunningsfactor?</label>
+        <input type="text" id="t2a" data-accept="5|5x|vijf|factor 5">
+        <button class="btn-check" onclick="checkText('t2a','tf2a')">Check</button>
+      </div>
+      <div class="feedback" id="tf2a"></div>
+
+      <div class="q-row">
+        <label>2b. Bereken het oorspronkelijke sulfaatgehalte (massa-ppm):</label>
+        <input type="text" id="t2b" data-accept="15|15.0|15,0">
+        <button class="btn-check" onclick="checkNumeric('t2b','tf2b', 15.0, 0.3)">Check</button>
+      </div>
+      <div class="feedback" id="tf2b"></div>
+
+      <div class="q-row">
+        <label>2c. Toon door middel van een berekening aan of dit water aan de norm voldoet:</label>
+      </div>
+      <textarea id="t2c" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div class="q-row">
+        <label>2d. De medewerker wil ook de pH controleren. Hij meet pH = 7,5. Welke indicator uit Binas 52A is hier het meest geschikt om snel te bevestigen dat de pH boven de 7 ligt, en welke kleur zie je dan?</label>
+      </div>
+      <textarea id="t2d" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
+
+      <div style="margin-top:0.6rem;">
+        <button class="btn-step" onclick="toggleSteps('ts2')">Stappenplan opgave 2</button>
+      </div>
+      <div class="detail-steps" id="ts2">
+        <h5>Uitwerking opgave 2</h5>
+        <ol>
+          <li>2a: 25,00 / 5,00 = factor 5</li>
+          <li>2b: 3,0 × 5 = <strong>15 massa-ppm sulfaat</strong> in oorspronkelijk water</li>
+          <li>2c: 15 massa-ppm &lt; 20 massa-ppm. Dus het water voldoet aan de norm. (Conclusie expliciet maken!)</li>
+          <li>2d: pH 7,5 ligt in/rond een paar trajecten. Beste keuze: <strong>fenolrood</strong> (6,8-8,4). Bij pH 7,5 zit dat in het traject → mengkleur oranje-rood. Beter: <strong>broomthymolblauw</strong> (6,0-7,6): bij pH 7,5 ligt dat ook in traject; dichter bij blauw aan de hoge kant. Of <strong>lakmoes</strong> (5,0-8,0) is bij 7,5 nog enigszins paars (mengkleur). Strikt boven traject: <em>methylrood</em> (4,4-6,2) → bij pH 7,5 ver boven traject → geel → bevestigt pH &gt; 6,2. Goed antwoord: methylrood → geel (toont dat pH boven 6,2 ligt, dus boven 7 mogelijk).</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kennischeck -->
+  <div class="checklist">
+    <h2>Kan ik het?</h2>
+    <label><input type="checkbox" id="c1"> Ik kan een indicator kiezen uit Binas-tabel 52A bij een gegeven pH.</label>
+    <label><input type="checkbox" id="c2"> Ik snap het verschil tussen pH binnen en buiten het omslagtraject.</label>
+    <label><input type="checkbox" id="c3"> Ik kan een "aantonen door berekening"-vraag afronden met een conclusie-zin.</label>
+    <label><input type="checkbox" id="c4"> Ik kan een ijklijn aflezen en daarna de verdunningsfactor verrekenen.</label>
+    <label><input type="checkbox" id="c5"> Ik weet wanneer een oplossing zuur, basisch of neutraal is op basis van de pH.</label>
+    <label><input type="checkbox" id="c6"> Ik kan uitleggen waarom een proces CO<sub>2</sub>-neutraal kan zijn (kringloop).</label>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="../dag3-molariteit/index.html">&larr; Terug naar Dag 3</a>
+    <a href="../synthese/index.html">Door naar Synthese &rarr;</a>
+  </div>
+
+  <footer>
+    <p>Gemaakt door Ralph Wagter met Claude Code. Vrij hergebruik onder <a href="https://eupl.eu/1.2/nl/">EUPL-1.2</a>. &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub repo</a></p>
+  </footer>
+</div>
+
+<script>
+function normalize(s) {
+  return (s || '').toString().toLowerCase()
+    .replace(/\^/g, '').replace(/_/g, '')
+    .replace(/\s+/g, ' ').replace(/,/g, '.').trim();
+}
+function stripSpaces(s) { return s.replace(/\s/g, ''); }
+
+function checkText(inputId, feedbackId) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const accepts = (input.dataset.accept || '').split('|').map(normalize);
+  const user = normalize(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (!user) {
+    feedback.textContent = 'Vul een antwoord in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  const userStripped = stripSpaces(user);
+  const ok = accepts.some(a => {
+    if (!a) return false;
+    if (user === a) return true;
+    return stripSpaces(a) === userStripped;
+  });
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Kijk de uitwerking of probeer opnieuw.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function parseNumber(s) {
+  if (!s) return NaN;
+  const norm = s.toString().toLowerCase()
+    .replace(/,/g, '.').replace(/\s/g, '')
+    .replace(/·/g, '*').replace(/×/g, '*').replace(/−/g, '-');
+  const sciNotation = norm.match(/^([\-\+]?\d*\.?\d*)\*?10\^?([\-\+]?\d+)$/);
+  if (sciNotation) {
+    const coefStr = sciNotation[1];
+    const coef = (coefStr === '' || coefStr === '+' || coefStr === '-')
+      ? parseFloat(coefStr + '1') : parseFloat(coefStr);
+    return coef * Math.pow(10, parseFloat(sciNotation[2]));
+  }
+  return parseFloat(norm);
+}
+
+function checkNumeric(inputId, feedbackId, target, tol) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const user = parseNumber(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (isNaN(user)) {
+    feedback.textContent = 'Vul een getal in.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+    return;
+  }
+  const ok = Math.abs(user - target) <= tol;
+  if (ok) {
+    feedback.textContent = '✓ Goed!';
+    feedback.classList.add('correct');
+    input.classList.add('correct');
+  } else {
+    feedback.textContent = 'Nog niet helemaal. Probeer opnieuw of bekijk de uitwerking.';
+    feedback.classList.add('incorrect');
+    input.classList.add('incorrect');
+  }
+}
+
+function toggleSteps(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+}
+
+const PAGE_KEY = 'h7-dag4';
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(cb => {
+  const key = PAGE_KEY + '-' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+</script>
+</body>
+</html>

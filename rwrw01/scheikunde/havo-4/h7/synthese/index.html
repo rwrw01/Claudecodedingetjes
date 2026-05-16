@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Synthese H7 Zuren — Strategie-training — Voor Kasper</title>
+<style>
+:root {
+  --primary:#c2410c;
+  --primary-soft:#fed7aa;
+  --primary-dark:#7c2d12;
+  --accent:#0891b2;
+  --bg:#fafaf9;
+  --card:#ffffff;
+  --text:#1c1917;
+  --text-soft:#57534e;
+  --border:#e7e5e4;
+  --radius:14px;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family: 'Atkinson Hyperlegible','Open Sans','Segoe UI',system-ui,sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 17px;
+}
+header.page-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
+  padding: 3rem 1.5rem 2.5rem;
+  text-align: center;
+}
+header.page-header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.6rem; }
+header.page-header p { font-size: 1.1rem; opacity: 0.92; }
+.breadcrumb {
+  background: white;
+  padding: 0.9rem 1.5rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb a { color: var(--primary); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.container { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem 8rem; }
+.intro {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.intro h2 { font-size: 1.25rem; color: var(--primary-dark); margin-bottom: 0.6rem; }
+.section {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.section h2 {
+  font-size: 1.4rem; color: var(--primary-dark);
+  margin-bottom: 1rem; padding-bottom: 0.6rem;
+  border-bottom: 3px solid var(--primary-soft);
+}
+.section h3 { font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 0.6rem; }
+.section p { margin: 0.8rem 0; }
+.strategie {
+  background: linear-gradient(135deg, #fffbeb, #fef3c7);
+  border: 2px solid #f59e0b;
+  border-radius: var(--radius);
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.strategie h2 { color: #b45309; margin-bottom: 1rem; font-size: 1.3rem; }
+.strategie ol { margin: 0.6rem 0 0.6rem 1.6rem; }
+.strategie li { margin: 0.5rem 0; font-size: 1.02rem; }
+.strategie .vraag-num {
+  display: inline-block; background: #d97706; color: white;
+  width: 28px; height: 28px; border-radius: 50%;
+  text-align: center; font-weight: 700; font-size: 0.92rem;
+  line-height: 28px; margin-right: 0.5rem;
+}
+.opgave-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 1.75rem; margin-bottom: 1.75rem;
+}
+.opgave-card .opg-header {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.opgave-card .opg-num {
+  background: var(--primary); color: white;
+  font-size: 1.05rem; font-weight: 700;
+  padding: 0.35rem 0.9rem; border-radius: 5px;
+}
+.opgave-card h2 { color: var(--primary-dark); font-size: 1.3rem; margin: 0; }
+.opgave-card .opg-tags {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.opg-tags .tag {
+  font-size: 0.78rem; background: var(--primary-soft);
+  color: var(--primary-dark); padding: 0.18rem 0.55rem;
+  border-radius: 4px; font-weight: 600;
+}
+.formula-line {
+  font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+  font-size: 1.1rem; background: #f5f5f4;
+  border-left: 4px solid var(--primary);
+  padding: 0.6rem 1rem; margin: 0.6rem 0;
+  border-radius: 0 8px 8px 0;
+}
+.formula-line.center { text-align: center; }
+.walkthrough {
+  background: #f0fdf4; border: 2px solid #86efac;
+  border-radius: 10px; padding: 1.25rem;
+  margin: 1rem 0;
+}
+.walkthrough h4 { color: #15803d; margin-bottom: 0.5rem; font-size: 1.05rem; }
+.walkthrough .stap {
+  background: white; border-left: 3px solid #15803d;
+  padding: 0.7rem 1rem; margin: 0.6rem 0;
+  border-radius: 0 6px 6px 0;
+}
+.walkthrough .stap strong { color: #15803d; }
+.q-row {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 0.6rem; margin: 0.7rem 0;
+}
+.q-row label { flex: 1 1 220px; font-size: 0.98rem; }
+.q-row input[type=text] {
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.45rem 0.7rem; font-size: 1rem;
+  width: 180px; font-family: 'STIX Two Math','Cambria Math','Georgia',serif;
+}
+.q-row input:focus { outline: none; border-color: var(--primary); }
+.q-row input.correct { border-color: #16a34a; background: #f0fdf4; }
+.q-row input.incorrect { border-color: #dc2626; background: #fff1f2; }
+.btn-check {
+  background: #0284c7; color: white; border: none;
+  border-radius: 8px; padding: 0.45rem 0.9rem;
+  font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-check:hover { background: #0369a1; }
+.btn-step {
+  background: #fef3c7; color: #92400e;
+  border: 1.5px solid #fcd34d; border-radius: 8px;
+  padding: 0.45rem 0.9rem; font-size: 0.92rem; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+}
+.btn-step:hover { background: #fde68a; }
+.feedback {
+  margin-top: 0.5rem; padding: 0.55rem 0.9rem;
+  border-radius: 8px; font-size: 0.95rem; display: none;
+}
+.feedback.show { display: block; }
+.feedback.correct { background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+.feedback.incorrect { background: #fff1f2; color: #9f1239; border: 1px solid #fca5a5; }
+.detail-steps {
+  background: #fffbeb; border: 1px solid #fcd34d;
+  border-radius: 8px; padding: 0.8rem 1.1rem;
+  margin-top: 0.6rem; display: none;
+}
+.detail-steps.show { display: block; }
+.detail-steps h5 { color: #92400e; margin-bottom: 0.4rem; font-size: 0.98rem; }
+.detail-steps ol { margin-left: 1.4rem; }
+.detail-steps li { margin: 0.3rem 0; font-size: 0.95rem; }
+textarea {
+  width: 100%; font-size: 1rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  padding: 0.5rem; font-family: inherit;
+}
+.checklist {
+  background: var(--card); border: 2px solid var(--primary);
+  border-radius: var(--radius); padding: 1.5rem;
+}
+.checklist h2 { color: var(--primary-dark); margin-bottom: 1rem; }
+.checklist label { display: block; padding: 0.45rem 0; cursor: pointer; }
+.checklist input { margin-right: 0.6rem; transform: scale(1.2); }
+.nav-bottom {
+  display: flex; justify-content: space-between; gap: 1rem;
+  margin-top: 2rem; flex-wrap: wrap;
+}
+.nav-bottom a {
+  flex: 1 1 200px; background: var(--card);
+  border: 2px solid var(--primary); color: var(--primary-dark);
+  padding: 1rem 1.25rem; border-radius: var(--radius);
+  text-decoration: none; font-weight: 600; text-align: center;
+}
+.nav-bottom a:hover { background: var(--primary-soft); }
+footer {
+  text-align: center; padding: 2rem 1rem 3rem;
+  font-size: 0.85rem; color: var(--text-soft);
+  border-top: 1px solid var(--border); margin-top: 2rem;
+}
+footer a { color: var(--primary); }
+sub { font-size: 0.75em; vertical-align: sub; }
+sup { font-size: 0.75em; vertical-align: super; }
+.math { font-family: 'STIX Two Math','Cambria Math','Georgia',serif; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1>Synthese H7 — De gemengde opgaven</h1>
+  <p>Hier oefen je het samenspel: vergelijkingen, pH, molariteit, indicatoren — alles tegelijk. Strategie kiezen vóór rekenen.</p>
+</header>
+
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a> &rsaquo;
+  <a href="../../index.html">Scheikunde</a> &rsaquo;
+  <a href="../../havo-4/index.html">HAVO 4</a> &rsaquo;
+  <a href="../index.html">H7 Zuren</a> &rsaquo;
+  Synthese
+</div>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Waarom een synthese-pagina?</h2>
+    <p>Op de toets krijg je geen vragen van een enkele paragraaf. Je krijgt een verhaaltje met deelvragen waarin alle stof <em>tegelijk</em> langs komt: reactievergelijking opstellen, dan molariteit, dan pH, dan indicator-keuze. Hier oefen je <strong>strategie</strong> — kiezen wat je het eerst doet, en welke formule waar nodig is.</p>
+    <p>Vier opgaven. De eerste is volledig uitgewerkt zodat je het patroon kent. De andere drie doe je zelf met deelvragen en self-check.</p>
+  </div>
+
+  <!-- STRATEGIE-CHECKLIST -->
+  <div class="strategie">
+    <h2>De zes strategie-vragen — stel ze altijd vóór je begint te rekenen</h2>
+    <ol>
+      <li><span class="vraag-num">1</span><strong>Wat zie ik?</strong> &mdash; welke stoffen, formules, gegeven waarden? Onderstreep ze.</li>
+      <li><span class="vraag-num">2</span><strong>Wat moet ik berekenen?</strong> &mdash; lees per deelvraag exact welke grootheid en eenheid wordt gevraagd.</li>
+      <li><span class="vraag-num">3</span><strong>Welke regel of formule heb ik nodig?</strong> &mdash; pH = &minus;log [H<sup>+</sup>]? M = mol/V? c<sub>1</sub>V<sub>1</sub> = c<sub>2</sub>V<sub>2</sub>? Stoichiometrie?</li>
+      <li><span class="vraag-num">4</span><strong>Welke Binas-tabel heb ik nodig?</strong> &mdash; 52A (indicatoren), 99 (atoommassa's), 104 (molecuulmassa's), 37I (formules wiskunde).</li>
+      <li><span class="vraag-num">5</span><strong>Wat is mijn eerste stap?</strong> &mdash; meestal: reactievergelijking schrijven of mol berekenen. Niet meteen invullen in de eindformule.</li>
+      <li><span class="vraag-num">6</span><strong>Heb ik de tussenstappen opgeschreven?</strong> &mdash; punten op de toets komen niet alleen van het eindantwoord, ook van de berekening eronder.</li>
+    </ol>
+  </div>
+
+  <!-- OPGAVE 1 - WALKTHROUGH -->
+  <div class="opgave-card">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 1</span>
+      <h2>Volledige uitwerking — superzuur in laboratorium</h2>
+    </div>
+    <div class="opg-tags">
+      <span class="tag">reactievergelijking</span>
+      <span class="tag">soort binding</span>
+      <span class="tag">veiligheid</span>
+      <span class="tag">gram via M</span>
+      <span class="tag">pH</span>
+    </div>
+
+    <p><em>Verhaal:</em> Methaansulfonzuur (CH<sub>3</sub>SO<sub>3</sub>H) is een sterk zuur dat in de chemische industrie gebruikt wordt. Het is een vloeibaar zuur. Een laborant wil 200 mL van een 0,0500 M oplossing van methaansulfonzuur maken. M(CH<sub>3</sub>SO<sub>3</sub>H) = 96,1 g mol<sup>−1</sup>.</p>
+
+    <p><strong>Deelvragen:</strong></p>
+    <ol style="margin-left:1.6rem;">
+      <li>Geef de reactievergelijking met toestandsaanduidingen voor methaansulfonzuur in water (het zuur staat één H<sup>+</sup> af).</li>
+      <li>Welk soort binding wordt verbroken in deze reactie?</li>
+      <li>Bij snel toevoegen aan water kan de oplossing heel heet worden. Welk gevaar geeft dat?</li>
+      <li>Hoeveel gram methaansulfonzuur moet de laborant opgelost hebben voor 200 mL 0,0500 M?</li>
+      <li>Bereken de pH van deze 0,0500 M oplossing. Geef het antwoord in de juiste significantie.</li>
+    </ol>
+
+    <h3>Strategie eerst</h3>
+
+    <div class="walkthrough">
+      <h4>Stap 0 — toepassing van de zes vragen</h4>
+      <div class="stap">
+        <strong>1. Wat zie ik?</strong> CH<sub>3</sub>SO<sub>3</sub>H als vloeibaar sterk zuur (1 H<sup>+</sup>), 200 mL, 0,0500 M, M-molair 96,1 g/mol.
+      </div>
+      <div class="stap">
+        <strong>2. Wat moet ik berekenen?</strong> per deelvraag: a) chemische vergelijking, b) bindingstype, c) gevaar uitleggen, d) gram, e) pH met sign cijfers.
+      </div>
+      <div class="stap">
+        <strong>3. Formules/regels:</strong> a) zuur → H<sup>+</sup> + zuurrest, b) atoombinding, d) mol=M·V → gram=mol·M-molair, e) pH=&minus;log[H<sup>+</sup>].
+      </div>
+      <div class="stap">
+        <strong>4. Binas:</strong> 104 voor molaire massa (al gegeven).
+      </div>
+      <div class="stap">
+        <strong>5. Eerste stap:</strong> reactievergelijking schrijven (vraag a) — bepaalt ook de factor voor pH later.
+      </div>
+      <div class="stap">
+        <strong>6. Tussenstappen:</strong> alle berekeningen op één rij houden — mol-berekening apart van gram-berekening apart van pH-berekening.
+      </div>
+    </div>
+
+    <h3>Uitwerking</h3>
+
+    <div class="walkthrough">
+      <h4>1a. Reactievergelijking</h4>
+      <div class="stap">
+        <p>CH<sub>3</sub>SO<sub>3</sub>H is een vloeistof; in water valt hij uit elkaar in H<sup>+</sup> en CH<sub>3</sub>SO<sub>3</sub><sup>−</sup>.</p>
+        <div class="formula-line center">CH<sub>3</sub>SO<sub>3</sub>H (l) → H<sup>+</sup> (aq) + CH<sub>3</sub>SO<sub>3</sub><sup>−</sup> (aq)</div>
+      </div>
+
+      <h4>1b. Soort binding</h4>
+      <div class="stap">
+        <p>De binding tussen S/O-H gaat stuk. Dat is een <strong>atoombinding</strong> (gedeeld elektronenpaar). Geen ionbinding.</p>
+      </div>
+
+      <h4>1c. Gevaar</h4>
+      <div class="stap">
+        <p>Bij heel snel toevoegen kan de oplossing lokaal heel heet worden (exotherm proces) en spetteren. Spatten met sterk zuur leiden tot brandwonden op huid/oog. <strong>Voorzichtig: kleine hoeveelheid zuur in veel water, niet andersom.</strong></p>
+      </div>
+
+      <h4>1d. Gram berekenen</h4>
+      <div class="stap">
+        <p><em>Eerste tussenstap:</em> mol = M × V = 0,0500 × 0,200 = 0,0100 mol</p>
+        <p><em>Tweede tussenstap:</em> gram = mol × M-molair = 0,0100 × 96,1 = 0,961 g</p>
+        <p>Antwoord: <strong>0,961 g methaansulfonzuur</strong> (3 sign cijfers)</p>
+      </div>
+
+      <h4>1e. pH berekenen</h4>
+      <div class="stap">
+        <p>De factor uit de vergelijking is 1 (één H<sup>+</sup> per molecuul). Dus [H<sup>+</sup>] = 1 × 0,0500 = 0,0500 M.</p>
+        <p>pH = &minus;log (0,0500) = 1,301...</p>
+        <p>0,0500 heeft 3 sign cijfers → pH op 3 decimalen → pH = <strong>1,301</strong></p>
+      </div>
+    </div>
+
+    <p style="font-style:italic; color:var(--text-soft);">→ Bestudeer welke strategie-vraag bij welke deelvraag hoort. Vooral 5 (eerst de vergelijking, dan rest) is cruciaal.</p>
+  </div>
+
+  <!-- OPGAVE 2 -->
+  <div class="opgave-card">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 2</span>
+      <h2>Slibverwerking — kalk neerslaan uit afvalwater</h2>
+    </div>
+    <div class="opg-tags">
+      <span class="tag">stoichiometrie</span>
+      <span class="tag">mol via M×V</span>
+      <span class="tag">kg-product</span>
+      <span class="tag">uitleg</span>
+    </div>
+
+    <p><em>Verhaal:</em> Een waterzuiveringsinstallatie verwerkt 22.000 L afvalwater. In het afvalwater zit calcium met een concentratie van 0,025 M. Er wordt soda (Na<sub>2</sub>CO<sub>3</sub>) toegevoegd om calciumcarbonaat (CaCO<sub>3</sub>) neer te slaan en zo de hardheid te verlagen:</p>
+    <div class="formula-line center">
+      Ca<sup>2+</sup> (aq) + CO<sub>3</sub><sup>2−</sup> (aq) → CaCO<sub>3</sub> (s)
+    </div>
+    <p>M(CaCO<sub>3</sub>) = 100,1 g mol<sup>−1</sup>, M(Na<sub>2</sub>CO<sub>3</sub>) = 106,0 g mol<sup>−1</sup>.</p>
+
+    <div class="q-row">
+      <label>2a. Hoeveel mol Ca<sup>2+</sup>-ionen zitten in 22.000 L?</label>
+      <input type="text" id="o2a" data-accept="550|5.5e2|5,5e2|550.0">
+      <button class="btn-check" onclick="checkNumeric('o2a','fo2a', 550, 10)">Check</button>
+    </div>
+    <div class="feedback" id="fo2a"></div>
+
+    <div class="q-row">
+      <label>2b. Hoeveel mol Na<sub>2</sub>CO<sub>3</sub> moet er <em>minimaal</em> worden toegevoegd om alle calcium neer te slaan?</label>
+      <input type="text" id="o2b" data-accept="550|5.5e2|5,5e2|550.0">
+      <button class="btn-check" onclick="checkNumeric('o2b','fo2b', 550, 10)">Check</button>
+    </div>
+    <div class="feedback" id="fo2b"></div>
+
+    <div class="q-row">
+      <label>2c. Bereken de maximale massa CaCO<sub>3</sub>-slib in kg:</label>
+      <input type="text" id="o2c" data-accept="55|55.1|55,1">
+      <button class="btn-check" onclick="checkNumeric('o2c','fo2c', 55.1, 1.0)">Check</button>
+    </div>
+    <div class="feedback" id="fo2c"></div>
+
+    <div class="q-row">
+      <label>2d. Noem één reden waarom het waterzuiveringsbedrijf liever met soda werkt dan met natriumhydroxide voor deze precipitatie.</label>
+    </div>
+    <textarea id="o2d" rows="3"></textarea>
+
+    <div style="margin-top:0.6rem;">
+      <button class="btn-step" onclick="toggleSteps('s-opg2')">Uitwerking opgave 2</button>
+    </div>
+    <div class="detail-steps" id="s-opg2">
+      <h5>Uitwerking</h5>
+      <ol>
+        <li>2a: mol = M × V = 0,025 × 22.000 = <strong>550 mol Ca<sup>2+</sup></strong> (2 sign cijfers)</li>
+        <li>2b: verhouding 1:1 in de reactie → <strong>550 mol Na<sub>2</sub>CO<sub>3</sub></strong> minimaal</li>
+        <li>2c: massa CaCO<sub>3</sub> = 550 × 100,1 = 55.055 g = <strong>55 kg CaCO<sub>3</sub></strong> (2 sign cijfers)</li>
+        <li>2d: mogelijke argumenten: (a) NaOH is een sterke base en geeft pH-schok in het water; soda werkt zachter. (b) NaOH zou met CO<sub>2</sub> uit de lucht reageren (verlies). (c) Soda is goedkoper en veiliger te hanteren. (d) Met NaOH zou ook Mg(OH)<sub>2</sub> neerslaan — soda alleen Ca.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- OPGAVE 3 -->
+  <div class="opgave-card">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 3</span>
+      <h2>Frisdrank-zout — aantonen door berekening</h2>
+    </div>
+    <div class="opg-tags">
+      <span class="tag">mol via massa</span>
+      <span class="tag">verhouding</span>
+      <span class="tag">aantonen</span>
+    </div>
+
+    <p><em>Verhaal:</em> Op het etiket van een sportdrank staat: 100 mL drank bevat 84 mg natrium-ionen en 60 mg kalium-ionen plus 78 mg chloride-ionen. Een leerling beweert: "het zout in deze drank is een mengsel van natriumchloride (NaCl) en kaliumchloride (KCl), in zo'n verhouding dat alle natrium en kalium met chloride is gepaard."</p>
+    <p>M(Na) = 23,0 g mol<sup>−1</sup>, M(K) = 39,1 g mol<sup>−1</sup>, M(Cl) = 35,5 g mol<sup>−1</sup>.</p>
+
+    <div class="q-row">
+      <label>3a. Hoeveel mol Na<sup>+</sup>?</label>
+      <input type="text" id="o3a" data-accept="3.7e-3|3,7e-3|0.00365|0,00365|0.0037|0,0037">
+      <button class="btn-check" onclick="checkNumeric('o3a','fo3a', 3.65e-3, 0.0002)">Check</button>
+    </div>
+    <div class="feedback" id="fo3a"></div>
+
+    <div class="q-row">
+      <label>3b. Hoeveel mol K<sup>+</sup>?</label>
+      <input type="text" id="o3b" data-accept="1.5e-3|1,5e-3|0.0015|0,0015">
+      <button class="btn-check" onclick="checkNumeric('o3b','fo3b', 1.5e-3, 0.0001)">Check</button>
+    </div>
+    <div class="feedback" id="fo3b"></div>
+
+    <div class="q-row">
+      <label>3c. Hoeveel mol Cl<sup>−</sup>?</label>
+      <input type="text" id="o3c" data-accept="2.2e-3|2,2e-3|0.0022|0,0022">
+      <button class="btn-check" onclick="checkNumeric('o3c','fo3c', 2.2e-3, 0.0001)">Check</button>
+    </div>
+    <div class="feedback" id="fo3c"></div>
+
+    <div class="q-row">
+      <label>3d. Klopt de bewering van de leerling? (ja/nee)</label>
+      <input type="text" id="o3d" data-accept="nee|niet|onjuist|fout">
+      <button class="btn-check" onclick="checkText('o3d','fo3d')">Check</button>
+    </div>
+    <div class="feedback" id="fo3d"></div>
+
+    <div class="q-row">
+      <label>3e. Leg in één zin uit waarom (op basis van je berekening).</label>
+    </div>
+    <textarea id="o3e" rows="3"></textarea>
+
+    <div style="margin-top:0.6rem;">
+      <button class="btn-step" onclick="toggleSteps('s-opg3')">Uitwerking opgave 3</button>
+    </div>
+    <div class="detail-steps" id="s-opg3">
+      <h5>Uitwerking</h5>
+      <ol>
+        <li>3a: mol Na = 84·10<sup>−3</sup> / 23,0 = 3,65·10<sup>−3</sup> ≈ 3,7·10<sup>−3</sup> mol</li>
+        <li>3b: mol K = 60·10<sup>−3</sup> / 39,1 = 1,53·10<sup>−3</sup> ≈ 1,5·10<sup>−3</sup> mol</li>
+        <li>3c: mol Cl = 78·10<sup>−3</sup> / 35,5 = 2,20·10<sup>−3</sup> ≈ 2,2·10<sup>−3</sup> mol</li>
+        <li>3d: <strong>Nee.</strong></li>
+        <li>3e: mol Na + mol K = 3,65 + 1,53 = 5,18·10<sup>−3</sup> mol positieve ionen. Maar mol Cl<sup>−</sup> = slechts 2,20·10<sup>−3</sup> mol. Er is ruim 2× zoveel positieve ionen als chloride — kan dus niet één-op-één gepaard zijn als NaCl + KCl. Er moet ook een ander zout in zitten (bv. natriumcitraat of kaliumfosfaat).</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- OPGAVE 4 -->
+  <div class="opgave-card">
+    <div class="opg-header">
+      <span class="opg-num">Opgave 4</span>
+      <h2>Schoonmaakazijn-titratie en pH</h2>
+    </div>
+    <div class="opg-tags">
+      <span class="tag">molariteit</span>
+      <span class="tag">stoichiometrie</span>
+      <span class="tag">indicator-keuze</span>
+      <span class="tag">verdunning</span>
+    </div>
+
+    <p><em>Verhaal:</em> Een leerling onderzoekt of een fles schoonmaakazijn echt de op het etiket aangegeven 8,0% w/v azijnzuur bevat (= 8,0 g azijnzuur per 100 mL oplossing). Hij neemt 10,0 mL azijn, verdunt dit met gedestilleerd water tot 100,0 mL, en titreert dit met 0,500 M NaOH. De reactie:</p>
+    <div class="formula-line center">
+      CH<sub>3</sub>COOH (aq) + NaOH (aq) → CH<sub>3</sub>COONa (aq) + H<sub>2</sub>O (l)
+    </div>
+    <p>Voor neutralisatie gaat er 26,7 mL NaOH-oplossing in. M(CH<sub>3</sub>COOH) = 60,0 g mol<sup>−1</sup>.</p>
+
+    <div class="q-row">
+      <label>4a. Hoeveel mol NaOH is verbruikt?</label>
+      <input type="text" id="o4a" data-accept="0.0134|0,0134|0.013|0,013|1.34e-2|1,34e-2">
+      <button class="btn-check" onclick="checkNumeric('o4a','fo4a', 0.01335, 0.0005)">Check</button>
+    </div>
+    <div class="feedback" id="fo4a"></div>
+
+    <div class="q-row">
+      <label>4b. Hoeveel mol azijnzuur zat in de 100,0 mL verdunde oplossing?</label>
+      <input type="text" id="o4b" data-accept="0.0134|0,0134|0.013|0,013|1.34e-2|1,34e-2">
+      <button class="btn-check" onclick="checkNumeric('o4b','fo4b', 0.01335, 0.0005)">Check</button>
+    </div>
+    <div class="feedback" id="fo4b"></div>
+
+    <div class="q-row">
+      <label>4c. Wat is de molariteit van het oorspronkelijke azijn (M)?</label>
+      <input type="text" id="o4c" data-accept="1.34|1,34|1.3|1,3">
+      <button class="btn-check" onclick="checkNumeric('o4c','fo4c', 1.34, 0.05)">Check</button>
+    </div>
+    <div class="feedback" id="fo4c"></div>
+
+    <div class="q-row">
+      <label>4d. Komt dit overeen met de aangegeven 8,0 g per 100 mL? (toon met berekening hoeveel g per 100 mL: ja/nee)</label>
+      <input type="text" id="o4d" data-accept="ja|wel|klopt|overeen">
+      <button class="btn-check" onclick="checkText('o4d','fo4d')">Check</button>
+    </div>
+    <div class="feedback" id="fo4d"></div>
+
+    <div class="q-row">
+      <label>4e. Welke indicator uit Binas 52A is geschikt voor het eindpunt van deze titratie? Geef ook de kleur bij het eindpunt.</label>
+    </div>
+    <textarea id="o4e" rows="2"></textarea>
+
+    <div style="margin-top:0.6rem;">
+      <button class="btn-step" onclick="toggleSteps('s-opg4')">Uitwerking opgave 4</button>
+    </div>
+    <div class="detail-steps" id="s-opg4">
+      <h5>Uitwerking</h5>
+      <ol>
+        <li>4a: mol NaOH = 0,500 × 0,0267 = <strong>0,01335 mol</strong> (≈ 0,0134 mol)</li>
+        <li>4b: verhouding 1:1 → <strong>0,01335 mol azijnzuur</strong> in 100 mL verdunde oplossing</li>
+        <li>4c: oorspronkelijk volume = 10,0 mL = 0,010 L. M = 0,01335 / 0,010 = <strong>1,34 M</strong>. (Of: verdunning was 10× — verdunde [azijnzuur] = 0,01335/0,1000 = 0,1335 M, oorspronkelijk = 10× = 1,34 M.)</li>
+        <li>4d: gram = 1,34 mol/L × 0,100 L × 60,0 = 8,01 g per 100 mL. Klopt met 8,0 g op het etiket. <strong>Ja.</strong></li>
+        <li>4e: bij eindpunt is het zuur volledig geneutraliseerd; pH van CH<sub>3</sub>COONa-oplossing is licht basisch (rond pH 8-9). Beste indicator: <strong>fenolftaleïne</strong> (omslag 8,3-10,0) → eindpunt zichtbaar bij eerste blijvende roze kleur. Methyloranje of methylrood zouden bij neutrale pH al omgeslagen zijn — te vroeg.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Doel-checklist -->
+  <div class="checklist">
+    <h2>Synthese-doelen</h2>
+    <label><input type="checkbox" id="sd1"> Ik gebruik de zes strategie-vragen automatisch voordat ik begin met rekenen.</label>
+    <label><input type="checkbox" id="sd2"> Ik schrijf altijd eerst de reactievergelijking met toestandsaanduidingen op.</label>
+    <label><input type="checkbox" id="sd3"> Ik kan een stoichiometrie-keten doorlopen (volume × M → mol → andere mol → gram → kg).</label>
+    <label><input type="checkbox" id="sd4"> Ik kan een "aantonen door berekening"-vraag afmaken met een conclusie-zin.</label>
+    <label><input type="checkbox" id="sd5"> Ik kan een indicator kiezen op basis van de pH bij het eindpunt.</label>
+    <label><input type="checkbox" id="sd6"> Ik kan een verdunning verrekenen (factor × verdunde waarde = oorspronkelijke waarde).</label>
+  </div>
+
+  <div class="nav-bottom">
+    <a href="../dag4-indicatoren-en-toepassen/index.html">&larr; Terug naar Dag 4</a>
+    <a href="../oefentoets/index.html">Door naar de Oefentoets &rarr;</a>
+  </div>
+
+  <footer>
+    <p>Gemaakt door Ralph Wagter met Claude Code. Vrij hergebruik onder <a href="https://eupl.eu/1.2/nl/">EUPL-1.2</a>. &middot; <a href="https://github.com/rwrw01/Claudecodedingetjes">GitHub repo</a></p>
+  </footer>
+</div>
+
+<script>
+function normalize(s) {
+  return (s || '').toString().toLowerCase()
+    .replace(/\^/g, '').replace(/_/g, '')
+    .replace(/\s+/g, ' ').replace(/,/g, '.').trim();
+}
+function stripSpaces(s) { return s.replace(/\s/g, ''); }
+function checkText(inputId, feedbackId) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const accepts = (input.dataset.accept || '').split('|').map(normalize);
+  const user = normalize(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (!user) { feedback.textContent='Vul een antwoord in.'; feedback.classList.add('incorrect'); input.classList.add('incorrect'); return; }
+  const userStripped = stripSpaces(user);
+  const ok = accepts.some(a => {
+    if (!a) return false;
+    if (user === a) return true;
+    return stripSpaces(a) === userStripped;
+  });
+  if (ok) { feedback.textContent='✓ Goed!'; feedback.classList.add('correct'); input.classList.add('correct'); }
+  else { feedback.textContent='Nog niet helemaal. Kijk de uitwerking of probeer opnieuw.'; feedback.classList.add('incorrect'); input.classList.add('incorrect'); }
+}
+function parseNumber(s) {
+  if (!s) return NaN;
+  const norm = s.toString().toLowerCase()
+    .replace(/,/g, '.').replace(/\s/g, '')
+    .replace(/·/g, '*').replace(/×/g, '*').replace(/−/g, '-');
+  const sciNotation = norm.match(/^([\-\+]?\d*\.?\d*)\*?10\^?([\-\+]?\d+)$/);
+  if (sciNotation) {
+    const coefStr = sciNotation[1];
+    const coef = (coefStr === '' || coefStr === '+' || coefStr === '-') ? parseFloat(coefStr + '1') : parseFloat(coefStr);
+    return coef * Math.pow(10, parseFloat(sciNotation[2]));
+  }
+  return parseFloat(norm);
+}
+function checkNumeric(inputId, feedbackId, target, tol) {
+  const input = document.getElementById(inputId);
+  const feedback = document.getElementById(feedbackId);
+  const user = parseNumber(input.value);
+  feedback.classList.remove('correct','incorrect');
+  feedback.classList.add('show');
+  input.classList.remove('correct','incorrect');
+  if (isNaN(user)) { feedback.textContent='Vul een getal in.'; feedback.classList.add('incorrect'); input.classList.add('incorrect'); return; }
+  if (Math.abs(user - target) <= tol) { feedback.textContent='✓ Goed!'; feedback.classList.add('correct'); input.classList.add('correct'); }
+  else { feedback.textContent='Nog niet helemaal. Probeer opnieuw of bekijk de uitwerking.'; feedback.classList.add('incorrect'); input.classList.add('incorrect'); }
+}
+function toggleSteps(id) { const el = document.getElementById(id); if (!el) return; el.classList.toggle('show'); }
+
+const PAGE_KEY = 'h7-synthese';
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(cb => {
+  const key = PAGE_KEY + '-' + cb.id;
+  cb.checked = localStorage.getItem(key) === 'true';
+  cb.addEventListener('change', () => localStorage.setItem(key, cb.checked));
+});
+</script>
+</body>
+</html>

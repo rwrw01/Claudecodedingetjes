@@ -401,14 +401,14 @@ sup { font-size: 0.75em; vertical-align: super; }
 
       <div class="q-row">
         <label>1b. Welke kleur heeft fenolftaleïne hier?</label>
-        <input type="text" id="q1b" data-accept="roze|rood|rose|paars">
+        <input type="text" id="q1b" data-accept="roze|rose|licht roze|roze-rood">
         <button class="btn-check" onclick="checkText('q1b','f1b')">Check</button>
       </div>
       <div class="feedback" id="f1b"></div>
 
       <div class="q-row">
         <label>1c. Is methylrood geschikt om aan te tonen dat pH = 9,0?</label>
-        <input type="text" id="q1c" data-accept="ja|geschikt|wel">
+        <input type="text" id="q1c" data-accept="ja|geschikt|wel|ja geel|geschikt geel|ja wel|ja geschikt|wel geschikt">
         <button class="btn-check" onclick="checkText('q1c','f1c')">Check</button>
       </div>
       <div class="feedback" id="f1c"></div>
@@ -723,7 +723,7 @@ sup { font-size: 0.75em; vertical-align: super; }
       <textarea id="t2c" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
 
       <div class="q-row">
-        <label>2d. De medewerker wil ook de pH controleren. Hij meet pH = 7,5. Welke indicator uit Binas 52A is hier het meest geschikt om snel te bevestigen dat de pH boven de 7 ligt, en welke kleur zie je dan?</label>
+        <label>2d. De medewerker wil de pH controleren. Hij meet pH = 7,5. Noem één indicator uit Binas-tabel 52A waarvan het omslagtraject volledig <em>onder</em> pH 7,5 ligt, en welke kleur hij dan geeft. (Die kleur bevestigt dan dat de pH minstens boven het omslagtraject ligt.)</label>
       </div>
       <textarea id="t2d" rows="3" style="width:100%;font-size:1rem;border:2px solid var(--border);border-radius:8px;padding:0.5rem;"></textarea>
 
@@ -736,7 +736,14 @@ sup { font-size: 0.75em; vertical-align: super; }
           <li>2a: 25,00 / 5,00 = factor 5</li>
           <li>2b: 3,0 × 5 = <strong>15 massa-ppm sulfaat</strong> in oorspronkelijk water</li>
           <li>2c: 15 massa-ppm &lt; 20 massa-ppm. Dus het water voldoet aan de norm. (Conclusie expliciet maken!)</li>
-          <li>2d: pH 7,5 ligt in/rond een paar trajecten. Beste keuze: <strong>fenolrood</strong> (6,8-8,4). Bij pH 7,5 zit dat in het traject → mengkleur oranje-rood. Beter: <strong>broomthymolblauw</strong> (6,0-7,6): bij pH 7,5 ligt dat ook in traject; dichter bij blauw aan de hoge kant. Of <strong>lakmoes</strong> (5,0-8,0) is bij 7,5 nog enigszins paars (mengkleur). Strikt boven traject: <em>methylrood</em> (4,4-6,2) → bij pH 7,5 ver boven traject → geel → bevestigt pH &gt; 6,2. Goed antwoord: methylrood → geel (toont dat pH boven 6,2 ligt, dus boven 7 mogelijk).</li>
+          <li>2d: er zijn drie indicatoren met omslagtraject volledig onder pH 7,5:
+            <ul style="margin-top:0.3rem;">
+              <li><strong>Methyloranje</strong> (3,1-4,4) → pH 7,5 ver boven traject → <strong>geel</strong></li>
+              <li><strong>Broomfenolblauw</strong> (3,0-4,6) → pH 7,5 ver boven traject → <strong>blauw</strong></li>
+              <li><strong>Methylrood</strong> (4,4-6,2) → pH 7,5 boven traject → <strong>geel</strong></li>
+            </ul>
+            Elk van deze drie is een goed antwoord. De kleur bevestigt dat de pH boven het traject ligt — dus minstens 6,2 of hoger.
+          </li>
         </ol>
       </div>
     </div>
